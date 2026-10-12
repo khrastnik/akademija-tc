@@ -472,3 +472,49 @@ main {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* ---------- svetli / temni način ---------- */
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin-left: 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.theme-toggle:hover {
+  border-color: var(--accent);
+}
+/* Ikona pokaže, kam preklopiš: v svetlem luna, v temnem sonce. */
+.theme-toggle .i-sun {
+  display: none;
+}
+:root[data-theme='dark'] .theme-toggle .i-sun {
+  display: block;
+}
+:root[data-theme='dark'] .theme-toggle .i-moon {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-toggle .i-sun {
+    display: block;
+  }
+  :root:not([data-theme='light']) .theme-toggle .i-moon {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  /* telefon: gumb desno ob imenu, meni v drugi vrstici */
+  .theme-toggle {
+    order: 2;
+    margin-left: auto;
+  }
+  .nav {
+    order: 3;
+  }
+}

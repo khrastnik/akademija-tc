@@ -34,6 +34,13 @@ const nav = [
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#171411" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      // Izbrana tema pred prvim izrisom – brez utripa napačne barve.
+      try {
+        var t = localStorage.getItem('akademija-tc:tema');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={url('icon-192.png')} />
     <link rel="manifest" href={url('manifest.webmanifest')} />
@@ -59,8 +66,35 @@ const nav = [
         <nav class="nav" aria-label="Glavni meni">
           {nav.map((n) => <a href={n.href} aria-current={current === n.id ? 'page' : undefined}>{n.label}</a>)}
         </nav>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Temni način" title="Svetli / temni način">
+          <svg class="i-moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="i-sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+        </button>
       </div>
     </header>
+    <script is:inline>
+      // Svetli / temni način: prva izbira sledi sistemu, nato velja izbira uporabnika.
+      (function () {
+        var root = document.documentElement;
+        var btn = document.querySelector('[data-theme-toggle]');
+        var dark = matchMedia('(prefers-color-scheme: dark)');
+        var current = function () { return root.dataset.theme || (dark.matches ? 'dark' : 'light'); };
+        var sync = function () {
+          var isDark = current() === 'dark';
+          btn.setAttribute('aria-label', isDark ? 'Svetli način' : 'Temni način');
+          btn.setAttribute('aria-pressed', String(isDark));
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = isDark ? '#171411' : '#f7f3ec'; });
+        };
+        btn.addEventListener('click', function () {
+          var next = current() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try { localStorage.setItem('akademija-tc:tema', next); } catch (e) {}
+          sync();
+        });
+        dark.addEventListener('change', sync);
+        sync();
+      })();
+    </script>
     <main id="vsebina" class={wide ? "wrap wide" : "wrap"}>
       <slot />
     </main>
