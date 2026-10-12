@@ -37,7 +37,7 @@
   verify: Tlak vode stabilen, šumenje izgine, ΔT vode normalna.
 - id: eev
   name: Zatikajoč ekspanzijski ventil
-  pattern: Visoko pregrevanje kot pri premalo hladiva – a podhlajevanje je VISOKO.
+  pattern: Visoko pregrevanje kot pri premalo hladiva – a podhlajevanje je VISOKO. Na filtru sušilniku ni razlike temperatur (ta je zdrav).
   why: Ventil prepusti premalo hladiva. Uparjalnik je lačen (visok SH), hladivo pa se nabira pred ventilom v kondenzatorju (visok SC). Hladiva je dovolj – le ne pride skozi.
   fix: Preveri tuljavo in senzorje, ki vodijo ventil. Zamenjava ventila je delo serviserja s spričevalom.
   verify: SH in SC v normalnem območju pri stabilnem delovanju.
@@ -47,3 +47,21 @@
   why: Krmilnik verjame senzorju. Če senzor povratne vode kaže preveč, krmilnik misli, da je hiša topla, in zmanjša moč.
   fix: Preveri namestitev senzorja (toplotna pasta, izolacija) in njegovo upornost po tabeli proizvajalca. Okvarjenega zamenjaj.
   verify: Vrednost na zaslonu se ujema s termometrom na cevi.
+- id: tripotni
+  name: Obtičan 3-potni ventil
+  pattern: Radiatorji hladni, voda v bojlerju prevroča. Ventil kaže sanitarno vodo, čeprav krmilnik zahteva ogrevanje.
+  why: 3-potni ventil odloča, ali gre topla voda v radiatorje ali v tuljavo bojlerja. Če obtiči, gre vsa toplota v bojler – hiša se ohlaja, tople vode je preveč.
+  fix: Preveri napetost na motorju ventila po shemi proizvajalca. Če motor dobi ukaz in se gred ne premakne, zamenjaj motor ali ventil. Električni del samo usposobljena oseba.
+  verify: Ob preklopu se sliši klik, kazalec se premakne, dvižni vod do radiatorjev se segreje.
+- id: odtajevanje
+  name: Odtajevanje ne deluje (4-potni ventil)
+  pattern: Zunanja enota v celoti v ledu, listja ni. Krmilnik javlja neuspešno odtajevanje, preklopa ventila ni slišati.
+  why: Za odtajevanje 4-potni ventil obrne tok – vroč plin gre v zunanje lamele in stopi led. Če se ventil ne preklopi, led raste, uparjalnik ne dobi zraka in moč pade.
+  fix: Preveri tuljavo 4-potnega ventila (napetost ob ukazu za odtajevanje) in senzor temperature uparjalnika. Menjava ventila je poseg v krog hladiva – samo serviser s spričevalom.
+  verify: Ob naslednjem odtajevanju se sliši preklop, led se stopi, voda odteče.
+- id: filter-susilnik
+  name: Zamašen filter sušilnik
+  pattern: Visok SH in visok SC kot pri zatikajočem ekspanzijskem ventilu – a na filtru sušilniku je velika razlika temperatur, izstop je orošen.
+  why: Filter sušilnik lovi vlago in nečistoče v hladivu. Ko se zamaši, deluje kot ozko grlo pred ventilom – za njim tlak pade, hladivo začne vreti že v filtru, zato se ohladi.
+  fix: Zamenjava filtra sušilnika in iskanje vzroka (vlaga, nečistoče po posegu). Poseg v krog hladiva – samo serviser s spričevalom.
+  verify: ΔT na novem filtru je skoraj nič, SH in SC v normalnem območju.

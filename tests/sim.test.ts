@@ -75,3 +75,22 @@ describe('vsebina simulatorja', async () => {
       }
   });
 });
+
+describe('novi deli: 3-potni ventil, 4-potni ventil, filter sušilnik', () => {
+  it('obtičan 3-potni ventil: radiatorji hladni, bojler prevroč', () => {
+    expect([zone('tripotni', 't-dvizni'), zone('tripotni', 't-bojler')]).toEqual(['low', 'high']);
+  });
+  it('odtajevanje ne deluje: zelo nizka T uparjanja, a SH ni visoko in listja ni', () => {
+    expect(zone('odtajevanje', 't0')).toBe('low');
+    expect(zone('odtajevanje', 'sh')).toBe('ok');
+    expect(readingsFor('odtajevanje', 's').zunanja.text).not.toMatch(/listjem/);
+  });
+  it('filter sušilnik vs EEV: oba visok SH in SC – loči ju ΔT na filtru sušilniku', () => {
+    expect([zone('filter-susilnik', 'sh'), zone('filter-susilnik', 'sc'), zone('filter-susilnik', 'dt-susilnik')]).toEqual(['high', 'high', 'high']);
+    expect(zone('eev', 'dt-susilnik')).toBe('ok');
+  });
+  it('odtajevanje se dokaže brez manometrov (bonus)', () => {
+    const s = scoreCase({ fault: 'odtajevanje', measured: ['zaslon', 'zunanja'], guesses: ['odtajevanje'], par: 9 });
+    expect(s.stars).toBe(3);
+  });
+});

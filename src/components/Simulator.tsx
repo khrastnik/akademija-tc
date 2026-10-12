@@ -8,11 +8,13 @@ import {
   type Reading,
   type Score,
 } from '../../packages/engine/src/sim';
-import type { SimScene, Cue } from '../sim/scene';
+import type { SimScene, Cue, OperatingMode } from '../sim/scene';
 import './simulator.css';
 
+type Group = 'hladivo' | 'voda' | 'krmiljenje';
 interface Part {
   id: string;
+  group: Group;
   name: string;
   en: string;
   where: string;
@@ -79,6 +81,9 @@ const MEASURE_SHORT: Record<string, string> = {
   'tlak-vode': 'Tlak vode',
   zunanja: 'Pregled',
   poslusaj: 'Poslušaj',
+  'ventil-3p': '3-potni',
+  bojler: 'Bojler',
+  'dt-susilnik': 'Sušilnik',
   't-dvizni': 'T dvižni',
   'dt-voda': 'ΔT voda',
   filter: 'Filter',
@@ -93,6 +98,9 @@ const MEASURE_ANCHOR: Record<string, string> = {
   'tlak-vode': 'raztezna',
   zunanja: 'uparjalnik',
   poslusaj: 'obtocna',
+  'ventil-3p': 'tripotni',
+  bojler: 'bojler',
+  'dt-susilnik': 'susilnik',
   't-dvizni': 'dvizni',
   'dt-voda': 'povratni',
   filter: 'filter',
@@ -107,7 +115,35 @@ const DISPLAY: Partial<Record<FaultId, { lines: string[]; alarm?: boolean }>> = 
   filter: { lines: ['E: VISOK TLAK', 'Ponovni zagon …'], alarm: true },
   'zrak-v-vodi': { lines: ['E: PRETOK', 'Premajhen pretok'], alarm: true },
   senzor: { lines: ['Povratna 40 °C', 'Moč zmanjšana'] },
+  odtajevanje: { lines: ['E: ODTAJEVANJE', '6× neuspešno'], alarm: true },
 };
+
+const GROUPS: { id: Group | 'vse'; label: string }[] = [
+  { id: 'hladivo', label: 'Krog hladiva' },
+  { id: 'voda', label: 'Vodni krog' },
+  { id: 'krmiljenje', label: 'Krmiljenje' },
+  { id: 'vse', label: 'Vse' },
+];
+const MODES: { id: OperatingMode; label: string; part: string; text: string }[] = [
+  {
+    id: 'ogrevanje',
+    label: 'Ogrevanje',
+    part: 'kondenzator',
+    text: 'Hladivo vzame toploto zunanjemu zraku in jo v kondenzatorju odda vodi. 3-potni ventil pošilja toplo vodo v radiatorje.',
+  },
+  {
+    id: 'sanitarna',
+    label: 'Sanitarna voda',
+    part: 'tripotni',
+    text: '3-potni ventil preklopi: topla voda ne gre več v radiatorje, ampak v tuljavo bojlerja. Hiša se ta čas ne greje – zato je pomembno, da ventil po segrevanju bojlerja preklopi nazaj.',
+  },
+  {
+    id: 'odtajevanje',
+    label: 'Odtajevanje',
+    part: 'stiripotni',
+    text: '4-potni ventil obrne tok. Vroč plin iz kompresorja gre v zunanje lamele in stopi led, ventilator stoji. Toploto za to si črpalka za nekaj minut »izposodi« iz vode ogrevanja.',
+  },
+];
 
 const clockText = (min: number) => `${String(Math.floor(min / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
 
@@ -121,6 +157,8 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
   // učenje
   const [selected, setSelected] = useState<string | null>(null);
   const [step, setStep] = useState(0);
+  const [group, setGroup] = useState<Group | 'vse'>('hladivo');
+  const [opMode, setOpMode] = useState<OperatingMode>('ogrevanje');
 
   // igra
   const [saved, setSaved] = useState<Saved>({ days: {} });
@@ -206,6 +244,17 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
     sceneRef.current?.focus(id);
   }
 
+  function changeMode(m: OperatingMode) {
+    setOpMode(m);
+    sceneRef.current?.setOperatingMode(m);
+    const part = MODES.find((x) => x.id === m)!.part;
+    setStep(0);
+    setSelected(null);
+    sceneRef.current?.highlight(m === 'ogrevanje' ? null : part);
+    sceneRef.current?.focus(m === 'ogrevanje' ? null : part);
+    if (m !== 'ogrevanje') setGroup(partById.get(part)!.group);
+  }
+
   function goTour(n: number) {
     setStep(n);
     const p = n ? tourParts[n - 1] : null;
@@ -216,6 +265,7 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
 
   function switchMode(m: 'learn' | 'game') {
     setMode(m);
+    setOpMode('ogrevanje');
     selectPart(null);
     setStep(0);
     resetScene();
@@ -226,6 +276,7 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
     const s = sceneRef.current;
     if (!s) return;
     s.resetCues();
+    s.setOperatingMode('ogrevanje');
     s.setFlowSpeed(1, 1);
     s.setDisplay(['35 °C', 'Ogrevanje', 'OK']);
     s.highlight(null);
@@ -259,13 +310,16 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
     if (mId === 'filter' && f === 'filter') cues.push('dirty-filter');
     if (mId === 'poslusaj' && f === 'zrak-v-vodi') cues.push('bubbles');
     if (mId === 'tlak-vode' && f === 'zrak-v-vodi') cues.push('low-water');
+    if (mId === 'zunanja' && f === 'odtajevanje') cues.push('ice-full');
+    if ((mId === 'ventil-3p' || mId === 'bojler') && f === 'tripotni') cues.push('valve-dhw');
+    if (mId === 'dt-susilnik' && f === 'filter-susilnik') cues.push('frost-drier');
     cues.forEach((c) => s.reveal(c));
     if (mId === 'zaslon') {
       const d = DISPLAY[f] ?? { lines: ['35 °C', 'Ogrevanje', 'OK'] };
       s.setDisplay(d.lines, d.alarm);
     }
     if (mId === 'dt-voda' && (f === 'filter' || f === 'zrak-v-vodi')) s.setFlowSpeed(1, 0.35);
-    if ((mId === 'nt-stran' || mId === 'vt-stran') && (f === 'premalo-hladiva' || f === 'eev')) s.setFlowSpeed(0.55, 1);
+    if ((mId === 'nt-stran' || mId === 'vt-stran') && (f === 'premalo-hladiva' || f === 'eev' || f === 'filter-susilnik')) s.setFlowSpeed(0.55, 1);
     s.highlight(MEASURE_ANCHOR[mId]);
   }
 
@@ -323,7 +377,10 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
     status !== 'ready'
       ? []
       : mode === 'learn'
-        ? parts.map((p, i) => ({ id: p.id, n: i + 1, anchor: p.id, label: p.name.replace(/ \(.*\)/, ''), on: selected === p.id, done: false }))
+        ? parts
+            .map((p, i) => ({ p, i }))
+            .filter(({ p }) => group === 'vse' || p.group === group || p.id === selected)
+            .map(({ p, i }) => ({ id: p.id, n: i + 1, anchor: p.id, label: p.name.replace(/ \(.*\)/, ''), on: selected === p.id, done: false }))
         : phase === 'work'
           ? MEASUREMENTS.map((m, i) => ({ id: m.id, n: i + 1, anchor: MEASURE_ANCHOR[m.id], label: MEASURE_SHORT[m.id], on: false, done: measured.includes(m.id) }))
           : [];
@@ -388,6 +445,10 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
         <div class="side" aria-live="polite">
           {mode === 'learn' && (
             <LearnPanel
+              group={group}
+              setGroup={setGroup}
+              opMode={opMode}
+              changeMode={changeMode}
               parts={parts}
               tourParts={tourParts}
               selected={selected ? partById.get(selected) ?? null : null}
@@ -596,6 +657,10 @@ function Debrief({ score, fault, readings, onNext, last }: { score: Score; fault
 }
 
 function LearnPanel({
+  group,
+  setGroup,
+  opMode,
+  changeMode,
   parts,
   tourParts,
   selected,
@@ -604,6 +669,10 @@ function LearnPanel({
   selectPart,
   lessonUrl,
 }: {
+  group: Group | 'vse';
+  setGroup: (g: Group | 'vse') => void;
+  opMode: OperatingMode;
+  changeMode: (m: OperatingMode) => void;
   parts: Part[];
   tourParts: Part[];
   selected: Part | null;
@@ -676,13 +745,33 @@ function LearnPanel({
       <button type="button" class="btn wide" onClick={() => goTour(1)}>
         ▶ Ogled kroga v 4 korakih
       </button>
-      <h3>Ali tapni del</h3>
-      <div class="part-list">
-        {parts.map((p, i) => (
-          <button key={p.id} type="button" onClick={() => selectPart(p.id)}>
-            <b class="num-dot">{i + 1}</b> {p.name}
+
+      <h3>Način delovanja</h3>
+      <div class="seg3" role="radiogroup" aria-label="Način delovanja">
+        {MODES.map((m) => (
+          <button key={m.id} type="button" role="radio" aria-checked={opMode === m.id} class={opMode === m.id ? 'on' : ''} onClick={() => changeMode(m.id)}>
+            {m.label}
           </button>
         ))}
+      </div>
+      <p class="mode-text">{MODES.find((m) => m.id === opMode)!.text}</p>
+
+      <h3>Deli naprave ({parts.length})</h3>
+      <div class="seg3 groups" role="radiogroup" aria-label="Skupina delov">
+        {GROUPS.map((g) => (
+          <button key={g.id} type="button" role="radio" aria-checked={group === g.id} class={group === g.id ? 'on' : ''} onClick={() => setGroup(g.id)}>
+            {g.label}
+          </button>
+        ))}
+      </div>
+      <div class="part-list">
+        {parts.map((p, i) =>
+          group === 'vse' || p.group === group ? (
+            <button key={p.id} type="button" onClick={() => selectPart(p.id)}>
+              <b class="num-dot">{i + 1}</b> {p.name}
+            </button>
+          ) : null,
+        )}
       </div>
       <p class="fine">
         Najprej razumi razliko med simptomom in vzrokom: <a href={lessonUrl}>lekcija 0.1</a>.

@@ -56,3 +56,22 @@
       customer: Hišnik Branko
       call: »Toplotna črpalka se ustavlja z visokim tlakom. Po sistemu so ravno menjali cevi.«
       par: 18
+- id: dan-4
+  title: Četrtek – mraz in tuši
+  intro: Novi deli – 3-potni ventil, 4-potni ventil, filter sušilnik. Dva klica rešiš brez manometrov.
+  calls:
+    - fault: tripotni
+      place: Družinska hiša v Kamniku
+      customer: Gospa Nina
+      call: »Tople vode imamo toliko, da se opečeš, v dnevni sobi pa je 17 stopinj.«
+      par: 8
+    - fault: odtajevanje
+      place: Hiša na Pohorju
+      customer: Gospod Rok
+      call: »Zunanja enota je cela bela kot hladilnik, ki ga nismo odtalili. Pozimi greje vedno slabše.«
+      par: 9
+    - fault: filter-susilnik
+      place: Hiša v Ptuju
+      customer: Gospod Stane
+      call: »Lani so menjali kompresor. Od takrat greje slabo, prejšnji serviser pravi, da hladiva ne manjka.«
+      par: 24

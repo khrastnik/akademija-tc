@@ -226,7 +226,7 @@ export function loadWidgets() {
 
 const simSchema = {
   parts: z.array(
-    z.object({ id, name: z.string(), en: z.string(), where: z.string(), what: z.string().min(20), analogy: z.string(), faults: z.array(z.string()), step: z.number().int().min(1).max(4).optional() }),
+    z.object({ id, group: z.enum(['hladivo', 'voda', 'krmiljenje']), name: z.string(), en: z.string(), where: z.string(), what: z.string().min(20), analogy: z.string(), faults: z.array(z.string()), step: z.number().int().min(1).max(4).optional() }),
   ),
   faults: z.array(z.object({ id, name: z.string(), pattern: z.string(), why: z.string().min(20), fix: z.string(), verify: z.string() })),
   days: z.array(

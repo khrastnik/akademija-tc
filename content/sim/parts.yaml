@@ -1,6 +1,7 @@
 # Deli toplotne črpalke v 3D simulatorju. `id` se ujema z deli v 3D sceni.
 # Besedila so kratka: ena ideja, nato analogija in tipične napake.
 - id: uparjalnik
+  group: hladivo
   name: Uparjalnik
   en: evaporator
   where: Zunanja enota, lamele zadaj
@@ -9,6 +10,7 @@
   faults: [Listje ali umazanija na lamelah, Led, ki se ne odtali, Zvite lamele]
   step: 1
 - id: ventilator
+  group: hladivo
   name: Ventilator
   en: fan
   where: Zunanja enota, spredaj
@@ -16,6 +18,7 @@
   analogy: Kot pihanje v žerjavico – brez pretoka zraka ni moči.
   faults: [Ovira pred enoto, Okvarjen motor, Zaledenele lopatice]
 - id: kompresor
+  group: hladivo
   name: Kompresor
   en: compressor
   where: Zunanja enota, spodaj
@@ -24,6 +27,7 @@
   faults: [Pregreva se zaradi premalo hladiva, Preobremenjen pri premajhnem pretoku vode, Električne napake (samo za usposobljene)]
   step: 2
 - id: kondenzator
+  group: hladivo
   name: Kondenzator (ploščni prenosnik)
   en: condenser
   where: Notranja enota
@@ -32,6 +36,7 @@
   faults: [Premajhen pretok vode, Zamašen prenosnik, Zrak v vodnem krogu]
   step: 3
 - id: eev
+  group: hladivo
   name: Ekspanzijski ventil (EEV)
   en: electronic expansion valve
   where: Med kondenzatorjem in uparjalnikom
@@ -40,6 +45,7 @@
   faults: [Zatikanje ali zamašitev, Okvarjena tuljava ali senzor, ki ga vodi]
   step: 4
 - id: obtocna
+  group: voda
   name: Obtočna črpalka
   en: circulation pump
   where: Notranja enota, vodni krog
@@ -47,6 +53,7 @@
   analogy: Kot srce v ogrevalnem krogu.
   faults: [Zrak v črpalki, Prenizka hitrost, Blokirana gred]
 - id: filter
+  group: voda
   name: Filter (lovilec nečistoč)
   en: strainer
   where: Povratni vod pred notranjo enoto
@@ -54,6 +61,7 @@
   analogy: Kot sito v pomivalnem koritu – koristno, dokler ga ne zamaši.
   faults: [Zamašena mrežica]
 - id: raztezna
+  group: voda
   name: Raztezna posoda in manometer
   en: expansion vessel and gauge
   where: Vodni krog
@@ -61,6 +69,7 @@
   analogy: Kot zračni blazinici, ki ublaži sunke.
   faults: [Prenizek tlak vode, Izpraznjena posoda]
 - id: radiator
+  group: voda
   name: Radiatorji ali talno ogrevanje
   en: emitters
   where: V prostorih
@@ -68,9 +77,90 @@
   analogy: Kot grelna blazina – večja površina zadošča tudi za nižjo temperaturo.
   faults: [Zrak v radiatorju, Zaprti termostatski ventili]
 - id: krmilnik
+  group: krmiljenje
   name: Krmilnik in zaslon
   en: controller
   where: Notranja enota
   what: Meri temperature in tlake ter odloča, kako hitro teče kompresor in kdaj se odtaja. Koda napake pove, kaj je zaznal – ne zakaj.
   analogy: Kot armaturna plošča v avtu – lučka sveti, vzrok moraš poiskati sam.
   faults: [Napačna nastavitev, Senzor, ki laže]
+- id: stiripotni
+  group: hladivo
+  name: 4-potni ventil
+  en: reversing valve
+  where: Zunanja enota, takoj za kompresorjem
+  what: Obrne smer toka hladiva. Pri odtajevanju pošlje vroč plin v zunanje lamele, da stopi led. Pri hlajenju poleti zamenja vlogi obeh prenosnikov.
+  analogy: Kot kretnica na železnici – vlak (hladivo) ostane isti, spremeni se le smer.
+  faults: [Ne preklopi – odtajevanje ne steče, Obtiči na pol poti, Okvarjena tuljava]
+- id: susilnik
+  group: hladivo
+  name: Filter sušilnik
+  en: filter drier
+  where: Tekočinski vod pred ekspanzijskim ventilom
+  what: Ujame vlago in delce v hladivu, da ne zamašijo ventila in ne poškodujejo kompresorja.
+  analogy: Kot filter za vodo v kuhinji – ko se zamaši, za njim komaj kaj priteče.
+  faults: [Zamašen – za njim pade tlak in temperatura, Nasičen z vlago po nepravilnem posegu]
+- id: locevalnik
+  group: hladivo
+  name: Ločevalnik kapljevine
+  en: suction accumulator
+  where: Sesalni vod tik pred kompresorjem
+  what: Ujame kapljice tekočega hladiva, da v kompresor pride samo para. Tekočina bi kompresor poškodovala.
+  analogy: Kot lovilec kapljic pri sesalniku za mokro čiščenje.
+  faults: [Preveč tekočine po odtajevanju, Zamrznjen zunaj ob premalem pregrevanju]
+- id: servisni
+  group: hladivo
+  name: Servisni priključki
+  en: service ports
+  where: Na sesalnem in tekočinskem vodu
+  what: Ventilčki s kapico, na katere serviser priklopi manometre. Vsak priklop pomeni malo izgube hladiva in tveganje za puščanje.
+  analogy: Kot ventil na kolesarski zračnici – priročen, a ga ne odpiraš brez razloga.
+  faults: [Puščanje pod kapico, Manjkajoča kapica]
+- id: tripotni
+  group: voda
+  name: 3-potni preklopni ventil
+  en: diverter valve
+  where: Dvižni vod za notranjo enoto
+  what: Preklaplja toplo vodo med radiatorji in tuljavo bojlerja za sanitarno vodo. Hkrati gre lahko le v eno smer.
+  analogy: Kot pipa s preklopom med tušem in kopalno kadjo.
+  faults: [Obtiči v enem položaju, Okvarjen motor, Pušča – oboje se greje hkrati]
+- id: bojler
+  group: voda
+  name: Bojler za sanitarno vodo
+  en: domestic hot water tank
+  where: Ob notranji enoti
+  what: Hranilnik vode za tuš in pipe. V njem je tuljava, po kateri teče topla voda iz toplotne črpalke.
+  analogy: Kot termovka – ogreješ jo enkrat, toplo vodo točiš kasneje.
+  faults: [Vodni kamen na tuljavi, Senzor bojlerja na napačnem mestu, Obtičan 3-potni ventil]
+- id: pretok
+  group: voda
+  name: Merilnik pretoka
+  en: flow sensor
+  where: Vodni krog za obtočno črpalko
+  what: Krmilniku pove, koliko vode teče. Če je pretok premajhen, krmilnik ustavi kompresor in javi napako pretoka.
+  analogy: Kot števec na vodovodu – pove, ali sploh kaj teče.
+  faults: [Premajhen pretok – zamašen filter ali zrak, Okvarjen senzor]
+- id: varnostni
+  group: voda
+  name: Varnostni ventil in odzračevalnik
+  en: safety valve and air vent
+  where: Vrh vodnega kroga v notranji enoti
+  what: Varnostni ventil izpusti vodo, če tlak zraste previsoko. Odzračevalnik sam izpusti zrak, ki se nabere na vrhu.
+  analogy: Kot ventil na ekonom loncu in luknjica na pokrovu.
+  faults: [Varnostni ventil kaplja – raztezna posoda prazna, Zamašen odzračevalnik]
+- id: dogrevalnik
+  group: voda
+  name: Električni dogrevalnik
+  en: backup heater
+  where: Notranja enota, vodni krog
+  what: Električni grelec, ki pomaga v hudem mrazu ali med odtajevanjem. Greje neposredno z elektriko, zato je drag.
+  analogy: Kot rezervni grelec v avtu – priročen, a porabi veliko.
+  faults: [Vklopljen predolgo – visok račun za elektriko, Pregorel grelec]
+- id: zunanji-senzor
+  group: krmiljenje
+  name: Zunanji senzor temperature
+  en: outdoor sensor
+  where: Severna stena hiše
+  what: Meri zunanjo temperaturo. Po njej krmilnik po ogrevalni krivulji izbere temperaturo vode.
+  analogy: Kot pogled skozi okno, preden izbereš jakno.
+  faults: [Na soncu – kaže preveč, krmilnik premalo greje, Prekinjen kabel]

@@ -507,3 +507,36 @@
     min-height: 280px;
   }
 }
+.seg3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+.seg3 button {
+  flex: 1 1 auto;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.seg3 button.on {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.seg3.groups {
+  margin-bottom: 8px;
+}
+.mode-text {
+  margin: 8px 0 0;
+  font-size: 0.95rem;
+}
