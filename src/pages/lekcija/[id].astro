@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import Quiz from '../../components/Quiz.tsx';
 import SortGame from '../../components/SortGame.tsx';
-import ShareButton from '../../components/ShareButton.astro';
 import { loadLessons, loadModules, loadGlossary, loadQuizzes, loadWidgets, CARD_TYPES, lessonNumber } from '../../lib/content.js';
 import { renderCard } from '../../lib/render.js';
 import { url } from '../../lib/site.js';
@@ -23,7 +22,6 @@ const widgets = new Map(loadWidgets().map((w) => [w.id, w]));
 const titleOf = (type: string) => CARD_TYPES.find((c) => c.type === type)?.title ?? type;
 const cards = lesson.cards.map((c: any) => ({ ...c, title: titleOf(c.type), html: c.md ? renderCard(c.md, termMap) : '' }));
 const total = cards.length;
-const lessonUrl = new URL(url(`lekcija/${lesson.id}/`), Astro.site).href;
 ---
 <Base title={`${lessonNumber(lesson.id)} ${lesson.title}`} source={lesson.file} updated={lesson.updated} current="pot">
   <nav class="crumbs" aria-label="Drobtine">
@@ -71,8 +69,6 @@ const lessonUrl = new URL(url(`lekcija/${lesson.id}/`), Astro.site).href;
       {nextLesson ? <a class="btn" href={url(`lekcija/${nextLesson.id}/`)}>Naslednja lekcija →</a> : <a class="btn" href={url(`modul/${mod.id}/`)}>Nazaj na modul</a>}
       <a class="btn secondary" href={url('pot')}>Na pot</a>
     </p>
-    <p class="share-line">Poznaš koga, ki ga to zanima? Pošlji lekcijo naprej:</p>
-    <ShareButton shareUrl={lessonUrl} text={`Lekcija »${lesson.title}« iz brezplačne Akademije toplotnih črpalk – poskusi še ti, traja ${lesson.minutes} min:`} label="Deli lekcijo" />
   </aside>
 </Base>
 
@@ -224,9 +220,6 @@ const lessonUrl = new URL(url(`lekcija/${lesson.id}/`), Astro.site).href;
   .controls {
     flex-wrap: wrap;
     padding-bottom: max(12px, env(safe-area-inset-bottom));
-  }
-  .share-line {
-    margin: 20px 0 8px;
   }
   /* Na telefonu: manj notranjega roba in kviz brez okvirja v okvirju. */
   @media (max-width: 520px) {

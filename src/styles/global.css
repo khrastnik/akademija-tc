@@ -219,23 +219,6 @@ main {
     padding-top: 16px;
   }
 }
-.footer-share {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 16px;
-  padding: 16px;
-  margin-bottom: 16px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: var(--ink);
-  font-size: 1rem;
-}
-.footer-share p {
-  margin: 0;
-}
 .site-footer {
   border-top: 1px solid var(--line);
   padding: 24px 0 40px;
