@@ -47,9 +47,10 @@ self.addEventListener('activate', (event) => {
       await Promise.all(old.map((k) => caches.delete(k)));
       await self.clients.claim();
       // Nova različica namesto stare: odprte zavihke enkrat osveži, da nihče ne obtiči na stari strani.
+      // Osvežitev SAMO sprožimo, ne čakamo nanjo: čaka namreč na konec aktivacije (sicer zastoj).
       if (old.length) {
         const tabs = await self.clients.matchAll({ type: 'window' });
-        await Promise.all(tabs.map((t) => t.navigate(t.url).catch(() => {})));
+        for (const t of tabs) t.navigate(t.url).catch(() => {});
       }
     })(),
   );
