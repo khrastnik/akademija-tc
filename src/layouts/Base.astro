@@ -115,17 +115,6 @@ const nav = [
         // Service worker: stran deluje brez povezave in se ob ponovnem obisku naloži iz predpomnilnika.
         if ('serviceWorker' in navigator) {
           addEventListener('load', () => navigator.serviceWorker.register(swUrl, { scope }).catch(() => {}));
-          // Nova objava: stran je prišla iz predpomnilnika, novejša različica je pravkar prevzela.
-          const hadController = !!navigator.serviceWorker.controller;
-          navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (!hadController || document.getElementById('nova-razlicica')) return;
-            const bar = document.createElement('div');
-            bar.id = 'nova-razlicica';
-            bar.setAttribute('role', 'status');
-            bar.innerHTML = '<span>Na voljo je nova različica.</span><button type="button">Osveži</button>';
-            bar.querySelector('button').addEventListener('click', () => location.reload());
-            document.body.append(bar);
-          });
         }
       </script>
     )}

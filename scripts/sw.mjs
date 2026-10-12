@@ -42,9 +42,16 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k.startsWith('akademija-tc-') && k !== CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim()),
+    (async () => {
+      const old = (await caches.keys()).filter((k) => k.startsWith('akademija-tc-') && k !== CACHE);
+      await Promise.all(old.map((k) => caches.delete(k)));
+      await self.clients.claim();
+      // Nova različica namesto stare: odprte zavihke enkrat osveži, da nihče ne obtiči na stari strani.
+      if (old.length) {
+        const tabs = await self.clients.matchAll({ type: 'window' });
+        await Promise.all(tabs.map((t) => t.navigate(t.url).catch(() => {})));
+      }
+    })(),
   );
 });
 
@@ -59,18 +66,27 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Strani: takoj iz predpomnilnika, v ozadju osveži (stale-while-revalidate).
+  // Strani: najprej omrežje (vedno zadnja različica), predpomnilnik le brez povezave
+  // ali ko omrežje ne odgovori v 4 s (slab signal na terenu).
   event.respondWith(
-    caches.match(req, { ignoreSearch: true }).then((hit) => {
-      const fresh = fetch(req)
-        .then((res) => put(req, res))
-        .catch(() => hit || caches.match(OFFLINE));
-      if (hit) {
-        event.waitUntil(fresh.catch(() => {}));
-        return hit;
+    (async () => {
+      const fresh = fetch(req).then((res) => put(req, res));
+      event.waitUntil(fresh.catch(() => {}));
+      const timeout = new Promise((r) => setTimeout(() => r(null), 4000));
+      try {
+        const res = await Promise.race([fresh, timeout]);
+        if (res) return res;
+      } catch {
+        /* brez povezave */
       }
-      return fresh;
-    }),
+      const hit = await caches.match(req, { ignoreSearch: true });
+      if (hit) return hit;
+      try {
+        return await fresh;
+      } catch {
+        return (await caches.match(OFFLINE)) || Response.error();
+      }
+    })(),
   );
 });
 
