@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Quiz from '../../components/Quiz.tsx';
 import SortGame from '../../components/SortGame.tsx';
+import ShareButton from '../../components/ShareButton.astro';
 import { loadLessons, loadModules, loadGlossary, loadQuizzes, loadWidgets, CARD_TYPES, lessonNumber } from '../../lib/content.js';
 import { renderCard } from '../../lib/render.js';
 import { url } from '../../lib/site.js';
@@ -22,6 +23,7 @@ const widgets = new Map(loadWidgets().map((w) => [w.id, w]));
 const titleOf = (type: string) => CARD_TYPES.find((c) => c.type === type)?.title ?? type;
 const cards = lesson.cards.map((c: any) => ({ ...c, title: titleOf(c.type), html: c.md ? renderCard(c.md, termMap) : '' }));
 const total = cards.length;
+const lessonUrl = new URL(url(`lekcija/${lesson.id}/`), Astro.site).href;
 ---
 <Base title={`${lessonNumber(lesson.id)} ${lesson.title}`} source={lesson.file} updated={lesson.updated} current="pot">
   <nav class="crumbs" aria-label="Drobtine">
@@ -46,10 +48,10 @@ const total = cards.length;
         <h2 id={`h-${c.type}`}>{c.title}</h2>
         {c.html && <div class="prose" set:html={c.html} />}
         {c.type === 'widget' && widgets.get(c.attrs.id) && (
-          <SortGame client:idle widgetId={c.attrs.id} groups={widgets.get(c.attrs.id)!.groups} items={widgets.get(c.attrs.id)!.items} />
+          <SortGame client:visible widgetId={c.attrs.id} groups={widgets.get(c.attrs.id)!.groups} items={widgets.get(c.attrs.id)!.items} />
         )}
         {c.type === 'quiz' && quizzes.get(c.attrs.ref) && (
-          <Quiz client:idle quizId={c.attrs.ref} questions={quizzes.get(c.attrs.ref)!.questions as any} terms={termsLite} lessonBase={url('lekcija/')} />
+          <Quiz client:visible quizId={c.attrs.ref} questions={quizzes.get(c.attrs.ref)!.questions as any} terms={termsLite} lessonBase={url('lekcija/')} />
         )}
       </section>
     ))}
@@ -69,6 +71,8 @@ const total = cards.length;
       {nextLesson ? <a class="btn" href={url(`lekcija/${nextLesson.id}/`)}>Naslednja lekcija →</a> : <a class="btn" href={url(`modul/${mod.id}/`)}>Nazaj na modul</a>}
       <a class="btn secondary" href={url('pot')}>Na pot</a>
     </p>
+    <p class="share-line">Poznaš koga, ki ga to zanima? Pošlji lekcijo naprej:</p>
+    <ShareButton shareUrl={lessonUrl} text={`Lekcija »${lesson.title}« iz brezplačne Akademije toplotnih črpalk – poskusi še ti, traja ${lesson.minutes} min:`} label="Deli lekcijo" />
   </aside>
 </Base>
 
@@ -218,6 +222,33 @@ const total = cards.length;
   }
   .controls {
     flex-wrap: wrap;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+  .share-line {
+    margin: 20px 0 8px;
+  }
+  /* Na telefonu: manj notranjega roba in kviz brez okvirja v okvirju. */
+  @media (max-width: 520px) {
+    .lcard {
+      padding: 18px 16px;
+      min-height: 0;
+    }
+    .lcard h2 {
+      font-size: 1.3rem;
+    }
+    .lcard :global(.q) {
+      border: 0;
+      border-top: 1px solid var(--line);
+      border-radius: 0;
+      padding: 14px 0 0;
+      background: transparent;
+    }
+    .lcard :global(.q legend) {
+      padding: 0 6px 0 0;
+    }
+    .controls .btn {
+      padding: 0 16px;
+    }
   }
   .lock-msg {
     order: 3;

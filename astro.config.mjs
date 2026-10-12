@@ -8,4 +8,8 @@ export default defineConfig({
   base: '/akademija-tc',
   trailingSlash: 'ignore',
   integrations: [preact()],
+  build: {
+    // CSS je majhen (~6 kB): vgrajen v HTML prihrani en krog po omrežju pred prvim izrisom.
+    inlineStylesheets: 'always',
+  },
 });

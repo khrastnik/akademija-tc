@@ -191,6 +191,12 @@ li {
   font-weight: 600;
 }
 @media (max-width: 640px) {
+  /* Na telefonu glava ni lepljiva: dve vrstici menija bi pojedli četrtino zaslona lekcije. */
+  .site-header {
+    position: static;
+    backdrop-filter: none;
+    background: var(--bg);
+  }
   .site-header .wrap {
     flex-wrap: wrap;
     gap: 0;
@@ -200,10 +206,35 @@ li {
     margin-left: -10px;
     width: calc(100% + 20px);
   }
+  html {
+    scroll-padding-top: 12px;
+  }
 }
 
 main {
   padding: 28px 0 48px;
+}
+@media (max-width: 640px) {
+  main {
+    padding-top: 16px;
+  }
+}
+.footer-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 1rem;
+}
+.footer-share p {
+  margin: 0;
 }
 .site-footer {
   border-top: 1px solid var(--line);
@@ -386,9 +417,15 @@ main {
   background: var(--ok-bg);
   color: var(--ok);
 }
+/* Zaklenjeni in »v pripravi« moduli: umirjeni, a z berljivim kontrastom (brez opacity). */
 .mod[data-state='locked'],
 .mod[data-state='soon'] {
-  opacity: 0.62;
+  background: transparent;
+  border-style: dashed;
+}
+.mod[data-state='locked'] h3,
+.mod[data-state='soon'] h3 {
+  color: var(--ink-2);
 }
 .mod h3 {
   margin: 0;

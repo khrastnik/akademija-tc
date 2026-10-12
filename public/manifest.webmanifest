@@ -1,0 +1,16 @@
+{
+  "name": "Akademija toplotnih črpalk",
+  "short_name": "Akademija TČ",
+  "description": "Brezplačna pot od nič do serviserja in diagnostika toplotnih črpalk.",
+  "lang": "sl",
+  "start_url": "/akademija-tc/",
+  "scope": "/akademija-tc/",
+  "display": "standalone",
+  "background_color": "#f7f3ec",
+  "theme_color": "#a4502a",
+  "icons": [
+    { "src": "/akademija-tc/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/akademija-tc/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/akademija-tc/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

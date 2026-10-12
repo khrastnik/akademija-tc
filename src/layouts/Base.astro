@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ShareButton from '../components/ShareButton.astro';
 import { SITE, url, sourceUrl, issueUrl } from '../lib/site.js';
 
 interface Props {
@@ -10,13 +11,16 @@ interface Props {
   updated?: string;
   current?: 'pot' | 'orodja' | 'slovar' | 'ponovitev' | 'izpit';
 }
-const { title, description = 'Brezplačna, odprta spletna pot od nič do serviserja in diagnostika toplotnih črpalk zrak–voda.', source = 'src/pages', updated, current } = Astro.props;
+const { title, description = 'Brezplačna, odprta spletna pot od nič do serviserja in diagnostika toplotnih črpalk zrak–voda. Kratke lekcije s kvizi, na telefonu.', source = 'src/pages', updated, current } = Astro.props;
 const pageTitle = title === SITE.name ? title : `${title} · ${SITE.short}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const homeUrl = new URL(url(''), Astro.site).href;
+const ogImage = new URL(url('og.png'), Astro.site).href;
 const nav = [
   { id: 'pot', href: url('pot'), label: 'Pot' },
   { id: 'orodja', href: url('orodja'), label: 'Orodja' },
   { id: 'slovar', href: url('slovar'), label: 'Slovar' },
-  { id: 'ponovitev', href: url('ponovitev'), label: 'Za ponovitev' },
+  { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev' },
   { id: 'izpit', href: url('izpit'), label: 'Izpit' },
 ];
 ---
@@ -24,11 +28,28 @@ const nav = [
 <html lang="sl">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#a4502a" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#171411" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('icon-192.png')} />
+    <link rel="manifest" href={url('manifest.webmanifest')} />
+
+    <!-- Predogled povezave pri deljenju (Viber, WhatsApp, Messenger, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="sl_SI" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Akademija toplotnih črpalk – od nič do serviserja" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <a class="skip" href="#vsebina">Preskoči na vsebino</a>
@@ -45,6 +66,10 @@ const nav = [
     </main>
     <footer class="site-footer">
       <div class="wrap">
+        <div class="footer-share">
+          <p><strong>Poznaš koga, ki ga to zanima?</strong> Akademija je brezplačna za vse.</p>
+          <ShareButton shareUrl={homeUrl} />
+        </div>
         <p><strong>Ta stran uči razumevanje in diagnostično razmišljanje.</strong> Ne nadomešča uradnega usposabljanja ne spričevala, ki ga zakonodaja zahteva za delo s hladivi. Navodila proizvajalca vedno prevladajo.</p>
         <p class="links">
           {updated && <span>Zadnja sprememba: {updated}</span>}
@@ -55,5 +80,13 @@ const nav = [
         <p>Koda MIT · vsebina CC BY-NC-SA 4.0 · brez piškotkov, sledenja in analitike.</p>
       </div>
     </footer>
+    {import.meta.env.PROD && (
+      <script is:inline define:vars={{ swUrl: url('sw.js'), scope: url('') }}>
+        // Service worker: stran deluje brez povezave in se ob ponovnem obisku naloži iz predpomnilnika.
+        if ('serviceWorker' in navigator) {
+          addEventListener('load', () => navigator.serviceWorker.register(swUrl, { scope }).catch(() => {}));
+        }
+      </script>
+    )}
   </body>
 </html>
