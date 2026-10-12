@@ -5,10 +5,18 @@ export const SITE = {
   branch: 'main',
 };
 
-/** Pot znotraj strani, z upoštevanjem `base` (GitHub Pages podmapa). */
+/**
+ * Pot znotraj strani, z upoštevanjem `base` (GitHub Pages podmapa).
+ * Strani dobijo končno poševnico: brez nje GitHub Pages vrne 301 (en krog po omrežju več),
+ * service worker pa strani hrani pod »/pot/«, zato bi »/pot« brez povezave odpovedal.
+ */
 export function url(p = '') {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-  return `${base}/${p.replace(/^\//, '')}`;
+  let path = p.replace(/^\//, '');
+  const [pathname, rest = ''] = path.split(/(?=[#?])/);
+  const isFile = /\.[a-z0-9]+$/i.test(pathname);
+  const withSlash = pathname && !isFile && !pathname.endsWith('/') ? `${pathname}/` : pathname;
+  return `${base}/${withSlash}${rest}`;
 }
 
 export const sourceUrl = (file) => `${SITE.repo}/blob/${SITE.branch}/${file}`;

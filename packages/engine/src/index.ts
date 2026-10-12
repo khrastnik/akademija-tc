@@ -59,3 +59,4 @@ export function scoreSort<G extends string>(answers: Record<string, G | undefine
   const wrong = ids.filter((id) => answers[id] !== key[id]);
   return { correct: ids.length - wrong.length, total: ids.length, wrong, done: wrong.length === 0 };
 }
+export * from './sim';

@@ -107,7 +107,8 @@ const lessonUrl = new URL(url(`lekcija/${lesson.id}/`), Astro.site).href;
     const locked = !!lock && !unlocked.has(lock);
     next.disabled = locked;
     lockMsg.textContent = locked ? (lock === 'quiz' ? 'Odgovori na vsa vprašanja.' : 'Najprej opravi vajo.') : '';
-    history.replaceState(null, '', `#${cards[index].id}`);
+    // Hash samo ob uporabnikovem premiku – ob nalaganju bi Chrome skočil mimo naslova.
+    if (focus) history.replaceState(null, '', `#${cards[index].id}`);
     setCard(lessonId, index);
     if (focus) {
       cards[index].focus({ preventScroll: true });

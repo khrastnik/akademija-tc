@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Simulator from '../components/Simulator.tsx';
+import { loadSim } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const { parts, faults, days } = loadSim();
+---
+<Base
+  title="3D simulator"
+  description="3D model toplotne črpalke zrak–voda: kako deluje, kaj dela vsak del, in igra »Dan na terenu«, kjer z meritvami iščeš napake."
+  current="simulator"
+  source="content/sim"
+  wide
+>
+  <header class="sim-head">
+    <p class="eyebrow">Servisni center</p>
+    <h1>3D simulator toplotne črpalke</h1>
+    <p class="muted">Poglej, kako toplota iz zraka pride v radiatorje – nato se kot serviser loti pravih klicev strank.</p>
+  </header>
+  <Simulator client:only="preact" parts={parts} faults={faults} days={days} lessonUrl={url('lekcija/m00-l01')}>
+    <!-- Okostje iste velikosti, dokler se simulator ne naloži: stran ne poskoči. -->
+    <div slot="fallback" class="sim" aria-busy="true">
+      <div class="sim-tabs"><button disabled>Kako deluje</button><button disabled>Dan na terenu 🛠</button></div>
+      <div class="sim-layout">
+        <div class="stage"><div class="stage-msg">Nalagam 3D model …</div></div>
+        <div class="side"><div class="panel-in"><p class="eyebrow">3D model</p><h2>Kako toplotna črpalka greje</h2><p>Toplota iz zunanjega zraka gre v vodo radiatorjev – tudi pri mrazu.</p></div></div>
+      </div>
+    </div>
+  </Simulator>
+  <p class="notice model-note">Učni model: številke kažejo smer odstopanj (višje, nižje, normalno) in niso podatki proizvajalca. Na terenu vedno veljajo navodila proizvajalca tvoje naprave.</p>
+</Base>
+
+<style>
+  .sim-head {
+    margin-bottom: 14px;
+  }
+  .sim-head h1 {
+    margin-bottom: 4px;
+  }
+  .sim-head p {
+    margin: 0;
+  }
+  .model-note {
+    margin-top: 16px;
+  }
+</style>

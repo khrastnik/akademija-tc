@@ -224,6 +224,32 @@ export function loadWidgets() {
   });
 }
 
+const simSchema = {
+  parts: z.array(
+    z.object({ id, name: z.string(), en: z.string(), where: z.string(), what: z.string().min(20), analogy: z.string(), faults: z.array(z.string()), step: z.number().int().min(1).max(4).optional() }),
+  ),
+  faults: z.array(z.object({ id, name: z.string(), pattern: z.string(), why: z.string().min(20), fix: z.string(), verify: z.string() })),
+  days: z.array(
+    z.object({
+      id,
+      title: z.string(),
+      intro: z.string(),
+      calls: z.array(z.object({ fault: id, place: z.string(), customer: z.string(), call: z.string(), par: z.number().int().positive() })).min(1),
+    }),
+  ),
+};
+
+/** Vsebina 3D simulatorja: deli, diagnoze in dnevi na terenu. */
+export function loadSim() {
+  const out = {};
+  for (const [key, schema] of Object.entries(simSchema)) {
+    const parsed = schema.safeParse(parseYaml(read('content', 'sim', `${key}.yaml`)));
+    if (!parsed.success) throw new Error(`content/sim/${key}.yaml: ${formatZod(parsed.error)}`);
+    out[key] = parsed.data;
+  }
+  return /** @type {{parts: any[], faults: any[], days: any[]}} */ (out);
+}
+
 export function loadRefrigerants() {
   return refrigerantsSchema.parse(JSON.parse(read('data', 'refrigerants.json'))).refrigerants;
 }
@@ -258,6 +284,10 @@ export function validateContent() {
   const lessons = tryLoad(loadLessons, []);
   const widgets = tryLoad(loadWidgets, []);
   tryLoad(loadRefrigerants, []);
+  const sim = tryLoad(loadSim, { parts: [], faults: [], days: [] });
+  const simFaults = new Set(sim.faults.map((f) => f.id));
+  for (const d of sim.days)
+    for (const c of d.calls) if (!simFaults.has(c.fault)) errors.push(`content/sim/days.yaml ${d.id}: napaka "${c.fault}" ni v faults.yaml`);
   const widgetIds = new Set(widgets.map((w) => w.id));
   for (const w of widgets)
     for (const it of w.items)

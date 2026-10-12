@@ -20,11 +20,19 @@ const first = lessons[0];
     <p class="progress-line muted" data-progress hidden></p>
   </section>
 
+  <a class="sim-teaser" href={url('simulator')}>
+    <span class="sim-badge">NOVO · 3D</span>
+    <strong>Simulator in igra »Dan na terenu«</strong>
+    <span>Zavrti 3D model črpalke, poglej, kako teče hladivo, nato kot serviser z meritvami poišči napako. Zberi tri zvezdice.</span>
+    <span class="go">Odpri simulator →</span>
+  </a>
+
   <section class="paths">
     <article class="panel">
       <p class="eyebrow">Pot za lastnike</p>
       <h2>Razumem svojo črpalko</h2>
       <p>Moduli 0–2: kako črpalka deluje, najpogostejši simptomi in kdaj poklicati serviserja.</p>
+      <a href={url('modul/m00')}>Začni z modulom 0 →</a>
     </article>
     <article class="panel">
       <p class="eyebrow">Glavna pot</p>
@@ -80,6 +88,33 @@ const first = lessons[0];
     min-height: 56px;
     padding: 0 26px;
     font-size: 1.1rem;
+  }
+  .sim-teaser {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+    padding: 20px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, #2f7fd1 0%, #1f5fa3 45%, #a4502a 100%);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+  }
+  .sim-teaser strong {
+    font-size: 1.3rem;
+  }
+  .sim-teaser .go {
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .sim-badge {
+    justify-self: start;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgb(255 255 255 / 0.2);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
   }
   .paths {
     display: grid;

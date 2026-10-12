@@ -1,0 +1,49 @@
+# Diagnoze v igri. `id` se ujema z napakami v packages/engine/src/sim.ts.
+- id: nastavitev
+  name: Napačna nastavitev
+  pattern: Hladilni krog dela normalno, voda pa je prehladna. Zaslon pokaže nizko želeno temperaturo.
+  why: Krmilnik dela točno to, kar mu je naročeno. Ogrevalna krivulja je zamaknjena navzdol, zato voda ni dovolj topla za radiatorje.
+  fix: Popravi ogrevalno krivuljo ali želeno temperaturo po navodilih proizvajalca.
+  verify: Po eni uri je dvižni vod toplejši in radiatorji topli.
+- id: ovira-zraka
+  name: Ovira zraka na uparjalniku
+  pattern: Nizka temperatura uparjanja, pregrevanje ni visoko. Na zunanji enoti listje ali led.
+  why: Skozi lamele gre premalo zraka, zato hladivo dobi premalo toplote in uparja pri prenizki temperaturi.
+  fix: Očisti lamele in prostor okoli enote. Preveri odtok kondenzata, da se led ne nabira.
+  verify: Temperatura uparjanja se dvigne, led se po odtajevanju ne vrača.
+- id: filter
+  name: Zamašen filter vode
+  pattern: Velika razlika temperatur vode, visoka temperatura kondenzacije, občasno »visok tlak«. Hladivo je v redu.
+  why: Voda teče prepočasi, zato iz kondenzatorja odnese premalo toplote. Tlak na visoki strani raste, dokler krmilnik ne ustavi kompresorja.
+  fix: Zapri ventila, očisti mrežico filtra, odzrači in dopolni vodo do pravega tlaka.
+  verify: ΔT vode pade v normalno območje, koda »visok tlak« se ne ponovi.
+- id: premalo-hladiva
+  name: Premalo hladiva (puščanje)
+  pattern: Nizka temperatura uparjanja, visoko pregrevanje, nizko podhlajevanje, vroč tlačni vod.
+  why: V krogu je premalo hladiva. Uparjalnik je »lačen«, para se predolgo segreva (visok SH), v kondenzatorju pa ni tekočine za podhlajevanje (nizek SC).
+  fix: Najprej poišči in popravi puščanje (madež olja je dober namig). Polni samo serviser s spričevalom, po teži, po navodilih proizvajalca.
+  verify: SH in SC sta po popravilu in polnjenju v normalnem območju, tesnost je preverjena.
+- id: prevec-hladiva
+  name: Preveč hladiva
+  pattern: Visoka temperatura kondenzacije in visoko podhlajevanje, pregrevanje normalno, kompresor vleče več toka.
+  why: Odvečna tekočina se nabira v kondenzatorju in zavzame prostor, kjer bi se morala para utekočiniti. Tlak na visoki strani zato zraste.
+  fix: Odvečno hladivo odvzame serviser s spričevalom, nato napolni pravo količino po teži.
+  verify: SC in temperatura kondenzacije v normalnem območju.
+- id: zrak-v-vodi
+  name: Zrak v vodi / prenizek tlak vode
+  pattern: Nizek tlak vode na manometru, šumenje v ceveh, koda za pretok.
+  why: Premalo vode v krogu pomeni zrak v ceveh in črpalki. Pretok niha, kondenzator ne odda toplote.
+  fix: Poišči, kam voda izgine, dopolni do pravega tlaka in odzrači sistem.
+  verify: Tlak vode stabilen, šumenje izgine, ΔT vode normalna.
+- id: eev
+  name: Zatikajoč ekspanzijski ventil
+  pattern: Visoko pregrevanje kot pri premalo hladiva – a podhlajevanje je VISOKO.
+  why: Ventil prepusti premalo hladiva. Uparjalnik je lačen (visok SH), hladivo pa se nabira pred ventilom v kondenzatorju (visok SC). Hladiva je dovolj – le ne pride skozi.
+  fix: Preveri tuljavo in senzorje, ki vodijo ventil. Zamenjava ventila je delo serviserja s spričevalom.
+  verify: SH in SC v normalnem območju pri stabilnem delovanju.
+- id: senzor
+  name: Senzor, ki laže
+  pattern: Meritve na ceveh so normalne, krmilnik pa kaže drugačno temperaturo od termometra.
+  why: Krmilnik verjame senzorju. Če senzor povratne vode kaže preveč, krmilnik misli, da je hiša topla, in zmanjša moč.
+  fix: Preveri namestitev senzorja (toplotna pasta, izolacija) in njegovo upornost po tabeli proizvajalca. Okvarjenega zamenjaj.
+  verify: Vrednost na zaslonu se ujema s termometrom na cevi.

@@ -1,0 +1,76 @@
+# Deli toplotne črpalke v 3D simulatorju. `id` se ujema z deli v 3D sceni.
+# Besedila so kratka: ena ideja, nato analogija in tipične napake.
+- id: uparjalnik
+  name: Uparjalnik
+  en: evaporator
+  where: Zunanja enota, lamele zadaj
+  what: Hladivo v ceveh je hladnejše od zunanjega zraka, zato iz zraka vzame toploto in pri tem zavre – iz tekočine postane para.
+  analogy: Kot mokra roka na vetru – voda izhlapeva in roko hladi. Tu hladivo »izhlapeva« in s tem pobira toploto iz zraka.
+  faults: [Listje ali umazanija na lamelah, Led, ki se ne odtali, Zvite lamele]
+  step: 1
+- id: ventilator
+  name: Ventilator
+  en: fan
+  where: Zunanja enota, spredaj
+  what: Čez lamele uparjalnika potiska zunanji zrak. Več zraka pomeni več toplote za hladivo.
+  analogy: Kot pihanje v žerjavico – brez pretoka zraka ni moči.
+  faults: [Ovira pred enoto, Okvarjen motor, Zaledenele lopatice]
+- id: kompresor
+  name: Kompresor
+  en: compressor
+  where: Zunanja enota, spodaj
+  what: Posrka paro hladiva in jo stisne. Ko se tlak dvigne, se para močno segreje – zdaj je toplejša od vode v radiatorjih.
+  analogy: Kot tlačilka za kolo – ko stiskaš zrak, se tlačilka segreje.
+  faults: [Pregreva se zaradi premalo hladiva, Preobremenjen pri premajhnem pretoku vode, Električne napake (samo za usposobljene)]
+  step: 2
+- id: kondenzator
+  name: Kondenzator (ploščni prenosnik)
+  en: condenser
+  where: Notranja enota
+  what: Vroča para hladiva odda toploto vodi ogrevalnega kroga in se pri tem utekočini. Tu toplota pride v hišo.
+  analogy: Kot rosenje na hladnem kozarcu – para odda toploto in postane tekočina.
+  faults: [Premajhen pretok vode, Zamašen prenosnik, Zrak v vodnem krogu]
+  step: 3
+- id: eev
+  name: Ekspanzijski ventil (EEV)
+  en: electronic expansion valve
+  where: Med kondenzatorjem in uparjalnikom
+  what: Hladivu skozi ozko odprtino zniža tlak. S tlakom pade tudi temperatura – hladivo je spet dovolj hladno, da v uparjalniku vzame toploto iz zraka.
+  analogy: Kot pršilo za lase – ko plin pride skozi šobo, je pločevinka mrzla.
+  faults: [Zatikanje ali zamašitev, Okvarjena tuljava ali senzor, ki ga vodi]
+  step: 4
+- id: obtocna
+  name: Obtočna črpalka
+  en: circulation pump
+  where: Notranja enota, vodni krog
+  what: Poganja vodo skozi kondenzator do radiatorjev in nazaj.
+  analogy: Kot srce v ogrevalnem krogu.
+  faults: [Zrak v črpalki, Prenizka hitrost, Blokirana gred]
+- id: filter
+  name: Filter (lovilec nečistoč)
+  en: strainer
+  where: Povratni vod pred notranjo enoto
+  what: Ujame rjo in blato, preden pridejo v ploščni prenosnik. Ko se zamaši, pade pretok vode.
+  analogy: Kot sito v pomivalnem koritu – koristno, dokler ga ne zamaši.
+  faults: [Zamašena mrežica]
+- id: raztezna
+  name: Raztezna posoda in manometer
+  en: expansion vessel and gauge
+  where: Vodni krog
+  what: Voda se ob segrevanju razteza; posoda to sprejme. Manometer pokaže, ali je v krogu dovolj vode.
+  analogy: Kot zračni blazinici, ki ublaži sunke.
+  faults: [Prenizek tlak vode, Izpraznjena posoda]
+- id: radiator
+  name: Radiatorji ali talno ogrevanje
+  en: emitters
+  where: V prostorih
+  what: Oddajajo toploto vode v prostor. Nižja kot je potrebna temperatura vode, bolj učinkovita je črpalka.
+  analogy: Kot grelna blazina – večja površina zadošča tudi za nižjo temperaturo.
+  faults: [Zrak v radiatorju, Zaprti termostatski ventili]
+- id: krmilnik
+  name: Krmilnik in zaslon
+  en: controller
+  where: Notranja enota
+  what: Meri temperature in tlake ter odloča, kako hitro teče kompresor in kdaj se odtaja. Koda napake pove, kaj je zaznal – ne zakaj.
+  analogy: Kot armaturna plošča v avtu – lučka sveti, vzrok moraš poiskati sam.
+  faults: [Napačna nastavitev, Senzor, ki laže]

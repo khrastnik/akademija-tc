@@ -1,12 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import { url } from '../lib/site.js';
 ---
-<Base title="Orodja" current="orodja" source="src/pages/orodja.astro">
+<Base title="Orodja" source="src/pages/orodja.astro">
   <p class="eyebrow">Servisni center</p>
   <h1>Orodja</h1>
-  <p class="notice">V pripravi. Orodja se selijo iz obstoječega »Servisnega centra TČ« in pridejo na to stran, ko bodo podatki o hladivih preverjeni z virom.</p>
+  <p class="notice">Ostala orodja so v pripravi. Selijo se iz obstoječega »Servisnega centra TČ« in pridejo na to stran, ko bodo podatki o hladivih preverjeni z virom.</p>
   <ul class="mod-list">
-    <li class="mod" data-state="soon"><span class="num">3D</span><span><h3>3D simulator</h3><p>Merilne točke z živimi vrednostmi in vodeno iskanje napake v osmih korakih.</p></span><span class="pill">Faza 3</span></li>
+    <li><a class="mod" href={url("simulator")}><span class="num">3D</span><span><h3>3D simulator in igra »Dan na terenu«</h3><p>Kako črpalka deluje, opis delov in iskanje napak na terenu.</p></span><span class="pill">Odpri →</span></a></li>
     <li class="mod" data-state="soon"><span class="num">Dx</span><span><h3>Diagnostični program</h3><p>Vnos meritev, izračun veličin, razvrstitev vzorcev, diagnoza s koraki popravila.</p></span><span class="pill">Faza 3</span></li>
     <li class="mod" data-state="soon"><span class="num">?</span><span><h3>Vodnik po simptomih</h3><p>Drevo odločitev od simptoma do vzroka.</p></span><span class="pill">Faza 3</span></li>
     <li class="mod" data-state="soon"><span class="num">E</span><span><h3>Kode napak</h3><p>Daikin, Panasonic, Mitsubishi, Kronoterm, Vaillant/Viessmann.</p></span><span class="pill">Faza 3</span></li>

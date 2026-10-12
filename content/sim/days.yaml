@@ -1,0 +1,58 @@
+# »Dan na terenu«: vsak dan trije klici. `par` = minute meritev, ki jih rabi dober serviser.
+- id: dan-1
+  title: Ponedeljek – prvi dan
+  intro: Začneš lahko. Klici so pogosti in rešljivi brez manometrov.
+  calls:
+    - fault: nastavitev
+      place: Hiša v Domžalah
+      customer: Gospa Mojca
+      call: »Črpalka dela, ampak radiatorji so samo mlačni. Sin je včeraj nekaj nastavljal na zaslonu.«
+      par: 5
+    - fault: ovira-zraka
+      place: Vikend na Gorenjskem
+      customer: Gospod Tone
+      call: »Grelo je slabo že od ponedeljka. Zunaj je enota čisto bela, včasih se iz nje kadi.«
+      par: 8
+    - fault: filter
+      place: Starejša hiša v Celju
+      customer: Družina Kranjc
+      call: »Zjutraj je na zaslonu visok tlak, potem se sama zažene. Ravno smo menjali stare radiatorje.«
+      par: 18
+- id: dan-2
+  title: Torek – več dela
+  intro: Prvi klici, kjer ne gre brez manometrov. Najprej vseeno preveri najlažje.
+  calls:
+    - fault: zrak-v-vodi
+      place: Novogradnja v Kranju
+      customer: Gospod Luka
+      call: »V ceveh nekaj šumi in klokota, na zaslonu je napaka pretoka.«
+      par: 5
+    - fault: premalo-hladiva
+      place: Hiša ob morju, Izola
+      customer: Gospa Ana
+      call: »Lani je grelo super, letos komaj. Elektrike pa porabi enako.«
+      par: 25
+    - fault: senzor
+      place: Pisarna v Ljubljani
+      customer: Gospod Marko
+      call: »Zaslon kaže, da je voda topla, v pisarni pa zebe.«
+      par: 7
+- id: dan-3
+  title: Sreda – mojstrski izziv
+  intro: Napake, ki se lahko pretvarjajo druga v drugo. Primerjaj SH in SC.
+  calls:
+    - fault: prevec-hladiva
+      place: Hiša v Mariboru
+      customer: Gospa Petra
+      call: »Jeseni je bil tu drug serviser in dolil hladivo. Zdaj je črpalka glasnejša in več porabi.«
+      par: 12
+    - fault: eev
+      place: Kmetija pri Novem mestu
+      customer: Gospod Jože
+      call: »Grelo je dobro, potem vedno slabše. Prejšnji teden so rekli, da je hladiva dovolj.«
+      par: 22
+    - fault: filter
+      place: Blok v Velenju
+      customer: Hišnik Branko
+      call: »Toplotna črpalka se ustavlja z visokim tlakom. Po sistemu so ravno menjali cevi.«
+      par: 18

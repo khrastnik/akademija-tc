@@ -9,16 +9,18 @@ interface Props {
   /** Datoteka v repozitoriju, iz katere je stran (za povezavo »Vir«). */
   source?: string;
   updated?: string;
-  current?: 'pot' | 'orodja' | 'slovar' | 'ponovitev' | 'izpit';
+  current?: 'pot' | 'simulator' | 'slovar' | 'ponovitev' | 'izpit';
+  /** Široka postavitev (simulator). */
+  wide?: boolean;
 }
-const { title, description = 'Brezplačna, odprta spletna pot od nič do serviserja in diagnostika toplotnih črpalk zrak–voda. Kratke lekcije s kvizi, na telefonu.', source = 'src/pages', updated, current } = Astro.props;
+const { title, description = 'Brezplačna, odprta spletna pot od nič do serviserja in diagnostika toplotnih črpalk zrak–voda. Kratke lekcije s kvizi, na telefonu.', source = 'src/pages', updated, current, wide = false } = Astro.props;
 const pageTitle = title === SITE.name ? title : `${title} · ${SITE.short}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const homeUrl = new URL(url(''), Astro.site).href;
 const ogImage = new URL(url('og.png'), Astro.site).href;
 const nav = [
   { id: 'pot', href: url('pot'), label: 'Pot' },
-  { id: 'orodja', href: url('orodja'), label: 'Orodja' },
+  { id: 'simulator', href: url('simulator'), label: 'Simulator' },
   { id: 'slovar', href: url('slovar'), label: 'Slovar' },
   { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev' },
   { id: 'izpit', href: url('izpit'), label: 'Izpit' },
@@ -61,7 +63,7 @@ const nav = [
         </nav>
       </div>
     </header>
-    <main id="vsebina" class="wrap">
+    <main id="vsebina" class={wide ? "wrap wide" : "wrap"}>
       <slot />
     </main>
     <footer class="site-footer">
@@ -85,6 +87,17 @@ const nav = [
         // Service worker: stran deluje brez povezave in se ob ponovnem obisku naloži iz predpomnilnika.
         if ('serviceWorker' in navigator) {
           addEventListener('load', () => navigator.serviceWorker.register(swUrl, { scope }).catch(() => {}));
+          // Nova objava: stran je prišla iz predpomnilnika, novejša različica je pravkar prevzela.
+          const hadController = !!navigator.serviceWorker.controller;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!hadController || document.getElementById('nova-razlicica')) return;
+            const bar = document.createElement('div');
+            bar.id = 'nova-razlicica';
+            bar.setAttribute('role', 'status');
+            bar.innerHTML = '<span>Na voljo je nova različica.</span><button type="button">Osveži</button>';
+            bar.querySelector('button').addEventListener('click', () => location.reload());
+            document.body.append(bar);
+          });
         }
       </script>
     )}
