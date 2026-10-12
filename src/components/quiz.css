@@ -1,0 +1,106 @@
+.quiz {
+  display: grid;
+  gap: 18px;
+}
+.q {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 0;
+  background: var(--surface);
+}
+.q legend {
+  font-weight: 700;
+  padding: 0 4px;
+  font-size: 1.05rem;
+}
+.q-num {
+  color: var(--ochre);
+  font-variant-numeric: tabular-nums;
+}
+.understand {
+  margin: 6px 0 12px;
+  font-size: 0.95rem;
+}
+.understand summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+.understand dl {
+  margin: 8px 0;
+}
+.understand dt {
+  font-weight: 700;
+}
+.understand dd {
+  margin: 0 0 6px;
+}
+.options {
+  display: grid;
+  gap: 8px;
+}
+.options.tf {
+  grid-template-columns: 1fr 1fr;
+}
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 10px 14px;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.opt:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.opt:disabled {
+  cursor: default;
+}
+.opt .mark {
+  flex: 0 0 22px;
+  font-weight: 800;
+}
+.opt.right {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+.opt.wrong {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+}
+.opt.other {
+  opacity: 0.7;
+}
+.explain {
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+.explain ul {
+  padding-left: 18px;
+}
+.explain li {
+  margin: 6px 0;
+}
+.verdict {
+  font-weight: 700;
+  margin: 0;
+}
+.verdict.ok {
+  color: var(--ok);
+}
+.verdict.bad {
+  color: var(--bad);
+}
+.score {
+  font-size: 1.05rem;
+}

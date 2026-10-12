@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadLessons, loadModules } from '../lib/content.js';
+import { SITE, url } from '../lib/site.js';
+
+const lessons = loadLessons();
+const modules = loadModules();
+const first = lessons[0];
+---
+<Base title={SITE.name} source="src/pages/index.astro">
+  <section class="hero">
+    <p class="eyebrow">Brezplačno · odprto · na telefonu</p>
+    <h1>Od nič do serviserja toplotnih črpalk</h1>
+    <p class="lead">Kratke kartice, vaje in kvizi, ki razložijo <em>zakaj</em>. Pot vodi od razumevanja, kako črpalka deluje, do samostojnega servisnega obiska.</p>
+    <p>
+      <a class="btn big" href={url(`lekcija/${first.id}/`)} data-continue>Začni prvo lekcijo →</a>
+    </p>
+    <p class="progress-line muted" data-progress hidden></p>
+  </section>
+
+  <section class="paths">
+    <article class="panel">
+      <p class="eyebrow">Pot za lastnike</p>
+      <h2>Razumem svojo črpalko</h2>
+      <p>Moduli 0–2: kako črpalka deluje, najpogostejši simptomi in kdaj poklicati serviserja.</p>
+    </article>
+    <article class="panel">
+      <p class="eyebrow">Glavna pot</p>
+      <h2>Postani serviser</h2>
+      <p>Vseh {modules.length} modulov do profesionalne ravni, s simulacijami in končnim izpitom.</p>
+      <a href={url('pot')}>Poglej celo pot →</a>
+    </article>
+  </section>
+
+  <section class="how">
+    <h2>Kako se učiš</h2>
+    <ol>
+      <li><strong>Ena ideja na kartico</strong> – največ 120 besed, nato »Naprej«.</li>
+      <li><strong>Vedno »zakaj«</strong> – vsak koncept v 3 do 5 korakih od vzroka do posledice.</li>
+      <li><strong>Kvizi, ki učijo</strong> – vsak odgovor ima razlago, napačni se vrnejo v ponovitev.</li>
+      <li><strong>Brez računa</strong> – napredek ostane v tem brskalniku. Izvozi ga lahko kot datoteko.</li>
+    </ol>
+  </section>
+</Base>
+
+<script>
+  import { load } from '../lib/progress';
+  const p = load();
+  const done = Object.values(p.lessons).filter((l) => l.done).length;
+  const btn = document.querySelector<HTMLAnchorElement>('[data-continue]')!;
+  if (p.last) {
+    btn.textContent = 'Nadaljuj, kjer si ostal →';
+    btn.href = btn.href.replace(/lekcija\/[^/]+\/?$/, `lekcija/${p.last}/`);
+  }
+  if (done > 0) {
+    const line = document.querySelector<HTMLElement>('[data-progress]')!;
+    line.textContent = `Opravljenih lekcij: ${done} · ${p.xp} XP`;
+    line.hidden = false;
+  }
+</script>
+
+<style>
+  .hero {
+    padding: 12px 0 28px;
+  }
+  .lead {
+    font-size: 1.15rem;
+    color: var(--ink-2);
+  }
+  .btn.big {
+    min-height: 56px;
+    padding: 0 26px;
+    font-size: 1.1rem;
+  }
+  .paths {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .paths h2 {
+    margin: 0 0 6px;
+  }
+  .paths p {
+    margin: 0 0 8px;
+  }
+  .how {
+    margin-top: 32px;
+  }
+  .how li {
+    margin: 8px 0;
+  }
+</style>

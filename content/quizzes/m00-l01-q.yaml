@@ -1,0 +1,79 @@
+id: m00-l01-q
+lesson: m00-l01
+questions:
+  - id: q1
+    type: single
+    text: Na zaslonu toplotne črpalke piše »visok tlak«. Kaj je to?
+    understand:
+      simpler: Je »visok tlak« tisto, kar se je pokvarilo, ali tisto, kar je krmilnik opazil?
+      terms: [simptom, vzrok]
+      hint: Pomisli na vročino pri zdravniku.
+    options:
+      - id: a
+        text: Simptom, ki ga je zaznal krmilnik
+        correct: true
+        why: Koda pove, kaj je krmilnik zaznal, ne zakaj. Isti »visok tlak« lahko povzroči zamašen filter, premalo pretoka vode ali preveč hladiva.
+      - id: b
+        text: Vzrok, ki ga je treba popraviti
+        why: Vzrok je tisto, kar tlak dvigne. Tlak sam je posledica. Če bi »popravil tlak«, bi skril simptom, napaka pa bi ostala.
+      - id: c
+        text: Diagnoza, ki jo je postavil krmilnik
+        why: Krmilnik nič ne diagnosticira, samo meri in primerja z mejo. Diagnozo postavi serviser, ko z meritvami dokaže vzrok.
+    lessonLink: m00-l01#remember
+
+  - id: q2
+    type: single
+    text: Radiatorji so mlačni. Kaj narediš najprej?
+    understand:
+      simpler: Kateri korak je najhitrejši in najcenejši, pa vseeno lahko najde napako?
+      terms: [simptom]
+      hint: Drugi korak diagnostične verige.
+    options:
+      - id: a
+        text: Preverim termostat in tlak vode na manometru
+        correct: true
+        why: »Najlažje najprej« – voda, zrak, nastavitve. To preveriš v minuti in brez orodja, tam pa je velik del napak.
+      - id: b
+        text: Priključim manometre na krog hladiva
+        why: To je kasnejši korak. Brez preverjanja vode in nastavitev lahko meriš hladivo, napaka pa je v nastavitvi termostata.
+      - id: c
+        text: Dolijem malo hladiva za vsak primer
+        why: Dolivanje brez dokaza je ugibanje. Če hladiva ne manjka, ga je zdaj preveč – in imaš novo napako.
+    lessonLink: m00-l01#field-error
+
+  - id: q3
+    type: single
+    text: Kaj je zadnji korak diagnostične verige?
+    understand:
+      simpler: Ko je del zamenjan, ali je delo končano?
+      terms: [diagnoza]
+      hint: Kako veš, da si res odpravil napako?
+    options:
+      - id: a
+        text: Preverjanje, ali je simptom izginil
+        correct: true
+        why: Šele ko simptom izgine in meritve pokažejo normalno stanje, veš, da si našel pravi vzrok.
+      - id: b
+        text: Popravilo ali zamenjava dela
+        why: Popravilo je šesti korak. Brez preverjanja ne veš, ali si zamenjal pravi del.
+      - id: c
+        text: Zapis kode napake na zaslonu
+        why: Zapis kode spada na začetek, k simptomu. To je prvi korak, ne zadnji.
+    lessonLink: m00-l01#remember
+
+  - id: q4
+    type: truefalse
+    text: Za diagnozo je dovolj ena meritev, če je dovolj natančna.
+    understand:
+      simpler: Ali ena sama številka pove, kateri od več možnih vzrokov je pravi?
+      terms: [meritev, diagnoza]
+      hint: Isti simptom ima lahko več vzrokov.
+    options:
+      - id: da
+        text: DA
+        why: Ena meritev pokaže le smer. Ker ima en simptom več možnih vzrokov, potrebuješ več meritev, ki skupaj tvorijo vzorec.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Vzrok prepoznaš po vzorcu več meritev, ki kažejo isto smer – natančnost ene številke tega ne nadomesti.
+    lessonLink: m00-l01#why

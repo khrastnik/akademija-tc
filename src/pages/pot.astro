@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadLessons, loadModules } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const modules = loadModules();
+const lessons = loadLessons();
+const phases = [...new Set(modules.map((m) => m.phase))];
+const lessonsOf = (id: string) => lessons.filter((l) => l.module === id).map((l) => l.id);
+---
+<Base title="Pot" current="pot" source="content/modules/modules.yaml">
+  <p class="eyebrow">Zemljevid</p>
+  <h1>Pot do serviserja</h1>
+  <p class="muted">{modules.length} modulov v fazah. Modul se odklene, ko opraviš prejšnjega – lahko pa ga preskočiš, če snov že znaš.</p>
+
+  {phases.map((phase) => (
+    <section>
+      <h2 class="phase">{phase}</h2>
+      <ul class="mod-list">
+        {modules.filter((m) => m.phase === phase).map((m) => {
+          const ls = lessonsOf(m.id);
+          return (
+            <li>
+              <a class="mod" href={ls.length ? url(`modul/${m.id}/`) : undefined} data-module={m.id} data-number={m.number} data-lessons={ls.join(',')} data-state={ls.length ? 'open' : 'soon'}>
+                <span class="num">{m.number}</span>
+                <span>
+                  <h3>{m.title}</h3>
+                  <p>{m.goal}</p>
+                </span>
+                <span class="pill" data-label>{ls.length ? `${ls.length} lekc.` : 'V pripravi'}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+
+  <section class="panel data">
+    <h2>Moj napredek</h2>
+    <p class="muted">Napredek je shranjen samo v tem brskalniku. Pred brisanjem podatkov brskalnika ali menjavo naprave ga izvozi.</p>
+    <p class="row">
+      <button type="button" class="btn secondary small" data-export>Izvozi (JSON)</button>
+      <label class="btn secondary small">Uvozi<input type="file" accept="application/json,.json" class="sr-only" data-import /></label>
+    </p>
+    <p data-status aria-live="polite"></p>
+  </section>
+</Base>
+
+<script>
+  import { load, update, exportJson, importJson, storageAvailable } from '../lib/progress';
+
+  function render() {
+    const p = load();
+    const mods = [...document.querySelectorAll<HTMLAnchorElement>('[data-module]')];
+    const isDone = (a: HTMLElement) => {
+      const ls = a.dataset.lessons ? a.dataset.lessons.split(',') : [];
+      return ls.length > 0 && ls.every((id) => p.lessons[id]?.done);
+    };
+    mods.forEach((a, i) => {
+      if (!a.dataset.lessons) return; // »V pripravi«
+      const label = a.querySelector<HTMLElement>('[data-label]')!;
+      const prevWithContent = mods.slice(0, i).reverse().find((m) => m.dataset.lessons);
+      const open = !prevWithContent || isDone(prevWithContent) || p.skipped[a.dataset.module!];
+      if (isDone(a)) {
+        a.dataset.state = 'done';
+        label.textContent = 'Opravljeno ✓';
+      } else if (!open) {
+        a.dataset.state = 'locked';
+        label.textContent = 'Zaklenjeno';
+        a.addEventListener('click', (e) => {
+          if (a.dataset.state !== 'locked') return;
+          e.preventDefault();
+          if (a.dataset.confirm) {
+            update((pp) => (pp.skipped[a.dataset.module!] = true));
+            location.href = a.href;
+          } else {
+            a.dataset.confirm = '1';
+            label.textContent = 'Preskočim? Tapni znova';
+          }
+        });
+      }
+    });
+  }
+  render();
+
+  const status = document.querySelector<HTMLElement>('[data-status]')!;
+  if (!storageAvailable()) status.textContent = 'Ta brskalnik ne dovoli shranjevanja – napredek velja le do zaprtja zavihka.';
+
+  document.querySelector('[data-export]')!.addEventListener('click', () => {
+    const blob = new Blob([exportJson()], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `akademija-tc-napredek-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    status.textContent = 'Napredek izvožen.';
+  });
+  document.querySelector<HTMLInputElement>('[data-import]')!.addEventListener('change', async (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    try {
+      importJson(await file.text());
+      status.textContent = 'Napredek uvožen.';
+      location.reload();
+    } catch (err) {
+      status.textContent = (err as Error).message;
+    }
+  });
+</script>
+
+<style>
+  .data {
+    margin-top: 32px;
+  }
+  .data h2 {
+    margin-top: 0;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  label.btn {
+    cursor: pointer;
+  }
+</style>

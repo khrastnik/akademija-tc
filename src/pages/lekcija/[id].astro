@@ -1,0 +1,239 @@
+---
+import Base from '../../layouts/Base.astro';
+import Quiz from '../../components/Quiz.tsx';
+import SortGame from '../../components/SortGame.tsx';
+import { loadLessons, loadModules, loadGlossary, loadQuizzes, loadWidgets, CARD_TYPES, lessonNumber } from '../../lib/content.js';
+import { renderCard } from '../../lib/render.js';
+import { url } from '../../lib/site.js';
+
+export function getStaticPaths() {
+  return loadLessons().map((lesson) => ({ params: { id: lesson.id }, props: { lesson } }));
+}
+
+const { lesson } = Astro.props;
+const mod = loadModules().find((m) => m.id === lesson.module)!;
+const siblings = loadLessons().filter((l) => l.module === lesson.module);
+const nextLesson = siblings[siblings.indexOf(siblings.find((l) => l.id === lesson.id)!) + 1];
+const glossary = loadGlossary();
+const termMap = new Map(glossary.map((t) => [t.id, t]));
+const termsLite = Object.fromEntries(glossary.map((t) => [t.id, { id: t.id, sl: t.sl, en: t.en, kratkaRazlaga: t.kratkaRazlaga }]));
+const quizzes = new Map(loadQuizzes().map((q) => [q.id, q]));
+const widgets = new Map(loadWidgets().map((w) => [w.id, w]));
+const titleOf = (type: string) => CARD_TYPES.find((c) => c.type === type)?.title ?? type;
+const cards = lesson.cards.map((c: any) => ({ ...c, title: titleOf(c.type), html: c.md ? renderCard(c.md, termMap) : '' }));
+const total = cards.length;
+---
+<Base title={`${lessonNumber(lesson.id)} ${lesson.title}`} source={lesson.file} updated={lesson.updated} current="pot">
+  <nav class="crumbs" aria-label="Drobtine">
+    <a href={url('pot')}>Pot</a> › <a href={url(`modul/${mod.id}/`)}>Modul {mod.number}</a> › Lekcija {lessonNumber(lesson.id)}
+  </nav>
+
+  {!lesson.reviewed && <p class="notice">Vsebina še ni strokovno pregledana. Če najdeš napako, jo javi spodaj.</p>}
+
+  <header class="lesson-head">
+    <p class="eyebrow">Lekcija {lessonNumber(lesson.id)} · {lesson.level} · {lesson.minutes} min</p>
+    <h1>{lesson.title}</h1>
+  </header>
+
+  <div class="player" data-lesson={lesson.id} data-total={total} data-done-url={url(`modul/${mod.id}/`)}>
+    <div class="bar" role="progressbar" aria-label="Napredek lekcije" aria-valuemin="1" aria-valuemax={total} aria-valuenow="1">
+      <span style={`width:${100 / total}%`}></span>
+    </div>
+
+    {cards.map((c: any, i: number) => (
+      <section class={`lcard t-${c.type}`} id={c.type} data-index={i} data-lock={c.type === 'widget' || c.type === 'quiz' ? c.type : undefined} hidden={i !== 0} aria-labelledby={`h-${c.type}`} tabindex="-1">
+        <p class="eyebrow">{i + 1} / {total}</p>
+        <h2 id={`h-${c.type}`}>{c.title}</h2>
+        {c.html && <div class="prose" set:html={c.html} />}
+        {c.type === 'widget' && widgets.get(c.attrs.id) && (
+          <SortGame client:idle widgetId={c.attrs.id} groups={widgets.get(c.attrs.id)!.groups} items={widgets.get(c.attrs.id)!.items} />
+        )}
+        {c.type === 'quiz' && quizzes.get(c.attrs.ref) && (
+          <Quiz client:idle quizId={c.attrs.ref} questions={quizzes.get(c.attrs.ref)!.questions as any} terms={termsLite} lessonBase={url('lekcija/')} />
+        )}
+      </section>
+    ))}
+
+    <div class="controls no-print">
+      <button type="button" class="btn secondary" data-prev>← Nazaj</button>
+      <span class="lock-msg muted" aria-live="polite"></span>
+      <button type="button" class="btn" data-next>Naprej →</button>
+      <button type="button" class="btn" data-finish hidden>Zaključi lekcijo ✓</button>
+    </div>
+  </div>
+
+  <aside class="after panel" hidden data-after>
+    <h2>Lekcija opravljena</h2>
+    <p>Napredek je shranjen v tem brskalniku.</p>
+    <p class="row">
+      {nextLesson ? <a class="btn" href={url(`lekcija/${nextLesson.id}/`)}>Naslednja lekcija →</a> : <a class="btn" href={url(`modul/${mod.id}/`)}>Nazaj na modul</a>}
+      <a class="btn secondary" href={url('pot')}>Na pot</a>
+    </p>
+  </aside>
+</Base>
+
+<script>
+  import { load, setCard, completeLesson } from '../../lib/progress';
+
+  const player = document.querySelector<HTMLElement>('.player')!;
+  const lessonId = player.dataset.lesson!;
+  const cards = [...player.querySelectorAll<HTMLElement>('.lcard')];
+  const bar = player.querySelector<HTMLElement>('.bar')!;
+  const prev = player.querySelector<HTMLButtonElement>('[data-prev]')!;
+  const next = player.querySelector<HTMLButtonElement>('[data-next]')!;
+  const finish = player.querySelector<HTMLButtonElement>('[data-finish]')!;
+  const lockMsg = player.querySelector<HTMLElement>('.lock-msg')!;
+  const after = document.querySelector<HTMLElement>('[data-after]')!;
+  const unlocked = new Set<string>();
+  let index = 0;
+
+  const saved = load().lessons[lessonId];
+  if (saved?.done) cards.forEach((c) => c.dataset.lock && unlocked.add(c.dataset.lock));
+
+  function show(i: number, focus = true) {
+    index = Math.max(0, Math.min(cards.length - 1, i));
+    cards.forEach((c, n) => (c.hidden = n !== index));
+    bar.setAttribute('aria-valuenow', String(index + 1));
+    bar.querySelector('span')!.style.width = `${((index + 1) / cards.length) * 100}%`;
+    prev.disabled = index === 0;
+    const last = index === cards.length - 1;
+    next.hidden = last;
+    finish.hidden = !last;
+    const lock = cards[index].dataset.lock;
+    const locked = !!lock && !unlocked.has(lock);
+    next.disabled = locked;
+    lockMsg.textContent = locked ? (lock === 'quiz' ? 'Odgovori na vsa vprašanja.' : 'Najprej opravi vajo.') : '';
+    history.replaceState(null, '', `#${cards[index].id}`);
+    setCard(lessonId, index);
+    if (focus) {
+      cards[index].focus({ preventScroll: true });
+      player.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+  }
+
+  document.addEventListener('lesson:unlock', (e) => {
+    unlocked.add((e as CustomEvent).detail.card);
+    show(index, false);
+  });
+  prev.addEventListener('click', () => show(index - 1));
+  next.addEventListener('click', () => show(index + 1));
+  finish.addEventListener('click', () => {
+    completeLesson(lessonId);
+    after.hidden = false;
+    after.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
+
+  // Povezava #kartica (npr. iz kviza »Preberi v lekciji«) ima prednost pred shranjenim mestom.
+  const fromHash = cards.findIndex((c) => `#${c.id}` === location.hash);
+  if (fromHash >= 0) {
+    for (let n = 0; n < fromHash; n++) if (cards[n].dataset.lock) unlocked.add(cards[n].dataset.lock!);
+  }
+  show(fromHash >= 0 ? fromHash : saved && !saved.done ? saved.card : 0, false);
+  // Brskalnik bi skočil na #kartico mimo drobtin in opozorila – lekcija se vedno začne na vrhu.
+  history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+</script>
+
+<style>
+  .crumbs {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    margin-bottom: 12px;
+  }
+  .crumbs a {
+    display: inline-block;
+    padding: 10px 0;
+  }
+  .lesson-head {
+    margin-bottom: 16px;
+  }
+  .bar {
+    height: 6px;
+    border-radius: 99px;
+    background: var(--surface-2);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .bar span {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.25s ease;
+  }
+  .lcard {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 20px;
+    min-height: 260px;
+    outline: none;
+  }
+  .lcard h2 {
+    margin: 0 0 12px;
+    font-size: 1.5rem;
+  }
+  .lcard .eyebrow {
+    color: var(--ink-2);
+  }
+  .t-story {
+    border-left: 5px solid var(--ochre);
+  }
+  .t-field-error {
+    border-left: 5px solid var(--high);
+  }
+  .t-remember {
+    border-left: 5px solid var(--ok);
+  }
+  .prose :global(blockquote) {
+    margin: 0 0 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    font-size: 1.15rem;
+  }
+  .prose :global(blockquote p) {
+    margin: 0;
+  }
+  .prose :global(ol),
+  .prose :global(ul) {
+    padding-left: 22px;
+  }
+  .prose :global(li) {
+    margin: 4px 0;
+  }
+  .controls {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    margin-top: 12px;
+    background: linear-gradient(to top, var(--bg) 70%, transparent);
+  }
+  .controls [data-next],
+  .controls [data-finish] {
+    margin-left: auto;
+  }
+  .controls {
+    flex-wrap: wrap;
+  }
+  .lock-msg {
+    order: 3;
+    flex-basis: 100%;
+    text-align: right;
+    font-size: 0.9rem;
+  }
+  .lock-msg:empty {
+    display: none;
+  }
+  .after {
+    margin-top: 20px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+</style>

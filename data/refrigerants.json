@@ -1,0 +1,4 @@
+{
+  "_opomba": "Ena tabela P-T za vse (lekcije, simulator, P-T kalkulator). Vsako hladivo mora imeti vir (proizvajalčeva tabela, standard, CoolProp). Brez vira ni objave, zato je seznam prazen, dokler podatkov ne preverimo.",
+  "refrigerants": []
+}

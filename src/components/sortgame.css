@@ -1,0 +1,61 @@
+.sort-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.sort-items li {
+  padding: 12px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.sort-items li.right {
+  border-color: var(--ok);
+}
+.sort-items li.wrong {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+}
+.sort-text {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.seg {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.seg button {
+  min-height: 44px;
+  font: inherit;
+  font-size: 0.92rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.seg button.on {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+.sort-hint,
+.sort-why {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+.sort-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+.ok-text {
+  color: var(--ok);
+}

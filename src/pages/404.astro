@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/site.js';
+---
+<Base title="Strani ni" source="src/pages/404.astro">
+  <h1>Te strani ni</h1>
+  <p>Morda je bila lekcija preimenovana.</p>
+  <p><a class="btn" href={url('pot')}>Na pot</a></p>
+</Base>

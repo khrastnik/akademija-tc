@@ -1,0 +1,113 @@
+# 22 modulov (0–21). `dir` imajo le moduli, ki že imajo lekcije.
+# Vrstni red faz in vsebina: PRD »Struktura vsebine« in kurikulum »Akademija za diagnostiko TČ«.
+- id: m00
+  number: 0
+  title: Kako razmišljati kot diagnostik
+  phase: A in B · Razumevanje
+  goal: Ločiš simptom od vzroka in veš, v kakšnem vrstnem redu iščeš napako.
+  dir: 00-kako-razmisljati
+- id: m01
+  number: 1
+  title: Kaj je toplotna črpalka?
+  phase: A in B · Razumevanje
+  goal: Razumeš, kako črpalka prenaša toploto iz zraka v vodo in zakaj pri tem porabi manj elektrike, kot je odda toplote.
+- id: m02
+  number: 2
+  title: Celoten cikel hladiva
+  phase: A in B · Razumevanje
+  goal: Znaš slediti hladivu skozi kompresor, kondenzator, ekspanzijski ventil in uparjalnik ter povedati, kaj se mu zgodi v vsakem delu.
+- id: m03
+  number: 3
+  title: Temperatura
+  phase: C · Fizikalne veličine
+  goal: Veš, kje in kako meriš temperaturo ter zakaj je ena sama temperatura brez druge redko uporabna.
+- id: m04
+  number: 4
+  title: Tlak
+  phase: C · Fizikalne veličine
+  goal: Razumeš absolutni in nadtlak ter povezavo med tlakom in temperaturo nasičenja.
+- id: m05
+  number: 5
+  title: Pretok
+  phase: C · Fizikalne veličine
+  goal: Razumeš, zakaj premajhen pretok vode ali zraka povzroči večino »čudnih« napak.
+- id: m06
+  number: 6
+  title: Razlika temperatur ΔT
+  phase: C · Fizikalne veličine
+  goal: Iz razlike temperatur prebereš, ali naprava dobi in odda toliko toplote, kot bi morala.
+- id: m07
+  number: 7
+  title: Pregrevanje (superheat, SH)
+  phase: C · Fizikalne veličine
+  goal: Izračunaš pregrevanje iz tlaka in temperature in razložiš, kaj pove o količini hladiva v uparjalniku.
+- id: m08
+  number: 8
+  title: Podhlajevanje (subcooling, SC)
+  phase: C · Fizikalne veličine
+  goal: Izračunaš podhlajevanje in ga skupaj s pregrevanjem uporabiš za oceno polnjenja.
+- id: m09
+  number: 9
+  title: Hidravlika
+  phase: D · Sistem okoli kroga
+  goal: Poznaš vodni krog, črpalko, filtre, ventile in raztezno posodo ter njihove tipične napake.
+- id: m10
+  number: 10
+  title: Elektrika za začetnika
+  phase: D · Sistem okoli kroga
+  goal: Razumeš napajanje, inverter in varnostna pravila – brez dela pod omrežno napetostjo.
+- id: m11
+  number: 11
+  title: Senzorji
+  phase: D · Sistem okoli kroga
+  goal: Veš, kje so senzorji, kaj merijo in kako prepoznaš, da senzor laže.
+- id: m12
+  number: 12
+  title: Regulacija in krmiljenje
+  phase: D · Sistem okoli kroga
+  goal: Razumeš ogrevalno krivuljo, odtajevanje in logiko krmilnika.
+- id: m13
+  number: 13
+  title: Meritve na realni TČ (obhod naprave)
+  phase: E · Orodje in meritve
+  goal: Narediš urejen obhod naprave in zapišeš vse meritve v pravem vrstnem redu.
+- id: m14
+  number: 14
+  title: Merilna oprema
+  phase: E · Orodje in meritve
+  goal: Poznaš manometre, termometre in klešče ter veš, kdaj jim zaupaš.
+- id: m15
+  number: 15
+  title: 30 realnih primerov napak
+  phase: F1 · Primeri
+  goal: Na 30 primerih vidiš celo diagnostično verigo od simptoma do preverjanja.
+- id: m16
+  number: 16
+  title: Diagnostične simulacije korak za korakom
+  phase: F2 · Simulacije
+  goal: Sam vodiš diagnozo v simulatorju in izbereš meritve, ki res nekaj povedo.
+- id: m17
+  number: 17
+  title: Napredne kombinacije napak
+  phase: F2 · Simulacije
+  goal: Prepoznaš, kdaj se dve napaki prekrivata in skrivata druga drugo.
+- id: m18
+  number: 18
+  title: Napake meritev
+  phase: E · Orodje in meritve
+  goal: Veš, kdaj meritev laže, in znaš to preveriti, preden iz nje sklepaš.
+- id: m19
+  number: 19
+  title: Servisni postopek od začetka do konca
+  phase: F3 · Samostojnost
+  goal: Opraviš celoten servisni obisk po korakih in napišeš servisno poročilo.
+- id: m20
+  number: 20
+  title: Diagnostični mindset
+  phase: F3 · Samostojnost
+  goal: Ostaneš miren pri neznani napaki in jo razstaviš na preverljive hipoteze.
+- id: m21
+  number: 21
+  title: Samostojno delo
+  phase: F3 · Samostojnost
+  goal: Poznaš pot do samostojnega dela – spričevalo, dovoljenje, zavarovanje, cene in poročila (preveri pri pristojnem organu).

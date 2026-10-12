@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Review from '../components/Review.tsx';
+import { loadQuizzes, loadGlossary } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const quizzes = Object.fromEntries(loadQuizzes().map((q) => [q.id, q.questions]));
+const terms = Object.fromEntries(loadGlossary().map((t) => [t.id, { id: t.id, sl: t.sl, en: t.en, kratkaRazlaga: t.kratkaRazlaga }]));
+---
+<Base title="Za ponovitev" current="ponovitev" source="src/pages/ponovitev.astro">
+  <p class="eyebrow">Ponavljanje</p>
+  <h1>Za ponovitev</h1>
+  <p class="muted">Vprašanja, na katera si odgovoril napačno, se vrnejo po 1, 3 in 7 dneh. Ko jih trikrat zapored rešiš prav, izginejo.</p>
+  <Review client:only="preact" quizzes={quizzes as any} terms={terms} lessonBase={url('lekcija/')} />
+</Base>

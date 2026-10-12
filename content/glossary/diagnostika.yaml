@@ -1,0 +1,39 @@
+- id: simptom
+  sl: simptom
+  en: symptom
+  kratkaRazlaga: Kar opaziš ali kar pove stranka – posledica napake, ne napaka sama.
+  dolgaRazlaga: Simptom je vidna ali merljiva posledica napake, na primer mlačni radiatorji, led na zunanji enoti ali koda napake na zaslonu. En simptom ima lahko več vzrokov, zato iz njega sam ne sklepaš na vzrok.
+  analogija: Vročina pri gripi.
+  povezaneLekcije: [m00-l01]
+
+- id: vzrok
+  sl: vzrok
+  en: root cause
+  kratkaRazlaga: Tisto, kar simptom povzroča in kar je treba popraviti.
+  dolgaRazlaga: Vzrok je okvara ali stanje, ki povzroči simptom – na primer zamašen filter, napačna nastavitev ali okvarjen senzor. Vzrok dokažeš z meritvami in s preverjanjem po popravilu.
+  analogija: Gripa, ki povzroči vročino.
+  povezaneLekcije: [m00-l01]
+
+- id: meritev
+  sl: meritev
+  en: measurement
+  kratkaRazlaga: Številka z instrumenta, skupaj s tem, kje in pri kakšnih pogojih je izmerjena.
+  dolgaRazlaga: Meritev ima smisel le, če veš, kaj si izmeril, kje, pri kakšnih pogojih in s čim jo primerjaš. Normalna območja so odvisna od naprave in hladiva, zato jih vedno preveriš v navodilih proizvajalca.
+  analogija: Termometer pod pazduho – brez podatka, kje in kdaj si meril, številka ne pove veliko.
+  povezaneLekcije: [m00-l01]
+
+- id: hipoteza
+  sl: hipoteza
+  en: hypothesis
+  kratkaRazlaga: Domneva o vzroku, ki jo lahko preveriš z meritvijo ali testom.
+  dolgaRazlaga: Hipoteza je predlog vzroka, ki ga še nisi dokazal. Dobra hipoteza pove, kaj bi moral izmeriti, če drži, in kaj, če ne drži.
+  analogija: »Mislim, da je zamašen filter – če drži, bo razlika temperatur vode večja od običajne.«
+  povezaneLekcije: [m00-l01]
+
+- id: diagnoza
+  sl: diagnoza
+  en: diagnosis
+  kratkaRazlaga: Z meritvami dokazan vzrok napake.
+  dolgaRazlaga: Diagnoza je zaključek diagnostične verige – vzrok, ki ga podpira vzorec meritev in ki ga po popravilu potrdi preverjanje. Koda napake ni diagnoza.
+  analogija: Zdravnikov izvid po pregledu, ne prvi vtis v čakalnici.
+  povezaneLekcije: [m00-l01]

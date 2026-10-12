@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadGlossary, loadLessons, lessonNumber } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const terms = loadGlossary().sort((a, b) => a.sl.localeCompare(b.sl, 'sl'));
+const lessons = new Map(loadLessons().map((l) => [l.id, l]));
+---
+<Base title="Slovar pojmov" current="slovar" source="content/glossary">
+  <p class="eyebrow">Slovar</p>
+  <h1>Slovar pojmov</h1>
+  <p class="muted">Najprej slovensko, v oklepaju angleško in kratica. {terms.length} pojmov.</p>
+  <label class="search">
+    <span class="sr-only">Išči po slovarju</span>
+    <input type="search" placeholder="Išči, npr. vzrok ali symptom" data-search autocomplete="off" />
+  </label>
+  <dl class="terms">
+    {terms.map((t) => (
+      <div class="term-entry panel" id={t.id} data-text={`${t.sl} ${t.en} ${t.abbr ?? ''} ${t.kratkaRazlaga}`.toLowerCase()}>
+        <dt><strong>{t.sl}</strong> <span class="muted">({t.en}{t.abbr ? `, ${t.abbr}` : ''})</span></dt>
+        <dd>
+          <p>{t.dolgaRazlaga}</p>
+          {t.analogija && <p><em>Predstavljaj si:</em> {t.analogija}</p>}
+          {t.povezaneLekcije.length > 0 && (
+            <p class="muted">Lekcije: {t.povezaneLekcije.map((id) => <a href={url(`lekcija/${id}/`)}>{lessonNumber(id)} {lessons.get(id)?.title}</a>)}</p>
+          )}
+        </dd>
+      </div>
+    ))}
+  </dl>
+  <p data-empty hidden class="muted">Ni zadetkov.</p>
+</Base>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>('[data-search]')!;
+  const entries = [...document.querySelectorAll<HTMLElement>('.term-entry')];
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    entries.forEach((e) => {
+      const hit = !q || e.dataset.text!.includes(q);
+      e.hidden = !hit;
+      if (hit) shown++;
+    });
+    empty.hidden = shown > 0;
+  });
+</script>
+
+<style>
+  .search input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    font: inherit;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--ink);
+    margin: 8px 0 18px;
+  }
+  .terms {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+  }
+  .term-entry dd {
+    margin: 0;
+  }
+  .term-entry p {
+    margin: 6px 0;
+  }
+  .term-entry:target {
+    border-color: var(--ochre);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ochre) 30%, transparent);
+  }
+</style>

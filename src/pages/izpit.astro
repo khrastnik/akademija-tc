@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/site.js';
+---
+<Base title="Končni izpit" current="izpit" source="src/pages/izpit.astro">
+  <p class="eyebrow">Izpit</p>
+  <h1>Končni izpit</h1>
+  <p class="notice">V pripravi. Izpit pride, ko bodo objavljeni vsi moduli poti.</p>
+  <p>Izpit bo simulacija servisnega obiska v klepetu s stranko: 25 do 50 vprašanj, ocena po petih sklopih, prag 80 %. Vsak napačen odgovor dobi razlago.</p>
+  <p>Ob uspehu dobiš potrdilo o opravljenem spletnem tečaju z imenom, ki ga vpišeš sam. <strong>Potrdilo ni uradno spričevalo</strong> in ne nadomešča usposabljanja za delo s hladivi.</p>
+  <p><a class="btn" href={url('pot')}>Nazaj na pot</a></p>
+</Base>

@@ -1,0 +1,46 @@
+id: simptom-vzrok
+kind: sort
+groups:
+  - id: simptom
+    label: Simptom
+  - id: meritev
+    label: Meritev
+  - id: vzrok
+    label: Vzrok
+items:
+  - id: mlacni
+    text: Radiatorji so komaj mlačni.
+    group: simptom
+    why: To opazi stranka. Pove, da nekaj ni v redu, ne pa, kaj.
+  - id: koda
+    text: Na zaslonu je koda »visok tlak«.
+    group: simptom
+    why: Koda je to, kar je zaznal krmilnik. Je simptom, ne diagnoza.
+  - id: led
+    text: Zunanja enota je vsa v ledu.
+    group: simptom
+    why: Led vidiš z očmi. Lahko ima več vzrokov, zato je simptom.
+  - id: t-dvizni
+    text: Temperatura vode v dvižnem vodu.
+    group: meritev
+    why: To je številka z instrumenta na točno določenem mestu.
+  - id: manometer
+    text: Tlak vode na manometru vodnega kroga.
+    group: meritev
+    why: Odčitek z instrumenta. Sam po sebi ni ne dober ne slab, dokler ga ne primerjaš z navodili.
+  - id: delta-t
+    text: Razlika temperatur med dvižnim in povratnim vodom.
+    group: meritev
+    why: Izračunana iz dveh meritev. Pove, koliko toplote voda odnese.
+  - id: filter
+    text: Filter v vodnem krogu je zamašen.
+    group: vzrok
+    why: To je okvara, ki zmanjša pretok vode – in povzroči simptome, kot sta mlačni radiatorji ali visok tlak.
+  - id: termostat
+    text: Termostat je nastavljen prenizko.
+    group: vzrok
+    why: Napačna nastavitev je vzrok. Odpraviš ga brez orodja – zato »najlažje najprej«.
+  - id: listje
+    text: Zunanja enota je zasuta z listjem.
+    group: vzrok
+    why: Listje zapre pretok zraka skozi lamele. To je vzrok, ki ga popraviš z metlo.

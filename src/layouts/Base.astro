@@ -1,0 +1,59 @@
+---
+import '../styles/global.css';
+import { SITE, url, sourceUrl, issueUrl } from '../lib/site.js';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Datoteka v repozitoriju, iz katere je stran (za povezavo »Vir«). */
+  source?: string;
+  updated?: string;
+  current?: 'pot' | 'orodja' | 'slovar' | 'ponovitev' | 'izpit';
+}
+const { title, description = 'Brezplačna, odprta spletna pot od nič do serviserja in diagnostika toplotnih črpalk zrak–voda.', source = 'src/pages', updated, current } = Astro.props;
+const pageTitle = title === SITE.name ? title : `${title} · ${SITE.short}`;
+const nav = [
+  { id: 'pot', href: url('pot'), label: 'Pot' },
+  { id: 'orodja', href: url('orodja'), label: 'Orodja' },
+  { id: 'slovar', href: url('slovar'), label: 'Slovar' },
+  { id: 'ponovitev', href: url('ponovitev'), label: 'Za ponovitev' },
+  { id: 'izpit', href: url('izpit'), label: 'Izpit' },
+];
+---
+<!doctype html>
+<html lang="sl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#a4502a" />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#vsebina">Preskoči na vsebino</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={url('')}>Akademija <span>TČ</span></a>
+        <nav class="nav" aria-label="Glavni meni">
+          {nav.map((n) => <a href={n.href} aria-current={current === n.id ? 'page' : undefined}>{n.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main id="vsebina" class="wrap">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p><strong>Ta stran uči razumevanje in diagnostično razmišljanje.</strong> Ne nadomešča uradnega usposabljanja ne spričevala, ki ga zakonodaja zahteva za delo s hladivi. Navodila proizvajalca vedno prevladajo.</p>
+        <p class="links">
+          {updated && <span>Zadnja sprememba: {updated}</span>}
+          <a href={sourceUrl(source)}>Vir na GitHubu</a>
+          <a href={issueUrl(title)}>Javi napako</a>
+          <a href={`${SITE.repo}/blob/${SITE.branch}/CONTRIBUTING.md`}>Kako pomagati</a>
+        </p>
+        <p>Koda MIT · vsebina CC BY-NC-SA 4.0 · brez piškotkov, sledenja in analitike.</p>
+      </div>
+    </footer>
+  </body>
+</html>
