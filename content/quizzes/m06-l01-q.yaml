@@ -1,0 +1,62 @@
+id: m06-l01-q
+lesson: m06-l01
+questions:
+  - id: q1
+    type: single
+    text: Dvižni vod ima 40 °C, povratni vod 28 °C. Koliko je ΔT?
+    understand:
+      simpler: Koliko je 40 minus 28 in v kateri enoti to zapišeš?
+      terms: [delta-t]
+      hint: Razlike temperatur pišemo v kelvinih.
+    options:
+      - id: a
+        text: 12 K
+        correct: true
+        why: 40 minus 28 je 12. Razliko zapišeš v kelvinih.
+      - id: b
+        text: 68 K
+        why: To je vsota obeh temperatur. ΔT je razlika.
+      - id: c
+        text: 28 °C
+        why: To je temperatura povratnega voda, ne razlika.
+    lessonLink: m06-l01#numbers
+
+  - id: q2
+    type: single
+    text: Pretok vode pade na polovico, moč naprave ostane enaka. Kaj se zgodi z ΔT?
+    understand:
+      simpler: Če narediš pol manj poti, kako polne morajo biti košare?
+      terms: [delta-t, pretok]
+      hint: Toplota je sorazmerna s pretokom in z ΔT.
+    options:
+      - id: a
+        text: Približno se podvoji
+        correct: true
+        why: Za isto toploto pri polovičnem pretoku mora biti ΔT približno dvakrat večja.
+      - id: b
+        text: Pade na polovico
+        why: Tako bi bilo, če bi se pretok podvojil. Pri manjšem pretoku ΔT naraste.
+      - id: c
+        text: Ostane enaka
+        why: ΔT je odvisna od pretoka. Ko pretok pade, ΔT naraste.
+    lessonLink: m06-l01#why
+
+  - id: q3
+    type: single
+    text: Na kaj najpogosteje kaže nenavadno velika ΔT vode?
+    understand:
+      simpler: Kaj pomeni, če mora vsaka »košara« nositi več toplote?
+      terms: [pretok]
+      hint: Spomni se modula 5.
+    options:
+      - id: a
+        text: Na premajhen pretok vode
+        correct: true
+        why: Voda teče prepočasi, zato se v njej nabere več toplote na liter – ΔT naraste.
+      - id: b
+        text: Na preveč hladiva v krogu
+        why: Preveč hladiva se pokaže v krogu hladiva, ne neposredno v ΔT vode.
+      - id: c
+        text: Na previsok tlak vode
+        why: Tlak vode pove, koliko vode je v krogu, ne kako hitro teče.
+    lessonLink: m06-l01#remember

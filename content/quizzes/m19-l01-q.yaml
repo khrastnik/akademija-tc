@@ -1,0 +1,59 @@
+id: m19-l01-q
+lesson: m19-l01
+questions:
+  - id: q1
+    type: single
+    text: Kaj mora vsebovati dobro servisno poročilo?
+    understand:
+      simpler: Kaj bi naslednji serviser potreboval, da nadaljuje tvoje delo?
+      terms: [servisno-porocilo]
+      hint: Spomni se zdravnikovega izvida.
+    options:
+      - id: a
+        text: Meritve s pogoji pred in po popravilu
+        correct: true
+        why: Tako lahko naslednji serviser primerja z isto napravo in vidi, kaj se je spremenilo.
+      - id: b
+        text: Samo seznam zamenjanih delov
+        why: Deli brez meritev in vzroka ne povedo, zakaj so bili zamenjani in ali je pomagalo.
+      - id: c
+        text: Samo podpis stranke
+        why: Podpis potrdi obisk, ne pove pa ničesar o napravi.
+    lessonLink: m19-l01#measure
+
+  - id: q2
+    type: single
+    text: Kaj narediš pred obiskom?
+    understand:
+      simpler: Kaj lahko izveš po telefonu, da na mestu ne izgubljaš časa?
+      terms: [obhod]
+      hint: Model, simptomi, kdaj se je začelo.
+    options:
+      - id: a
+        text: Vprašaš za model in simptome
+        correct: true
+        why: S temi podatki pripraviš pravo opremo, navodila in prve hipoteze.
+      - id: b
+        text: Kupiš nov kompresor za vsak primer
+        why: Nakup dela pred diagnozo je ugibanje.
+      - id: c
+        text: Nič, vse izveš na mestu
+        why: Pogovor pred obiskom prihrani čas in pogosto že nakaže vzrok.
+    lessonLink: m19-l01#what
+
+  - id: q3
+    type: truefalse
+    text: Servisno poročilo je birokracija, ki napravi ne pomaga.
+    understand:
+      simpler: Ali zapis meritev in vzroka pomaga pri naslednji napaki?
+      terms: [servisno-porocilo]
+      hint: Spomni se drugega serviserja iz zgodbe.
+    options:
+      - id: da
+        text: DA
+        why: Dobro poročilo naslednjemu serviserju prihrani ure in prepreči ponavljanje napak, kot je dvojno dolivanje.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Poročilo je izvid naprave in del popravila.
+    lessonLink: m19-l01#why

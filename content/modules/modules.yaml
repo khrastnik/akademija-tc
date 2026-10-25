@@ -11,103 +11,124 @@
   title: Kaj je toplotna črpalka?
   phase: A in B · Razumevanje
   goal: Razumeš, kako črpalka prenaša toploto iz zraka v vodo in zakaj pri tem porabi manj elektrike, kot je odda toplote.
+  dir: 01-kaj-je-tc
 - id: m02
   number: 2
   title: Celoten cikel hladiva
   phase: A in B · Razumevanje
   goal: Znaš slediti hladivu skozi kompresor, kondenzator, ekspanzijski ventil in uparjalnik ter povedati, kaj se mu zgodi v vsakem delu.
+  dir: 02-cikel-hladiva
 - id: m03
   number: 3
   title: Temperatura
   phase: C · Fizikalne veličine
   goal: Veš, kje in kako meriš temperaturo ter zakaj je ena sama temperatura brez druge redko uporabna.
+  dir: 03-temperatura
 - id: m04
   number: 4
   title: Tlak
   phase: C · Fizikalne veličine
   goal: Razumeš absolutni in nadtlak ter povezavo med tlakom in temperaturo nasičenja.
+  dir: 04-tlak
 - id: m05
   number: 5
   title: Pretok
   phase: C · Fizikalne veličine
   goal: Razumeš, zakaj premajhen pretok vode ali zraka povzroči večino »čudnih« napak.
+  dir: 05-pretok
 - id: m06
   number: 6
   title: Razlika temperatur ΔT
   phase: C · Fizikalne veličine
   goal: Iz razlike temperatur prebereš, ali naprava dobi in odda toliko toplote, kot bi morala.
+  dir: 06-razlika-temperatur
 - id: m07
   number: 7
   title: Pregrevanje (superheat, SH)
   phase: C · Fizikalne veličine
   goal: Izračunaš pregrevanje iz tlaka in temperature in razložiš, kaj pove o količini hladiva v uparjalniku.
+  dir: 07-pregrevanje
 - id: m08
   number: 8
   title: Podhlajevanje (subcooling, SC)
   phase: C · Fizikalne veličine
   goal: Izračunaš podhlajevanje in ga skupaj s pregrevanjem uporabiš za oceno polnjenja.
+  dir: 08-podhlajevanje
 - id: m09
   number: 9
   title: Hidravlika
   phase: D · Sistem okoli kroga
   goal: Poznaš vodni krog, črpalko, filtre, ventile in raztezno posodo ter njihove tipične napake.
+  dir: 09-hidravlika
 - id: m10
   number: 10
   title: Elektrika za začetnika
   phase: D · Sistem okoli kroga
   goal: Razumeš napajanje, inverter in varnostna pravila – brez dela pod omrežno napetostjo.
+  dir: 10-elektrika
 - id: m11
   number: 11
   title: Senzorji
   phase: D · Sistem okoli kroga
   goal: Veš, kje so senzorji, kaj merijo in kako prepoznaš, da senzor laže.
+  dir: 11-senzorji
 - id: m12
   number: 12
   title: Regulacija in krmiljenje
   phase: D · Sistem okoli kroga
   goal: Razumeš ogrevalno krivuljo, odtajevanje in logiko krmilnika.
+  dir: 12-regulacija
 - id: m13
   number: 13
   title: Meritve na realni TČ (obhod naprave)
   phase: E · Orodje in meritve
   goal: Narediš urejen obhod naprave in zapišeš vse meritve v pravem vrstnem redu.
+  dir: 13-meritve-na-tc
 - id: m14
   number: 14
   title: Merilna oprema
   phase: E · Orodje in meritve
   goal: Poznaš manometre, termometre in klešče ter veš, kdaj jim zaupaš.
+  dir: 14-merilna-oprema
 - id: m15
   number: 15
   title: 30 realnih primerov napak
   phase: F1 · Primeri
   goal: Na 30 primerih vidiš celo diagnostično verigo od simptoma do preverjanja.
+  dir: 15-primeri-napak
 - id: m16
   number: 16
   title: Diagnostične simulacije korak za korakom
   phase: F2 · Simulacije
   goal: Sam vodiš diagnozo v simulatorju in izbereš meritve, ki res nekaj povedo.
+  dir: 16-diagnosticne-simulacije
 - id: m17
   number: 17
   title: Napredne kombinacije napak
   phase: F2 · Simulacije
   goal: Prepoznaš, kdaj se dve napaki prekrivata in skrivata druga drugo.
+  dir: 17-kombinacije-napak
 - id: m18
   number: 18
   title: Napake meritev
   phase: E · Orodje in meritve
   goal: Veš, kdaj meritev laže, in znaš to preveriti, preden iz nje sklepaš.
+  dir: 18-napake-meritev
 - id: m19
   number: 19
   title: Servisni postopek od začetka do konca
   phase: F3 · Samostojnost
   goal: Opraviš celoten servisni obisk po korakih in napišeš servisno poročilo.
+  dir: 19-servisni-postopek
 - id: m20
   number: 20
   title: Diagnostični mindset
   phase: F3 · Samostojnost
   goal: Ostaneš miren pri neznani napaki in jo razstaviš na preverljive hipoteze.
+  dir: 20-diagnosticni-mindset
 - id: m21
   number: 21
   title: Samostojno delo
   phase: F3 · Samostojnost
   goal: Poznaš pot do samostojnega dela – spričevalo, dovoljenje, zavarovanje, cene in poročila (preveri pri pristojnem organu).
+  dir: 21-samostojno-delo

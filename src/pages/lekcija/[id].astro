@@ -196,6 +196,22 @@ const total = cards.length;
   .prose :global(blockquote p) {
     margin: 0;
   }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.95rem;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .prose :global(th) {
+    background: var(--surface-2);
+    font-weight: 700;
+  }
   .prose :global(ol),
   .prose :global(ul) {
     padding-left: 22px;

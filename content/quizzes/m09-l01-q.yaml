@@ -1,0 +1,59 @@
+id: m09-l01-q
+lesson: m09-l01
+questions:
+  - id: q1
+    type: single
+    text: Varnostni ventil vsak dan kaplja, ko se sistem segreje. Kaj je najverjetnejši vzrok?
+    understand:
+      simpler: Zakaj tlak ob segrevanju naraste tako visoko, da se ventil odpre?
+      terms: [raztezna-posoda]
+      hint: Kaj sprejme raztezanje tople vode?
+    options:
+      - id: a
+        text: Raztezna posoda je izgubila zračno blazino
+        correct: true
+        why: Brez blazine raztezanje vode strmo dvigne tlak in ventil ga sprosti.
+      - id: b
+        text: Obtočna črpalka je prešibka
+        why: Moč črpalke vpliva na pretok, ne na raztezanje vode in tlak ob segrevanju.
+      - id: c
+        text: Filter vode je zamašen
+        why: Zamašen filter zmanjša pretok, ne povzroča pa dnevnega skoka tlaka.
+    lessonLink: m09-l01#why
+
+  - id: q2
+    type: single
+    text: Kaj naredi raztezna posoda?
+    understand:
+      simpler: Kam gre dodatna prostornina, ko se voda segreje?
+      terms: [raztezna-posoda]
+      hint: Spomni se prožne stene žile.
+    options:
+      - id: a
+        text: Sprejme raztezanje tople vode
+        correct: true
+        why: Zračna blazina se stisne in sprejme dodatno prostornino vode.
+      - id: b
+        text: Poganja vodo po krogu
+        why: To dela obtočna črpalka.
+      - id: c
+        text: Lovi rjo in mulj iz vode
+        why: To dela filter.
+    lessonLink: m09-l01#what
+
+  - id: q3
+    type: truefalse
+    text: Če tlak vode stalno pada, je dovolj, da vodo redno doliješ.
+    understand:
+      simpler: Kam gre voda, ki je iz zaprtega kroga zmanjkalo?
+      terms: []
+      hint: Vsako dolivanje prinese v sistem nov kisik.
+    options:
+      - id: da
+        text: DA
+        why: Dolivanje skrije simptom. Voda nekam odteka – vzrok je treba najti.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Padanje tlaka pomeni puščanje ali kapljanje ventila. Z vsakim dolivanjem pride v sistem tudi nov kisik.
+    lessonLink: m09-l01#field-error

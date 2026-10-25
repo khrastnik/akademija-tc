@@ -1,0 +1,59 @@
+id: m11-l01-q
+lesson: m11-l01
+questions:
+  - id: q1
+    type: single
+    text: Zaslon kaže povratni vod 40 °C, tvoj termometer na isti cevi 25 °C. Kaj narediš najprej?
+    understand:
+      simpler: Če se dva instrumenta na istem mestu ne ujemata, kateremu ne zaupaš?
+      terms: [senzor]
+      hint: Najlažje najprej – preveri, kako je senzor nameščen.
+    options:
+      - id: a
+        text: Preveriš namestitev in stanje senzorja
+        correct: true
+        why: Velika razlika kaže na senzor, ki ne meri cevi. Najprej preveri tulec, stik in izolacijo.
+      - id: b
+        text: Zamenjaš krmilno ploščo
+        why: Plošča verjetno dela prav – le napačen podatek dobi. To bi bilo drago ugibanje.
+      - id: c
+        text: Zvišaš ogrevalno krivuljo
+        why: S tem bi skril simptom, napačen senzor pa bi ostal.
+    lessonLink: m11-l01#measure
+
+  - id: q2
+    type: single
+    text: Zunanji senzor je na južni steni na soncu. Kaj se zgodi?
+    understand:
+      simpler: Kakšno temperaturo pokaže senzor, ki ga greje sonce?
+      terms: [senzor]
+      hint: Krmilnik verjame senzorju.
+    options:
+      - id: a
+        text: Krmilnik misli, da je topleje, in premalo greje
+        correct: true
+        why: Sonce segreje senzor, krmilnik izbere hladnejšo vodo, hiša pa se ohladi.
+      - id: b
+        text: Krmilnik greje preveč
+        why: Bilo bi obratno, če bi senzor kazal premalo. Sonce ga segreje.
+      - id: c
+        text: Nič, senzor sonca ne čuti
+        why: Senzor meri svojo temperaturo – in sonce ga segreje.
+    lessonLink: m11-l01#field-error
+
+  - id: q3
+    type: truefalse
+    text: Če zaslon kaže temperaturo, je ta vedno prava.
+    understand:
+      simpler: Od kod zaslon dobi temperaturo?
+      terms: [senzor]
+      hint: Spomni se pilota v megli.
+    options:
+      - id: da
+        text: DA
+        why: Zaslon kaže le to, kar izmeri senzor. Senzor brez stika, na soncu ali okvarjen kaže narobe.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Zaslon je toliko dober kot senzor. Preveri ga s svojim termometrom.
+    lessonLink: m11-l01#remember

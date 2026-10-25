@@ -1,0 +1,38 @@
+id: vrstni-red-obhoda
+kind: sort
+groups:
+  - id: najprej
+    label: Najprej, brez orodja
+  - id: nato
+    label: Nato, s termometrom
+  - id: konec
+    label: Na koncu, z manometri
+items:
+  - id: zaslon
+    text: Koda napake in nastavitve na zaslonu
+    group: najprej
+    why: Dve minuti in nobenega orodja – pogosto že pokaže vzrok.
+  - id: tlak-vode
+    text: Tlak vode na manometru vodnega kroga
+    group: najprej
+    why: Odčitek brez posega – premalo vode je pogost vzrok.
+  - id: zunanja
+    text: Pregled zunanje enote za listje in led
+    group: najprej
+    why: Samo pogled – ovira zraka je pogosta in hitro vidna.
+  - id: dt
+    text: Dvižni in povratni vod, ΔT
+    group: nato
+    why: Dva termometra brez posega v napravo povesta, ali je pretok prav.
+  - id: susilnik
+    text: Razlika temperatur na filtru sušilniku
+    group: nato
+    why: Meritev s sondo na površini – brez priklopa na krog hladiva.
+  - id: nt
+    text: Temperatura uparjanja in pregrevanje
+    group: konec
+    why: Zahteva priklop manometra – poseg, samo s spričevalom.
+  - id: vt
+    text: Temperatura kondenzacije in podhlajevanje
+    group: konec
+    why: Zahteva priklop manometra – poseg, samo s spričevalom.

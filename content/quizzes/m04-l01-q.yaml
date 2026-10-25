@@ -1,0 +1,59 @@
+id: m04-l01-q
+lesson: m04-l01
+questions:
+  - id: q1
+    type: single
+    text: Kaj kaže navaden manometer?
+    understand:
+      simpler: Od katere ničle manometer šteje tlak?
+      terms: [nadtlak, absolutni-tlak]
+      hint: Pri odprtem priključku kaže nič.
+    options:
+      - id: a
+        text: Nadtlak nad zračnim tlakom
+        correct: true
+        why: Manometer šteje od zračnega tlaka okolice, zato pri odprtem priključku kaže nič.
+      - id: b
+        text: Absolutni tlak od vakuuma
+        why: Absolutni tlak šteje od vakuuma. Navaden manometer pa od zračnega tlaka.
+      - id: c
+        text: Temperaturo vode v krogu
+        why: Manometer meri tlak. Temperaturo lahko izračuna digitalni manometer – za hladivo, ne za vodo.
+    lessonLink: m04-l01#what
+
+  - id: q2
+    type: single
+    text: V uparjalniku tlak pade. Kaj se zgodi s temperaturo, pri kateri hladivo vre?
+    understand:
+      simpler: Ali pri nižjem tlaku tekočina zavre pri nižji ali višji temperaturi?
+      terms: [nasicenje]
+      hint: Pomisli na čaj na visoki gori.
+    options:
+      - id: a
+        text: Temperatura vrenja pade
+        correct: true
+        why: Nižji tlak pomeni nižjo temperaturo nasičenja. Zato je hladivo za ekspanzijskim ventilom mrzlo.
+      - id: b
+        text: Temperatura vrenja naraste
+        why: Tako bi bilo pri višjem tlaku. Pri nižjem tlaku hladivo zavre pri nižji temperaturi.
+      - id: c
+        text: Temperatura ostane enaka
+        why: Temperatura vrenja je odvisna od tlaka. Ko se tlak spremeni, se spremeni tudi ona.
+    lessonLink: m04-l01#why
+
+  - id: q3
+    type: truefalse
+    text: Na digitalnem manometru ni pomembno, katero hladivo izbereš, saj tlak meri enako.
+    understand:
+      simpler: Ali ima vsako hladivo isto tabelo tlak–temperatura?
+      terms: [nasicenje]
+      hint: Tlak je prav, kaj pa temperatura, ki jo manometer izračuna?
+    options:
+      - id: da
+        text: DA
+        why: Tlak je res izmerjen prav, temperatura nasičenja pa je izračunana iz tabele izbranega hladiva. Napačno hladivo da napačno temperaturo.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Vsako hladivo ima svojo tabelo. Napačna izbira pokvari temperaturo nasičenja in vse, kar iz nje računaš.
+    lessonLink: m04-l01#field-error

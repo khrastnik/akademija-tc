@@ -1,0 +1,32 @@
+id: dejstvo-domneva
+kind: sort
+groups:
+  - id: dejstvo
+    label: Videl ali izmeril
+  - id: domneva
+    label: Moja domneva
+items:
+  - id: koda
+    text: Na zaslonu je koda »visok tlak«
+    group: dejstvo
+    why: To si videl. Ne pove vzroka, a je dejstvo.
+  - id: dt
+    text: ΔT vode je dvakrat večja kot ob zagonu
+    group: dejstvo
+    why: Izmerjeno in primerjano z zapisnikom.
+  - id: listje
+    text: Na lamelah je listje
+    group: dejstvo
+    why: Videl si ga.
+  - id: hladivo
+    text: Verjetno manjka hladiva
+    group: domneva
+    why: Hipoteza – preveriš jo s SH in SC.
+  - id: serviser
+    text: Prejšnji serviser je naredil napako
+    group: domneva
+    why: Morda – a brez dokazov je to domneva, ne dejstvo.
+  - id: kompresor
+    text: Kompresor je na koncu življenjske dobe
+    group: domneva
+    why: Mnenje, ki ga moraš šele podpreti z meritvami.

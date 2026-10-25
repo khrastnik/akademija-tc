@@ -1,0 +1,38 @@
+id: deli-vodnega-kroga
+kind: sort
+groups:
+  - id: tlak
+    label: Tlak in varnost
+  - id: pretok
+    label: Pretok
+  - id: cistoca
+    label: Zrak in nečistoče
+items:
+  - id: posoda
+    text: Raztezna posoda
+    group: tlak
+    why: Sprejme raztezanje tople vode, da tlak ne skače.
+  - id: varnostni
+    text: Varnostni ventil
+    group: tlak
+    why: Izpusti vodo, če tlak zraste previsoko.
+  - id: manometer
+    text: Manometer vodnega kroga
+    group: tlak
+    why: Pokaže, ali je v krogu dovolj vode in ali tlak niha.
+  - id: crpalka
+    text: Obtočna črpalka
+    group: pretok
+    why: Poganja vodo skozi kondenzator in radiatorje.
+  - id: merilnik
+    text: Merilnik pretoka
+    group: pretok
+    why: Krmilniku pove, koliko vode teče.
+  - id: filter
+    text: Filter (lovilec nečistoč)
+    group: cistoca
+    why: Ujame rjo in mulj, preden zamašita prenosnik.
+  - id: odzracevalnik
+    text: Odzračevalnik
+    group: cistoca
+    why: Izpusti zrak, ki se nabere na vrhu kroga.

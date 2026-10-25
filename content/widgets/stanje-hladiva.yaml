@@ -1,0 +1,44 @@
+id: stanje-hladiva
+kind: sort
+groups:
+  - id: para-nt
+    label: Para, nizek tlak
+  - id: para-vt
+    label: Para, visok tlak
+  - id: tekocina-vt
+    label: Tekočina, visok tlak
+  - id: mesanica-nt
+    label: Mešanica, nizek tlak
+items:
+  - id: sesalni
+    text: Sesalni vod pred kompresorjem
+    group: para-nt
+    why: Hladivo je v uparjalniku že vse zavrelo. Kompresor sesa paro nizkega tlaka.
+  - id: izhod-uparjalnika
+    text: Izhod iz uparjalnika
+    group: para-nt
+    why: Na koncu uparjalnika je hladivo para, rahlo pregreta.
+  - id: tlacni
+    text: Tlačni vod za kompresorjem
+    group: para-vt
+    why: Kompresor je paro stisnil – visok tlak in visoka temperatura.
+  - id: vstop-kondenzatorja
+    text: Vstop v kondenzator
+    group: para-vt
+    why: Vroča para pride v kondenzator, kjer bo oddala toploto vodi.
+  - id: izhod-kondenzatorja
+    text: Izhod iz kondenzatorja
+    group: tekocina-vt
+    why: Para se je utekočinila. Tlak je še visok, ker ventil še ni na vrsti.
+  - id: tekocinski
+    text: Tekočinski vod pred ventilom
+    group: tekocina-vt
+    why: Tekočina čaka na ekspanzijski ventil pri visokem tlaku.
+  - id: za-ventilom
+    text: Takoj za ekspanzijskim ventilom
+    group: mesanica-nt
+    why: Tlak je padel, del tekočine je že zavrel – mešanica tekočine in pare.
+  - id: vstop-uparjalnika
+    text: Vstop v uparjalnik
+    group: mesanica-nt
+    why: Mrzla mešanica vstopi v uparjalnik in tam do konca zavre.

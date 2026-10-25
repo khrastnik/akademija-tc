@@ -1,0 +1,28 @@
+id: dvigni-spusti
+kind: sort
+groups:
+  - id: dvigni
+    label: Dvigni (več toplote)
+  - id: spusti
+    label: Spusti (manj toplote)
+items:
+  - id: vedno-mrzlo
+    text: V hiši je ob vsakem vremenu prehladno
+    group: dvigni
+    why: Premalo toplote ob vsakem vremenu – krivuljo premakneš višje.
+  - id: mraz
+    text: Prehladno je samo, ko je zunaj zelo mrzlo
+    group: dvigni
+    why: Pri mrazu potrebuješ več toplote – krivuljo narediš bolj strmo.
+  - id: vedno-toplo
+    text: V hiši je ob vsakem vremenu pretoplo
+    group: spusti
+    why: Preveč toplote ob vsakem vremenu – krivuljo premakneš nižje.
+  - id: okna
+    text: Stanovalci zračijo z odprtimi okni, ker je prevroče
+    group: spusti
+    why: Toploto mečejo skozi okno. Nižja krivulja prihrani elektriko.
+  - id: blago
+    text: Jeseni je pretoplo, pri mrazu pa ravno prav
+    group: spusti
+    why: Pri blagem vremenu je preveč toplote – krivuljo spustiš pri blagem vremenu, mraz pa ostane enak.

@@ -1,0 +1,59 @@
+id: m16-l01-q
+lesson: m16-l01
+questions:
+  - id: q1
+    type: single
+    text: Sumiš zamašen filter vode, a ΔT vode je normalna. Kaj narediš?
+    understand:
+      simpler: Ali meritev tvojo domnevo podpre ali ji nasprotuje?
+      terms: [hipoteza]
+      hint: Zamašen filter bi pomenil veliko ΔT.
+    options:
+      - id: a
+        text: Hipotezo ovržeš in preveriš naslednjo
+        correct: true
+        why: Normalna ΔT ne ustreza zamašenemu filtru. Hipoteza je ovržena – pojdi naprej.
+      - id: b
+        text: Vseeno očistiš filter za vsak primer
+        why: To je delo brez razloga. Meritev je hipotezo ovrgla.
+      - id: c
+        text: Meriš znova, dokler ne pokaže visoko
+        why: To je iskanje potrditve. Meritev ne prilagajaš pričakovanju.
+    lessonLink: m16-l01#why
+
+  - id: q2
+    type: single
+    text: Katero hipotezo preveriš najprej?
+    understand:
+      simpler: Ali začneš z najdražjo ali z najcenejšo preverbo?
+      terms: [hipoteza]
+      hint: Najlažje najprej.
+    options:
+      - id: a
+        text: Tisto, ki jo najceneje preveriš
+        correct: true
+        why: Hitra in poceni preverba pogosto izloči več vzrokov brez posega v napravo.
+      - id: b
+        text: Tisto, ki zveni najbolj strokovno
+        why: Strokovnost ni merilo. Merilo je, kako hitro in poceni jo preveriš.
+      - id: c
+        text: Tisto, ki zahteva manometre
+        why: Manometri so poseg in pridejo na konec – le, če so potrebni.
+    lessonLink: m16-l01#why
+
+  - id: q3
+    type: truefalse
+    text: Če meritev ne potrdi tvoje hipoteze, je verjetno napačna meritev.
+    understand:
+      simpler: Ali kriviš instrument, ker ti ni dal odgovora, ki si ga pričakoval?
+      terms: [hipoteza]
+      hint: Spomni se miselne pasti iz lekcije.
+    options:
+      - id: da
+        text: DA
+        why: To je iskanje potrditve. Meritev seveda preveri, če dvomiš – a najprej sprejmi, da je hipoteza lahko napačna.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Najpogosteje je napačna hipoteza, ne meritev.
+    lessonLink: m16-l01#field-error

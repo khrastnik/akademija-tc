@@ -1,0 +1,32 @@
+id: vec-manj-pretoka
+kind: sort
+groups:
+  - id: vec
+    label: Poveča pretok
+  - id: manj
+    label: Zmanjša pretok
+items:
+  - id: filter-zamasen
+    text: Zamašen filter vodnega kroga
+    group: manj
+    why: Mulj v mrežici je ovira – voda teče počasneje.
+  - id: zrak-crpalka
+    text: Zrak v obtočni črpalki
+    group: manj
+    why: Črpalka z zrakom slabo poganja vodo.
+  - id: zaprti-ventili
+    text: Zaprti termostatski ventili v skoraj vseh prostorih
+    group: manj
+    why: Voda ima manj poti, zato skupni pretok pade.
+  - id: filter-cist
+    text: Očiščen filter
+    group: vec
+    why: Brez ovire voda spet teče, kot mora.
+  - id: odzraceno
+    text: Odzračen sistem
+    group: vec
+    why: Brez zračnih čepov voda teče enakomerno.
+  - id: hitrost
+    text: Višja stopnja obtočne črpalke
+    group: vec
+    why: Črpalka premaga več upora in potisne več vode.

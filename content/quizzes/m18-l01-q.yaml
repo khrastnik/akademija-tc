@@ -1,0 +1,59 @@
+id: m18-l01-q
+lesson: m18-l01
+questions:
+  - id: q1
+    type: single
+    text: Med merjenjem na zaslonu vidiš »odtajevanje«. Kaj narediš?
+    understand:
+      simpler: Ali meritev med odtajevanjem opisuje ogrevanje?
+      terms: [ustalitev]
+      hint: Spomni se skoka na tehtnici.
+    options:
+      - id: a
+        text: Počakaš na ogrevanje in ustalitev
+        correct: true
+        why: Med odtajevanjem tok teče drugače. Zanesljiva je šele meritev pri ustaljenem ogrevanju.
+      - id: b
+        text: Zapišeš vrednosti, saj so izmerjene
+        why: Izmerjene so točno, a opisujejo odtajevanje, ne ogrevanja.
+      - id: c
+        text: Takoj zamenjaš ekspanzijski ventil
+        why: Menjava na podlagi meritve v prehodu je ugibanje.
+    lessonLink: m18-l01#story
+
+  - id: q2
+    type: single
+    text: Katera od naštetih je napaka trenutka?
+    understand:
+      simpler: Katera napaka nima nič z instrumentom ali sondo, ampak s časom meritve?
+      terms: [meritev]
+      hint: Tri vrste – instrument, namestitev, trenutek.
+    options:
+      - id: a
+        text: Meritev takoj po zagonu
+        correct: true
+        why: Po zagonu se vrednosti še spreminjajo – to je napaka trenutka.
+      - id: b
+        text: Prazna baterija instrumenta
+        why: To je napaka instrumenta.
+      - id: c
+        text: Sonda brez izolacije
+        why: To je napaka namestitve.
+    lessonLink: m18-l01#what
+
+  - id: q3
+    type: truefalse
+    text: Točen instrument vedno da uporabno meritev.
+    understand:
+      simpler: Ali dober instrument pomaga, če meriš ob napačnem času ali na napačnem mestu?
+      terms: [meritev]
+      hint: Točna številka v napačnem trenutku.
+    options:
+      - id: da
+        text: DA
+        why: Tudi najboljši instrument izmeri napačno stvar, če je sonda slabo nameščena ali meriš v prehodu.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Namestitev in trenutek sta enako pomembna kot instrument.
+    lessonLink: m18-l01#remember

@@ -1,0 +1,38 @@
+id: vrsta-napake
+kind: sort
+groups:
+  - id: instrument
+    label: Instrument
+  - id: namestitev
+    label: Namestitev
+  - id: trenutek
+    label: Trenutek
+items:
+  - id: baterija
+    text: Prazna baterija v termometru
+    group: instrument
+    why: Instrument sam ne dela prav.
+  - id: hladivo
+    text: Na manometru je izbrano napačno hladivo
+    group: instrument
+    why: Tlak je prav, izračun temperature pa ne – nastavitev instrumenta.
+  - id: izolacija
+    text: Sonda brez izolacije na vetru
+    group: namestitev
+    why: Instrument je dober, a meri zrak namesto cevi.
+  - id: ir
+    text: Infrardeči termometer na sijoči cevi
+    group: namestitev
+    why: Napačen način merjenja za to površino.
+  - id: odtajevanje
+    text: Meritev med odtajevanjem
+    group: trenutek
+    why: Naprava je v prehodu – tok hladiva je obrnjen.
+  - id: zagon
+    text: Meritev takoj po zagonu
+    group: trenutek
+    why: Vrednosti se še ustaljujejo.
+  - id: bojler
+    text: Meritev ΔT med segrevanjem bojlerja
+    group: trenutek
+    why: Voda takrat teče v bojler, ne v radiatorje.

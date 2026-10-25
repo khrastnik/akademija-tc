@@ -1,0 +1,32 @@
+id: visok-nizek-sh
+kind: sort
+groups:
+  - id: visok
+    label: Visok SH
+  - id: nizek
+    label: Nizek SH
+items:
+  - id: premalo
+    text: Premalo hladiva zaradi puščanja
+    group: visok
+    why: Hladivo zavre že na začetku uparjalnika, para se dolgo greje.
+  - id: eev-zaprt
+    text: Ekspanzijski ventil prepušča premalo
+    group: visok
+    why: V uparjalnik pride premalo hladiva – lačen uparjalnik.
+  - id: susilnik
+    text: Zamašen filter sušilnik
+    group: visok
+    why: Zožitev pred ventilom zmanjša dotok hladiva v uparjalnik.
+  - id: eev-odprt
+    text: Ekspanzijski ventil prepušča preveč
+    group: nizek
+    why: V uparjalniku je tekočina skoraj do konca – para se ne utegne pregreti.
+  - id: listje
+    text: Lamele uparjalnika zamašene z listjem
+    group: nizek
+    why: Hladivo dobi premalo toplote iz zraka, zato ne zavre do konca in se ne pregreje.
+  - id: led
+    text: Uparjalnik obložen z ledom
+    group: nizek
+    why: Led je ovira za zrak in toploto – hladivo ostane tekoče dlje.

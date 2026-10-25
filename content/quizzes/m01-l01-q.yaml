@@ -1,0 +1,59 @@
+id: m01-l01-q
+lesson: m01-l01
+questions:
+  - id: q1
+    type: single
+    text: Od kod pride večina toplote, ki jo toplotna črpalka odda v hišo?
+    understand:
+      simpler: Ali črpalka toploto naredi iz elektrike ali jo od nekod prinese?
+      terms: [toplotna-crpalka]
+      hint: Spomni se hladilnika in tople rešetke zadaj.
+    options:
+      - id: a
+        text: Iz zunanjega zraka
+        correct: true
+        why: Črpalka toploto prenaša iz zraka v vodo. Elektrika plača le prenos, zato je oddane toplote več kot porabljene elektrike.
+      - id: b
+        text: Iz porabljene elektrike
+        why: Tako dela električni grelec. Črpalka elektriko porabi za kompresor, večina toplote pa pride iz zraka.
+      - id: c
+        text: Iz vode v radiatorjih
+        why: Voda v radiatorjih toploto sprejme, ne odda. Je cilj toplote, ne njen vir.
+    lessonLink: m01-l01#what
+
+  - id: q2
+    type: truefalse
+    text: Pri −5 °C v zunanjem zraku ni več toplote, ki bi jo črpalka lahko vzela.
+    understand:
+      simpler: Ali »mrzlo« pomeni, da toplote sploh ni?
+      terms: []
+      hint: Kaj mora veljati za hladivo v zunanji enoti, da toplota teče vanj?
+    options:
+      - id: da
+        text: DA
+        why: Mrzel zrak ima manj toplote, a je še vedno ima. Dokler je hladivo hladnejše od zraka, toplota teče vanj.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Hladivo v uparjalniku je hladnejše od zraka, zato toplota teče iz zraka vanj tudi pri mrazu.
+    lessonLink: m01-l01#why
+
+  - id: q3
+    type: single
+    text: Kaj se zgodi z grelnim številom, ko zvišaš temperaturo vode v ogrevanju?
+    understand:
+      simpler: Ali ima kompresor več ali manj dela, ko mora vodo segreti bolj?
+      terms: [cop]
+      hint: Pomisli na višino dviga pri dvigalu za vodo.
+    options:
+      - id: a
+        text: Grelno število pade
+        correct: true
+        why: Večja razlika med zunanjim zrakom in vodo pomeni več dela za kompresor za isto toploto.
+      - id: b
+        text: Grelno število naraste
+        why: Bilo bi obratno, če bi kompresor imel manj dela. Višja temperatura vode pomeni več dela.
+      - id: c
+        text: Grelno število ostane enako
+        why: Grelno število ni stalno. Spreminja se z zunanjo temperaturo in s temperaturo vode.
+    lessonLink: m01-l01#numbers

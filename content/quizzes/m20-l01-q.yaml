@@ -1,0 +1,59 @@
+id: m20-l01-q
+lesson: m20-l01
+questions:
+  - id: q1
+    type: single
+    text: Katera od trditev je domneva, ne dejstvo?
+    understand:
+      simpler: Katere stvari nisi videl ali izmeril, ampak jo misliš?
+      terms: [hipoteza]
+      hint: Besede »verjetno« ali »mislim« so dober namig.
+    options:
+      - id: a
+        text: »Verjetno manjka hladiva.«
+        correct: true
+        why: To je hipoteza, ki jo moraš šele preveriti z meritvami.
+      - id: b
+        text: »Na zaslonu je koda visok tlak.«
+        why: To si videl – je dejstvo, čeprav ne pove vzroka.
+      - id: c
+        text: »ΔT vode je 12 K.«
+        why: To si izmeril – je dejstvo.
+    lessonLink: m20-l01#what
+
+  - id: q2
+    type: single
+    text: Na zaslonu je koda, ki je ni v priročniku. Kaj je dober prvi korak?
+    understand:
+      simpler: Kako dobiš več podatkov, ne da bi ugibal?
+      terms: [simptom]
+      hint: Rutina pri neznani napaki.
+    options:
+      - id: a
+        text: Fotografiraš in pokličeš podporo
+        correct: true
+        why: Fotografija kode in tipske ploščice ter meritve podpori omogočijo hitro pomoč.
+      - id: b
+        text: Zamenjaš krmilno ploščo
+        why: Menjava dela brez diagnoze je ugibanje – in drago.
+      - id: c
+        text: Napravo izklopiš in odideš
+        why: Stranka ostane brez ogrevanja, ti pa brez odgovora.
+    lessonLink: m20-l01#measure
+
+  - id: q3
+    type: truefalse
+    text: Dober serviser vedno takoj ve, kaj je narobe.
+    understand:
+      simpler: Ali izkušnja pomeni, da nikoli ne naletiš na neznano?
+      terms: [vzrok]
+      hint: Spomni se zdravnika na urgenci.
+    options:
+      - id: da
+        text: DA
+        why: Tudi izkušeni naletijo na neznano. Dober serviser ima postopek, ne vseh odgovorov.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Dober serviser ve, kako poiskati odgovor – ne pa vedno takoj odgovora.
+    lessonLink: m20-l01#field-error

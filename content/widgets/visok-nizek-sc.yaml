@@ -1,0 +1,28 @@
+id: visok-nizek-sc
+kind: sort
+groups:
+  - id: visok
+    label: Visok SC
+  - id: nizek
+    label: Nizek SC
+items:
+  - id: premalo
+    text: Premalo hladiva zaradi puščanja
+    group: nizek
+    why: V kondenzatorju skoraj ni tekočine, ki bi se lahko ohladila.
+  - id: preve
+    text: Preveč hladiva v krogu
+    group: visok
+    why: Odvečna tekočina se nabira v kondenzatorju in se dolgo ohlaja.
+  - id: eev
+    text: Ekspanzijski ventil se zatika
+    group: visok
+    why: Hladivo ne pride skozi ventil in se nabira v kondenzatorju.
+  - id: susilnik
+    text: Zamašen filter sušilnik
+    group: visok
+    why: Zožitev na tekočinskem vodu zadrži hladivo v kondenzatorju.
+  - id: puscanje
+    text: Oljni madež na spoju cevi
+    group: nizek
+    why: Madež olja je namig za puščanje – hladivo uhaja, tekočine je malo.

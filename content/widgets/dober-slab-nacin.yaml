@@ -1,0 +1,36 @@
+id: dober-slab-nacin
+kind: sort
+groups:
+  - id: zanesljivo
+    label: Zanesljivo
+  - id: dvomljivo
+    label: Dvomljivo
+items:
+  - id: pasta
+    text: Kontaktna sonda s toplotno pasto na očiščeni cevi
+    group: zanesljivo
+    why: Dober stik pomeni, da je sonda skoraj enako topla kot cev.
+  - id: izolacija
+    text: Sonda, prekrita z izolacijo
+    group: zanesljivo
+    why: Izolacija prepreči, da bi zrak sondo grel ali hladil.
+  - id: ustaljeno
+    text: Meritev po nekaj minutah enakomernega delovanja
+    group: zanesljivo
+    why: Pri ustaljenem delovanju se vrednosti ne spreminjajo več bistveno.
+  - id: ir-baker
+    text: Infrardeči termometer na sijoči bakreni cevi
+    group: dvomljivo
+    why: Sijoča kovina odbija sevanje okolice – meriš odboj, ne cevi.
+  - id: rob
+    text: Sonda se cevi dotika le z robom, na vetru
+    group: dvomljivo
+    why: Sondo obliva zrak, zato pokaže nekaj med cevjo in zrakom.
+  - id: zagon
+    text: Meritev takoj po zagonu
+    group: dvomljivo
+    why: Po zagonu se temperature še hitro spreminjajo.
+  - id: odtajevanje
+    text: Meritev med odtajevanjem
+    group: dvomljivo
+    why: Med odtajevanjem tok teče drugače kot pri ogrevanju – meritev ne opisuje ogrevanja.

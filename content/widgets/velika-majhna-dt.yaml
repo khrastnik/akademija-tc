@@ -1,0 +1,32 @@
+id: velika-majhna-dt
+kind: sort
+groups:
+  - id: velika
+    label: Velika ΔT
+  - id: majhna
+    label: Majhna ΔT
+items:
+  - id: filter
+    text: Zamašen filter vodnega kroga
+    group: velika
+    why: Pretok pade, zato vsak liter vode odnese več toplote.
+  - id: zrak
+    text: Zrak v obtočni črpalki
+    group: velika
+    why: Črpalka poganja manj vode – pretok pade, ΔT naraste.
+  - id: nizka-stopnja
+    text: Obtočna črpalka na najnižji stopnji
+    group: velika
+    why: Manj pretoka pri isti moči pomeni večjo razliko.
+  - id: visoka-stopnja
+    text: Obtočna črpalka na najvišji stopnji
+    group: majhna
+    why: Veliko pretoka – vsak liter odnese le malo toplote.
+  - id: mala-moc
+    text: Kompresor dela na najnižji moči
+    group: majhna
+    why: Naprava odda malo toplote, zato se voda malo segreje.
+  - id: topla-hisa
+    text: Hiša je že topla, radiatorji oddajo malo toplote
+    group: majhna
+    why: Voda se v radiatorjih le malo ohladi, zato je povratni vod skoraj tako topel kot dvižni.

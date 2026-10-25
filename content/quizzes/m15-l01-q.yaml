@@ -1,0 +1,59 @@
+id: m15-l01-q
+lesson: m15-l01
+questions:
+  - id: q1
+    type: single
+    text: Kateri par meritev je v primeru pokazal na premajhen pretok vode?
+    understand:
+      simpler: Kateri dve meritvi skupaj kažeta, da voda ne odnaša toplote?
+      terms: [vzorec]
+      hint: Ena meritev je na vodi, druga na hladivu.
+    options:
+      - id: a
+        text: Velika ΔT in visok tlak
+        correct: true
+        why: Voda teče prepočasi (velika ΔT), zato toplota ostane v hladivu (visok tlak).
+      - id: b
+        text: Nizek tlak vode in šumenje
+        why: To bi kazalo na zrak v vodi. Tu je bil tlak vode normalen.
+      - id: c
+        text: Visok SH in nizek SC
+        why: To je vzorec za premalo hladiva. Tu manometrov sploh ni bilo treba priklopiti.
+    lessonLink: m15-l01#why
+
+  - id: q2
+    type: single
+    text: Kaj je bil zadnji korak verige v tem primeru?
+    understand:
+      simpler: Kako je serviserka vedela, da je popravilo uspelo?
+      terms: [diagnoza]
+      hint: Popravilo ni konec.
+    options:
+      - id: a
+        text: Preverjanje ΔT in kode po popravilu
+        correct: true
+        why: Šele ko se ΔT vrne in koda ne ponovi, je vzrok dokazan.
+      - id: b
+        text: Čiščenje filtra
+        why: Čiščenje je popravilo – predzadnji korak.
+      - id: c
+        text: Zapis kode napake
+        why: Zapis kode je del simptoma – začetek verige.
+    lessonLink: m15-l01#remember
+
+  - id: q3
+    type: truefalse
+    text: Visoka temperatura kondenzacije v tem primeru pomeni, da je v krogu preveč hladiva.
+    understand:
+      simpler: Ali je visoka temperatura kondenzacije tu vzrok ali posledica?
+      terms: [vzorec]
+      hint: Kam gre toplota, če je voda ne odnese?
+    options:
+      - id: da
+        text: DA
+        why: Tu je visoka temperatura kondenzacije posledica premajhnega pretoka vode. Izpuščanje hladiva bi naredilo novo napako.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Toplota ostane v hladivu, ker je voda ne odnese – vzrok je v vodi.
+    lessonLink: m15-l01#field-error

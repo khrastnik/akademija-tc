@@ -1,0 +1,59 @@
+id: m12-l01-q
+lesson: m12-l01
+questions:
+  - id: q1
+    type: single
+    text: Hiša je prehladna samo, ko je zunaj zelo mrzlo. Kaj spremeniš?
+    understand:
+      simpler: Ali potrebuješ več toplote vedno ali samo pri mrazu?
+      terms: [ogrevalna-krivulja]
+      hint: Spomni se oblačenja – boljša oprema samo za mraz.
+    options:
+      - id: a
+        text: Strmino krivulje
+        correct: true
+        why: Strmejša krivulja da več toplote samo pri mrazu, pri blagem vremenu pa ostane enako.
+      - id: b
+        text: Vzporedni premik navzdol
+        why: Premik navzdol bi dal manj toplote ob vsakem vremenu – še bolj prehladno.
+      - id: c
+        text: Nič, to je normalno
+        why: Hladna hiša pri mrazu ni normalna. Krivulja je premalo strma.
+    lessonLink: m12-l01#why
+
+  - id: q2
+    type: single
+    text: Iz zunanje enote se pozimi občasno kadi, ventilator pa stoji. Kaj je to?
+    understand:
+      simpler: Kaj naprava naredi, ko se na lamelah nabere led?
+      terms: [odtajevanje]
+      hint: Para in ustavljen ventilator za nekaj minut.
+    options:
+      - id: a
+        text: Normalno odtajevanje
+        correct: true
+        why: Vroč plin stopi led, ventilator stoji, para se dviga. To je predvideno delovanje.
+      - id: b
+        text: Požar v kompresorju
+        why: Para pri odtajevanju je vodna para iz stopljenega ledu, ne dim.
+      - id: c
+        text: Okvara ventilatorja
+        why: Ventilator med odtajevanjem stoji namenoma, da toplota ostane na lamelah.
+    lessonLink: m12-l01#measure
+
+  - id: q3
+    type: truefalse
+    text: Spremembe krivulje so takoj vidne, zato jih lahko delaš na hitro.
+    understand:
+      simpler: Kako hitro se hiša segreje ali ohladi?
+      terms: [ogrevalna-krivulja]
+      hint: Hiša je počasna.
+    options:
+      - id: da
+        text: DA
+        why: Hiša se odziva počasi. Učinek spremembe oceni šele po dnevu ali več.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Spremembe po malem in počakaj, da se hiša odzove.
+    lessonLink: m12-l01#numbers

@@ -1,0 +1,59 @@
+id: m02-l01-q
+lesson: m02-l01
+questions:
+  - id: q1
+    type: single
+    text: V katerem delu hladivo vzame toploto zunanjemu zraku?
+    understand:
+      simpler: Kje v krogu hladivo zavre?
+      terms: [uparjalnik, kondenzator]
+      hint: Zunaj vre, notri se utekočini.
+    options:
+      - id: a
+        text: V uparjalniku
+        correct: true
+        why: V uparjalniku je hladivo hladnejše od zraka, zato vzame toploto in zavre.
+      - id: b
+        text: V kondenzatorju
+        why: V kondenzatorju hladivo toploto odda vodi, ne sprejme od zraka.
+      - id: c
+        text: V kompresorju
+        why: Kompresor paro stisne in jo segreje, toplote zraka pa ne pobira.
+    lessonLink: m02-l01#why
+
+  - id: q2
+    type: single
+    text: Kaj naredi ekspanzijski ventil?
+    understand:
+      simpler: Kaj se zgodi s hladivom, ko gre skozi ozko odprtino?
+      terms: [ekspanzijski-ventil]
+      hint: Spomni se šobe pršila.
+    options:
+      - id: a
+        text: Zniža tlak in s tem temperaturo
+        correct: true
+        why: Za ozko odprtino tlak pade, s tlakom pa tudi temperatura vrenja – hladivo je spet mrzlo.
+      - id: b
+        text: Zviša tlak hladiva
+        why: Tlak zviša kompresor. Ventil ga zniža.
+      - id: c
+        text: Odda toploto vodi
+        why: Toploto vodi odda kondenzator. Ventil le pripravi hladivo za uparjalnik.
+    lessonLink: m02-l01#remember
+
+  - id: q3
+    type: truefalse
+    text: Hladivo se med delovanjem porablja, zato ga je treba redno dolivati.
+    understand:
+      simpler: Ali je krog hladiva odprt ali zaprt?
+      terms: [hladivo]
+      hint: Če hladiva zmanjka, kam je šlo?
+    options:
+      - id: da
+        text: DA
+        why: Krog je zaprt. Če hladiva zmanjka, nekje pušča – puščanje je treba najti in popraviti.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. V zaprtem krogu se hladivo ne porablja. Manjko pomeni puščanje.
+    lessonLink: m02-l01#what

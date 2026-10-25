@@ -1,0 +1,59 @@
+id: m10-l01-q
+lesson: m10-l01
+questions:
+  - id: q1
+    type: single
+    text: Zakaj je v inverterju nevarno tudi po izklopu varovalke?
+    understand:
+      simpler: Kaj v inverterju še hrani elektriko, ko je napajanje izklopljeno?
+      terms: [inverter]
+      hint: Spomni se rezervoarja na strehi.
+    options:
+      - id: a
+        text: Kondenzatorji ostanejo nabiti
+        correct: true
+        why: Kondenzatorji shranjujejo napetost in se po izklopu praznijo počasi.
+      - id: b
+        text: Kompresor se vrti še nekaj ur
+        why: Kompresor se po izklopu ustavi. Nevarnost so nabiti kondenzatorji.
+      - id: c
+        text: Hladivo prevaja elektriko
+        why: Nevarnost ni v hladivu, ampak v shranjeni napetosti v elektroniki.
+    lessonLink: m10-l01#why
+
+  - id: q2
+    type: single
+    text: Kaj sme lastnik narediti sam?
+    understand:
+      simpler: Katero opravilo ne zahteva odpiranja naprave?
+      terms: []
+      hint: Vse, kar je za ohišjem, je delo za usposobljeno osebo.
+    options:
+      - id: a
+        text: Fotografirati kodo napake na zaslonu
+        correct: true
+        why: To je varno in serviserju zelo pomaga.
+      - id: b
+        text: Odpreti pokrov in pogledati ploščo
+        why: Za pokrovom je lahko nevarna napetost tudi po izklopu.
+      - id: c
+        text: Izmeriti napetost na sponkah
+        why: Merjenje napetosti zahteva usposobljenost in ustrezno opremo.
+    lessonLink: m10-l01#measure
+
+  - id: q3
+    type: truefalse
+    text: Varovalko, ki izpade večkrat zapored, lahko vedno znova vklopiš.
+    understand:
+      simpler: Ali je ponavljajoče izpadanje varovalke naključje?
+      terms: []
+      hint: Varovalka je zaščita, ne nagajivka.
+    options:
+      - id: da
+        text: DA
+        why: Ponavljajoče izpadanje kaže na okvaro. Vklapljanje na silo lahko poveča škodo ali ogrozi ljudi.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Varovalka, ki izpada, ščiti pred okvaro. Pokliči serviserja.
+    lessonLink: m10-l01#field-error

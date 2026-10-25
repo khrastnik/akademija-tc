@@ -1,0 +1,36 @@
+id: res-ali-mit
+kind: sort
+groups:
+  - id: drzi
+    label: Drži
+  - id: mit
+    label: Mit
+items:
+  - id: prenasa
+    text: Toplotna črpalka toploto prenaša, ne proizvaja.
+    group: drzi
+    why: Toploto vzame zunanjemu zraku in jo odda vodi. Elektrika poganja le prenos.
+  - id: mraz
+    text: Tudi zrak pri −5 °C vsebuje toploto.
+    group: drzi
+    why: Mrzlo pomeni manj toplote, ne nič. Hladivo je še hladnejše, zato toplota teče vanj.
+  - id: hladilnik
+    text: Hladilnik deluje po istem principu.
+    group: drzi
+    why: Hladilnik toploto odnaša iz notranjosti in jo odda skozi rešetko zadaj.
+  - id: nizka-t
+    text: Nižja temperatura vode pomeni boljše grelno število.
+    group: drzi
+    why: Manjša razlika med zrakom in vodo pomeni manj dela za kompresor.
+  - id: grelec
+    text: Toplotna črpalka greje enako kot električni grelec.
+    group: mit
+    why: Grelec vso toploto naredi iz elektrike. Črpalka večino toplote prinese iz zraka.
+  - id: vroce
+    text: Pri mrazu naj voda v radiatorjih teče čim bolj vroča.
+    group: mit
+    why: Previsoka temperatura vode zniža grelno število. Vodo segrej toliko, kot hiša res potrebuje.
+  - id: iz-nic
+    text: Kompresor proizvede toploto iz nič.
+    group: mit
+    why: Kompresor toploto, ki jo hladivo vzame zraku, le dvigne na višjo temperaturo.

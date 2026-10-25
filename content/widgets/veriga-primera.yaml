@@ -1,0 +1,36 @@
+id: veriga-primera
+kind: sort
+groups:
+  - id: simptom
+    label: Simptom
+  - id: meritev
+    label: Meritev
+  - id: vzrok
+    label: Vzrok
+  - id: preverjanje
+    label: Preverjanje
+items:
+  - id: koda
+    text: Zjutraj koda »visok tlak«
+    group: simptom
+    why: To je krmilnik zaznal – posledica, ne vzrok.
+  - id: mlacno
+    text: Radiatorji v nadstropju so mlačni
+    group: simptom
+    why: To opazi stranka.
+  - id: dt
+    text: ΔT vode je več kot dvakrat večja kot ob zagonu
+    group: meritev
+    why: Številka z instrumenta, primerjana z isto napravo.
+  - id: tlak-vode
+    text: Tlak vode je normalen
+    group: meritev
+    why: Odčitek, ki izloči zrak v vodi kot vzrok.
+  - id: mulj
+    text: Filter je poln rje in mulja
+    group: vzrok
+    why: To zmanjša pretok in povzroči oba simptoma.
+  - id: po-ciscenju
+    text: Po čiščenju je ΔT normalna in koda se ne ponovi
+    group: preverjanje
+    why: Simptom je izginil, meritve so normalne – vzrok je dokazan.

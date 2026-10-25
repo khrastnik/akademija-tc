@@ -1,0 +1,32 @@
+id: sme-ali-ne
+kind: sort
+groups:
+  - id: lastnik
+    label: Sme lastnik
+  - id: usposobljen
+    label: Samo usposobljena oseba
+items:
+  - id: koda
+    text: Fotografirati kodo napake
+    group: lastnik
+    why: Varno in koristno – serviser takoj ve, kaj je krmilnik zaznal.
+  - id: ploscica
+    text: Fotografirati tipsko ploščico
+    group: lastnik
+    why: Model in serijska številka serviserju pomagata najti prave podatke.
+  - id: izklop
+    text: Izklopiti napravo po navodilih proizvajalca
+    group: lastnik
+    why: Izklop po navodilih je predviden za uporabnika.
+  - id: pokrov
+    text: Odpreti pokrov zunanje enote
+    group: usposobljen
+    why: Za pokrovom je napetost in vroče ali hladne cevi.
+  - id: napetost
+    text: Izmeriti napetost na sponkah
+    group: usposobljen
+    why: Zahteva usposobljenost in ustrezno opremo.
+  - id: plosca
+    text: Dotakniti se inverterske plošče po izklopu
+    group: usposobljen
+    why: Kondenzatorji so lahko še nabiti.

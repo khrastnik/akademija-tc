@@ -1,0 +1,32 @@
+id: potrebujes
+kind: sort
+groups:
+  - id: potrebujes
+    label: Potrebuješ
+  - id: ni-dovolj
+    label: Ni dovolj
+items:
+  - id: spricevalo
+    text: Spričevalo za delo s hladivi
+    group: potrebujes
+    why: Uradna zahteva za posege v krog hladiva.
+  - id: oprema
+    text: Manometri, vakuumska črpalka, tehtnica, detektor puščanja
+    group: potrebujes
+    why: Brez prave opreme ne moreš delati po pravilih.
+  - id: dejavnost
+    text: Registrirana dejavnost in zavarovanje
+    group: potrebujes
+    why: Zaščitita stranko in tebe – zahteve preveri pri pristojnem organu.
+  - id: tecaj
+    text: Ta spletni tečaj
+    group: ni-dovolj
+    why: Daje znanje, ne spričevala.
+  - id: video
+    text: Ogled videa na spletu
+    group: ni-dovolj
+    why: Video ne nadomesti prakse ne usposabljanja.
+  - id: izkusnje
+    text: Leta izkušenj brez spričevala
+    group: ni-dovolj
+    why: Izkušnje so dragocene, a ne nadomestijo uradne zahteve.

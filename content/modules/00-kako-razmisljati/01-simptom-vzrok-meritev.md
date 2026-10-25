@@ -101,4 +101,4 @@ Diagnostična veriga v sedmih korakih:
 - Najprej preveri najlažje: voda, zrak, nastavitve.
 - Popravilo ni konec – konec je preverjanje.
 
-**Kaj sledi:** v lekciji 0.2 bomo iz več meritev skupaj sestavljali **vzorec** in postavljali **[[hipoteza|hipoteze]]**, ki jih lahko preverimo.
+**Kaj sledi:** v modulu 1 spoznaš, kako toplotna črpalka sploh greje – in zakaj tudi pri mrazu. Kasneje bomo iz več meritev sestavljali **vzorec** in postavljali **[[hipoteza|hipoteze]]**.

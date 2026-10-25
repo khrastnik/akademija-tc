@@ -1,0 +1,214 @@
+- id: toplotna-crpalka
+  sl: toplotna črpalka
+  en: heat pump
+  abbr: TČ
+  kratkaRazlaga: Naprava, ki toploto iz okolice z delom kompresorja prenese na višjo temperaturo.
+  dolgaRazlaga: Toplotna črpalka toplote ne proizvaja, ampak jo prenaša – iz zraka, zemlje ali vode v ogrevalni krog. Elektriko porabi za pogon kompresorja, ki toploto »dvigne« na uporabno temperaturo.
+  analogija: Kot hladilnik, obrnjen na glavo – hladilnik toploto odnaša iz hrane v kuhinjo, TČ iz zraka v hišo.
+  povezaneLekcije: [m01-l01]
+
+- id: cop
+  sl: grelno število
+  en: coefficient of performance
+  abbr: COP
+  kratkaRazlaga: Koliko toplote naprava odda za vsako enoto porabljene elektrike.
+  dolgaRazlaga: Grelno število je razmerje med oddano toploto in porabljeno električno energijo v istem trenutku. Odvisno je od temperature zunanjega zraka in temperature vode – čim manjša je razlika med njima, tem višje je.
+  analogija: Kot dvigalo – manjša višina dviga pomeni manj dela za isti tovor.
+  povezaneLekcije: [m01-l01]
+
+- id: hladivo
+  sl: hladivo
+  en: refrigerant
+  kratkaRazlaga: Snov, ki v zaprtem krogu kroži, vre in se utekočinja ter pri tem prenaša toploto.
+  dolgaRazlaga: Hladivo je izbrano tako, da pri tlakih v napravi vre pri nizki in se utekočini pri višji temperaturi. Pri tem sprejme in odda veliko toplote. Delo s hladivi je zakonsko urejeno in zahteva spričevalo.
+  analogija: Kot dostavljalec, ki toploto prevzame zunaj in jo odloži v hiši.
+  povezaneLekcije: [m02-l01]
+
+- id: kompresor
+  sl: kompresor
+  en: compressor
+  kratkaRazlaga: Stisne paro hladiva na višji tlak in s tem na višjo temperaturo.
+  dolgaRazlaga: Kompresor je srce kroga hladiva. Posrka paro nizkega tlaka iz uparjalnika in jo potisne v kondenzator z visokim tlakom. Porabi večino elektrike naprave.
+  analogija: Kot tlačilka za kolo, ki se pri stiskanju segreje.
+  povezaneLekcije: [m02-l01]
+
+- id: kondenzator
+  sl: kondenzator
+  en: condenser
+  kratkaRazlaga: Prenosnik, kjer vroča para hladiva odda toploto vodi in se utekočini.
+  dolgaRazlaga: Pri ogrevanju je kondenzator običajno ploščni prenosnik v notranji enoti. Na eni strani teče hladivo, na drugi voda ogrevalnega kroga.
+  analogija: Kot rosenje na hladni šipi – para odda toploto in postane tekočina.
+  povezaneLekcije: [m02-l01]
+
+- id: uparjalnik
+  sl: uparjalnik
+  en: evaporator
+  kratkaRazlaga: Prenosnik, kjer hladivo vzame toploto okolici in zavre.
+  dolgaRazlaga: Pri TČ zrak–voda so to lamele zunanje enote. Hladivo je v njih hladnejše od zraka, zato toplota teče iz zraka v hladivo.
+  analogija: Kot mokra koža na vetru – izhlapevanje jemlje toploto.
+  povezaneLekcije: [m02-l01]
+
+- id: ekspanzijski-ventil
+  sl: ekspanzijski ventil
+  en: expansion valve
+  abbr: EEV
+  kratkaRazlaga: Zoži pot hladivu in mu zniža tlak, s tem pa tudi temperaturo.
+  dolgaRazlaga: Elektronski ekspanzijski ventil krmilnik odpira in zapira tako, da v uparjalnik pride ravno prav hladiva. Za ventilom je hladivo mešanica tekočine in pare pri nizkem tlaku.
+  analogija: Kot šoba pršila – plin za njo je mrzel.
+  povezaneLekcije: [m02-l01]
+
+- id: nasicenje
+  sl: temperatura nasičenja
+  en: saturation temperature
+  kratkaRazlaga: Temperatura, pri kateri hladivo pri danem tlaku vre ali se utekočinja.
+  dolgaRazlaga: "Za vsako hladivo velja tabela tlak–temperatura: višji tlak pomeni višjo temperaturo vrelišča. Digitalni manometri temperaturo nasičenja izračunajo sami, če izbereš pravo hladivo."
+  analogija: Kot lonec na pritisk – pod večjim tlakom voda vre pri višji temperaturi.
+  povezaneLekcije: [m04-l01, m07-l01]
+
+- id: nadtlak
+  sl: nadtlak
+  en: gauge pressure
+  kratkaRazlaga: Tlak nad zunanjim zračnim tlakom – to kaže običajen manometer.
+  dolgaRazlaga: Manometer pri odprtem priključku kaže nič, čeprav je okoli nas zračni tlak. Zato moraš vedeti, ali je tabela, ki jo uporabljaš, v nadtlaku ali absolutnem tlaku.
+  analogija: Kot višina nad morjem namesto razdalje od središča Zemlje.
+  povezaneLekcije: [m04-l01]
+
+- id: absolutni-tlak
+  sl: absolutni tlak
+  en: absolute pressure
+  kratkaRazlaga: Tlak, merjen od popolnega vakuuma naprej.
+  dolgaRazlaga: Absolutni tlak je nadtlak plus zračni tlak. Pri izračunih z eno samo tabelo je pomembno, da ne mešaš obeh.
+  analogija: Kot štetje od nič namesto od vrha mize.
+  povezaneLekcije: [m04-l01]
+
+- id: pretok
+  sl: pretok
+  en: flow rate
+  kratkaRazlaga: Koliko vode ali zraka steče skozi napravo v določenem času.
+  dolgaRazlaga: Premajhen pretok vode pomeni, da voda iz kondenzatorja odnese premalo toplote, zato tlak hladiva naraste. Premajhen pretok zraka pomeni, da uparjalnik dobi premalo toplote.
+  analogija: Kot promet na cesti – zastoj na enem mestu ustavi vse.
+  povezaneLekcije: [m05-l01]
+
+- id: delta-t
+  sl: razlika temperatur
+  en: temperature difference
+  abbr: ΔT
+  kratkaRazlaga: Razlika med temperaturo dvižnega in povratnega voda, v kelvinih.
+  dolgaRazlaga: ΔT skupaj s pretokom pove, koliko toplote voda prenese. Pri enaki moči manjši pretok pomeni večjo ΔT.
+  analogija: Kot razlika med polno in prazno košaro – pove, koliko si prinesel.
+  povezaneLekcije: [m06-l01]
+
+- id: pregrevanje
+  sl: pregrevanje
+  en: superheat
+  abbr: SH
+  kratkaRazlaga: Za koliko je para v sesalnem vodu toplejša od temperature uparjanja.
+  dolgaRazlaga: Pregrevanje izračunaš kot temperaturo sesalnega voda minus temperaturo nasičenja na nizkotlačni strani. Pove, ali uparjalnik dobi preveč ali premalo hladiva.
+  analogija: Kot lonec, iz katerega je vsa voda že izhlapela – če grelec še greje, raste temperatura pare.
+  povezaneLekcije: [m07-l01]
+
+- id: podhlajevanje
+  sl: podhlajevanje
+  en: subcooling
+  abbr: SC
+  kratkaRazlaga: Za koliko je tekočina za kondenzatorjem hladnejša od temperature kondenzacije.
+  dolgaRazlaga: Podhlajevanje izračunaš kot temperaturo kondenzacije minus temperaturo tekočinskega voda. Pove, koliko tekočega hladiva se nabira v kondenzatorju.
+  analogija: Kot voda, ki ostane v kozarcu, potem ko se para že vsa zgosti.
+  povezaneLekcije: [m08-l01]
+
+- id: raztezna-posoda
+  sl: raztezna posoda
+  en: expansion vessel
+  kratkaRazlaga: Posoda z zračno blazino, ki sprejme raztezanje tople vode.
+  dolgaRazlaga: Voda se ob segrevanju razteza. Raztezna posoda to prostornino sprejme, da tlak v krogu ne skače. Prazna posoda povzroča nihanje tlaka in kapljanje varnostnega ventila.
+  analogija: Kot blažilnik v avtu.
+  povezaneLekcije: [m09-l01]
+
+- id: obtocna-crpalka
+  sl: obtočna črpalka
+  en: circulation pump
+  kratkaRazlaga: Poganja vodo po ogrevalnem krogu.
+  dolgaRazlaga: Obtočna črpalka ne dviguje vode, ampak premaguje upor cevi, ventilov in prenosnikov. Zrak v črpalki ali zamašitev zmanjšata pretok.
+  analogija: Kot srce v krvnem obtoku.
+  povezaneLekcije: [m09-l01]
+
+- id: inverter
+  sl: inverter
+  en: inverter
+  kratkaRazlaga: Elektronika, ki spreminja hitrost kompresorja.
+  dolgaRazlaga: Inverter iz omrežne napetosti naredi napetost spremenljive frekvence. V njem so kondenzatorji, ki ostanejo nabiti tudi po izklopu – zato ga sme odpirati le usposobljena oseba.
+  analogija: Kot plin v avtu namesto stikala vklop–izklop.
+  povezaneLekcije: [m10-l01]
+
+- id: senzor
+  sl: temperaturni senzor
+  en: temperature sensor
+  abbr: NTC
+  kratkaRazlaga: Element, katerega upornost se spreminja s temperaturo; po njej krmilnik bere temperaturo.
+  dolgaRazlaga: Krmilnik verjame senzorju. Če senzor ni dobro pritrjen, izoliran ali je okvarjen, krmilnik dela pravilno – a na podlagi napačnega podatka.
+  analogija: Kot oči krmilnika – če vidijo narobe, roka seže narobe.
+  povezaneLekcije: [m11-l01]
+
+- id: ogrevalna-krivulja
+  sl: ogrevalna krivulja
+  en: heating curve
+  kratkaRazlaga: Pravilo, ki zunanji temperaturi priredi temperaturo vode v ogrevanju.
+  dolgaRazlaga: Bolj ko je zunaj mrzlo, toplejšo vodo krmilnik pošlje v radiatorje. Prenizka krivulja pomeni hladno hišo, previsoka pa višjo porabo in slabše grelno število.
+  analogija: Kot pravilo za oblačenje – mrzleje kot je zunaj, debelejšo jakno vzameš.
+  povezaneLekcije: [m12-l01]
+
+- id: odtajevanje
+  sl: odtajevanje
+  en: defrost
+  kratkaRazlaga: Kratek obrnjen tok hladiva, ki stopi led z zunanjih lamel.
+  dolgaRazlaga: Pri vlažnem in hladnem vremenu se na uparjalniku nabira led. Krmilnik občasno obrne tok s 4-potnim ventilom, da vroč plin led stopi.
+  analogija: Kot odtaljevanje zamrzovalnika, le samodejno in na nekaj minut.
+  povezaneLekcije: [m12-l01]
+
+- id: obhod
+  sl: obhod naprave
+  en: system walk-through
+  kratkaRazlaga: Urejen pregled naprave v vedno istem vrstnem redu, preden začneš popravljati.
+  dolgaRazlaga: Obhod začneš pri zaslonu in vodi, nadaljuješ z zunanjo enoto in temperaturami, manometre priklopiš na koncu – le, če so res potrebni.
+  analogija: Kot pilotov kontrolni seznam pred vzletom.
+  povezaneLekcije: [m13-l01]
+
+- id: manometer
+  sl: servisni manometer
+  en: manifold gauge
+  kratkaRazlaga: Instrument za tlak hladiva na nizko- in visokotlačni strani.
+  dolgaRazlaga: Digitalni servisni manometer pokaže tlak in iz njega izračuna temperaturo nasičenja za izbrano hladivo. Priklop na krog hladiva sme opraviti le oseba s spričevalom.
+  analogija: Kot merilnik krvnega tlaka – izmeri, ne pove pa sam, zakaj je tlak tak.
+  povezaneLekcije: [m14-l01]
+
+- id: vzorec
+  sl: vzorec meritev
+  en: pattern
+  kratkaRazlaga: Več meritev, ki skupaj kažejo v isto smer in s tem na isti vzrok.
+  dolgaRazlaga: Ena meritev redko loči med več možnimi vzroki. Vzorec – na primer visok SH in nizek SC skupaj – zoži izbiro na enega.
+  analogija: Kot sledi v snegu – ena stopinja ne pove veliko, cela sled pove, kdo je šel mimo.
+  povezaneLekcije: [m15-l01, m16-l01]
+
+- id: ustalitev
+  sl: ustaljeno delovanje
+  en: steady state
+  kratkaRazlaga: Stanje, ko se meritve ne spreminjajo več bistveno.
+  dolgaRazlaga: Takoj po zagonu, med odtajevanjem ali ob spremembi moči se vrednosti hitro spreminjajo. Zanesljive so šele meritve pri ustaljenem delovanju.
+  analogija: Kot tehtanje – odčitaš, ko se kazalec umiri.
+  povezaneLekcije: [m18-l01]
+
+- id: servisno-porocilo
+  sl: servisno poročilo
+  en: service report
+  kratkaRazlaga: Zapis, kaj si ugotovil, izmeril, popravil in preveril.
+  dolgaRazlaga: Dobro poročilo omogoči naslednjemu serviserju, da nadaljuje, kjer si končal. Vsebuje simptom, meritve s pogoji, vzrok, popravilo in preverjanje.
+  analogija: Kot zdravnikov izvid za naslednjega zdravnika.
+  povezaneLekcije: [m19-l01]
+
+- id: spricevalo
+  sl: spričevalo za delo s hladivi
+  en: F-gas certificate
+  kratkaRazlaga: Uradno potrdilo, ki ga zakonodaja zahteva za posege v krog hladiva.
+  dolgaRazlaga: Za priklop manometrov, polnjenje, praznjenje in popravila kroga hladiva zakonodaja zahteva spričevalo. Točne pogoje preveri pri pristojnem organu. Ta spletni tečaj spričevala ne nadomešča.
+  analogija: Kot vozniško dovoljenje – znanje vožnje še ni dovoljenje za vožnjo.
+  povezaneLekcije: [m21-l01]

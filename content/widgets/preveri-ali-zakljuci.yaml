@@ -1,0 +1,28 @@
+id: preveri-ali-zakljuci
+kind: sort
+groups:
+  - id: preveri
+    label: Preveri naprej
+  - id: zakljuci
+    label: Lahko zaključiš
+items:
+  - id: sh-visok
+    text: Po čiščenju filtra je ΔT normalna, SH pa še vedno visok
+    group: preveri
+    why: Visok SH kaže na drugo napako v krogu hladiva.
+  - id: vse-normalno
+    text: Po popravilu so vse meritve normalne in simptom je izginil
+    group: zakljuci
+    why: Oboje skupaj pove, da je vzrok odpravljen.
+  - id: dolivanje
+    text: Po dolivanju se je SC dvignil, SH pa je ostal visok
+    group: preveri
+    why: Če hladiva ni več premalo, a je uparjalnik še lačen, je lahko kriv še ventil ali sušilnik.
+  - id: stranka
+    text: Stranka pravi, da je bolje, ti pa nisi nič meril
+    group: preveri
+    why: Brez meritev ne veš, ali je napaka odpravljena.
+  - id: stabilno
+    text: Ponovljene meritve pri ustaljenem delovanju so enake kot ob zagonu
+    group: zakljuci
+    why: Naprava dela kot takrat, ko je bila nova – to je dober dokaz.

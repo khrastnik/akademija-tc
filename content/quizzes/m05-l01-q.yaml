@@ -1,0 +1,59 @@
+id: m05-l01-q
+lesson: m05-l01
+questions:
+  - id: q1
+    type: single
+    text: Zakaj premajhen pretok vode dvigne tlak na visokotlačni strani?
+    understand:
+      simpler: Kam gre toplota iz kondenzatorja, če voda teče prepočasi?
+      terms: [pretok]
+      hint: Spomni se blagajne in kupca, ki ne pobira izdelkov.
+    options:
+      - id: a
+        text: Voda odnese premalo toplote iz kondenzatorja
+        correct: true
+        why: Toplota ostane v hladivu, zato tlak na visoki strani raste, dokler krmilnik ne ustavi kompresorja.
+      - id: b
+        text: Voda potisne hladivo nazaj v kompresor
+        why: Voda in hladivo se ne mešata – ločuje ju stena prenosnika.
+      - id: c
+        text: Obtočna črpalka stisne hladivo
+        why: Obtočna črpalka poganja le vodo. Hladivo stiska kompresor.
+    lessonLink: m05-l01#why
+
+  - id: q2
+    type: single
+    text: Kaj od naštetega NE zmanjša pretoka vode?
+    understand:
+      simpler: Katera možnost vodi odpre pot, namesto da jo zapre?
+      terms: [pretok]
+      hint: Pretok zmanjša vse, kar vodi stoji na poti.
+    options:
+      - id: a
+        text: Odprti ventili vseh radiatorjev
+        correct: true
+        why: Odprti ventili vodi pustijo pot. Pretok zmanjšajo zaprti ventili, ne odprti.
+      - id: b
+        text: Zamašen filter
+        why: Mulj v filtru je ovira na poti vode – pretok pade.
+      - id: c
+        text: Zrak v obtočni črpalki
+        why: Črpalka z zrakom ne poganja vode prav – pretok pade.
+    lessonLink: m05-l01#widget
+
+  - id: q3
+    type: truefalse
+    text: Pri kodi »visok tlak« je prvi korak dolivanje hladiva.
+    understand:
+      simpler: Ali koda »visok tlak« pove, da manjka hladiva?
+      terms: []
+      hint: Najlažje najprej – voda, zrak, nastavitve.
+    options:
+      - id: da
+        text: DA
+        why: Ravno obratno – dolivanje bi tlak še zvišalo. Visok tlak najpogosteje pomeni premajhen pretok vode.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Najprej preveri pretok vode in zraka. Dolivanje brez dokaza ustvari novo napako.
+    lessonLink: m05-l01#field-error

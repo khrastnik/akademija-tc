@@ -1,0 +1,59 @@
+id: m07-l01-q
+lesson: m07-l01
+questions:
+  - id: q1
+    type: single
+    text: Temperatura uparjanja je −8 °C, sesalni vod −2 °C. Koliko je pregrevanje?
+    understand:
+      simpler: Koliko je −2 minus −8?
+      terms: [pregrevanje]
+      hint: Odštevanje negativnega števila je prištevanje.
+    options:
+      - id: a
+        text: 6 K
+        correct: true
+        why: −2 − (−8) = −2 + 8 = 6. Pregrevanje je 6 K.
+      - id: b
+        text: 10 K
+        why: To bi dobil, če bi obe števili sešteval kot pozitivni. Pravilno je −2 + 8.
+      - id: c
+        text: −10 K
+        why: Pregrevanje je pri delovanju vedno pozitivno – para je toplejša od temperature vrenja.
+    lessonLink: m07-l01#numbers
+
+  - id: q2
+    type: single
+    text: Kaj najpogosteje pomeni visoko pregrevanje?
+    understand:
+      simpler: Ali je v uparjalniku preveč ali premalo tekočega hladiva?
+      terms: [pregrevanje]
+      hint: Pomisli na prazen lonec, ki se hitro segreva.
+    options:
+      - id: a
+        text: Uparjalnik dobi premalo hladiva
+        correct: true
+        why: Hladivo zavre že zgodaj, para se nato dolgo greje – SH je visok.
+      - id: b
+        text: Uparjalnik dobi preveč hladiva
+        why: Preveč hladiva pomeni tekočino skoraj do konca – SH je takrat nizek.
+      - id: c
+        text: Voda v ogrevanju teče prehitro
+        why: Pretok vode vpliva na kondenzator, ne neposredno na pregrevanje v uparjalniku.
+    lessonLink: m07-l01#why
+
+  - id: q3
+    type: truefalse
+    text: Nizko pregrevanje je za kompresor vedno varno.
+    understand:
+      simpler: Kaj lahko pride do kompresorja, če je tekočina skoraj do konca uparjalnika?
+      terms: [pregrevanje]
+      hint: Kompresor stiska paro, tekočine ne more.
+    options:
+      - id: da
+        text: DA
+        why: Pri zelo nizkem SH lahko kapljice tekočine dosežejo kompresor in ga poškodujejo.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Prenizko pregrevanje pomeni tveganje, da tekočina pride v kompresor.
+    lessonLink: m07-l01#remember

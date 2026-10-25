@@ -1,0 +1,59 @@
+id: m03-l01-q
+lesson: m03-l01
+questions:
+  - id: q1
+    type: single
+    text: Zakaj infrardeči termometer na sijoči bakreni cevi pogosto kaže napačno?
+    understand:
+      simpler: Kaj infrardeči termometer v resnici »vidi«, ko meriš svetlečo kovino?
+      terms: [meritev]
+      hint: Mojster je rekel, da je vajenec izmeril strop.
+    options:
+      - id: a
+        text: Ker sijoča kovina odbija sevanje okolice
+        correct: true
+        why: Sijoča kovina malo seva sama in veliko odbija. Termometer zato meri odboj okolice, ne cevi.
+      - id: b
+        text: Ker baker prehitro prevaja toploto
+        why: Dobra prevodnost bakra meritvi ne škodi. Težava je v odboju, ne v prevajanju.
+      - id: c
+        text: Ker so infrardeči termometri vedno nenatančni
+        why: Na matirani ali pobarvani površini so lahko dovolj dobri. Težava je sijoča kovina.
+    lessonLink: m03-l01#story
+
+  - id: q2
+    type: single
+    text: Dvižni vod ima 35 °C, povratni vod 30 °C. Kako pravilno zapišeš razliko?
+    understand:
+      simpler: V kateri enoti pišemo razliko dveh temperatur?
+      terms: [delta-t]
+      hint: Razlika ni temperatura nečesa – je razdalja med dvema temperaturama.
+    options:
+      - id: a
+        text: 5 K
+        correct: true
+        why: Razlike temperatur pišemo v kelvinih. Razlika 5 K je enaka razliki 5 stopinj.
+      - id: b
+        text: 5 °C
+        why: Številka je prava, enota pa bi pomenila temperaturo 5 °C, ne razlike.
+      - id: c
+        text: 65 °C
+        why: To je vsota, ne razlika. Razliko dobiš z odštevanjem.
+    lessonLink: m03-l01#numbers
+
+  - id: q3
+    type: truefalse
+    text: Meritev takoj po zagonu naprave je enako zanesljiva kot meritev pri ustaljenem delovanju.
+    understand:
+      simpler: Ali se vrednosti takoj po zagonu še spreminjajo?
+      terms: [ustalitev]
+      hint: Tehtnico odčitaš, ko se kazalec umiri.
+    options:
+      - id: da
+        text: DA
+        why: Po zagonu se tlaki in temperature še hitro spreminjajo. Zanesljiva je šele meritev pri ustaljenem delovanju.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Počakaj, da se vrednosti umirijo, sicer meriš prehod, ne stanja.
+    lessonLink: m03-l01#field-error

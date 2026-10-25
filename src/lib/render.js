@@ -25,5 +25,7 @@ export function renderCard(md, terms) {
     const term = terms.get(id.trim());
     return term ? termPopover(term, label ?? term.sl) : esc(label ?? id);
   });
-  return marked.parse(withTerms, { async: false });
+  // Številka in enota ostaneta skupaj v isti vrstici (34 °C, 5 K, 8 bar).
+  const units = withTerms.replace(/(\d) (°C|K|bar|V)(?=[\s.,;:)–-]|$)/g, '$1 $2');
+  return marked.parse(units, { async: false });
 }

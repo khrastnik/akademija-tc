@@ -1,0 +1,32 @@
+id: senzor-resnica
+kind: sort
+groups:
+  - id: verjetno-prav
+    label: Verjetno prav
+  - id: sumljivo
+    label: Sumljivo
+items:
+  - id: ujemanje
+    text: Zaslon in tvoj termometer na isti cevi se ujemata
+    group: verjetno-prav
+    why: Dva neodvisna instrumenta kažeta isto – senzor dela.
+  - id: tulec
+    text: Senzor je v tulcu s toplotno pasto in izoliran
+    group: verjetno-prav
+    why: Dober stik in izolacija – senzor meri cev, ne zraka.
+  - id: razlika
+    text: Zaslon kaže 15 stopinj več kot termometer na isti cevi
+    group: sumljivo
+    why: Tako velika razlika kaže na senzor, ki ne meri tega, kar bi moral.
+  - id: visi
+    text: Senzor visi iz tulca
+    group: sumljivo
+    why: Meri zrak okoli sebe, ne cevi.
+  - id: sonce
+    text: Zunanji senzor je na soncu na južni steni
+    group: sumljivo
+    why: Sonce ga segreje, zato kaže višjo temperaturo od zraka.
+  - id: izpuh
+    text: Zunanji senzor je tik nad izpuhom zunanje enote
+    group: sumljivo
+    why: Iz enote piha ohlajen zrak, zato kaže prenizko temperaturo.

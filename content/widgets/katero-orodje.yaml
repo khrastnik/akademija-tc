@@ -1,0 +1,34 @@
+id: katero-orodje
+kind: sort
+groups:
+  - id: termometer
+    label: Termometer s sondo
+  - id: manometer
+    label: Servisni manometer
+  - id: klesce
+    label: Klešče za tok
+items:
+  - id: dt
+    text: Razlika temperatur vode ΔT
+    group: termometer
+    why: Dve sondi na dvižnem in povratnem vodu.
+  - id: sesalni
+    text: Temperatura sesalnega voda
+    group: termometer
+    why: Sonda na cevi – del izračuna pregrevanja.
+  - id: susilnik
+    text: Razlika temperatur na filtru sušilniku
+    group: termometer
+    why: Dve sondi pred in za filtrom, brez priklopa na krog.
+  - id: t0
+    text: Temperatura uparjanja
+    group: manometer
+    why: Izračuna se iz tlaka na nizkotlačni strani.
+  - id: tc
+    text: Temperatura kondenzacije
+    group: manometer
+    why: Izračuna se iz tlaka na visokotlačni strani.
+  - id: tok
+    text: Koliko toka vleče kompresor
+    group: klesce
+    why: Klešče objamejo vodnik in izmerijo tok brez prekinitve.

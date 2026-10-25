@@ -1,0 +1,32 @@
+id: potrdi-ovrzi
+kind: sort
+groups:
+  - id: potrjena
+    label: Hipoteza potrjena
+  - id: ovrzena
+    label: Hipoteza ovržena
+items:
+  - id: filter-dt
+    text: Sumiš zamašen filter vode – ΔT vode je normalna
+    group: ovrzena
+    why: Zamašen filter bi pomenil veliko ΔT. Hipoteza ne drži.
+  - id: premalo
+    text: Sumiš premalo hladiva – SH je visok, SC nizek
+    group: potrjena
+    why: To je točno vzorec za premalo hladiva.
+  - id: eev-sc
+    text: Sumiš zatikajoč ekspanzijski ventil – SC je nizek
+    group: ovrzena
+    why: Pri zatikajočem ventilu bi bil SC visok.
+  - id: tripotni
+    text: Sumiš obtičan 3-potni ventil – bojler prevroč, radiatorji hladni
+    group: potrjena
+    why: Vsa toplota gre v bojler – točno to, kar bi pričakoval.
+  - id: listje
+    text: Sumiš oviro zraka – lamele so čiste in suhe
+    group: ovrzena
+    why: Brez listja, umazanije ali ledu ovire zraka ni.
+  - id: prevec
+    text: Sumiš preveč hladiva – SC visok, temperatura kondenzacije visoka, SH normalen
+    group: potrjena
+    why: Odvečna tekočina v kondenzatorju da točno ta vzorec.

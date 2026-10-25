@@ -1,0 +1,62 @@
+id: m08-l01-q
+lesson: m08-l01
+questions:
+  - id: q1
+    type: single
+    text: Temperatura kondenzacije je 40 °C, tekočinski vod 35 °C. Koliko je podhlajevanje?
+    understand:
+      simpler: Koliko je 40 minus 35?
+      terms: [podhlajevanje]
+      hint: SC = T kondenzacije − T tekočinskega voda.
+    options:
+      - id: a
+        text: 5 K
+        correct: true
+        why: 40 − 35 = 5. Podhlajevanje je 5 K.
+      - id: b
+        text: 75 K
+        why: To je vsota. Podhlajevanje je razlika.
+      - id: c
+        text: 35 K
+        why: To je temperatura tekočinskega voda, ne razlika.
+    lessonLink: m08-l01#numbers
+
+  - id: q2
+    type: single
+    text: Pregrevanje je visoko in podhlajevanje je visoko. Kaj je najverjetneje?
+    understand:
+      simpler: Če je uparjalnik lačen, kondenzator pa poln tekočine, kje hladivo obtiči?
+      terms: [pregrevanje, podhlajevanje]
+      hint: Poglej tabelo vzorcev.
+    options:
+      - id: a
+        text: Zožitev pred uparjalnikom, npr. ventil
+        correct: true
+        why: Hladiva je dovolj, a ne pride skozi – nabira se v kondenzatorju (visok SC), uparjalnik je lačen (visok SH).
+      - id: b
+        text: Premalo hladiva v celem krogu
+        why: Pri premalo hladiva je podhlajevanje nizko, ker v kondenzatorju skoraj ni tekočine.
+      - id: c
+        text: Preveč zraka čez uparjalnik
+        why: Več zraka uparjalniku pomaga, ne povzroči visokega SC.
+    lessonLink: m08-l01#why
+
+  - id: q3
+    type: single
+    text: Pregrevanje je visoko, podhlajevanje nizko. Kaj narediš najprej?
+    understand:
+      simpler: Ta vzorec kaže, da hladiva manjka. Kam pa je šlo?
+      terms: [podhlajevanje]
+      hint: V zaprtem krogu se hladivo ne porablja.
+    options:
+      - id: a
+        text: Poiščeš puščanje
+        correct: true
+        why: Vzorec kaže na premalo hladiva. Brez popravila puščanja bi dolito hladivo spet ušlo.
+      - id: b
+        text: Zamenjaš ekspanzijski ventil
+        why: Pri zatikajočem ventilu bi bil SC visok. Tu je nizek.
+      - id: c
+        text: Očistiš filter vode
+        why: Filter vode vpliva na vodni krog, vzorec SH in SC pa kaže na hladivo.
+    lessonLink: m08-l01#remember

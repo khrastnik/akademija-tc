@@ -1,0 +1,59 @@
+id: m21-l01-q
+lesson: m21-l01
+questions:
+  - id: q1
+    type: single
+    text: Ali ta spletni tečaj nadomešča spričevalo za delo s hladivi?
+    understand:
+      simpler: Ali je znanje isto kot uradno dovoljenje?
+      terms: [spricevalo]
+      hint: Spomni se vozniškega dovoljenja.
+    options:
+      - id: a
+        text: Ne, spričevalo je uradna zahteva
+        correct: true
+        why: Tečaj daje znanje. Spričevalo dobiš z uradnim usposabljanjem in izpitom.
+      - id: b
+        text: Da, po končnem izpitu
+        why: Potrdilo tečaja ni uradno spričevalo in ne dovoljuje posegov v krog hladiva.
+      - id: c
+        text: Da, če rešiš vse kvize
+        why: Kvizi preverjajo razumevanje, ne dajejo dovoljenja za delo.
+    lessonLink: m21-l01#field-error
+
+  - id: q2
+    type: single
+    text: Zakaj zakonodaja zahteva spričevalo za posege v krog hladiva?
+    understand:
+      simpler: Kaj se lahko zgodi, če hladivo uide ali se vžge?
+      terms: [spricevalo]
+      hint: Okolje in varnost.
+    options:
+      - id: a
+        text: Hladiva lahko škodijo okolju ali so vnetljiva
+        correct: true
+        why: Zato mora oseba znati delati varno in brez izpustov.
+      - id: b
+        text: Da so storitve dražje
+        why: Namen je varnost ljudi in okolja, ne cena.
+      - id: c
+        text: Ker so manometri težki za uporabo
+        why: Uporaba manometra ni bistvo. Bistvo je varno ravnanje s hladivi.
+    lessonLink: m21-l01#why
+
+  - id: q3
+    type: truefalse
+    text: Točne zahteve za samostojno delo preveriš pri pristojnem organu.
+    understand:
+      simpler: Ali se predpisi lahko spremenijo?
+      terms: [spricevalo]
+      hint: Ta stran namenoma ne navaja podrobnosti.
+    options:
+      - id: da
+        text: DA
+        correct: true
+        why: Prav. Zahteve se spreminjajo, zato jih preveriš pri viru, ki zanje odgovarja.
+      - id: ne
+        text: NE
+        why: Zahteve se spreminjajo. Edini zanesljiv vir je pristojni organ.
+    lessonLink: m21-l01#what

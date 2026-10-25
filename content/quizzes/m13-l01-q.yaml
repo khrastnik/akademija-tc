@@ -1,0 +1,59 @@
+id: m13-l01-q
+lesson: m13-l01
+questions:
+  - id: q1
+    type: single
+    text: Kaj narediš najprej, ko prideš na obisk?
+    understand:
+      simpler: Kaj je najhitrejše in ne zahteva nobenega orodja?
+      terms: [obhod]
+      hint: Prva dva koraka obhoda.
+    options:
+      - id: a
+        text: Pogovor s stranko in pogled na zaslon
+        correct: true
+        why: Stranka pove, kdaj in kako se je začelo, zaslon pa kodo in nastavitve. Oboje v nekaj minutah.
+      - id: b
+        text: Priklop manometrov na krog hladiva
+        why: To je zadnji korak obhoda in le, če je res potreben.
+      - id: c
+        text: Menjavo filtra sušilnika
+        why: Menjava dela brez diagnoze je ugibanje – in poseg v krog hladiva.
+    lessonLink: m13-l01#what
+
+  - id: q2
+    type: single
+    text: Zakaj krog hladiva pride na konec obhoda?
+    understand:
+      simpler: Kaj se zgodi z napravo vsakič, ko priklopiš manometre?
+      terms: [obhod]
+      hint: Pomisli na izgubo hladiva in tveganje za puščanje.
+    options:
+      - id: a
+        text: Vsak priklop manometrov je poseg
+        correct: true
+        why: Priklop pomeni malo izgube hladiva in tveganje za puščanje, zato ga ne delaš brez razloga.
+      - id: b
+        text: Ker so manometri najdražji
+        why: Cena orodja ni razlog. Razlog je poseg v krog hladiva.
+      - id: c
+        text: Ker je krog hladiva najmanj pomemben
+        why: Krog hladiva je zelo pomemben – a napake so pogosteje drugje, poseg pa ima ceno.
+    lessonLink: m13-l01#why
+
+  - id: q3
+    type: truefalse
+    text: Vrednost meritve brez zapisanih pogojev je enako uporabna kot z njimi.
+    understand:
+      simpler: Ali lahko primerjaš dve meritvi, če ne veš, pri kakšnem vremenu in načinu sta nastali?
+      terms: [meritev]
+      hint: Zunanja temperatura, čas delovanja, način.
+    options:
+      - id: da
+        text: DA
+        why: Brez pogojev meritve ne moreš primerjati z navodili, s prvim zagonom ali z naslednjim obiskom.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Ista naprava da pri drugačnih pogojih drugačne vrednosti – pogoji so del meritve.
+    lessonLink: m13-l01#numbers

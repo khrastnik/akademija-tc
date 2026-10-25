@@ -1,0 +1,59 @@
+id: m14-l01-q
+lesson: m14-l01
+questions:
+  - id: q1
+    type: single
+    text: S čim posredno oceniš, ali voda teče dovolj hitro?
+    understand:
+      simpler: Kateri dve temperaturi povesta, koliko toplote voda nese?
+      terms: [meritev]
+      hint: Spomni se modula 6.
+    options:
+      - id: a
+        text: Z dvema termometroma – ΔT
+        correct: true
+        why: Dvižni in povratni vod dasta ΔT, ki pri isti moči kaže na pretok.
+      - id: b
+        text: S kleščami za tok
+        why: Klešče povedo, koliko dela kompresor, ne koliko vode teče.
+      - id: c
+        text: S servisnim manometrom
+        why: Manometer meri tlak hladiva, ne pretoka vode.
+    lessonLink: m14-l01#why
+
+  - id: q2
+    type: single
+    text: Kaj potrebuješ za izračun pregrevanja?
+    understand:
+      simpler: Iz katerih dveh vrednosti izračunaš SH?
+      terms: [manometer]
+      hint: Temperatura uparjanja in temperatura sesalnega voda.
+    options:
+      - id: a
+        text: Manometer in termometer s sondo
+        correct: true
+        why: Manometer da temperaturo uparjanja, sonda temperaturo sesalnega voda – razlika je SH.
+      - id: b
+        text: Samo termometer s sondo
+        why: Brez manometra ne poznaš temperature uparjanja.
+      - id: c
+        text: Samo klešče za tok
+        why: Tok kompresorja ne pove pregrevanja.
+    lessonLink: m14-l01#story
+
+  - id: q3
+    type: truefalse
+    text: Preden zaupaš digitalnemu manometru, preveriš, ali je izbrano pravo hladivo.
+    understand:
+      simpler: Ali manometer izračuna temperaturo enako za vsa hladiva?
+      terms: [manometer]
+      hint: Vsako hladivo ima svojo tabelo tlak–temperatura.
+    options:
+      - id: da
+        text: DA
+        correct: true
+        why: Prav. Napačno hladivo da napačno temperaturo nasičenja in s tem napačen SH in SC.
+      - id: ne
+        text: NE
+        why: Tlak je izmerjen prav, temperatura pa je izračunana po izbranem hladivu. Napačna izbira pokvari vse izračune.
+    lessonLink: m14-l01#measure

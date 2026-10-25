@@ -1,0 +1,59 @@
+id: m17-l01-q
+lesson: m17-l01
+questions:
+  - id: q1
+    type: single
+    text: Po čiščenju filtra je ΔT vode normalna, pregrevanje pa je še vedno visoko. Kaj narediš?
+    understand:
+      simpler: Ali je kakšna meritev še zunaj normalnega območja?
+      terms: [vzorec]
+      hint: Kar se ni vrnilo v normalno, je sled.
+    options:
+      - id: a
+        text: Iščeš drugo napako v krogu hladiva
+        correct: true
+        why: Visok SH ni povezan s filtrom vode. Kaže na drugo napako – npr. premalo hladiva.
+      - id: b
+        text: Zaključiš, ker je ΔT normalna
+        why: ΔT je normalna, SH pa ne. Delo še ni končano.
+      - id: c
+        text: Filter očistiš še enkrat
+        why: Filter je čist – to pove normalna ΔT. Vzrok za visok SH je drugje.
+    lessonLink: m17-l01#why
+
+  - id: q2
+    type: single
+    text: Kdaj je delo res končano?
+    understand:
+      simpler: Kaj mora veljati, da veš, da v napravi ni več napake?
+      terms: [diagnoza]
+      hint: Simptom in meritve.
+    options:
+      - id: a
+        text: Ko simptom izgine in so meritve normalne
+        correct: true
+        why: Šele oboje skupaj pove, da si odpravil vse vzroke.
+      - id: b
+        text: Ko stranka reče, da je bolje
+        why: Bolje ni isto kot dobro. Druga napaka je lahko še v napravi.
+      - id: c
+        text: Ko zamenjaš vsaj en del
+        why: Število zamenjanih delov ne pove ničesar o tem, ali je napaka odpravljena.
+    lessonLink: m17-l01#remember
+
+  - id: q3
+    type: truefalse
+    text: Drugo napako lahko včasih opaziš šele, ko odpraviš prvo.
+    understand:
+      simpler: Ali lahko glasnejši simptom prekrije tišjega?
+      terms: [vzorec]
+      hint: Spomni se glavobola.
+    options:
+      - id: da
+        text: DA
+        correct: true
+        why: Prav. Prva napaka lahko drugo skrije ali vzorec zamegli. Zato preverjaš po vsakem popravilu.
+      - id: ne
+        text: NE
+        why: Dve napaki se lahko prekrivata. Zato ponoviš meritve po vsakem popravilu.
+    lessonLink: m17-l01#what

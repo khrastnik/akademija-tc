@@ -1,0 +1,32 @@
+id: visji-nizji-tlak
+kind: sort
+groups:
+  - id: visji
+    label: Višji tlak
+  - id: nizji
+    label: Nižji tlak
+items:
+  - id: lonec
+    text: Lonec na pritisk – voda zavre pri več kot 100 °C
+    group: visji
+    why: Pod pokrovom je tlak višji, zato je temperatura vrenja višja.
+  - id: gora
+    text: Na visoki gori voda zavre pri manj kot 100 °C
+    group: nizji
+    why: Zračni tlak je tam nižji, zato voda zavre pri nižji temperaturi.
+  - id: kondenzator
+    text: Kondenzator toplotne črpalke
+    group: visji
+    why: Hladivo se tu utekočini pri visoki temperaturi – zato mora biti tlak visok.
+  - id: uparjalnik
+    text: Uparjalnik toplotne črpalke
+    group: nizji
+    why: Hladivo mora vreti pri nizki temperaturi – zato je tlak nizek.
+  - id: za-kompresorjem
+    text: Takoj za kompresorjem
+    group: visji
+    why: Kompresor je paro pravkar stisnil.
+  - id: za-ventilom
+    text: Takoj za ekspanzijskim ventilom
+    group: nizji
+    why: Ventil je hladivu znižal tlak.

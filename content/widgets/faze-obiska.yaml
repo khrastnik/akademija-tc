@@ -1,0 +1,34 @@
+id: faze-obiska
+kind: sort
+groups:
+  - id: pred
+    label: Pred obiskom
+  - id: teren
+    label: Na terenu
+  - id: po
+    label: Po obisku
+items:
+  - id: telefon
+    text: Po telefonu vprašaš za model in kdaj se je napaka začela
+    group: pred
+    why: Pripraviš pravo opremo in navodila za ta model.
+  - id: zapisnik
+    text: Poiščeš zapisnik prejšnjega servisa
+    group: pred
+    why: Primerjava z isto napravo je najmočnejša.
+  - id: obhod
+    text: Obhod naprave v istem vrstnem redu
+    group: teren
+    why: Najde preproste napake hitro in brez posega.
+  - id: preverjanje
+    text: Meritve po popravilu
+    group: teren
+    why: Šele preverjanje dokaže, da je vzrok odpravljen.
+  - id: porocilo
+    text: Poročilo z meritvami, vzrokom in popravilom
+    group: po
+    why: Izvid naprave za naslednji obisk.
+  - id: klic
+    text: Klic stranki čez nekaj dni
+    group: po
+    why: Preveriš, ali je simptom res izginil.
