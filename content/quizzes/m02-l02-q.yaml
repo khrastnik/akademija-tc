@@ -1,0 +1,59 @@
+id: m02-l02-q
+lesson: m02-l02
+questions:
+  - id: q1
+    type: single
+    text: Lamele uparjalnika so zasute z listjem. Kaj se zgodi s tlakom na nizkotlačni strani?
+    understand:
+      simpler: Če hladivo dobi manj toplote, pri kakšni temperaturi zavre?
+      terms: [uparjalnik]
+      hint: Uparjalnik ne dobi toplote.
+    options:
+      - id: a
+        text: Tlak pade
+        correct: true
+        why: Hladivo dobi manj toplote in zavre pri nižji temperaturi – nižja temperatura pomeni nižji tlak.
+      - id: b
+        text: Tlak zraste
+        why: Tlak na nizki strani zraste, ko uparjalnik dobi več toplote, ne manj.
+      - id: c
+        text: Tlak ostane enak
+        why: Manj toplote v uparjalniku spremeni temperaturo vrenja in s tem tlak.
+    lessonLink: m02-l02#what
+
+  - id: q2
+    type: single
+    text: Na zaslonu je koda »visok tlak«. Katera postaja najverjetneje ne opravi svojega dela?
+    understand:
+      simpler: Na kateri strani kroga je tlak previsok in katera postaja je tam?
+      terms: [kondenzator, kompresor]
+      hint: Kompresor je pogosto žrtev.
+    options:
+      - id: a
+        text: Kondenzator ne odda toplote
+        correct: true
+        why: Če toplota ne gre iz kondenzatorja, tlak na visoki strani raste – kompresor je le žrtev.
+      - id: b
+        text: Kompresor je pokvarjen
+        why: Pokvarjen kompresor bi tlak prej znižal. Visok tlak pomeni, da toplota ne odide.
+      - id: c
+        text: Uparjalnik dobi preveč zraka
+        why: Več zraka uparjalniku pomaga in ne povzroči visokega tlaka.
+    lessonLink: m02-l02#field-error
+
+  - id: q3
+    type: truefalse
+    text: Če ekspanzijski ventil ne prepušča dovolj, je uparjalnik lačen, kondenzator pa poln tekočine.
+    understand:
+      simpler: Kje se nabira hladivo, ki ne more skozi ventil?
+      terms: [ekspanzijski-ventil]
+      hint: Gneča pred postajo, praznina za njo.
+    options:
+      - id: da
+        text: DA
+        correct: true
+        why: Prav. Hladivo se nabira pred ventilom v kondenzatorju, za njim v uparjalniku pa ga zmanjka.
+      - id: ne
+        text: NE
+        why: Ventil je med kondenzatorjem in uparjalnikom. Pred njim je gneča, za njim praznina.
+    lessonLink: m02-l02#why

@@ -93,4 +93,4 @@ Druga napaka: SC izmerjen med odtajevanjem ali takoj po zagonu, ko se tekočina 
 - SH in SC skupaj ločita napake, ki jih vsak sam ne more.
 - Ne dolivaj hladiva brez SC.
 
-**Kaj sledi:** v modulu 9 greš iz kroga hladiva v vodni krog – tam se skriva največ napak.
+**Kaj sledi:** v lekciji 8.2 izveš, zakaj se hladivo polni po teži in ne po tlaku.

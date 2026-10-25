@@ -1,0 +1,59 @@
+id: m07-l02-q
+lesson: m07-l02
+questions:
+  - id: q1
+    type: single
+    text: Zakaj je prenizko pregrevanje nevarno za kompresor?
+    understand:
+      simpler: Kaj pride v kompresor, ko tekočina seže do konca uparjalnika?
+      terms: [pregrevanje, kompresor]
+      hint: Spomni se tlačilke z vodo.
+    options:
+      - id: a
+        text: Kapljice tekočine pridejo v kompresor
+        correct: true
+        why: Tekočine ni mogoče stisniti. Kapljice obremenjujejo dele in izpirajo olje.
+      - id: b
+        text: Kompresor se zaradi tega pregreje
+        why: Pregrevanje kompresorja grozi pri previsokem pregrevanju, ne pri prenizkem.
+      - id: c
+        text: Hladivo v kompresorju zmrzne
+        why: Hladivo ne zmrzne. Težava je tekočina, ki je ni mogoče stisniti.
+    lessonLink: m07-l02#why
+
+  - id: q2
+    type: single
+    text: Kateri namig brez instrumentov kaže na prenizko pregrevanje?
+    understand:
+      simpler: Kaj vidiš na sesalnem vodu, ko je ta skoraj tako mrzel kot temperatura uparjanja?
+      terms: [pregrevanje]
+      hint: Ivje in rosa.
+    options:
+      - id: a
+        text: Ivje na sesalnem vodu do kompresorja
+        correct: true
+        why: Zelo mrzel sesalni vod vse do kompresorja kaže, da para ni pregreta.
+      - id: b
+        text: Vroč tlačni vod za kompresorjem
+        why: Vroč tlačni vod je normalen – visoka temperatura kaže prej na previsoko pregrevanje.
+      - id: c
+        text: Suha in čista zunanja enota
+        why: Čista enota je dober znak, ne kaže na prenizko pregrevanje.
+    lessonLink: m07-l02#measure
+
+  - id: q3
+    type: truefalse
+    text: Čim bolj mrzel je sesalni vod pri kompresorju, tem bolje naprava dela.
+    understand:
+      simpler: Ali je zelo mrzel sesalni vod znak zdravja ali premajhnega varnostnega roba?
+      terms: [pregrevanje]
+      hint: »Hladno pomeni dobro« je napaka iz lekcije.
+    options:
+      - id: da
+        text: DA
+        why: Zelo mrzel sesalni vod pomeni premalo pregrevanja – tekočina lahko doseže kompresor.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Pregrevanje je varnostni rob. Brez njega je kompresor v nevarnosti.
+    lessonLink: m07-l02#field-error

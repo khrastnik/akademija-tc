@@ -1,0 +1,34 @@
+id: voda-zrak-nastavitve
+kind: sort
+groups:
+  - id: voda
+    label: Voda
+  - id: zrak
+    label: Zrak
+  - id: nastavitve
+    label: Nastavitve
+items:
+  - id: tlak
+    text: Tlak na manometru vodnega kroga
+    group: voda
+    why: Premalo vode pomeni slab pretok in zrak v ceveh.
+  - id: ventili
+    text: Ventili radiatorjev so odprti
+    group: voda
+    why: Zaprti ventili zmanjšajo pretok vode.
+  - id: sneg
+    text: Pred zunanjo enoto ni snega
+    group: zrak
+    why: Sneg zapre pot zraku do uparjalnika.
+  - id: listje
+    text: Lamele niso zamašene z listjem
+    group: zrak
+    why: Listje zmanjša pretok zraka in s tem toploto za hladivo.
+  - id: nacin
+    text: Način delovanja ni »počitnice« ali »izklop«
+    group: nastavitve
+    why: Naprava dela točno to, kar ji je naročeno.
+  - id: zelena
+    text: Želena temperatura vode ni prenizka
+    group: nastavitve
+    why: Prenizka nastavitev pomeni mlačne radiatorje pri povsem zdravi napravi.

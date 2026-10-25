@@ -90,4 +90,4 @@ Pogoste napake pri pregrevanju:
 - Računaš ga iz tlaka in temperature sesalnega voda.
 - Visok SH ima več vzrokov – potrebuješ še SC.
 
-**Kaj sledi:** v modulu 8 spoznaš podhlajevanje, ki skupaj s pregrevanjem loči napake med seboj.
+**Kaj sledi:** v lekciji 7.2 spoznaš drugo stran – zakaj je tudi prenizko pregrevanje nevarno.

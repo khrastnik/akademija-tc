@@ -212,3 +212,19 @@
   dolgaRazlaga: Za priklop manometrov, polnjenje, praznjenje in popravila kroga hladiva zakonodaja zahteva spričevalo. Točne pogoje preveri pri pristojnem organu. Ta spletni tečaj spričevala ne nadomešča.
   analogija: Kot vozniško dovoljenje – znanje vožnje še ni dovoljenje za vožnjo.
   povezaneLekcije: [m21-l01]
+
+- id: monoblok
+  sl: monoblok
+  en: monobloc heat pump
+  kratkaRazlaga: Izvedba, pri kateri je ves krog hladiva v zunanji enoti, v hišo pa teče voda.
+  dolgaRazlaga: Krog hladiva je zaprt in preizkušen v tovarni. Monter na terenu povezuje le vodne cevi. Ker voda teče tudi zunaj, je pomembna zaščita pred zmrzaljo.
+  analogija: Kot juha, skuhana zunaj in v hišo prinesena gotova.
+  povezaneLekcije: [m01-l02]
+
+- id: split
+  sl: split
+  en: split heat pump
+  kratkaRazlaga: Izvedba z zunanjo in notranjo enoto, med katerima teče hladivo.
+  dolgaRazlaga: Kondenzator je v notranji enoti, zato hladivo teče po bakrenih ceveh v hišo. Spoje med enotama naredi serviser s spričevalom na terenu; so možno mesto puščanja.
+  analogija: Kot štedilnik zunaj in lonec v hiši – paro nosiš skozi vrata.
+  povezaneLekcije: [m01-l02]

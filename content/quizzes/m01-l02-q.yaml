@@ -1,0 +1,59 @@
+id: m01-l02-q
+lesson: m01-l02
+questions:
+  - id: q1
+    type: single
+    text: Kaj teče med zunanjo enoto in hišo pri monobloku?
+    understand:
+      simpler: Kje je pri monobloku ves krog hladiva?
+      terms: [monoblok]
+      hint: Juho skuhaš zunaj in v hišo prineseš gotovo.
+    options:
+      - id: a
+        text: Voda ogrevalnega kroga
+        correct: true
+        why: Krog hladiva je v zunanji enoti, v hišo teče le topla voda.
+      - id: b
+        text: Hladivo v bakrenih ceveh
+        why: To velja za split. Pri monobloku je hladivo le v zunanji enoti.
+      - id: c
+        text: Topel zrak po kanalih
+        why: To je toplotna črpalka zrak–zrak. Pri zrak–voda gre toplota v vodo.
+    lessonLink: m01-l02#what
+
+  - id: q2
+    type: single
+    text: Zakaj je pri splitu pomembno pregledati spoje med enotama?
+    understand:
+      simpler: Kje so bili ti spoji narejeni – v tovarni ali na terenu?
+      terms: [split]
+      hint: Spoji na gradbišču so možno mesto puščanja.
+    options:
+      - id: a
+        text: Ker so narejeni na terenu in lahko puščajo
+        correct: true
+        why: Spoje z maticami naredi monter na gradbišču. So pogosto mesto puščanja hladiva.
+      - id: b
+        text: Ker po njih teče voda, ki lahko zmrzne
+        why: To velja za monoblok. Pri splitu med enotama teče hladivo.
+      - id: c
+        text: Ker so to edini deli z elektriko
+        why: Spoji cevi niso električni deli. Pomembni so zaradi možnega puščanja.
+    lessonLink: m01-l02#why
+
+  - id: q3
+    type: truefalse
+    text: Pri monobloku je pozimi ob dolgem izpadu elektrike nevarnost zmrzali vodnih cevi zunaj.
+    understand:
+      simpler: Kje teče voda pri monobloku in kaj se zgodi, ko obstane na mrazu?
+      terms: [monoblok]
+      hint: Voda teče od zunanje enote v hišo.
+    options:
+      - id: da
+        text: DA
+        correct: true
+        why: Prav. Voda v zunanjih ceveh lahko zmrzne, zato proizvajalci predvidijo zaščito pred zmrzaljo.
+      - id: ne
+        text: NE
+        why: Pri monobloku voda teče tudi zunaj. Ko obstane na mrazu, lahko zmrzne.
+    lessonLink: m01-l02#why

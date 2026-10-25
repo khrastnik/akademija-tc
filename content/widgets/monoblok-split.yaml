@@ -1,0 +1,32 @@
+id: monoblok-split
+kind: sort
+groups:
+  - id: monoblok
+    label: Monoblok
+  - id: split
+    label: Split
+items:
+  - id: zunaj
+    text: Ves krog hladiva je v zunanji enoti
+    group: monoblok
+    why: Krog je zaprt v tovarni, v hišo teče le voda.
+  - id: voda
+    text: Med enotama teče voda
+    group: monoblok
+    why: Topla voda gre iz zunanje enote naravnost v ogrevanje.
+  - id: zmrzal
+    text: Pozimi grozi zmrzal vode v zunanjih ceveh
+    group: monoblok
+    why: Voda teče tudi zunaj – ob zastoju lahko zmrzne.
+  - id: hladivo
+    text: Med enotama tečejo cevi s hladivom
+    group: split
+    why: Kondenzator je v notranji enoti, zato hladivo teče v hišo.
+  - id: spricevalo
+    text: Priklop cevi na terenu zahteva spričevalo
+    group: split
+    why: Povezovanje cevi s hladivom je poseg v krog hladiva.
+  - id: kondenzator
+    text: Kondenzator je v notranji enoti
+    group: split
+    why: Hladivo odda toploto vodi šele v hiši.

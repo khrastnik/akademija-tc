@@ -88,4 +88,4 @@ Vprašaj se vedno: **katera postaja ne opravi svojega dela?**
 - Vre v uparjalniku, utekočini se v kondenzatorju.
 - Napaka je postaja, ki ne opravi svojega dela.
 
-**Kaj sledi:** v modulu 3 se naučiš pravilno meriti temperaturo – brez tega ne moreš preveriti nobene postaje.
+**Kaj sledi:** v lekciji 2.2 se naučiš iz simptoma sklepati, katera postaja ne opravi svojega dela.

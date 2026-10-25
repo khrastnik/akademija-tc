@@ -1,0 +1,36 @@
+id: veriga-puscanje
+kind: sort
+groups:
+  - id: simptom
+    label: Simptom
+  - id: meritev
+    label: Meritev
+  - id: vzrok
+    label: Vzrok
+  - id: preverjanje
+    label: Preverjanje
+items:
+  - id: slabse
+    text: Vsako zimo greje slabše
+    group: simptom
+    why: To opazi stranka – posledica, ne vzrok.
+  - id: poraba
+    text: Poraba elektrike ostaja enaka
+    group: simptom
+    why: Opažanje stranke, ki dopolni sliko.
+  - id: sh
+    text: Pregrevanje je visoko
+    group: meritev
+    why: Izmerjeno z manometrom in sondo – uparjalnik je lačen.
+  - id: sc
+    text: Podhlajevanje je skoraj nič
+    group: meritev
+    why: Izmerjeno – v kondenzatorju ni tekočine.
+  - id: spoj
+    text: Spoj pod pokrovom pušča
+    group: vzrok
+    why: Hladivo počasi uhaja – vzrok za oba simptoma.
+  - id: po
+    text: Po popravilu in polnjenju po teži sta SH in SC normalna
+    group: preverjanje
+    why: Meritve dokažejo, da je bil vzrok pravi.

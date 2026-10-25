@@ -88,4 +88,4 @@ Najprej poišči vzrok: zaprti ventili radiatorjev, napačna krivulja, premajhen
 - Elektrika poganja kompresor, ki toploto »dvigne«.
 - Nizka temperatura vode je ključ do dobre učinkovitosti.
 
-**Kaj sledi:** v modulu 2 bomo hladivu sledili skozi štiri glavne dele naprave.
+**Kaj sledi:** v lekciji 1.2 ločiš monoblok od splita – in izveš, kje v tvoji napravi sploh teče hladivo.

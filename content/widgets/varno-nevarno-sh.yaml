@@ -1,0 +1,32 @@
+id: varno-nevarno-sh
+kind: sort
+groups:
+  - id: varno
+    label: Varno za kompresor
+  - id: nevarno
+    label: Nevarno za kompresor
+items:
+  - id: obmocje
+    text: Pregrevanje v območju iz navodil proizvajalca
+    group: varno
+    why: Varnostni rob je zagotovljen – v kompresor gre samo para.
+  - id: stabilno
+    text: Pregrevanje stabilno pri ustaljenem delovanju
+    group: varno
+    why: Ventil in krmilnik delata, kot morata.
+  - id: nic
+    text: Pregrevanje skoraj nič
+    group: nevarno
+    why: Ni varnostnega roba – kapljice lahko pridejo v kompresor.
+  - id: ivje
+    text: Ivje sega do ohišja kompresorja
+    group: nevarno
+    why: Znak, da para pri kompresorju ni pregreta.
+  - id: eev
+    text: Ekspanzijski ventil prepušča preveč hladiva
+    group: nevarno
+    why: Tekočina seže do konca uparjalnika ali čez.
+  - id: listje
+    text: Uparjalnik zasut z listjem in preveč hladiva v krogu
+    group: nevarno
+    why: Obe napaki pregrevanje znižata – skupaj še bolj.

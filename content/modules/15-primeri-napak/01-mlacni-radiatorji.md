@@ -96,4 +96,4 @@ Visoka temperatura kondenzacije je tu **posledica**, ne vzrok.
 - Vzorec dveh meritev je dokazal vzrok.
 - Preverjanje je potrdilo popravilo.
 
-**Kaj sledi:** v modulu 16 boš sam vodil diagnozo – postavljal hipoteze in jih z meritvami potrjeval ali ovrgel.
+**Kaj sledi:** v lekciji 15.2 rešiš drugi primer – napako, ki se razvija leta.

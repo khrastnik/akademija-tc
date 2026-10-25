@@ -1,0 +1,34 @@
+id: katera-postaja
+kind: sort
+groups:
+  - id: uparjalnik
+    label: Uparjalnik
+  - id: kondenzator
+    label: Kondenzator
+  - id: ventil
+    label: Ekspanzijski ventil
+items:
+  - id: listje
+    text: Lamele zasute z listjem
+    group: uparjalnik
+    why: Premalo zraka – uparjalnik ne dobi toplote.
+  - id: led
+    text: Uparjalnik obložen z ledom
+    group: uparjalnik
+    why: Led je ovira za zrak in toploto.
+  - id: ventilator
+    text: Ventilator zunanje enote stoji
+    group: uparjalnik
+    why: Brez pretoka zraka uparjalnik ne dobi toplote.
+  - id: filter
+    text: Zamašen filter vodnega kroga
+    group: kondenzator
+    why: Voda teče prepočasi in ne odnese toplote iz kondenzatorja.
+  - id: zrak
+    text: Zrak v vodnem krogu
+    group: kondenzator
+    why: Pretok vode niha – kondenzator ne odda toplote.
+  - id: zatika
+    text: Ventil se zatika in se ne odpre dovolj
+    group: ventil
+    why: Hladivo ne pride skozi – spodaj lačno, zgoraj polno.

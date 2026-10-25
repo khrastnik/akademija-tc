@@ -1,0 +1,59 @@
+id: m08-l02-q
+lesson: m08-l02
+questions:
+  - id: q1
+    type: single
+    text: Kje najdeš predpisano količino hladiva za napravo?
+    understand:
+      simpler: Kje je zapisan »recept« za napravo?
+      terms: [hladivo]
+      hint: Pogledaš lahko tudi kot lastnik.
+    options:
+      - id: a
+        text: Na tipski ploščici naprave
+        correct: true
+        why: Proizvajalec tam navede vrsto in količino hladiva.
+      - id: b
+        text: Na manometru med delovanjem
+        why: Tlak ni merilo količine – odvisen je od pogojev.
+      - id: c
+        text: V tabeli tlak–temperatura
+        why: Tabela pove temperaturo nasičenja, ne količine v napravi.
+    lessonLink: m08-l02#what
+
+  - id: q2
+    type: single
+    text: V napravi manjka hladiva. Kaj je prvi korak?
+    understand:
+      simpler: Kam je hladivo izginilo iz zaprtega kroga?
+      terms: [hladivo, spricevalo]
+      hint: Najprej puščanje.
+    options:
+      - id: a
+        text: Poiskati in popraviti puščanje
+        correct: true
+        why: Brez popravila puščanja bi novo hladivo spet ušlo.
+      - id: b
+        text: Doliti, dokler je tlak normalen
+        why: Ne veš, koliko je v napravi, puščanje pa ostane.
+      - id: c
+        text: Zamenjati kompresor
+        why: Kompresor ni kriv za manjko hladiva. Vzrok je puščanje.
+    lessonLink: m08-l02#what
+
+  - id: q3
+    type: truefalse
+    text: Če je tlak pri polnjenju »normalen«, je v napravi prava količina hladiva.
+    understand:
+      simpler: Ali je tlak odvisen samo od količine hladiva?
+      terms: [podhlajevanje]
+      hint: Zunanja temperatura, pretok vode, obremenitev.
+    options:
+      - id: da
+        text: DA
+        why: Tlak je odvisen od več pogojev. Isti tlak lahko pomeni preveč ali premalo hladiva.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Edino zanesljivo merilo je teža s tipske ploščice.
+    lessonLink: m08-l02#why

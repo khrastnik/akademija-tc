@@ -1,0 +1,32 @@
+id: pravilno-polnjenje
+kind: sort
+groups:
+  - id: pravilno
+    label: Pravilno
+  - id: napacno
+    label: Napačno
+items:
+  - id: ploscica
+    text: Količino vzameš s tipske ploščice
+    group: pravilno
+    why: To je predpisana količina za to napravo.
+  - id: puscanje
+    text: Pred polnjenjem poiščeš in popraviš puščanje
+    group: pravilno
+    why: Sicer novo hladivo spet uide.
+  - id: vakuum
+    text: Napravo izprazniš in izvakuumiraš, nato polniš s tehtnico
+    group: pravilno
+    why: Tako točno veš, koliko je v napravi.
+  - id: evidenca
+    text: Količino zapišeš v evidenco
+    group: pravilno
+    why: Naslednji serviser vidi zgodovino naprave.
+  - id: tlak
+    text: Doliješ, dokler se tlak ne zdi normalen
+    group: napacno
+    why: Tlak je odvisen od pogojev, ne le od količine.
+  - id: za-vsak-primer
+    text: Doliješ malo za vsak primer
+    group: napacno
+    why: Preveč hladiva je napaka – in puščanje ostane.

@@ -1,0 +1,59 @@
+id: m15-l02-q
+lesson: m15-l02
+questions:
+  - id: q1
+    type: single
+    text: Kaj v tem primeru loči puščanje od zatikajočega ventila?
+    understand:
+      simpler: Oba imata visok SH. Katera druga meritev se razlikuje?
+      terms: [podhlajevanje, pregrevanje]
+      hint: Kondenzator – poln ali prazen tekočine?
+    options:
+      - id: a
+        text: Nizko podhlajevanje
+        correct: true
+        why: Pri puščanju v kondenzatorju ni tekočine (nizek SC). Pri ventilu bi bil SC visok.
+      - id: b
+        text: Visoko pregrevanje
+        why: Visok SH imata oba. Sam ne loči med njima.
+      - id: c
+        text: Normalen tlak vode
+        why: Tlak vode pove o vodnem krogu, ne o hladivu.
+    lessonLink: m15-l02#why
+
+  - id: q2
+    type: single
+    text: Zakaj je počasno slabšanje skozi leta namig za puščanje?
+    understand:
+      simpler: Kakšne napake se pojavijo nenadoma in kakšne počasi?
+      terms: [vzorec]
+      hint: Spomni se počasi puščajoče zračnice.
+    options:
+      - id: a
+        text: Ker hladivo uhaja počasi in moč pada postopoma
+        correct: true
+        why: Vsako leto ga je malo manj – moč pada brez trenutka, ko bi šlo očitno narobe.
+      - id: b
+        text: Ker se filter vode vedno zamaši počasi
+        why: Filter se pogosto zamaši naenkrat, npr. po menjavi radiatorjev.
+      - id: c
+        text: Ker se kompresor obrablja vsako leto enako
+        why: Obraba kompresorja ni tipičen vzrok za tak potek.
+    lessonLink: m15-l02#story
+
+  - id: q3
+    type: truefalse
+    text: Oljni madež na spoju že sam dokazuje, da je vzrok puščanje hladiva.
+    understand:
+      simpler: Ali je sled isto kot dokaz?
+      terms: [vzorec]
+      hint: Oljni madež je sled, ne dokaz.
+    options:
+      - id: da
+        text: DA
+        why: Madež je močan namig, dokaz pa da šele vzorec meritev – in iskanje puščanja na tistem mestu.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Madež je sled. Dokaz sta vzorec SH in SC ter potrjeno mesto puščanja.
+    lessonLink: m15-l02#remember

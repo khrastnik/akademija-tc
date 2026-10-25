@@ -1,0 +1,59 @@
+id: m00-l02-q
+lesson: m00-l02
+questions:
+  - id: q1
+    type: single
+    text: Kateri trije sklopi so »najlažje najprej«?
+    understand:
+      simpler: Katere tri stvari naprava potrebuje, da sploh lahko greje?
+      terms: [simptom]
+      hint: Toplota iz zraka, voda, ki jo odnese, in pravilen ukaz.
+    options:
+      - id: a
+        text: Voda, zrak in nastavitve
+        correct: true
+        why: Vse tri so pogoste, hitre in jih preveriš brez posega v napravo.
+      - id: b
+        text: Kompresor, ventil in hladivo
+        why: To je krog hladiva – pride na vrsto šele po najlažjih korakih.
+      - id: c
+        text: Elektrika, inverter in plošča
+        why: Elektronika je delo za usposobljeno osebo in ni med najlažjimi koraki.
+    lessonLink: m00-l02#what
+
+  - id: q2
+    type: single
+    text: Tlak vode je v redu. Kaj narediš?
+    understand:
+      simpler: Ali si s tem preveril vse najlažje korake?
+      terms: [meritev]
+      hint: Trije sklopi, ne le eden.
+    options:
+      - id: a
+        text: Preveriš še zrak in nastavitve
+        correct: true
+        why: En sklop je izločen, ostala dva še ne. Preveri vse tri.
+      - id: b
+        text: Takoj priklopiš manometre
+        why: Zrak in nastavitve še nista preverjena – vzrok je lahko tam.
+      - id: c
+        text: Stranki rečeš, da je vse v redu
+        why: Simptom še ni pojasnjen. Delo se šele začenja.
+    lessonLink: m00-l02#field-error
+
+  - id: q3
+    type: truefalse
+    text: Najlažji koraki so manj strokovni, zato jih izkušen serviser preskoči.
+    understand:
+      simpler: Ali je preverjanje žarnice pred klicem električarja neumno?
+      terms: [vzrok]
+      hint: Spomni se mojstrovega odgovora v zgodbi.
+    options:
+      - id: da
+        text: DA
+        why: Ravno izkušen serviser začne z najlažjim – ker ve, da je tam velik del napak.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Najlažje najprej je najbolj strokovna odločitev, ne bližnjica.
+    lessonLink: m00-l02#story
