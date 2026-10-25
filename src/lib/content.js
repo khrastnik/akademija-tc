@@ -49,6 +49,8 @@ export const lessonFrontmatterSchema = z.object({
   terms: z.array(id).default([]),
   updated: z.union([z.string(), z.date()]).transform((d) => (d instanceof Date ? d.toISOString().slice(0, 10) : d)),
   reviewed: z.boolean().default(false),
+  /** Kdo je lekcijo strokovno pregledal – obvezno, če je reviewed: true. */
+  reviewedBy: z.string().min(5).optional(),
   sources: z.array(z.object({ title: z.string(), url: z.string().url().optional() })).default([]),
 });
 
@@ -311,6 +313,7 @@ export function validateContent() {
   for (const lesson of lessons) {
     const at = lesson.file;
     if (!moduleIds.has(lesson.module)) errors.push(`${at}: modul "${lesson.module}" ne obstaja`);
+    if (lesson.reviewed && !lesson.reviewedBy) errors.push(`${at}: reviewed: true zahteva reviewedBy (kdo je pregledal)`);
     if (!lesson.id.startsWith(lesson.module)) errors.push(`${at}: id "${lesson.id}" ne spada v modul "${lesson.module}"`);
     for (const b of lesson.buildsOn) if (!lessonIds.has(b)) errors.push(`${at}: buildsOn "${b}" ne obstaja`);
     for (const t of lesson.terms) if (!termIds.has(t)) errors.push(`${at}: pojem "${t}" ni v slovarju`);

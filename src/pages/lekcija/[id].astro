@@ -29,6 +29,7 @@ const total = cards.length;
   </nav>
 
   {!lesson.reviewed && <p class="notice">Vsebina še ni strokovno pregledana. Če najdeš napako, jo javi spodaj.</p>}
+  {lesson.reviewed && <p class="reviewed">✓ Strokovno pregledal: {lesson.reviewedBy}</p>}
 
   <header class="lesson-head">
     <p class="eyebrow">Lekcija {lessonNumber(lesson.id)} · {lesson.level} · {lesson.minutes} min</p>
@@ -144,6 +145,15 @@ const total = cards.length;
   .crumbs a {
     display: inline-block;
     padding: 10px 0;
+  }
+  .reviewed {
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--ok-bg);
+    color: var(--ok);
+    font-weight: 600;
+    font-size: 0.95rem;
   }
   .lesson-head {
     margin-bottom: 16px;

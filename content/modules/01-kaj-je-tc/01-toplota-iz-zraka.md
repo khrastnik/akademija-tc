@@ -25,7 +25,7 @@ Toplotna črpalka je hladilnik, ki je obrnjen na glavo. Njena »notranjost« je 
 ::card{type=what}
 Toplotna črpalka toplote **ne proizvaja**, ampak jo **prenaša** – iz zunanjega zraka v vodo ogrevanja.
 
-Elektriko porabi za pogon kompresorja, ki toploto »dvigne« na temperaturo, uporabno za radiatorje.
+Elektriko porabi za pogon kompresorja, ki toploto »dvigne« na temperaturo, uporabno za radiatorje. Tudi ta elektrika na koncu postane toplota v vodi – a je le manjši del.
 
 **[[cop|Grelno število]]** pove, koliko toplote naprava odda za vsako enoto porabljene elektrike.
 

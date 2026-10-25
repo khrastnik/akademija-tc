@@ -27,7 +27,7 @@ items:
   - id: susilnik
     text: Razlika temperatur na filtru sušilniku
     group: nato
-    why: Meritev s sondo na površini – brez priklopa na krog hladiva.
+    why: Meritev s sondo na površini, brez priklopa na krog hladiva. Če je sušilnik v ohišju, ga odpre le usposobljena oseba.
   - id: nt
     text: Temperatura uparjanja in pregrevanje
     group: konec

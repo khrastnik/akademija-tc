@@ -18,7 +18,7 @@ Spoznal boš drugi korak diagnostične verige: preden kar koli meriš na krogu h
 ::card{type=story}
 Mojster in vajenec dobita isti dan tri klice: »Ne greje dovolj.«
 
-Pri prvi stranki je tlak vode skoraj na nič – voda je počasi odtekala skozi kapljajoč ventil. Pri drugi je zunanja enota do polovice zasuta s snegom, ki ga je spluženo z dvorišča. Pri tretji je otrok na zaslonu spremenil način na »počitnice«.
+Pri prvi stranki je tlak vode skoraj na nič – voda je počasi odtekala skozi kapljajoč ventil. Pri drugi je zunanja enota do polovice zasuta s snegom, ki so ga splužili z dvorišča. Pri tretji je otrok na zaslonu spremenil način na »počitnice«.
 
 Trije klici, nobenega orodja za hladivo. Vajenec se čudi: »Saj nismo naredili nič strokovnega.«
 

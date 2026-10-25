@@ -55,7 +55,7 @@ Razvrsti dele primera v pravi korak verige.
 ::card{type=numbers}
 Primer za računanje: ob prvem zagonu je bila ΔT zapisana kot 5 K, danes pri podobni zunanji temperaturi 11 K.
 
-To je več kot dvakrat več. Pretok je padel na manj kot polovico.
+To je več kot dvakrat več. Če je naprava oddajala podobno moč, je pretok padel približno na polovico ali manj – to je ocena, ne izračun.
 
 Primerjava z zapisnikom iste naprave je tu močnejša od katerekoli splošne tabele.
 

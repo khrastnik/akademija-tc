@@ -65,7 +65,7 @@ Preden zaupaš instrumentom:
 - na digitalnem manometru je izbrano pravo hladivo,
 - baterije so polne.
 
-Servisni manometer sme priklopiti le serviser s spričevalom. Za vnetljiva hladiva, kot je R290, mora biti oprema za to primerna.
+Servisni manometer sme priklopiti le serviser s spričevalom. Klešče na kablih v ohišju naprave uporablja le usposobljena oseba. Za vnetljiva hladiva, kot je R290, mora biti oprema primerna.
 
 ::card{type=field-error}
 Tri napake, ki dajo verjetne, a napačne številke:

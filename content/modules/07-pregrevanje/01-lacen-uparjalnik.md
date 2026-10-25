@@ -43,7 +43,7 @@ Zakaj malo hladiva pomeni visoko pregrevanje?
 2. Dokler je tekočina, se temperatura ne dviga.
 3. Ko vsa tekočina zavre, para dobiva še toploto in se segreje.
 4. Malo hladiva zavre že na začetku – para se greje dolgo pot, zato je SH visok.
-5. Preveč hladiva pride skoraj do konca – SH je nizek, kapljice lahko dosežejo kompresor.
+5. Če ventil spusti v uparjalnik preveč hladiva, tekočina pride skoraj do konca – SH je nizek, kapljice lahko dosežejo kompresor.
 
 ::card{type=widget id=visok-nizek-sh}
 Kaj povzroči visoko in kaj nizko pregrevanje?

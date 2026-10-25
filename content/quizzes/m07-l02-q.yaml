@@ -23,37 +23,37 @@ questions:
 
   - id: q2
     type: single
-    text: Kateri namig brez instrumentov kaže na prenizko pregrevanje?
+    text: Kateri namig kaže, da v kompresor morda prihaja tekočina?
     understand:
-      simpler: Kaj vidiš na sesalnem vodu, ko je ta skoraj tako mrzel kot temperatura uparjanja?
+      simpler: Kaj se zgodi s temperaturo za kompresorjem, ko vanj prihajajo hladne kapljice?
       terms: [pregrevanje]
-      hint: Ivje in rosa.
+      hint: Ivje na sesalnem vodu pozimi ni zanesljiv znak.
     options:
       - id: a
-        text: Ivje na sesalnem vodu do kompresorja
+        text: Nenavadno hladen tlačni vod
         correct: true
-        why: Zelo mrzel sesalni vod vse do kompresorja kaže, da para ni pregreta.
+        why: Kapljice tekočine kompresor ohladijo, zato je tlačni vod hladnejši kot ob zagonu.
       - id: b
-        text: Vroč tlačni vod za kompresorjem
-        why: Vroč tlačni vod je normalen – visoka temperatura kaže prej na previsoko pregrevanje.
+        text: Ivje na sesalnem vodu pozimi
+        why: Pri ogrevanju je sesalni vod pod ničlo tudi pri normalnem pregrevanju – ivje je lahko povsem normalno.
       - id: c
         text: Suha in čista zunanja enota
-        why: Čista enota je dober znak, ne kaže na prenizko pregrevanje.
+        why: Čista enota je dober znak, ne kaže na tekočino v kompresorju.
     lessonLink: m07-l02#measure
 
   - id: q3
     type: truefalse
-    text: Čim bolj mrzel je sesalni vod pri kompresorju, tem bolje naprava dela.
+    text: Čim hladnejši je tlačni vod za kompresorjem, tem bolje naprava dela.
     understand:
-      simpler: Ali je zelo mrzel sesalni vod znak zdravja ali premajhnega varnostnega roba?
+      simpler: Ali je hladen tlačni vod znak zdravja ali znak, da v kompresor prihaja tekočina?
       terms: [pregrevanje]
       hint: »Hladno pomeni dobro« je napaka iz lekcije.
     options:
       - id: da
         text: DA
-        why: Zelo mrzel sesalni vod pomeni premalo pregrevanja – tekočina lahko doseže kompresor.
+        why: Nenavadno hladen tlačni vod lahko pomeni, da v kompresor prihaja tekočina.
       - id: ne
         text: NE
         correct: true
-        why: Prav. Pregrevanje je varnostni rob. Brez njega je kompresor v nevarnosti.
+        why: Prav. Hladen tlačni vod je opozorilo – pregrevanje je morda prenizko.
     lessonLink: m07-l02#field-error

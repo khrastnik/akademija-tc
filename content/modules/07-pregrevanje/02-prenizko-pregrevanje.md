@@ -16,11 +16,11 @@ sources:
 Razumel boš, zakaj je prenizko **[[pregrevanje]]** nevarno za **[[kompresor]]**, kaj ga povzroči in katere namige vidiš brez instrumentov.
 
 ::card{type=story}
-Pozimi serviser opazi, da je sesalni vod ves v ivju – vse do ohišja kompresorja. Kompresor zveni drugače kot običajno, bolj grobo.
+Pozimi serviser opazi, da je tlačni vod za kompresorjem komaj topel – mnogo hladnejši kot ob prvem zagonu. Kompresor zveni drugače kot običajno, bolj grobo.
 
 Na zaslonu ni nobene kode. Naprava greje.
 
-Serviser s spričevalom izmeri pregrevanje: skoraj nič. V kompresor prihaja mešanica pare in kapljic. Če bi tako delovalo še mesece, bi bil kompresor uničen – in nihče ne bi vedel zakaj.
+Serviser s spričevalom izmeri pregrevanje: skoraj nič. V kompresor prihaja mešanica pare in kapljic. Senzor na sesalnem vodu je zdrsnil iz objemke, zato krmilnik odpira ventil vse bolj. Če bi tako delovalo še mesece, bi bil kompresor uničen.
 
 ::card{type=what}
 **Prenizko pregrevanje** pomeni, da se para po izhodu iz uparjalnika skoraj nič ne segreje – ker je tekočina segla do samega konca uparjalnika ali še čez.
@@ -53,27 +53,30 @@ Varno območje pregrevanja določi proizvajalec v navodilih. Pri elektronskem ek
 
 Primer za razumevanje: če je sesalni vod enako mrzel kot temperatura uparjanja, je SH nič – ni več varnostnega roba.
 
-::card{type=measure}
-Namigi brez instrumentov:
+Ker kapljice tekočine kompresor ohladijo, je pri tem tudi tlačni vod hladnejši kot običajno.
 
-- ivje ali rosa na sesalnem vodu vse do ohišja kompresorja,
-- spremenjen, bolj grob zvok kompresorja,
-- zasut ali zaledenel uparjalnik.
+::card{type=measure}
+Namigi, ki zahtevajo previdnost:
+
+- tlačni vod za kompresorjem je nenavadno hladen v primerjavi z zagonom,
+- spremenjen, bolj grob zvok kompresorja.
+
+Ivje na sesalnem vodu pozimi **ni** zanesljiv znak – pri ogrevanju je ta vod pod ničlo tudi pri normalnem pregrevanju.
 
 Za dokaz potrebuješ manometer in sondo – **samo serviser s spričevalom**. Pri R290 brez virov vžiga in z detektorjem plina.
 
 ::card{type=field-error}
 Dve napaki:
 
-1. **»Hladno pomeni dobro.«** Mrzel sesalni vod do kompresorja ni znak zdrave naprave, ampak premajhnega varnostnega roba.
-2. **Dolivanje hladiva, ker »greje slabo«, ko je vzrok zasut uparjalnik.** Preveč hladiva in premalo zraka skupaj pregrevanje še znižata – kompresor je v še večji nevarnosti.
+1. **»Hladno pomeni dobro.«** Hladen tlačni vod ni znak zdrave naprave, ampak lahko pomeni, da v kompresor prihaja tekočina.
+2. **Spregledan senzor.** Elektronski ventil uravnava pregrevanje po senzorju na sesalnem vodu. Če senzor ne meri cevi, krmilnik misli, da je pregrevanje višje, kot je – in ventil odpre še bolj.
 
 ::card{type=remember}
 > **Pregrevanje je varnostni rob kompresorja.**
 
 - Prenizko → kapljice v kompresor.
-- Namigi: ivje do kompresorja, grob zvok.
-- Vzrok: ventil, senzor, premalo zraka ali preveč hladiva.
+- Namig: nenavadno hladen tlačni vod, grob zvok.
+- Pogost vzrok: ventil ali senzor, ki ga vodi.
 
 ::quiz{ref=m07-l02-q}
 
@@ -82,6 +85,6 @@ Dve napaki:
 
 - Kompresor stiska paro, ne tekočine.
 - Prenizko pregrevanje poškoduje počasi in tiho.
-- Mrzlo do kompresorja je opozorilo, ne pohvala.
+- Hladen tlačni vod je opozorilo, ne pohvala.
 
 **Kaj sledi:** v modulu 8 spoznaš podhlajevanje – drugo polovico slike.

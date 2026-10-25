@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE, url, sourceUrl, issueUrl } from '../lib/site.js';
+import pkg from '../../package.json';
 
 interface Props {
   title: string;
@@ -107,7 +108,7 @@ const nav = [
           <a href={issueUrl(title)}>Javi napako</a>
           <a href={`${SITE.repo}/blob/${SITE.branch}/CONTRIBUTING.md`}>Kako pomagati</a>
         </p>
-        <p>Koda MIT · vsebina CC BY-NC-SA 4.0 · brez piškotkov, sledenja in analitike.</p>
+        <p>Koda MIT · vsebina CC BY-NC-SA 4.0 · brez piškotkov, sledenja in analitike · <a href={`${SITE.repo}/blob/${SITE.branch}/CHANGELOG.md`}>različica {pkg.version}</a></p>
       </div>
     </footer>
     {import.meta.env.PROD && (

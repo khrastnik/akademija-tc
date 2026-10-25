@@ -143,8 +143,7 @@
 - id: senzor
   sl: temperaturni senzor
   en: temperature sensor
-  abbr: NTC
-  kratkaRazlaga: Element, katerega upornost se spreminja s temperaturo; po njej krmilnik bere temperaturo.
+  kratkaRazlaga: Element, katerega upornost se spreminja s temperaturo; po njej krmilnik bere temperaturo. Pogosto je to NTC.
   dolgaRazlaga: Krmilnik verjame senzorju. Če senzor ni dobro pritrjen, izoliran ali je okvarjen, krmilnik dela pravilno – a na podlagi napačnega podatka.
   analogija: Kot oči krmilnika – če vidijo narobe, roka seže narobe.
   povezaneLekcije: [m11-l01]

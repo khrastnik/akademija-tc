@@ -25,4 +25,4 @@ items:
   - id: blago
     text: Jeseni je pretoplo, pri mrazu pa ravno prav
     group: spusti
-    why: Pri blagem vremenu je preveč toplote – krivuljo spustiš pri blagem vremenu, mraz pa ostane enak.
+    why: Pri blagem vremenu je preveč toplote. Krivuljo premakneš nižje in jo narediš nekoliko bolj strmo, da pri mrazu ostane enako.

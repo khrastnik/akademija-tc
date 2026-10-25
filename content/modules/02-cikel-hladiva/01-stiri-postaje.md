@@ -18,7 +18,7 @@ Sledil boš **[[hladivo|hladivu]]** skozi štiri glavne dele naprave in za vsake
 ::card{type=story}
 Prvi dan na terenu z mojstrom. Odpre ohišje zunanje enote, pokaže na cevi in reče: »Ne dotikaj se. Samo glej.«
 
-Na eni cevi je rosa, skoraj ivje. Druga je suha. Tretja ima ob sebi malo pare, ker je vroča.
+Na eni cevi je rosa, skoraj ivje. Druga je mlačna in suha. Za tretjo mojster opozori: »Ta je vroča – lahko te opeče.«
 
 »Če znaš povedati, zakaj je vsaka cev taka, kot je,« reče, »si na pol poti do diagnoze. Napaka je vedno postaja, ki ne opravi svojega dela.«
 

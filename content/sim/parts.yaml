@@ -30,7 +30,7 @@
   group: hladivo
   name: Kondenzator (ploščni prenosnik)
   en: condenser
-  where: Notranja enota
+  where: Notranja enota pri splitu, zunanja enota pri monobloku
   what: Vroča para hladiva odda toploto vodi ogrevalnega kroga in se pri tem utekočini. Tu toplota pride v hišo.
   analogy: Kot rosenje na hladnem kozarcu – para odda toploto in postane tekočina.
   faults: [Premajhen pretok vode, Zamašen prenosnik, Zrak v vodnem krogu]
@@ -107,7 +107,7 @@
   where: Sesalni vod tik pred kompresorjem
   what: Ujame kapljice tekočega hladiva, da v kompresor pride samo para. Tekočina bi kompresor poškodovala.
   analogy: Kot lovilec kapljic pri sesalniku za mokro čiščenje.
-  faults: [Preveč tekočine po odtajevanju, Zamrznjen zunaj ob premalem pregrevanju]
+  faults: [Preveč tekočine po odtajevanju, Preobremenjen, če v uparjalniku stalno ostaja tekočina]
 - id: servisni
   group: hladivo
   name: Servisni priključki

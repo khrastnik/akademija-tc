@@ -15,7 +15,7 @@ questions:
         why: Črpalka toploto prenaša iz zraka v vodo. Elektrika plača le prenos, zato je oddane toplote več kot porabljene elektrike.
       - id: b
         text: Iz porabljene elektrike
-        why: Tako dela električni grelec. Črpalka elektriko porabi za kompresor, večina toplote pa pride iz zraka.
+        why: Tako dela električni grelec. Pri črpalki tudi elektrika kompresorja postane toplota, a večina toplote pride iz zraka.
       - id: c
         text: Iz vode v radiatorjih
         why: Voda v radiatorjih toploto sprejme, ne odda. Je cilj toplote, ne njen vir.

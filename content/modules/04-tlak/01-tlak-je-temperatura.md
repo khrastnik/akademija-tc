@@ -27,7 +27,7 @@ Navaden manometer kaže **[[nadtlak]]** – tlak nad zračnim tlakom okolice. Pr
 
 **[[absolutni-tlak|Absolutni tlak]]** je nadtlak plus zračni tlak.
 
-Pri hladivu velja pravilo: kjer sta para in tekočina skupaj, tlak določa **[[nasicenje|temperaturo nasičenja]]** – temperaturo, pri kateri hladivo vre ali se utekočinja.
+Pri hladivu velja pravilo: kjer sta para in tekočina skupaj, tlak določa **[[nasicenje|temperaturo nasičenja]]** – temperaturo, pri kateri hladivo vre ali se utekočinja. Izjema so mešanice z drsenjem temperature.
 
 ::card{type=imagine}
 Pomisli na lonec na pritisk. Pod pokrovom je tlak višji, zato voda zavre šele pri več kot 100 °C – hrana se skuha hitreje.
@@ -39,9 +39,9 @@ S hladivom je enako, le pri čisto drugih temperaturah.
 ::card{type=why}
 Zakaj tlak določa temperaturo vrenja?
 
-1. Tekočina zavre, ko se njeni delci dovolj močno odrivajo od okolice.
-2. Višji tlak jih bolj stiska – za vrenje potrebujejo več toplote, torej višjo temperaturo.
-3. Zato vsakemu tlaku pripada natanko ena temperatura vrenja.
+1. Vsaka tekočina ima parni tlak – ta raste s temperaturo.
+2. Tekočina zavre, ko njen parni tlak doseže tlak okolice.
+3. Višji tlak okolice zato pomeni višjo temperaturo vrenja – vsakemu tlaku pripada ena temperatura vrenja.
 4. Pri hladivu je ta zveza zapisana v tabeli tlak–temperatura.
 5. Zato manometer v resnici pove temperaturo v uparjalniku ali kondenzatorju.
 
@@ -65,6 +65,7 @@ Dve napaki, ki pokvarita cel izračun:
 
 1. **Na digitalnem manometru je izbrano napačno hladivo.** Tlak je prav izmerjen, temperatura nasičenja pa izračunana za drugo snov – in s tem tudi pregrevanje in podhlajevanje.
 2. **Mešanje tabel v nadtlaku in absolutnem tlaku.** Razlika okoli 1 bar se pri nizkih tlakih pozna kot več stopinj.
+3. **Pozabljeno drsenje temperature.** Pri nekaterih mešanicah (npr. R407C) se temperatura med vrenjem spreminja. Za pregrevanje uporabiš rosišče, za podhlajevanje vrelišče.
 
 ::card{type=remember}
 > **Tlak hladiva = temperatura vrenja.**

@@ -20,7 +20,7 @@ Klic iz hiše ob morju: »Prvo zimo je grelo odlično. Drugo malo slabše. Letos
 
 Serviserka vpraša: »Je kdo kaj delal na napravi?« – »Ne, nihče.«
 
-Počasno slabšanje brez posega je pomemben namig. Napake vode in zraka se navadno pojavijo nenadoma: filter se zamaši po menjavi radiatorjev, listje pade jeseni. Počasna izguba moči skozi leta pa diši po počasni izgubi hladiva.
+Počasno slabšanje brez posega je pomemben namig. Napake vode in zraka se pogosto pojavijo nenadoma: filter se zamaši po menjavi radiatorjev, listje pade jeseni. Počasna izguba moči skozi leta pa diši po počasni izgubi hladiva.
 
 ::card{type=what}
 Primer po verigi:

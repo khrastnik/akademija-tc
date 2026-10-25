@@ -33,4 +33,4 @@ items:
   - id: iz-nic
     text: Kompresor proizvede toploto iz nič.
     group: mit
-    why: Kompresor toploto, ki jo hladivo vzame zraku, le dvigne na višjo temperaturo.
+    why: Kompresor toploto iz zraka dvigne na višjo temperaturo. Porabljena elektrika sicer tudi postane toplota, a večina pride iz zraka.

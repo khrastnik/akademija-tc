@@ -19,14 +19,10 @@ items:
     group: visok
     why: Zožitev pred ventilom zmanjša dotok hladiva v uparjalnik.
   - id: eev-odprt
-    text: Ekspanzijski ventil prepušča preveč
+    text: Ekspanzijski ventil obtiči v preveč odprtem položaju
     group: nizek
     why: V uparjalniku je tekočina skoraj do konca – para se ne utegne pregreti.
-  - id: listje
-    text: Lamele uparjalnika zamašene z listjem
+  - id: senzor
+    text: Senzor sesalnega voda ne meri cevi, ampak toplejši zrak
     group: nizek
-    why: Hladivo dobi premalo toplote iz zraka, zato ne zavre do konca in se ne pregreje.
-  - id: led
-    text: Uparjalnik obložen z ledom
-    group: nizek
-    why: Led je ovira za zrak in toploto – hladivo ostane tekoče dlje.
+    why: Krmilnik vidi previsoko pregrevanje in ventil odpre preveč – dejansko pregrevanje pade.

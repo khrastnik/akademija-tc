@@ -14,19 +14,19 @@ items:
     text: Pregrevanje stabilno pri ustaljenem delovanju
     group: varno
     why: Ventil in krmilnik delata, kot morata.
+  - id: ivje-zima
+    text: Pozimi ivje na sesalnem vodu, pregrevanje pa v območju iz navodil
+    group: varno
+    why: Pri ogrevanju je sesalni vod pod ničlo tudi pri normalnem pregrevanju. Ivje samo po sebi ni napaka.
   - id: nic
     text: Pregrevanje skoraj nič
     group: nevarno
     why: Ni varnostnega roba – kapljice lahko pridejo v kompresor.
-  - id: ivje
-    text: Ivje sega do ohišja kompresorja
+  - id: tlacni-hladen
+    text: Tlačni vod je nenavadno hladen v primerjavi z zagonom
     group: nevarno
-    why: Znak, da para pri kompresorju ni pregreta.
-  - id: eev
-    text: Ekspanzijski ventil prepušča preveč hladiva
+    why: Kapljice tekočine kompresor ohladijo – znak, da v kompresor prihaja tekočina.
+  - id: senzor
+    text: Senzor sesalnega voda je zdrsnil iz objemke
     group: nevarno
-    why: Tekočina seže do konca uparjalnika ali čez.
-  - id: listje
-    text: Uparjalnik zasut z listjem in preveč hladiva v krogu
-    group: nevarno
-    why: Obe napaki pregrevanje znižata – skupaj še bolj.
+    why: Krmilnik misli, da je pregrevanje višje, kot je, in ventil odpre preveč.
