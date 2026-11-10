@@ -79,6 +79,8 @@ Vprašaj se vedno: **katera postaja ne opravi svojega dela?**
 3. Kondenzator – odda toploto vodi
 4. Ekspanzijski ventil – zniža tlak
 
+Vsako postajo si oglej v živo in jo preizkusi sam: [štiri postaje v simulatorju](../../simulator/#postaje).
+
 ::quiz{ref=m02-l01-q}
 
 ::card{type=next}

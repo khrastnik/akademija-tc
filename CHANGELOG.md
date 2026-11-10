@@ -1,5 +1,17 @@
 # Spremembe
 
+## 0.4.0 – 2026-11-10
+
+### Simulator
+- Nov razdelek »Štiri postaje v živo« na strani Simulator (`/simulator/#postaje`).
+  Vsaka postaja ima svojo animirano mini simulacijo z enim drsnikom:
+  - **uparjalnik** – pretok in temperatura zraka: kje hladivo zavre, pregrevanje, tekočina na izhodu,
+  - **kompresor** – hitrost (inverter): stiskanje pare, tlak, temperatura, poraba,
+  - **kondenzator** – pretok vode: utekočinjanje, podhlajevanje, »visok tlak« ob zamašenem filtru,
+  - **ekspanzijski ventil** – odprtost: padec tlaka in temperature, lačen ali preplavljen uparjalnik.
+- Lekcija 2.1 vodi na simulacije neposredno ob seznamu štirih postaj.
+- Spoštuje nastavitev »manj gibanja« (brez animacije).
+
 ## 0.3.0 – 2026-11-10
 
 ### Vsebina

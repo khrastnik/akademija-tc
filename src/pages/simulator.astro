@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Simulator from '../components/Simulator.tsx';
+import StationSims from '../components/StationSims.tsx';
 import { loadSim } from '../lib/content.js';
 import { url } from '../lib/site.js';
 
@@ -17,6 +18,7 @@ const { parts, faults, days } = loadSim();
     <p class="eyebrow">Servisni center</p>
     <h1>3D simulator toplotne črpalke</h1>
     <p class="muted">Poglej, kako toplota iz zraka pride v radiatorje – nato se kot serviser loti pravih klicev strank.</p>
+    <p class="jump"><a href="#postaje">↓ Štiri postaje v živo – vsaka posebej</a></p>
   </header>
   <Simulator client:only="preact" parts={parts} faults={faults} days={days} lessonUrl={url('lekcija/m00-l01')}>
     <!-- Okostje iste velikosti, dokler se simulator ne naloži: stran ne poskoči. -->
@@ -28,6 +30,12 @@ const { parts, faults, days } = loadSim();
       </div>
     </div>
   </Simulator>
+  <section id="postaje" class="stations">
+    <p class="eyebrow">Postaje v živo</p>
+    <h2>Štiri postaje kroga hladiva</h2>
+    <p class="muted">Vsaka postaja posebej: premakni drsnik in poglej, kaj se zgodi – ko dela prav in ko ne more.</p>
+    <StationSims client:visible />
+  </section>
   <p class="notice model-note">Učni model: številke kažejo smer odstopanj (višje, nižje, normalno) in niso podatki proizvajalca. Na terenu vedno veljajo navodila proizvajalca tvoje naprave.</p>
 </Base>
 
@@ -43,5 +51,25 @@ const { parts, faults, days } = loadSim();
   }
   .model-note {
     margin-top: 16px;
+  }
+  .jump {
+    margin-top: 8px !important;
+  }
+  .jump a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    font-weight: 700;
+  }
+  .stations {
+    margin-top: 40px;
+    padding-top: 8px;
+    scroll-margin-top: 80px;
+  }
+  .stations h2 {
+    margin: 0 0 4px;
+  }
+  .stations > .muted {
+    margin: 0 0 14px;
   }
 </style>

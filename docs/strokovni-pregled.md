@@ -74,6 +74,7 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 - `packages/engine/src/sim.ts` – učni model: v katero smer se ob vsaki napaki premaknejo meritve.
   Testi v `tests/sim.test.ts` zapišejo vzorce, ki jih igra uči – če je kateri napačen, popravi tudi test.
 - `content/sim/parts.yaml` – opisi 20 delov naprave.
+- `src/components/StationSims.tsx` – štiri postaje v živo: ali so smeri sprememb (kje zavre, kdaj tlak raste, lačen/preplavljen uparjalnik) pravilne in besedila sodil ob vsakem stanju strokovno točna.
 
 ## Kaj je bilo že popravljeno ob samopregledu (različica 0.2.0)
 
