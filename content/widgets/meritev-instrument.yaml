@@ -1,0 +1,36 @@
+id: meritev-instrument
+kind: sort
+groups:
+  - id: napetost
+    label: Multimeter – napetost
+  - id: upornost
+    label: Multimeter – upornost
+  - id: klesce
+    label: Klešče za tok
+  - id: izolacija
+    label: Merilnik izolacije
+items:
+  - id: sponke
+    text: Ali je na napajalnih sponkah napetost
+    group: napetost
+    why: Prvi korak – brez napajanja ni smisla iskati naprej.
+  - id: inverter
+    text: Ali je napetost v inverterju po izklopu padla
+    group: napetost
+    why: Preveri se, preden se česa dotakne.
+  - id: senzor
+    text: Ali senzor ustreza tabeli proizvajalca
+    group: upornost
+    why: Upornost pri izklopljeni napravi in odklopljenem konektorju.
+  - id: tuljava
+    text: Ali je tuljava 4-potnega ventila prekinjena
+    group: upornost
+    why: Prekinjena tuljava ima neskončno upornost.
+  - id: tok
+    text: Koliko toka vleče kompresor
+    group: klesce
+    why: Klešče objamejo en vodnik, brez prekinitve kroga.
+  - id: navitja
+    text: Ali je izolacija navitij kompresorja proti ohišju dobra
+    group: izolacija
+    why: Poseben instrument, pri izklopljeni napravi.

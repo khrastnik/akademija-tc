@@ -1,0 +1,59 @@
+id: m10-l02-q
+lesson: m10-l02
+questions:
+  - id: q1
+    type: single
+    text: Kaj plačaš na računu za elektriko?
+    understand:
+      simpler: Ali plačaš, kako močno naprava dela, ali koliko je porabila v mesecu?
+      terms: [energija, moc]
+      hint: Prevožena pot, ne hitrost.
+    options:
+      - id: a
+        text: Porabljeno energijo v kWh
+        correct: true
+        why: Števec sešteva energijo skozi čas – to je na računu.
+      - id: b
+        text: Trenutno moč v kW
+        why: Moč pove porabo v trenutku, ne v mesecu.
+      - id: c
+        text: Napetost v voltih
+        why: Napetost je v hiši ves čas enaka in ni merilo porabe.
+    lessonLink: m10-l02#what
+
+  - id: q2
+    type: single
+    text: Grelnik z močjo 2 kW deluje 3 ure. Koliko energije porabi?
+    understand:
+      simpler: Koliko je 2 krat 3?
+      terms: [energija]
+      hint: Energija = moč × čas.
+    options:
+      - id: a
+        text: 6 kWh
+        correct: true
+        why: 2 kW × 3 h = 6 kWh.
+      - id: b
+        text: 5 kWh
+        why: To je vsota. Energijo dobiš z množenjem moči in časa.
+      - id: c
+        text: 0,67 kWh
+        why: To je deljenje. Energija je moč, pomnožena s časom.
+    lessonLink: m10-l02#numbers
+
+  - id: q3
+    type: truefalse
+    text: Moč toplotne črpalke z inverterjem je ves čas enaka.
+    understand:
+      simpler: Ali inverter kompresor vrti vedno enako hitro?
+      terms: [moc]
+      hint: Spomni se plina v avtu.
+    options:
+      - id: da
+        text: DA
+        why: Inverter moč spreminja po vremenu in potrebi hiše. Zato porabo meriš na števcu.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Moč se spreminja ves čas – en odčitek ne pove mesečne porabe.
+    lessonLink: m10-l02#why

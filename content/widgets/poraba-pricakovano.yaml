@@ -1,0 +1,32 @@
+id: poraba-pricakovano
+kind: sort
+groups:
+  - id: pricakovano
+    label: Pričakovano
+  - id: sumljivo
+    label: Sumljivo – vprašaj serviserja
+items:
+  - id: mraz
+    text: Največja poraba v najhladnejšem tednu
+    group: pricakovano
+    why: Hiša pri mrazu potrebuje največ toplote.
+  - id: poletje
+    text: Poleti majhna poraba, samo za sanitarno vodo
+    group: pricakovano
+    why: Ogrevanja ni, greje se le bojler.
+  - id: odtajevanje
+    text: Kratek skok porabe ob odtajevanju
+    group: pricakovano
+    why: Odtajevanje porabi nekaj energije – to je del delovanja.
+  - id: blago
+    text: Nenadno visoka poraba pri blagem vremenu
+    group: sumljivo
+    why: Pri blagem vremenu je potreba majhna – kaj troši elektriko?
+  - id: dogrevalnik
+    text: Električni dogrevalnik vklopljen tudi pri blagem vremenu
+    group: sumljivo
+    why: Dogrevalnik je drag in pri blagem vremenu ni potreben – verjetno nastavitev.
+  - id: pada
+    text: Grelno število pri podobnem vremenu iz tedna v teden pada
+    group: sumljivo
+    why: Naprava dela vse slabše – lahko zamašen filter, led ali puščanje.

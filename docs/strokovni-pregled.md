@@ -49,6 +49,10 @@ Napake javi kot issue z oznako lekcije (npr. »7.2«) ali jih popravi neposredno
 | **8.2 Polnjenje po teži** | **Postopek: puščanje → vakuum → polnjenje po teži → evidenca.** |
 | 9.1 Vodni krog | Raztezna posoda kot vzrok kapljanja varnostnega ventila. |
 | 10.1 Elektrika | Napetost v inverterju po izklopu; meja med lastnikom in usposobljeno osebo. |
+| 10.2 Napetost, tok, moč, energija | 230/400 V, 50 Hz; »moč ≈ napetost × tok« le pri preprostih porabnikih. |
+| **10.3 Varovalke in FID** | **Ravnanje ob izpadu (en vklop, nato klic); tip FID stikala za inverterje po navodilih proizvajalca.** |
+| **10.4 Kaj meri električar** | **Vrstni red in mesta meritev; nič v lekciji ne sme spodbujati laika k merjenju v napravi.** |
+| 10.5 Poraba in učinkovitost | Izračun povprečnega grelnega števila iz števcev; statistika na zaslonu kot ocena. |
 | 11.1 Senzorji | Zunanji senzor na soncu / nad izpuhom; primerjava s termometrom. |
 | 12.1 Krivulja in odtajevanje | Strmina proti premiku; opis normalnega odtajevanja. |
 | 13.1 Obhod naprave | Vrstni red obhoda. |

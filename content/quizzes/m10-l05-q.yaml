@@ -1,0 +1,59 @@
+id: m10-l05-q
+lesson: m10-l05
+questions:
+  - id: q1
+    type: single
+    text: V tednu je števec toplote pokazal 240 kWh, števec elektrike 80 kWh. Koliko je povprečno grelno število?
+    understand:
+      simpler: Koliko je 240 deljeno z 80?
+      terms: [cop]
+      hint: Toplota ÷ elektrika.
+    options:
+      - id: a
+        text: "3"
+        correct: true
+        why: 240 ÷ 80 = 3. Za vsako kWh elektrike je naprava oddala 3 kWh toplote.
+      - id: b
+        text: "320"
+        why: To je vsota. Grelno število je razmerje – deljenje.
+      - id: c
+        text: "0,33"
+        why: To je elektrika deljena s toploto – obratno.
+    lessonLink: m10-l05#numbers
+
+  - id: q2
+    type: single
+    text: Katera ugotovitev je sumljiva?
+    understand:
+      simpler: Kdaj bi poraba morala biti največja?
+      terms: [energija]
+      hint: Mraz pomeni več porabe.
+    options:
+      - id: a
+        text: Visoka poraba pri blagem vremenu
+        correct: true
+        why: Pri blagem vremenu hiša potrebuje malo toplote. Visoka poraba je namig, npr. vklopljen dogrevalnik.
+      - id: b
+        text: Največja poraba v najhladnejšem tednu
+        why: To je pričakovano – hiša takrat potrebuje največ toplote.
+      - id: c
+        text: Kratek skok porabe ob odtajevanju
+        why: Odtajevanje porabi nekaj energije – to je normalno.
+    lessonLink: m10-l05#story
+
+  - id: q3
+    type: truefalse
+    text: Za oceno učinkovitosti zadošča en odčitek trenutne moči na zaslonu.
+    understand:
+      simpler: Ali porabo goriva izmeriš na enem semaforju?
+      terms: [cop]
+      hint: Meriš v tednih.
+    options:
+      - id: da
+        text: DA
+        why: Moč se ves čas spreminja. Učinkovitost se pokaže šele v daljšem obdobju.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Odčitke zbiraš skozi tedne in primerjaš podobno vreme.
+    lessonLink: m10-l05#why

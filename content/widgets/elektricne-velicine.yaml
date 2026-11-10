@@ -1,0 +1,44 @@
+id: elektricne-velicine
+kind: sort
+groups:
+  - id: napetost
+    label: Napetost (V)
+  - id: tok
+    label: Tok (A)
+  - id: moc
+    label: Moč (kW)
+  - id: energija
+    label: Energija (kWh)
+items:
+  - id: faza
+    text: 230 med fazo in nevtralnim vodnikom
+    group: napetost
+    why: Napetost v hišni vtičnici.
+  - id: fazi
+    text: 400 med dvema fazama
+    group: napetost
+    why: Napetost trifaznega priključka.
+  - id: kompresor
+    text: Koliko elektrike teče po vodniku do kompresorja
+    group: tok
+    why: To je tok – meri ga usposobljena oseba s kleščami.
+  - id: varovalka
+    text: Odklopnik z oznako 16
+    group: tok
+    why: Odklopnik ima podan tok, pri katerem izklopi.
+  - id: zaslon
+    text: Trenutna poraba na zaslonu naprave
+    group: moc
+    why: Koliko naprava porabi ta trenutek.
+  - id: dogrevalnik
+    text: Moč električnega dogrevalnika na tipski ploščici
+    group: moc
+    why: Koliko porabi, ko je vklopljen.
+  - id: racun
+    text: Mesečna poraba na računu
+    group: energija
+    why: Seštevek porabe skozi čas.
+  - id: stevec
+    text: Razlika na števcu med dvema odčitkoma
+    group: energija
+    why: Energija, porabljena v tem obdobju.

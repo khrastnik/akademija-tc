@@ -1,5 +1,17 @@
 # Spremembe
 
+## 0.3.0 – 2026-11-10
+
+### Vsebina
+- Modul 10 »Elektrika« razširjen s 4 lekcijami (skupaj 5):
+  - 10.2 Napetost, tok, moč in energija (W proti kWh),
+  - 10.3 Varovalke, FID stikalo in varen izklop – ravnanje ob izpadu zaščite,
+  - 10.4 Kaj meri električar ali serviser – kje in s čim (samo za usposobljene),
+  - 10.5 Koliko porabi moja črpalka – poraba in povprečno grelno število iz števcev.
+- 9 novih pojmov v slovarju (napetost, tok, moč, energija, odklopnik, FID stikalo, multimeter, klešče, števec toplote).
+- Lekcije namerno ne učijo meritev pod napetostjo 230/400 V; lastnik meri le na števcih.
+- Kontrolni seznam za strokovni pregled dopolnjen z novimi lekcijami.
+
 ## 0.2.0 – 2026-10-25
 
 ### Vsebina

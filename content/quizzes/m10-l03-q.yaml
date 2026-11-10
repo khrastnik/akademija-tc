@@ -1,0 +1,59 @@
+id: m10-l03-q
+lesson: m10-l03
+questions:
+  - id: q1
+    type: single
+    text: FID stikalo ob zagonu črpalke vedno znova izpade. Kaj narediš?
+    understand:
+      simpler: Ali je ponavljajoče izpadanje zaščite naključje?
+      terms: [fid-stikalo]
+      hint: Zaščita, ki pade dvakrat, govori.
+    options:
+      - id: a
+        text: Pustiš ga izklopljenega in pokličeš strokovnjaka
+        correct: true
+        why: FID izpade, ker tok uhaja drugam. To je okvara, ki jo mora najti usposobljena oseba.
+      - id: b
+        text: Vklapljaš ga, dokler ne zdrži
+        why: Vsak vklop pošlje napetost tja, kjer je okvara – nevarno za ljudi.
+      - id: c
+        text: Zamenjaš ga z drugačnim
+        why: FID ni pokvarjen – opravlja svoje delo. Zamenjava skrije nevarno okvaro.
+    lessonLink: m10-l03#measure
+
+  - id: q2
+    type: single
+    text: Pred čim ščiti FID stikalo?
+    understand:
+      simpler: Kaj FID primerja?
+      terms: [fid-stikalo]
+      hint: Spomni se števca na obeh koncih cevi.
+    options:
+      - id: a
+        text: Pred tokom, ki uhaja drugam
+        correct: true
+        why: Če se ves tok ne vrne, teče drugam – lahko skozi človeka. FID takrat izklopi.
+      - id: b
+        text: Pred previsoko napetostjo strele
+        why: Pred prenapetostjo ščitijo drugi elementi, ne FID stikalo.
+      - id: c
+        text: Pred preveliko porabo naprav
+        why: Pred preobremenitvijo ščiti odklopnik.
+    lessonLink: m10-l03#why
+
+  - id: q3
+    type: truefalse
+    text: Odklopnik, ki pogosto izpade, lahko zamenjaš z večjim.
+    understand:
+      simpler: Kaj odklopnik ščiti?
+      terms: [odklopnik]
+      hint: Kabel ima svojo mejo.
+    options:
+      - id: da
+        text: DA
+        why: Odklopnik ščiti kabel. Večji pusti, da se kabel pregreje – nevarnost požara.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Pogosto izpadanje kaže na težavo, ki jo mora najti električar.
+    lessonLink: m10-l03#field-error

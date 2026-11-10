@@ -227,3 +227,80 @@
   dolgaRazlaga: Kondenzator je v notranji enoti, zato hladivo teče po bakrenih ceveh v hišo. Spoje med enotama naredi serviser s spričevalom na terenu; so možno mesto puščanja.
   analogija: Kot štedilnik zunaj in lonec v hiši – paro nosiš skozi vrata.
   povezaneLekcije: [m01-l02]
+
+- id: napetost
+  sl: električna napetost
+  en: voltage
+  abbr: V
+  kratkaRazlaga: »Pritisk«, ki poganja elektriko po vodnikih, merjen v voltih.
+  dolgaRazlaga: V slovenskih hišah je med fazo in nevtralnim vodnikom 230 V, med dvema fazama 400 V. Napetost v napravi je lahko smrtno nevarna – meri jo le usposobljena oseba.
+  analogija: Kot tlak v vodovodu.
+  povezaneLekcije: [m10-l02]
+
+- id: tok
+  sl: električni tok
+  en: electric current
+  abbr: A
+  kratkaRazlaga: Koliko elektrike teče skozi vodnik, merjeno v amperih.
+  dolgaRazlaga: Tok je odvisen od tega, koliko naprava porabi. Odklopnik izklopi, ko tok preseže mejo, ki jo kabel še prenese.
+  analogija: Kot količina vode, ki teče skozi pipo.
+  povezaneLekcije: [m10-l02, m10-l03]
+
+- id: moc
+  sl: električna moč
+  en: electric power
+  abbr: kW
+  kratkaRazlaga: Koliko elektrike naprava porabi ta trenutek.
+  dolgaRazlaga: Moč se meri v vatih ali kilovatih. Pri toplotni črpalki z inverterjem se ves čas spreminja, zato en odčitek ne pove mesečne porabe.
+  analogija: Kot hitrost na merilniku v avtu.
+  povezaneLekcije: [m10-l02]
+
+- id: energija
+  sl: električna energija
+  en: electric energy
+  abbr: kWh
+  kratkaRazlaga: Koliko elektrike je naprava porabila v nekem času – to plačaš na računu.
+  dolgaRazlaga: Energija je moč, seštevana skozi čas. Naprava z močjo 2 kW, ki dela 3 ure, porabi 6 kWh.
+  analogija: Kot prevoženi kilometri.
+  povezaneLekcije: [m10-l02, m10-l05]
+
+- id: odklopnik
+  sl: instalacijski odklopnik
+  en: circuit breaker
+  kratkaRazlaga: Zaščita, ki ob prevelikem toku izklopi tokokrog in tako varuje kable.
+  dolgaRazlaga: Odklopnik izklopi ob preobremenitvi ali kratkem stiku. Velikost določi proizvajalec naprave in električar – zamenjava z večjim je nevarna.
+  analogija: Kot varnostni ventil na ekonom loncu.
+  povezaneLekcije: [m10-l03]
+
+- id: fid-stikalo
+  sl: FID stikalo
+  en: residual current device
+  abbr: RCD
+  kratkaRazlaga: Zaščitno stikalo na diferenčni tok – izklopi, ko del toka uhaja v ohišje, zemljo ali skozi človeka.
+  dolgaRazlaga: FID stikalo primerja tok, ki gre v napravo, s tokom, ki se vrne. Ob razliki izklopi v delčku sekunde. Ponavljajoče izpadanje je znak okvare ali vlage.
+  analogija: Kot števec na obeh koncih cevi, ki zapre vodo, če nekje pušča.
+  povezaneLekcije: [m10-l03]
+
+- id: multimeter
+  sl: multimeter
+  en: multimeter
+  kratkaRazlaga: Instrument za napetost, upornost in tok – v rokah usposobljene osebe.
+  dolgaRazlaga: Za delo na hišni inštalaciji mora imeti ustrezno varnostno kategorijo. Upornost senzorjev in tuljav se meri pri izklopljeni napravi.
+  analogija: Kot zdravnikova torba z več instrumenti v enem.
+  povezaneLekcije: [m10-l04]
+
+- id: klesce
+  sl: klešče za tok
+  en: clamp meter
+  kratkaRazlaga: Instrument, ki izmeri tok, ko objame en sam vodnik.
+  dolgaRazlaga: Klešče merijo tok brez prekinitve kroga. Objeti morajo le en vodnik – okoli celega kabla se tokova izničita. Na kablih v napravi jih uporablja le usposobljena oseba.
+  analogija: Kot merilnik pretoka, ki ga pritrdiš na cev od zunaj.
+  povezaneLekcije: [m10-l04]
+
+- id: stevec-toplote
+  sl: števec toplote
+  en: heat meter
+  kratkaRazlaga: Merilnik, ki iz pretoka vode in razlike temperatur izračuna oddano toploto.
+  dolgaRazlaga: Skupaj s števcem elektrike omogoči izračun povprečnega grelnega števila za obdobje. Statistika na zaslonu naprave je pogosto le ocena.
+  analogija: Kot vodomer, ki šteje toploto namesto vode.
+  povezaneLekcije: [m10-l05]

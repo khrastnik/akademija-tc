@@ -1,0 +1,28 @@
+id: varovalka-ali-fid
+kind: sort
+groups:
+  - id: odklopnik
+    label: Odklopnik (varovalka)
+  - id: fid
+    label: FID stikalo
+items:
+  - id: kratek-stik
+    text: Kratek stik med vodnikoma
+    group: odklopnik
+    why: Tok naenkrat močno naraste – odklopnik izklopi.
+  - id: preobremenitev
+    text: Preveč porabnikov na istem tokokrogu
+    group: odklopnik
+    why: Kabel bi se pregrel – odklopnik ga zaščiti.
+  - id: vlaga
+    text: Vlaga v priključni omarici zunanje enote
+    group: fid
+    why: Del toka steče skozi vlago v ohišje ali zemljo.
+  - id: izolacija
+    text: Poškodovana izolacija kabla, ki se dotika ohišja
+    group: fid
+    why: Tok uhaja v ohišje – FID zazna razliko.
+  - id: clovek
+    text: Človek se dotakne dela pod napetostjo
+    group: fid
+    why: Tok steče skozi človeka – FID izklopi v delčku sekunde.

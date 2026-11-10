@@ -1,0 +1,59 @@
+id: m10-l04-q
+lesson: m10-l04
+questions:
+  - id: q1
+    type: single
+    text: Zakaj klešče za tok ne smejo objeti celega kabla?
+    understand:
+      simpler: V kateri smeri teče tok v faznem in v nevtralnem vodniku?
+      terms: [klesce]
+      hint: Tokova sta enaka in nasprotna.
+    options:
+      - id: a
+        text: Tokova se izničita – klešče kažejo skoraj nič
+        correct: true
+        why: Tok gre po enem vodniku noter in po drugem ven. Klešče okoli obeh izmerijo razliko – skoraj nič.
+      - id: b
+        text: Ker se kabel pri tem poškoduje
+        why: Klešče kabla ne poškodujejo. Meritev je le napačna.
+      - id: c
+        text: Ker klešče merijo le napetost
+        why: Klešče merijo tok, a le okoli enega vodnika.
+    lessonLink: m10-l04#field-error
+
+  - id: q2
+    type: single
+    text: Kako usposobljena oseba izmeri upornost senzorja?
+    understand:
+      simpler: Ali se upornost meri pod napetostjo?
+      terms: [senzor, multimeter]
+      hint: Pasivni deli se merijo brez napetosti.
+    options:
+      - id: a
+        text: Pri izklopljeni napravi in odklopljenem konektorju
+        correct: true
+        why: Tako je varno in meritev ni motena z ostalo elektroniko.
+      - id: b
+        text: Med polnim delovanjem naprave
+        why: Pod napetostjo je meritev upornosti napačna in nevarna.
+      - id: c
+        text: Med odtajevanjem
+        why: Odtajevanje ni pogoj za meritev upornosti – naprava mora biti izklopljena.
+    lessonLink: m10-l04#what
+
+  - id: q3
+    type: truefalse
+    text: Te meritve sme opraviti lastnik, če ima multimeter.
+    understand:
+      simpler: Ali instrument naredi človeka usposobljenega?
+      terms: [multimeter]
+      hint: Spomni se lekcije 10.1 o inverterju.
+    options:
+      - id: da
+        text: DA
+        why: Instrument ni usposobljenost. Napetost v napravi je lahko smrtno nevarna tudi po izklopu.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Električne meritve v napravi opravi le usposobljena oseba.
+    lessonLink: m10-l04#measure

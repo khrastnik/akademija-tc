@@ -85,4 +85,4 @@ Dve nevarni napaki:
 - Ohišja odpira samo usposobljena oseba.
 - Ponavljajoče izpadanje varovalke je znak okvare.
 
-**Kaj sledi:** v modulu 11 spoznaš senzorje – oči krmilnika, ki včasih vidijo narobe.
+**Kaj sledi:** v lekciji 10.2 spoznaš osnovne veličine – napetost, tok, moč in energijo.
