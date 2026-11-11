@@ -75,3 +75,22 @@
       customer: Gospod Stane
       call: »Lani so menjali kompresor. Od takrat greje slabo, prejšnji serviser pravi, da hladiva ne manjka.«
       par: 24
+- id: dan-5
+  title: Petek – zalogovnik
+  intro: Nove naprave imajo zalogovnik in dve obtočni črpalki. Primerjaj temperaturo pred zalogovnikom in za njim – in ne pozabi na števec.
+  calls:
+    - fault: mesanje-zalogovnik
+      place: Novogradnja v Kranju
+      customer: Gospod Matej
+      call: »Cevi pri notranji enoti so vroče, radiatorji pa le mlačni. Inštalater je pred tednom 'malo pospešil' črpalko.«
+      par: 9
+    - fault: taktiranje
+      place: Prenovljena hiša v Novem mestu
+      customer: Gospa Tanja
+      call: »Zunanja enota se ves dan vklaplja in izklaplja, kot da ne ve, kaj bi. Po prenovi kotlovnice je tako.«
+      par: 7
+    - fault: dogrevalnik-meja
+      place: Hiša v Velenju
+      customer: Gospod Bojan
+      call: »V hiši je toplo, a račun za elektriko je skoraj dvojen. Saj ni bilo tako mrzlo!«
+      par: 6

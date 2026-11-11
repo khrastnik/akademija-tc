@@ -65,3 +65,21 @@
   why: Filter sušilnik lovi vlago in nečistoče v hladivu. Ko se zamaši, deluje kot ozko grlo pred ventilom – za njim tlak pade, hladivo začne vreti že v filtru, zato se ohladi.
   fix: Zamenjava filtra sušilnika in iskanje vzroka (vlaga, nečistoče po posegu). Poseg v krog hladiva – samo serviser s spričevalom.
   verify: ΔT na novem filtru je skoraj nič, SH in SC v normalnem območju.
+- id: mesanje-zalogovnik
+  name: Mešanje v zalogovniku (sekundarni pretok prevelik)
+  pattern: Iz toplotne črpalke gre topla voda, v radiatorje pa opazno hladnejša. Zalogovnik zgoraj le mlačen, sekundarna črpalka na najvišji stopnji.
+  why: Če sekundarna črpalka vleče več vode, kot jo primarna prinese, manjkajočo vodo dobi iz spodnjega dela zalogovnika – hladna povratna voda se primeša v dvižno. Krmilnik zato dviga temperaturo, črpalka dela slabše.
+  fix: Zmanjšaj pretok sekundarne črpalke ali povečaj primarnega, da je primarni nekoliko večji. Vrednosti po projektu in navodilih proizvajalca.
+  verify: Temperatura v radiatorje je le malo nižja od temperature iz črpalke, zalogovnik je zgoraj topel, spodaj hladnejši.
+- id: taktiranje
+  name: Taktiranje – senzor zalogovnika na napačnem mestu
+  pattern: Brez kode napake, a zelo veliko zagonov kompresorja in kratki cikli. Senzor zalogovnika ni v tulcu, ampak ob vstopu tople vode.
+  why: Senzor ob vstopu tople vode skoraj takoj »vidi« želeno temperaturo, zato krmilnik ustavi kompresor, preden se zalogovnik segreje. Voda se hitro ohladi in kompresor spet zažene. Pogosti zagoni obrabljajo kompresor in znižajo izkoristek.
+  fix: Senzor vstavi v potopni tulec na višini, ki jo določa proizvajalec, s toplotno pasto. Preveri histerezo vklopa.
+  verify: Cikli so spet dolgi, število zagonov na dan opazno pade, zalogovnik je topel do sredine.
+- id: dogrevalnik-meja
+  name: Dogrevalnik se vklaplja pri blagem vremenu
+  pattern: Hiša topla, brez kode napake, a račun za elektriko skoraj dvojen. Zaslon kaže vklopljen dogrevalnik in mejo vklopa nad zunanjo temperaturo.
+  why: Električni dogrevalnik greje z elektriko neposredno – iz 1 kWh elektrike dobiš 1 kWh toplote, toplotna črpalka pa večkrat toliko. Če je meja vklopa previsoka, dogrevalnik pomaga tudi, ko ga ne bi bilo treba.
+  fix: Mejo vklopa (bivalentno točko) nastavi po projektu in navodilih proizvajalca, da dogrevalnik dela le v največjem mrazu ali za zaščito pred legionelo.
+  verify: Pri blagem vremenu dogrevalnik ne dela, poraba se vrne na običajno raven.

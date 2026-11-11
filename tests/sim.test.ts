@@ -94,3 +94,19 @@ describe('novi deli: 3-potni ventil, 4-potni ventil, filter sušilnik', () => {
     expect(s.stars).toBe(3);
   });
 });
+
+describe('zalogovnik (5. dan)', () => {
+  const r = (f: any) => readingsFor(f, 'z');
+  it('mešanje v zalogovniku: iz črpalke toplo, v radiatorje opazno hladneje', () => {
+    const x = r('mesanje-zalogovnik');
+    expect(x['t-dvizni'].value! - x['t-radiator'].value!).toBeGreaterThan(6);
+    expect(x['t-radiator'].zone).toBe('low');
+  });
+  it('brez napake je voda v radiatorje le malo hladnejša od dvižnega voda', () => {
+    const x = r(undefined);
+    expect(x['t-dvizni'].value! - x['t-radiator'].value!).toBeLessThan(2.5);
+  });
+  it('taktiranje in dogrevalnik: hladivo normalno – manometri niso potrebni', () => {
+    for (const f of ['taktiranje', 'dogrevalnik-meja'] as const) expect([r(f).sh.zone, r(f).sc.zone]).toEqual(['ok', 'ok']);
+  });
+});

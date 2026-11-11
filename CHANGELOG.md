@@ -1,5 +1,18 @@
 # Spremembe
 
+## 0.5.0 – 2026-11-11
+
+### Simulator
+- **Zalogovnik** v 3D modelu: 4-priključni hranilnik loči primarni krog toplotne črpalke od sekundarnega kroga radiatorjev,
+  z lastno **sekundarno obtočno črpalko**. Sekundarni krog teče tudi med segrevanjem bojlerja.
+- Nov del **števec elektrike** (odčitavanje zaslona, brez odpiranja omarice).
+- Tri nove meritve: T vode v radiatorje (za zalogovnikom), pregled zalogovnika, števec elektrike.
+- **Peti dan – »Petek – zalogovnik«** v igri Dan na terenu, trije novi klici, vsi rešljivi brez manometrov:
+  - mešanje v zalogovniku (sekundarni pretok prevelik),
+  - taktiranje zaradi senzorja zunaj tulca,
+  - električni dogrevalnik se vklaplja pri blagem vremenu.
+- Nova vidna namiga v 3D (premešan zalogovnik, odlepljen senzor, žareč dogrevalnik) in testi vzorcev.
+
 ## 0.4.0 – 2026-11-10
 
 ### Simulator

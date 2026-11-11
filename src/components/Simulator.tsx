@@ -73,7 +73,7 @@ const ZONE_LABEL = { low: 'NIZKO', ok: 'NORMALNO', high: 'VISOKO', info: '' } as
 const STEP_TEXT: Record<number, string> = {
   1: 'Hladivo v uparjalniku je hladnejše od zunanjega zraka. Vzame mu toploto in zavre – postane para. Zato črpalka greje tudi pri mrazu.',
   2: 'Kompresor paro stisne. Ko se tlak dvigne, se para segreje – zdaj je bolj vroča od vode v radiatorjih.',
-  3: 'V kondenzatorju vroča para odda toploto vodi in se utekočini. Obtočna črpalka toplo vodo odpelje v radiatorje.',
+  3: 'V kondenzatorju vroča para odda toploto vodi in se utekočini. Obtočna črpalka toplo vodo odpelje v zalogovnik in naprej v radiatorje.',
   4: 'Ekspanzijski ventil tekočini zniža tlak. S tlakom pade temperatura – hladivo je spet mrzlo in krog se ponovi.',
 };
 const MEASURE_SHORT: Record<string, string> = {
@@ -83,6 +83,9 @@ const MEASURE_SHORT: Record<string, string> = {
   poslusaj: 'Poslušaj',
   'ventil-3p': '3-potni',
   bojler: 'Bojler',
+  stevec: 'Števec',
+  zalogovnik: 'Zalogovnik',
+  't-radiator': 'T radiatorji',
   'dt-susilnik': 'Sušilnik',
   't-dvizni': 'T dvižni',
   'dt-voda': 'ΔT voda',
@@ -100,6 +103,9 @@ const MEASURE_ANCHOR: Record<string, string> = {
   poslusaj: 'obtocna',
   'ventil-3p': 'tripotni',
   bojler: 'bojler',
+  stevec: 'stevec',
+  zalogovnik: 'zalogovnik',
+  't-radiator': 'sekundarni',
   'dt-susilnik': 'susilnik',
   't-dvizni': 'dvizni',
   'dt-voda': 'povratni',
@@ -116,6 +122,8 @@ const DISPLAY: Partial<Record<FaultId, { lines: string[]; alarm?: boolean }>> = 
   'zrak-v-vodi': { lines: ['E: PRETOK', 'Premajhen pretok'], alarm: true },
   senzor: { lines: ['Povratna 40 °C', 'Moč zmanjšana'] },
   odtajevanje: { lines: ['E: ODTAJEVANJE', '6× neuspešno'], alarm: true },
+  taktiranje: { lines: ['36 °C', 'Zagonov: 46/dan', 'Cikel 6 min'] },
+  'dogrevalnik-meja': { lines: ['38 °C', 'Dogrevalnik: VKL', 'Meja +10 °C'] },
 };
 
 const GROUPS: { id: Group | 'vse'; label: string }[] = [
@@ -129,13 +137,13 @@ const MODES: { id: OperatingMode; label: string; part: string; text: string }[] 
     id: 'ogrevanje',
     label: 'Ogrevanje',
     part: 'kondenzator',
-    text: 'Hladivo vzame toploto zunanjemu zraku in jo v kondenzatorju odda vodi. 3-potni ventil pošilja toplo vodo v radiatorje.',
+    text: 'Hladivo vzame toploto zunanjemu zraku in jo v kondenzatorju odda vodi. 3-potni ventil pošilja toplo vodo v zalogovnik, iz njega jo sekundarna črpalka vodi v radiatorje.',
   },
   {
     id: 'sanitarna',
     label: 'Sanitarna voda',
     part: 'tripotni',
-    text: '3-potni ventil preklopi: topla voda ne gre več v radiatorje, ampak v tuljavo bojlerja. Hiša se ta čas ne greje – zato je pomembno, da ventil po segrevanju bojlerja preklopi nazaj.',
+    text: '3-potni ventil preklopi: topla voda ne gre več v radiatorje, ampak v tuljavo bojlerja. Radiatorji ta čas dobivajo toploto iz zalogovnika – brez zalogovnika bi se hiša ohlajala. Pomembno je, da ventil po segrevanju bojlerja preklopi nazaj.',
   },
   {
     id: 'odtajevanje',
@@ -313,6 +321,9 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
     if (mId === 'zunanja' && f === 'odtajevanje') cues.push('ice-full');
     if ((mId === 'ventil-3p' || mId === 'bojler') && f === 'tripotni') cues.push('valve-dhw');
     if (mId === 'dt-susilnik' && f === 'filter-susilnik') cues.push('frost-drier');
+    if ((mId === 'zalogovnik' || mId === 't-radiator') && f === 'mesanje-zalogovnik') cues.push('buffer-mix');
+    if (mId === 'zalogovnik' && f === 'taktiranje') cues.push('sensor-loose');
+    if ((mId === 'zaslon' || mId === 'stevec') && f === 'dogrevalnik-meja') cues.push('heater-on');
     cues.forEach((c) => s.reveal(c));
     if (mId === 'zaslon') {
       const d = DISPLAY[f] ?? { lines: ['35 °C', 'Ogrevanje', 'OK'] };

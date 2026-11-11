@@ -34,7 +34,7 @@ import {
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export type Cue = 'leaves' | 'ice' | 'ice-full' | 'oil' | 'dirty-filter' | 'bubbles' | 'low-water' | 'frost-drier' | 'valve-dhw';
+export type Cue = 'leaves' | 'ice' | 'ice-full' | 'oil' | 'dirty-filter' | 'bubbles' | 'low-water' | 'frost-drier' | 'valve-dhw' | 'buffer-mix' | 'sensor-loose' | 'heater-on';
 export type OperatingMode = 'ogrevanje' | 'sanitarna' | 'odtajevanje';
 
 export interface Anchor {
@@ -104,12 +104,16 @@ export const ANCHORS: Record<string, Vector3> = {
   pretok: v(1.93, 1.1, -0.2),
   varnostni: v(2.0, 1.98, -0.2),
   dogrevalnik: v(2.08, 1.62, -0.2),
+  zalogovnik: v(3.55, 1.5, -1.45),
+  sekundarna: v(4.25, 1.38, -1.0),
+  stevec: v(0.13, 1.35, 0.75),
   // merilne točke na ceveh
   sesalni: v(-2.55, 0.2, -0.2),
   tekocinski: v(-0.7, 0.95, 0.06),
   tlacni: v(-0.7, 1.22, 0.06),
   dvizni: v(2.5, 1.78, -0.2),
-  povratni: v(3.4, 0.24, -0.2),
+  povratni: v(3.15, 0.24, -0.75),
+  sekundarni: v(4.25, 1.1, -0.6),
 };
 
 export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: boolean }): SimScene {
@@ -124,7 +128,7 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
   camera.position.set(1.2, 2.6, 6.4);
 
   const controls = new OrbitControls(camera, canvas);
-  controls.target.set(0.45, 0.85, -0.2);
+  controls.target.set(0.55, 0.85, -0.45);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
   controls.minDistance = 2.2;
@@ -281,6 +285,22 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
   // električni dogrevalnik v vodnem krogu za kondenzatorjem
   add('dogrevalnik', new CylinderGeometry(0.055, 0.055, 0.22, 18), std(0x9aa3ad, { metalness: 0.5 }), v(2.1, 1.76, -0.2)).rotation.z = Math.PI / 2;
 
+  // zalogovnik (hranilnik toplote): 4 priključki – levo primarni krog črpalke, desno sekundarni krog radiatorjev
+  const bufMat = std(0xb9c3cc, { roughness: 0.45, metalness: 0.25 });
+  add('zalogovnik', new CylinderGeometry(0.25, 0.25, 1.3, 32), bufMat, v(3.55, 0.75, -1.45));
+  add('zalogovnik', new SphereGeometry(0.25, 24, 10, 0, Math.PI * 2, 0, Math.PI / 2), bufMat, v(3.55, 1.4, -1.45));
+  for (let i = 0; i < 3; i++) add(null, new TorusGeometry(0.252, 0.008, 6, 40), std(0x8a949c), v(3.55, 0.35 + i * 0.4, -1.45)).rotation.x = Math.PI / 2;
+  // senzor v potopnem tulcu na sredini
+  const bufSensor = add(null, new CylinderGeometry(0.018, 0.018, 0.08, 10), std(0x1d1f22), v(3.55, 0.75, -1.18));
+  bufSensor.rotation.x = Math.PI / 2;
+  // sekundarna obtočna črpalka na vodu v radiatorje
+  const secPump = add('sekundarna', new CylinderGeometry(0.08, 0.08, 0.14, 20), std(0xc0392b), v(4.25, 1.25, -1.0));
+  secPump.rotation.x = Math.PI / 2;
+  add('sekundarna', new CylinderGeometry(0.06, 0.06, 0.12, 20), std(0x2b2f33), v(4.25, 1.36, -1.0));
+  // števec elektrike na notranji strani zidu
+  add('stevec', new BoxGeometry(0.03, 0.26, 0.18), std(0xe8e8e2), v(0.12, 1.35, 0.75));
+  add('stevec', new PlaneGeometry(0.12, 0.05), std(0x1d2a22, { emissive: 0x3a6b4a, emissiveIntensity: 0.4 }), v(0.137, 1.4, 0.75)).rotation.y = Math.PI / 2;
+
   // radiator
   const radMat = std(0xf4f1ea, { roughness: 0.35 });
   for (let i = 0; i < 8; i++) add('radiator', new BoxGeometry(0.07, 0.68, 0.1), radMat, v(3.25 + i * 0.09, 0.66, -0.6));
@@ -314,8 +334,15 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
   // vodni krog: kondenzator → dvižni → radiator → povratni → filter → črpalka → kondenzator
   // kondenzator → (dogrevalnik) → 3-potni ventil → radiatorji ALI bojler → povratni → filter → črpalka
   const segFlowA = pipe([v(1.82, 1.76, -0.2), v(2.32, 1.76, -0.2)], COL.waterHot, 0.024, 'dvizni');
-  const segFlowB = pipe([v(2.32, 1.76, -0.2), v(3.08, 1.76, -0.2), v(3.08, 0.96, -0.2), v(3.08, 0.96, -0.6), v(3.2, 0.96, -0.6), v(3.92, 0.96, -0.6)], COL.waterHot, 0.024, 'dvizni');
-  const segReturnA = pipe([v(3.92, 0.34, -0.6), v(4.02, 0.34, -0.6), v(4.02, 0.15, -0.6), v(4.02, 0.15, -0.2), v(2.98, 0.15, -0.2)], COL.waterCold, 0.024, 'povratni');
+  // primarni krog: 3-potni ventil → zalogovnik zgoraj levo; zalogovnik spodaj levo → povratni k črpalki
+  const segFlowB = pipe([v(2.32, 1.76, -0.2), v(3.08, 1.76, -0.2), v(3.08, 1.76, -1.45), v(3.08, 1.25, -1.45), v(3.3, 1.25, -1.45)], COL.waterHot, 0.024, 'dvizni');
+  const segBufPrim = path([v(3.3, 1.25, -1.45), v(3.45, 1.0, -1.45), v(3.45, 0.4, -1.45), v(3.3, 0.22, -1.45)]);
+  const segReturnA = pipe([v(3.3, 0.22, -1.45), v(3.15, 0.22, -1.45), v(3.15, 0.15, -1.45), v(3.15, 0.15, -0.2), v(2.98, 0.15, -0.2)], COL.waterCold, 0.024, 'povratni');
+  // sekundarni krog: zalogovnik zgoraj desno → sekundarna črpalka → radiator → zalogovnik spodaj desno
+  const segSecFlow = pipe([v(3.8, 1.25, -1.45), v(4.25, 1.25, -1.45), v(4.25, 1.25, -0.6), v(4.25, 0.96, -0.6), v(3.2, 0.96, -0.6)], COL.waterHot, 0.024, 'sekundarni');
+  const segRad = path([v(3.2, 0.96, -0.6), v(3.2, 0.34, -0.6)]);
+  const segSecRet = pipe([v(3.2, 0.34, -0.6), v(4.02, 0.34, -0.6), v(4.02, 0.22, -0.6), v(4.02, 0.22, -1.45), v(3.8, 0.22, -1.45)], COL.waterCold, 0.024);
+  const segBufSec = path([v(3.8, 0.22, -1.45), v(3.65, 0.4, -1.45), v(3.65, 1.0, -1.45), v(3.8, 1.25, -1.45)]);
   const segReturn = pipe([v(2.98, 0.15, -0.2), v(1.85, 0.15, -0.2), v(1.85, 0.52, -0.2)], COL.waterCold, 0.024, 'povratni');
   const segDhwIn = pipe([v(2.32, 1.76, -0.2), v(2.32, 1.76, -1.35), v(2.65, 1.76, -1.35), v(2.65, 0.3, -1.35)], COL.waterHot, 0.02);
   const segDhwOut = pipe([v(2.65, 0.3, -1.35), v(2.98, 0.3, -1.35), v(2.98, 0.15, -1.35), v(2.98, 0.15, -0.2)], COL.waterCold, 0.02);
@@ -359,14 +386,17 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
   // odtajevanje: tok obrnjen – vroč plin v zunanje lamele, notranji prenosnik je zdaj uparjalnik
   const REF_DEFROST = [0x5aa9ff, 0xffad5c, 0xffad5c, 0xff6a4d, 0xff6a4d];
   const refrigerant = flow([segDischarge, segLiquid, segMix, segEvap, segSuction], [...REF_HEAT], 90);
-  const water = flow([segFlowA, segFlowB, segReturnA, segReturn, segPumpUp], [0xffc070, 0xffc070, 0x7fe0d6, 0x7fe0d6, 0x7fe0d6], 64);
+  const water = flow([segFlowA, segFlowB, segBufPrim, segReturnA, segReturn, segPumpUp], [0xffc070, 0xffc070, 0xffc070, 0x7fe0d6, 0x7fe0d6, 0x7fe0d6], 64);
+  // sekundarni krog teče ves čas – tudi med segrevanjem bojlerja radiatorji dobijo toploto iz zalogovnika
+  const SEC_OK = [0xffc070, 0xffc070, 0x7fe0d6, 0x7fe0d6];
+  const waterSec = flow([segSecFlow, segRad, segSecRet, segBufSec], [...SEC_OK], 44);
   const waterDhw = flow([segFlowA, segDhwIn, segDhwOut, segReturn, segPumpUp], [0xffc070, 0xffc070, 0x7fe0d6, 0x7fe0d6, 0x7fe0d6], 52);
   waterDhw.mesh.visible = false;
 
   // ---------- vidni namigi napak (pokažejo se šele po pregledu) ----------
   const cues = new Group();
   scene.add(cues);
-  const cueObjects: Record<Cue, Object3D[]> = { leaves: [], ice: [], 'ice-full': [], oil: [], 'dirty-filter': [], bubbles: [], 'low-water': [], 'frost-drier': [], 'valve-dhw': [] };
+  const cueObjects: Record<Cue, Object3D[]> = { leaves: [], ice: [], 'ice-full': [], oil: [], 'dirty-filter': [], bubbles: [], 'low-water': [], 'frost-drier': [], 'valve-dhw': [], 'buffer-mix': [], 'sensor-loose': [], 'heater-on': [] };
   {
     const leafColors = [0xb5651d, 0xd08a2b, 0x8b4513, 0xc9a227];
     const leafGeo = track(new PlaneGeometry(0.09, 0.065));
@@ -394,6 +424,16 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
     drip.rotation.x = -Math.PI / 2;
     cueObjects.oil.push(oil, drip);
     cueObjects['dirty-filter'].push(add(null, new SphereGeometry(0.075, 12, 8), std(0x5b3a1e, { roughness: 1 }), v(2.45, 0.15, -0.2), cues));
+    // zalogovnik premešan: zgornji del obarvan mlačno turkizno
+    cueObjects['buffer-mix'].push(add(null, new CylinderGeometry(0.262, 0.262, 1.2, 32), std(0x7fe0d6, { transparent: true, opacity: 0.55 }), v(3.55, 0.75, -1.45), cues));
+    // senzor ob vstopu tople vode, prilepljen z rumenim trakom
+    cueObjects['sensor-loose'].push(
+      add(null, new BoxGeometry(0.07, 0.05, 0.06), std(0xf2c94c), v(3.2, 1.25, -1.45), cues),
+      add(null, new CylinderGeometry(0.006, 0.006, 0.5, 6), std(0x1d1f22), v(3.2, 1.0, -1.45), cues),
+    );
+    // dogrevalnik žari
+    cueObjects['heater-on'].push(add(null, new CylinderGeometry(0.065, 0.065, 0.2, 18), std(0xff5a2a, { emissive: 0xff3a10, emissiveIntensity: 0.9, transparent: true, opacity: 0.8 }), v(2.1, 1.76, -0.2), cues));
+    cueObjects['heater-on'][0].rotation.z = Math.PI / 2;
     const bubbleGeo = track(new SphereGeometry(0.022, 8, 6));
     const bubbleMat = std(0xffffff, { transparent: true, opacity: 0.85 });
     for (let i = 0; i < 14; i++) {
@@ -445,6 +485,8 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
   function resetCues() {
     for (const list of Object.values(cueObjects)) for (const o of list) o.visible = false;
     needle.rotation.z = -0.2;
+    bufSensor.visible = true;
+    waterSec.state.colors = [...SEC_OK];
     valveArrow.rotation.z = mode === 'sanitarna' ? -Math.PI / 2 : 0;
   }
   resetCues();
@@ -486,14 +528,14 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
   }
 
   let tween: { from: Vector3; to: Vector3; camFrom: Vector3; camTo: Vector3; t: number } | null = null;
-  const HOME = { target: v(0.45, 0.85, -0.2), cam: v(0.9, 2.3, 5.6) };
+  const HOME = { target: v(0.55, 0.85, -0.45), cam: v(0.9, 2.3, 5.6) };
   let userMoved = false;
   controls.addEventListener('start', () => (userMoved = true));
-  /** Kamera tako daleč, da je cela naprava (≈ 7,4 m široka) na zaslonu – na telefonu dlje, na računalniku bližje. */
+  /** Kamera tako daleč, da je cela naprava (≈ 7,7 m široka, z zalogovnikom) na zaslonu – na telefonu dlje, na računalniku bližje. */
   function fitHome(aspect: number) {
     const vfov = (camera.fov * Math.PI) / 180;
     const hfov = 2 * Math.atan(Math.tan(vfov / 2) * aspect);
-    const dist = Math.max(3.4, 3.9 / Math.tan(hfov / 2));
+    const dist = Math.max(3.4, 4.1 / Math.tan(hfov / 2));
     const dir = v(0.12, 0.34, 1).normalize();
     HOME.cam = HOME.target.clone().add(dir.multiplyScalar(dist));
   }
@@ -547,6 +589,7 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
       refrigerant.update(dt);
       if (water.mesh.visible) water.update(dt);
       if (waterDhw.mesh.visible) waterDhw.update(dt);
+      waterSec.update(dt);
       if (mode === 'odtajevanje' && melt < 1) {
         melt = Math.min(1, melt + dt / 8);
         iceMat.opacity = 0.9 * (1 - melt);
@@ -564,6 +607,7 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
   refrigerant.update(0);
   water.update(0);
   waterDhw.update(0);
+  waterSec.update(0);
   raf = requestAnimationFrame(frame);
 
   function resize() {
@@ -606,6 +650,9 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
         water.mesh.visible = false;
         waterDhw.mesh.visible = true;
       }
+      if (cue === 'sensor-loose') bufSensor.visible = false;
+      // mešanje: v dvižni vod radiatorjev pride mlačna voda
+      if (cue === 'buffer-mix') waterSec.state.colors = [0xb8d8a8, 0xb8d8a8, 0x7fe0d6, 0x7fe0d6];
       for (const o of cueObjects[cue]) o.visible = true;
     },
     resetCues,
@@ -615,6 +662,7 @@ export function createScene(canvas: HTMLCanvasElement, opts: { reducedMotion: bo
       refrigerant.state.speed = 0.25 * r * (mode === 'odtajevanje' ? -1 : 1);
       water.state.speed = 0.25 * w;
       waterDhw.state.speed = 0.25 * w;
+      waterSec.state.speed = 0.25 * w;
       // premalo hladiva: v tekočinskem vodu so vrzeli
       refrigerant.state.hidden = new Set(r < 0.8 ? [...Array(90).keys()].filter((i) => i % 3 === 0) : []);
     },

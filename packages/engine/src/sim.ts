@@ -16,7 +16,10 @@ export type FaultId =
   | 'senzor'
   | 'tripotni'
   | 'odtajevanje'
-  | 'filter-susilnik';
+  | 'filter-susilnik'
+  | 'mesanje-zalogovnik'
+  | 'taktiranje'
+  | 'dogrevalnik-meja';
 
 export interface Measurement {
   id: string;
@@ -47,8 +50,11 @@ export const MEASUREMENTS: Measurement[] = [
   { id: 'zunanja', label: 'Pregled zunanje enote', at: 'uparjalnik', minutes: 3, kind: 'visual', tells: 'Listje, led, umazanija, madeži olja.' },
   { id: 'poslusaj', label: 'Poslušaj napravo', at: 'obtocna', minutes: 2, kind: 'visual', tells: 'Šumenje, klokotanje, ropot, preklop ventilov.' },
   { id: 'ventil-3p', label: 'Položaj 3-potnega ventila', at: 'tripotni', minutes: 1, kind: 'visual', tells: 'Ali voda gre v radiatorje ali v bojler.' },
+  { id: 'stevec', label: 'Števec elektrike in poraba', at: 'stevec', minutes: 2, kind: 'easy', tells: 'Ali je poraba večja kot običajno ob podobnem vremenu.' },
+  { id: 'zalogovnik', label: 'Pregled zalogovnika', at: 'zalogovnik', minutes: 2, kind: 'visual', tells: 'Kje je senzor, kako topel je zalogovnik zgoraj in spodaj.' },
   { id: 'bojler', label: 'T sanitarne vode v bojlerju', at: 'bojler', minutes: 2, kind: 'water', tells: 'Kako topla je voda za tuš.' },
   { id: 't-dvizni', label: 'T dvižnega voda', at: 'dvizni', minutes: 3, kind: 'water', tells: 'Kako topla voda gre v radiatorje.' },
+  { id: 't-radiator', label: 'T vode v radiatorje (za zalogovnikom)', at: 'sekundarni', minutes: 3, kind: 'water', tells: 'Kako topla voda res pride do radiatorjev. Primerjaj s T dvižnega voda iz črpalke.' },
   { id: 'dt-voda', label: 'ΔT dvižni–povratni', at: 'povratni', minutes: 4, kind: 'water', tells: 'Koliko toplote voda odnese. Velika ΔT = premalo pretoka.' },
   { id: 'filter', label: 'Odpri filter vode', at: 'filter', minutes: 8, kind: 'water', tells: 'Ali je lovilec nečistoč zamašen.' },
   { id: 'nt-stran', label: 'NT manometer + sesalni vod', at: 'sesalni', minutes: 10, kind: 'refrigerant', tells: 'Temperatura uparjanja in pregrevanje (SH).' },
@@ -64,6 +70,7 @@ export const measurementById = (id: string) => MEASUREMENTS.find((m) => m.id ===
 const RANGES = {
   'tlak-vode': [1.0, 2.0],
   't-dvizni': [33, 40],
+  't-radiator': [32, 39],
   'dt-voda': [4, 7],
   t0: [-9, -3],
   sh: [3, 9],
@@ -75,8 +82,8 @@ const RANGES = {
   'dt-susilnik': [0, 2],
 } as const satisfies Record<string, [number, number]>;
 
-type Numbers = { tlakVode: number; tDvizni: number; dt: number; t0: number; sh: number; tc: number; sc: number; tTlacni: number; tok: number; tBojler: number; dtSusilnik: number };
-type Texts = { zaslon: string; zunanja: string; poslusaj: string; filter: string; ventil3p: string };
+type Numbers = { tlakVode: number; tDvizni: number; dt: number; t0: number; sh: number; tc: number; sc: number; tTlacni: number; tok: number; tBojler: number; dtSusilnik: number; tRadiator?: number };
+type Texts = { zaslon: string; zunanja: string; poslusaj: string; filter: string; ventil3p: string; zalogovnik: string; stevec: string };
 
 const BASE_N: Numbers = { tlakVode: 1.5, tDvizni: 35, dt: 5, t0: -6, sh: 5, tc: 38, sc: 4, tTlacni: 65, tok: 5, tBojler: 50, dtSusilnik: 0.5 };
 const BASE_T: Texts = {
@@ -85,6 +92,8 @@ const BASE_T: Texts = {
   poslusaj: 'Enakomerno brnenje kompresorja, brez šumenja v ceveh.',
   filter: 'Mrežica je čista.',
   ventil3p: 'Kazalec na ventilu: OGREVANJE. Motor se ob preklopu na sanitarno vodo premakne in vrne.',
+  zalogovnik: 'Senzor je v potopnem tulcu na sredini. Zgoraj toplo, spodaj hladneje – plasti so lepo ločene.',
+  stevec: 'Poraba podobna kot lani ob podobnem vremenu.',
 };
 
 /** Kako vsaka napaka spremeni stanje učnega modela. */
@@ -164,6 +173,37 @@ export const FAULTS: Record<FaultId, { n?: Partial<Numbers>; t?: Partial<Texts>;
     t: { zunanja: 'Lamele čiste. Filter sušilnik na izstopu orošen in hladen na otip.' },
     evidence: ['nt-stran', 'dt-susilnik'],
   },
+  // Zalogovnik: sekundarna črpalka vleče več vode kot primarna – povratna voda se v zalogovniku primeša v dvižno.
+  'mesanje-zalogovnik': {
+    side: 'voda',
+    n: { tDvizni: 41, tRadiator: 31, dt: 9, tc: 45, tTlacni: 80, tok: 5.8 },
+    t: {
+      zalogovnik: 'Senzor v tulcu. Zgoraj le mlačen, spodaj skoraj enako – plasti so premešane.',
+      poslusaj: 'Sekundarna obtočna črpalka za zalogovnikom teče na najvišji stopnji, voda v radiatorjih rahlo šumi.',
+    },
+    evidence: ['t-dvizni', 't-radiator'],
+  },
+  // Senzor zalogovnika ni v tulcu, ampak ob vstopu tople vode: hitro »doseže« želeno T, kompresor se ugaša in prižiga.
+  taktiranje: {
+    side: 'krmiljenje',
+    n: { tDvizni: 36, tRadiator: 30 },
+    t: {
+      zaslon: 'Brez kode napake. Števec zagonov kompresorja: 46 v zadnjih 24 urah. Zadnji cikel je trajal 6 minut.',
+      zalogovnik: 'Senzor zalogovnika visi ob zgornjem priključku dvižnega voda iz črpalke, prilepljen z lepilnim trakom – tulec na sredini je prazen. Spodnji del zalogovnika je hladen.',
+      poslusaj: 'Kompresor se po nekaj minutah ustavi, čez kratek čas spet zažene.',
+    },
+    evidence: ['zaslon', 'zalogovnik'],
+  },
+  // Meja vklopa električnega dogrevalnika nastavljena previsoko: pri blagem vremenu greje elektrika.
+  'dogrevalnik-meja': {
+    side: 'nastavitve',
+    n: { tDvizni: 38, tRadiator: 37 },
+    t: {
+      zaslon: 'Brez kode napake. Električni dogrevalnik: VKLOP. Meja vklopa dogrevalnika: +10 °C. Zunaj je +2 °C.',
+      stevec: 'Poraba zadnji mesec skoraj dvakrat večja kot lani ob podobnem vremenu. Števec teče hitro tudi, ko kompresor stoji.',
+    },
+    evidence: ['zaslon', 'stevec'],
+  },
 };
 
 export const FAULT_IDS = Object.keys(FAULTS) as FaultId[];
@@ -201,6 +241,7 @@ export function readingsFor(fault?: FaultId, seed = 'x'): Record<string, Reading
   const tok = num('tok', n.tok);
   const tBo = num('tbo', n.tBojler);
   const dtS = Math.max(0, num('dts', n.dtSusilnik));
+  const tRad = num('trad', n.tRadiator ?? n.tDvizni - 1);
 
   const out: Record<string, Reading> = {
     zaslon: { id: 'zaslon', label: 'Zaslon krmilnika', text: t.zaslon, zone: 'info' },
@@ -219,6 +260,9 @@ export function readingsFor(fault?: FaultId, seed = 'x'): Record<string, Reading
     'ventil-3p': { id: 'ventil-3p', label: '3-potni ventil', text: t.ventil3p, zone: 'info' },
     't-bojler': { id: 't-bojler', label: 'T sanitarne vode', value: tBo, unit: '°C', zone: zoneOf(tBo, RANGES['t-bojler']), range: [...RANGES['t-bojler']] },
     'dt-susilnik': { id: 'dt-susilnik', label: 'ΔT na filtru sušilniku', value: dtS, unit: 'K', zone: zoneOf(dtS, RANGES['dt-susilnik']), range: [...RANGES['dt-susilnik']] },
+    't-radiator': { id: 't-radiator', label: 'T vode v radiatorje', value: tRad, unit: '°C', zone: zoneOf(tRad, RANGES['t-radiator']), range: [...RANGES['t-radiator']] },
+    zalogovnik: { id: 'zalogovnik', label: 'Zalogovnik', text: t.zalogovnik, zone: 'info' },
+    stevec: { id: 'stevec', label: 'Števec elektrike', text: t.stevec, zone: 'info' },
   };
   return out;
 }
@@ -231,6 +275,9 @@ export const MEASUREMENT_READINGS: Record<string, string[]> = {
   poslusaj: ['poslusaj'],
   'ventil-3p': ['ventil-3p'],
   bojler: ['t-bojler'],
+  stevec: ['stevec'],
+  zalogovnik: ['zalogovnik'],
+  't-radiator': ['t-radiator'],
   'dt-susilnik': ['dt-susilnik'],
   't-dvizni': ['t-dvizni'],
   'dt-voda': ['dt-voda'],

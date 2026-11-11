@@ -164,3 +164,27 @@
   what: Meri zunanjo temperaturo. Po njej krmilnik po ogrevalni krivulji izbere temperaturo vode.
   analogy: Kot pogled skozi okno, preden izbereš jakno.
   faults: [Na soncu – kaže preveč, krmilnik premalo greje, Prekinjen kabel]
+- id: zalogovnik
+  group: voda
+  name: Zalogovnik (hranilnik toplote)
+  en: buffer tank
+  where: Kotlovnica, med toplotno črpalko in radiatorji
+  what: Posoda s toplo vodo, ki loči krog toplotne črpalke od kroga radiatorjev. Črpalka dela daljše, mirne cikle, odtajevanje ima dovolj vode, radiatorji dobijo toploto tudi med segrevanjem bojlerja. Ni v vsaki napravi – ali je potreben, določi projekt.
+  analogy: Kot rezervoar vode na podstrešju – polni se enakomerno, porablja pa se po potrebi.
+  faults: [Sekundarni pretok večji od primarnega – mešanje, Senzor zunaj tulca – taktiranje, Zrak na vrhu zalogovnika]
+- id: sekundarna
+  group: voda
+  name: Sekundarna obtočna črpalka
+  en: secondary circulation pump
+  where: Za zalogovnikom, na vodu v radiatorje
+  what: Poganja vodo iz zalogovnika v radiatorje in nazaj. Njen pretok mora biti nekoliko manjši od pretoka primarne črpalke, sicer se povratna voda v zalogovniku primeša v dvižno.
+  analogy: Kot natakar, ki nosi juho iz lonca – če zajema hitreje, kot kuhar dodaja, dobiš mlačno.
+  faults: [Nastavljena na previsoko stopnjo, Ne teče – zalogovnik vroč, radiatorji hladni]
+- id: stevec
+  group: krmiljenje
+  name: Števec elektrike
+  en: electricity meter
+  where: Električna omarica hiše
+  what: Pokaže, koliko elektrike hiša porabi. Iz primerjave z lanskim letom ob podobnem vremenu hitro vidiš, ali kaj greje dražje, kot bi smelo – na primer električni dogrevalnik. Odčitavaš samo zaslon, omarice ne odpiraš.
+  analogy: Kot račun v trgovini – pokaže, da si zapravil preveč, ne pa, za kaj.
+  faults: [Dogrevalnik dela pri blagem vremenu, Kompresor se prepogosto vklaplja]
