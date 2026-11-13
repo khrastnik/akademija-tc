@@ -190,25 +190,208 @@ li {
   background: var(--surface-2);
   font-weight: 600;
 }
-@media (max-width: 640px) {
-  /* Na telefonu glava ni lepljiva: dve vrstici menija bi pojedli četrtino zaslona lekcije. */
-  .site-header {
-    position: static;
-    backdrop-filter: none;
-    background: var(--bg);
+/* ---------- hamburger meni (telefon in tablica) ---------- */
+.menu-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.site-header {
+  transition: transform 0.22s ease;
+  padding-top: env(safe-area-inset-top);
+}
+.site-header .wrap {
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+@media (max-width: 860px) {
+  .nav {
+    display: none;
+  }
+  .menu-btn {
+    display: inline-flex;
+    order: 3;
   }
   .site-header .wrap {
-    flex-wrap: wrap;
-    gap: 0;
-    padding-top: 6px;
+    gap: 8px;
   }
-  .nav {
-    margin-left: -10px;
-    width: calc(100% + 20px);
+  .brand {
+    margin-right: auto;
+    font-size: 1.05rem;
+    padding: 10px 0;
+  }
+  /* Med branjem se glava umakne in vrne ob drsenju navzgor. */
+  .site-header.hide {
+    transform: translateY(-100%);
+  }
+  html.menu-open .site-header {
+    transform: none;
   }
   html {
-    scroll-padding-top: 12px;
+    scroll-padding-top: 72px;
   }
+}
+html.menu-open {
+  overflow: hidden;
+}
+.menu {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(380px, 88vw);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0 0 env(safe-area-inset-bottom);
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: -12px 0 40px rgb(0 0 0 / 0.25);
+}
+.menu[open] {
+  display: flex;
+  flex-direction: column;
+  animation: menu-in 0.22s ease-out;
+}
+.menu::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+@keyframes menu-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+.menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 56px;
+  padding: env(safe-area-inset-top) 12px 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+.menu-close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.menu-continue {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 12px 4px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+.menu-continue[hidden] {
+  display: none;
+}
+.menu-continue-text {
+  display: grid;
+  flex: 1;
+}
+.menu-continue .eyebrow {
+  color: inherit;
+  opacity: 0.85;
+  margin: 0;
+}
+.menu-continue strong {
+  font-size: 1.1rem;
+}
+.menu-arrow {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+}
+.menu-list li {
+  max-width: none;
+}
+.menu-list a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.menu-list a:hover {
+  background: var(--surface);
+}
+.menu-list a svg {
+  flex: none;
+  color: var(--ink-2);
+}
+.menu-list a span {
+  display: grid;
+}
+.menu-list strong {
+  font-size: 1.05rem;
+}
+.menu-list small {
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+.menu-list a[aria-current='page'] {
+  background: var(--surface-2);
+  box-shadow: inset 4px 0 0 var(--accent);
+}
+.menu-list a[aria-current='page'] svg {
+  color: var(--accent);
+}
+.menu-foot {
+  margin: auto 0 0;
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 0.88rem;
+}
+.menu-foot a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+/* Dotik: brez sivega bliska, gumbi se odzovejo takoj. */
+a,
+button,
+summary,
+label {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button:active,
+.btn:active {
+  transform: scale(0.98);
 }
 
 main {
@@ -481,13 +664,10 @@ main {
     display: none;
   }
 }
-@media (max-width: 640px) {
-  /* telefon: gumb desno ob imenu, meni v drugi vrstici */
+@media (max-width: 860px) {
+  /* telefon: ime levo, desno tema in meni */
   .theme-toggle {
     order: 2;
-    margin-left: auto;
-  }
-  .nav {
-    order: 3;
+    margin-left: 0;
   }
 }

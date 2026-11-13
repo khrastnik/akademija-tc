@@ -9,7 +9,7 @@ interface Props {
   /** Datoteka v repozitoriju, iz katere je stran (za povezavo »Vir«). */
   source?: string;
   updated?: string;
-  current?: 'pot' | 'simulator' | 'slovar' | 'ponovitev' | 'izpit';
+  current?: 'domov' | 'pot' | 'simulator' | 'slovar' | 'ponovitev' | 'izpit' | 'orodja';
   /** Široka postavitev (simulator). */
   wide?: boolean;
 }
@@ -24,6 +24,27 @@ const nav = [
   { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev' },
   { id: 'izpit', href: url('izpit'), label: 'Izpit' },
 ];
+// Meni na telefonu: vsak vnos z ikono in eno vrstico, kaj tam najdeš.
+const I: Record<string, string> = {
+  domov: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+  pot: '<path d="M4 19h16"/><path d="M4 15h10"/><path d="M4 11h13"/><path d="M4 7h8"/><circle cx="18" cy="7" r="2"/>',
+  simulator: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',
+  slovar: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+  ponovitev: '<path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/>',
+  izpit: '<path d="M9 4h6v3H9z"/><path d="M7 5H5v16h14V5h-2"/><path d="M9 14l2 2 4-4"/>',
+  orodja: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-2.5z"/>',
+};
+const menu = [
+  { id: 'domov', href: url(''), label: 'Domov', hint: 'Začetek in kratek pregled' },
+  { id: 'pot', href: url('pot'), label: 'Učna pot', hint: 'Vsi moduli in tvoj napredek' },
+  { id: 'simulator', href: url('simulator'), label: '3D simulator', hint: 'Kako deluje in igra »Dan na terenu«' },
+  { id: 'slovar', href: url('slovar'), label: 'Slovar pojmov', hint: 'Vsi strokovni izrazi na enem mestu' },
+  { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev', hint: 'Vprašanja, ki si jih zgrešil' },
+  { id: 'izpit', href: url('izpit'), label: 'Izpit', hint: 'Preveri znanje na koncu' },
+  { id: 'orodja', href: url('orodja'), label: 'Orodja', hint: 'Simulator in orodja v pripravi' },
+];
+const isHome = Astro.url.pathname.replace(/\/+$/, '') === url('').replace(/\/+$/, '');
+const active = current ?? (isHome ? 'domov' : undefined);
 ---
 <!doctype html>
 <html lang="sl">
@@ -67,12 +88,95 @@ const nav = [
         <nav class="nav" aria-label="Glavni meni">
           {nav.map((n) => <a href={n.href} aria-current={current === n.id ? 'page' : undefined}>{n.label}</a>)}
         </nav>
+        <button type="button" class="menu-btn" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="meni">
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <span>Meni</span>
+        </button>
         <button type="button" class="theme-toggle" data-theme-toggle aria-label="Temni način" title="Svetli / temni način">
           <svg class="i-moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
           <svg class="i-sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
         </button>
       </div>
     </header>
+    <dialog id="meni" class="menu" aria-label="Meni">
+      <div class="menu-head">
+        <a class="brand" href={url('')}>Akademija <span>TČ</span></a>
+        <button type="button" class="menu-close" data-menu-close aria-label="Zapri meni">
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <a class="menu-continue" href={url('pot')} data-menu-continue hidden>
+        <span class="menu-continue-text"><span class="eyebrow">Nadaljuj, kjer si ostal</span><strong data-menu-continue-label>Lekcija</strong></span>
+        <span aria-hidden="true" class="menu-arrow">→</span>
+      </a>
+      <nav aria-label="Meni strani">
+        <ul class="menu-list">
+          {menu.map((m) => (
+            <li>
+              <a href={m.href} aria-current={active === m.id ? 'page' : undefined}>
+                <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={I[m.id]} />
+                <span><strong>{m.label}</strong><small>{m.hint}</small></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <p class="menu-foot">Napredek se shranjuje samo v tem brskalniku. <a href={issueUrl(title)}>Javi napako</a></p>
+    </dialog>
+    <script is:inline define:vars={{ lessonBase: url('lekcija/') }}>
+      // Meni: <dialog> sam ujame fokus, Esc ga zapre, ozadje postane neaktivno.
+      (function () {
+        var dlg = document.getElementById('meni');
+        var openBtn = document.querySelector('[data-menu-open]');
+        if (!dlg || !openBtn || typeof dlg.showModal !== 'function') return;
+        var setOpen = function (o) {
+          openBtn.setAttribute('aria-expanded', String(o));
+          document.documentElement.classList.toggle('menu-open', o);
+        };
+        openBtn.addEventListener('click', function () {
+          // »Nadaljuj«: zadnja nedokončana lekcija iz shranjenega napredka
+          try {
+            var p = JSON.parse(localStorage.getItem('akademija-tc:napredek') || '{}');
+            var m = p.last && /^m(\d+)-l(\d+)$/.exec(p.last);
+            var done = m && p.lessons && p.lessons[p.last] && p.lessons[p.last].done;
+            var here = location.pathname.indexOf('/lekcija/' + p.last) !== -1;
+            if (m && !done && !here) {
+              var c = dlg.querySelector('[data-menu-continue]');
+              c.href = lessonBase + p.last + '/';
+              dlg.querySelector('[data-menu-continue-label]').textContent = 'Lekcija ' + Number(m[1]) + '.' + Number(m[2]);
+              c.hidden = false;
+            }
+          } catch (e) {}
+          dlg.showModal();
+          setOpen(true);
+        });
+        dlg.addEventListener('close', function () { setOpen(false); });
+        dlg.querySelector('[data-menu-close]').addEventListener('click', function () { dlg.close(); });
+        // tap na temno ozadje zapre meni
+        dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+        // ob vrnitvi s tipko Nazaj (bfcache) meni ne ostane odprt
+        addEventListener('pageshow', function () { if (dlg.open) dlg.close(); });
+        matchMedia('(min-width: 861px)').addEventListener('change', function (q) { if (q.matches && dlg.open) dlg.close(); });
+      })();
+      // Na telefonu se glava med branjem skrije (drsenje navzdol) in vrne ob drsenju navzgor.
+      (function () {
+        var h = document.querySelector('.site-header');
+        if (!h) return;
+        var last = scrollY, ticking = false;
+        addEventListener('scroll', function () {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function () {
+            var y = scrollY;
+            if (y < 120 || y < last - 4) h.classList.remove('hide');
+            else if (y > last + 4) h.classList.add('hide');
+            last = y;
+            ticking = false;
+          });
+        }, { passive: true });
+        h.addEventListener('focusin', function () { h.classList.remove('hide'); });
+      })();
+    </script>
     <script is:inline>
       // Svetli / temni način: prva izbira sledi sistemu, nato velja izbira uporabnika.
       (function () {
