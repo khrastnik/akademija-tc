@@ -38,6 +38,18 @@ describe('P-T kalkulator', () => {
     expect(check(0.3)).toBe('zero');
     expect(check(5)).toBe('ok');
   });
+  it('prave tabele: nadtlak pri 0 °C da 0 °C, primer SH za R32', () => {
+    const tab = (id: string) => loadRefrigerants().find((r) => r.id === id)!.points;
+    // referenčni nadtlaki pri 0 °C (NIST, zaokroženo): R32 ≈ 7,12 bar, R410A ≈ 6,99 bar, R290 ≈ 3,73 bar
+    expect(satTemp(tab('R32'), gaugeToAbs(7.12), 'bubble')!).toBeCloseTo(0, 0);
+    expect(satTemp(tab('R410A'), gaugeToAbs(6.99), 'bubble')!).toBeCloseTo(0, 0);
+    expect(satTemp(tab('R290'), gaugeToAbs(3.73), 'bubble')!).toBeCloseTo(0, 0);
+    // R410A: rosišče je pri istem tlaku malo toplejše od vrelišča (majhno drsenje)
+    const p = gaugeToAbs(7);
+    expect(satTemp(tab('R410A'), p, 'dew')!).toBeGreaterThan(satTemp(tab('R410A'), p, 'bubble')!);
+    // R32, NT 7,12 bar, sesalni vod +6 °C → SH ≈ 6 K
+    expect(superheat(6, satTemp(tab('R32'), gaugeToAbs(7.12), 'dew')!)).toBeCloseTo(6, 0);
+  });
   it('objavljene tabele hladiv so naraščajoče in imajo vir', () => {
     for (const r of loadRefrigerants()) {
       expect(r.source.length).toBeGreaterThan(10);

@@ -77,6 +77,12 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 - `src/components/StationSims.tsx` – štiri postaje v živo: ali so smeri sprememb (kje zavre, kdaj tlak raste, lačen/preplavljen uparjalnik) pravilne in besedila sodil ob vsakem stanju strokovno točna.
 - **Zalogovnik (0.5.0)** – prosimo posebej preveri: ali naj bo primarni pretok res nekoliko večji od sekundarnega (napaka »mešanje«), ali je »46 zagonov v 24 urah« prepričljiv primer taktiranja, in ali je opis meje vklopa dogrevalnika (bivalentne točke) pravilen za tipične naprave.
 
+## P-T tabela in kalkulator SH/SC (0.9.1)
+
+- `data/refrigerants.json` – izračunano s CoolProp 6.6 (`scripts/gen-pt.mjs`), preverjeno s točkami NIST (odstopanje ≤ 0,24 %).
+  Preveri še z uradno tabelo proizvajalca hladiva, posebej R410A (rosišče/vrelišče) in območje nad 60 °C.
+- `src/components/ShScCalc.tsx` – besedila opozoril in tabela »SH in SC skupaj«.
+
 ## Kode napak in izpitna vprašanja (0.8.0)
 
 - `content/kode/kode.yaml` – pomen kod je povzet po javnih priročnikih (viri pri vsakem proizvajalcu). Preveri pomen,

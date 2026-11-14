@@ -1,4 +1,1472 @@
 {
-  "_opomba": "Ena tabela P-T za vse (lekcije, simulator, P-T kalkulator). Vsako hladivo mora imeti vir (proizvajalčeva tabela, standard, CoolProp). Brez vira ni objave, zato je seznam prazen, dokler podatkov ne preverimo.",
-  "refrigerants": []
+ "_opomba": "Tabela tlak–temperatura nasičenja (absolutni tlak v bar). Ustvarjeno s skriptom iz CoolProp in preverjeno z referenčnimi točkami NIST. pBarAbs = vrelišče (tekočina), pDewBarAbs = rosišče (para), če se razlikujeta. Na terenu vedno velja tabela proizvajalca hladiva.",
+ "refrigerants": [
+  {
+   "id": "R32",
+   "name": "R32",
+   "safety": "A2L",
+   "source": "CoolProp 6.6 (enačbe stanja kot v NIST REFPROP), tekočina \"R32\". Preverjeno z referenčnimi točkami NIST pri vrelišču, 0 °C in 40 °C – odstopanje pod 1 %.",
+   "points": [
+    {
+     "tC": -40,
+     "pBarAbs": 1.774
+    },
+    {
+     "tC": -39,
+     "pBarAbs": 1.856
+    },
+    {
+     "tC": -38,
+     "pBarAbs": 1.941
+    },
+    {
+     "tC": -37,
+     "pBarAbs": 2.029
+    },
+    {
+     "tC": -36,
+     "pBarAbs": 2.12
+    },
+    {
+     "tC": -35,
+     "pBarAbs": 2.214
+    },
+    {
+     "tC": -34,
+     "pBarAbs": 2.311
+    },
+    {
+     "tC": -33,
+     "pBarAbs": 2.412
+    },
+    {
+     "tC": -32,
+     "pBarAbs": 2.516
+    },
+    {
+     "tC": -31,
+     "pBarAbs": 2.623
+    },
+    {
+     "tC": -30,
+     "pBarAbs": 2.734
+    },
+    {
+     "tC": -29,
+     "pBarAbs": 2.849
+    },
+    {
+     "tC": -28,
+     "pBarAbs": 2.967
+    },
+    {
+     "tC": -27,
+     "pBarAbs": 3.09
+    },
+    {
+     "tC": -26,
+     "pBarAbs": 3.216
+    },
+    {
+     "tC": -25,
+     "pBarAbs": 3.346
+    },
+    {
+     "tC": -24,
+     "pBarAbs": 3.48
+    },
+    {
+     "tC": -23,
+     "pBarAbs": 3.618
+    },
+    {
+     "tC": -22,
+     "pBarAbs": 3.76
+    },
+    {
+     "tC": -21,
+     "pBarAbs": 3.907
+    },
+    {
+     "tC": -20,
+     "pBarAbs": 4.058
+    },
+    {
+     "tC": -19,
+     "pBarAbs": 4.213
+    },
+    {
+     "tC": -18,
+     "pBarAbs": 4.373
+    },
+    {
+     "tC": -17,
+     "pBarAbs": 4.537
+    },
+    {
+     "tC": -16,
+     "pBarAbs": 4.707
+    },
+    {
+     "tC": -15,
+     "pBarAbs": 4.881
+    },
+    {
+     "tC": -14,
+     "pBarAbs": 5.06
+    },
+    {
+     "tC": -13,
+     "pBarAbs": 5.244
+    },
+    {
+     "tC": -12,
+     "pBarAbs": 5.433
+    },
+    {
+     "tC": -11,
+     "pBarAbs": 5.627
+    },
+    {
+     "tC": -10,
+     "pBarAbs": 5.826
+    },
+    {
+     "tC": -9,
+     "pBarAbs": 6.031
+    },
+    {
+     "tC": -8,
+     "pBarAbs": 6.241
+    },
+    {
+     "tC": -7,
+     "pBarAbs": 6.457
+    },
+    {
+     "tC": -6,
+     "pBarAbs": 6.679
+    },
+    {
+     "tC": -5,
+     "pBarAbs": 6.906
+    },
+    {
+     "tC": -4,
+     "pBarAbs": 7.139
+    },
+    {
+     "tC": -3,
+     "pBarAbs": 7.378
+    },
+    {
+     "tC": -2,
+     "pBarAbs": 7.623
+    },
+    {
+     "tC": -1,
+     "pBarAbs": 7.874
+    },
+    {
+     "tC": 0,
+     "pBarAbs": 8.131
+    },
+    {
+     "tC": 1,
+     "pBarAbs": 8.395
+    },
+    {
+     "tC": 2,
+     "pBarAbs": 8.665
+    },
+    {
+     "tC": 3,
+     "pBarAbs": 8.941
+    },
+    {
+     "tC": 4,
+     "pBarAbs": 9.225
+    },
+    {
+     "tC": 5,
+     "pBarAbs": 9.514
+    },
+    {
+     "tC": 6,
+     "pBarAbs": 9.811
+    },
+    {
+     "tC": 7,
+     "pBarAbs": 10.115
+    },
+    {
+     "tC": 8,
+     "pBarAbs": 10.426
+    },
+    {
+     "tC": 9,
+     "pBarAbs": 10.744
+    },
+    {
+     "tC": 10,
+     "pBarAbs": 11.069
+    },
+    {
+     "tC": 11,
+     "pBarAbs": 11.402
+    },
+    {
+     "tC": 12,
+     "pBarAbs": 11.742
+    },
+    {
+     "tC": 13,
+     "pBarAbs": 12.089
+    },
+    {
+     "tC": 14,
+     "pBarAbs": 12.445
+    },
+    {
+     "tC": 15,
+     "pBarAbs": 12.808
+    },
+    {
+     "tC": 16,
+     "pBarAbs": 13.179
+    },
+    {
+     "tC": 17,
+     "pBarAbs": 13.559
+    },
+    {
+     "tC": 18,
+     "pBarAbs": 13.946
+    },
+    {
+     "tC": 19,
+     "pBarAbs": 14.342
+    },
+    {
+     "tC": 20,
+     "pBarAbs": 14.746
+    },
+    {
+     "tC": 21,
+     "pBarAbs": 15.158
+    },
+    {
+     "tC": 22,
+     "pBarAbs": 15.579
+    },
+    {
+     "tC": 23,
+     "pBarAbs": 16.009
+    },
+    {
+     "tC": 24,
+     "pBarAbs": 16.448
+    },
+    {
+     "tC": 25,
+     "pBarAbs": 16.896
+    },
+    {
+     "tC": 26,
+     "pBarAbs": 17.353
+    },
+    {
+     "tC": 27,
+     "pBarAbs": 17.819
+    },
+    {
+     "tC": 28,
+     "pBarAbs": 18.295
+    },
+    {
+     "tC": 29,
+     "pBarAbs": 18.78
+    },
+    {
+     "tC": 30,
+     "pBarAbs": 19.275
+    },
+    {
+     "tC": 31,
+     "pBarAbs": 19.78
+    },
+    {
+     "tC": 32,
+     "pBarAbs": 20.294
+    },
+    {
+     "tC": 33,
+     "pBarAbs": 20.819
+    },
+    {
+     "tC": 34,
+     "pBarAbs": 21.353
+    },
+    {
+     "tC": 35,
+     "pBarAbs": 21.898
+    },
+    {
+     "tC": 36,
+     "pBarAbs": 22.454
+    },
+    {
+     "tC": 37,
+     "pBarAbs": 23.02
+    },
+    {
+     "tC": 38,
+     "pBarAbs": 23.597
+    },
+    {
+     "tC": 39,
+     "pBarAbs": 24.184
+    },
+    {
+     "tC": 40,
+     "pBarAbs": 24.783
+    },
+    {
+     "tC": 41,
+     "pBarAbs": 25.393
+    },
+    {
+     "tC": 42,
+     "pBarAbs": 26.014
+    },
+    {
+     "tC": 43,
+     "pBarAbs": 26.647
+    },
+    {
+     "tC": 44,
+     "pBarAbs": 27.292
+    },
+    {
+     "tC": 45,
+     "pBarAbs": 27.948
+    },
+    {
+     "tC": 46,
+     "pBarAbs": 28.616
+    },
+    {
+     "tC": 47,
+     "pBarAbs": 29.296
+    },
+    {
+     "tC": 48,
+     "pBarAbs": 29.989
+    },
+    {
+     "tC": 49,
+     "pBarAbs": 30.694
+    },
+    {
+     "tC": 50,
+     "pBarAbs": 31.412
+    },
+    {
+     "tC": 51,
+     "pBarAbs": 32.143
+    },
+    {
+     "tC": 52,
+     "pBarAbs": 32.887
+    },
+    {
+     "tC": 53,
+     "pBarAbs": 33.644
+    },
+    {
+     "tC": 54,
+     "pBarAbs": 34.415
+    },
+    {
+     "tC": 55,
+     "pBarAbs": 35.199
+    },
+    {
+     "tC": 56,
+     "pBarAbs": 35.997
+    },
+    {
+     "tC": 57,
+     "pBarAbs": 36.809
+    },
+    {
+     "tC": 58,
+     "pBarAbs": 37.635
+    },
+    {
+     "tC": 59,
+     "pBarAbs": 38.476
+    },
+    {
+     "tC": 60,
+     "pBarAbs": 39.332
+    },
+    {
+     "tC": 61,
+     "pBarAbs": 40.203
+    },
+    {
+     "tC": 62,
+     "pBarAbs": 41.089
+    },
+    {
+     "tC": 63,
+     "pBarAbs": 41.991
+    },
+    {
+     "tC": 64,
+     "pBarAbs": 42.909
+    },
+    {
+     "tC": 65,
+     "pBarAbs": 43.843
+    },
+    {
+     "tC": 66,
+     "pBarAbs": 44.793
+    },
+    {
+     "tC": 67,
+     "pBarAbs": 45.761
+    },
+    {
+     "tC": 68,
+     "pBarAbs": 46.745
+    },
+    {
+     "tC": 69,
+     "pBarAbs": 47.748
+    },
+    {
+     "tC": 70,
+     "pBarAbs": 48.768
+    }
+   ]
+  },
+  {
+   "id": "R410A",
+   "name": "R410A",
+   "safety": "A1",
+   "source": "CoolProp 6.6 (enačbe stanja kot v NIST REFPROP), tekočina \"R410A\". Preverjeno z referenčnimi točkami NIST pri vrelišču, 0 °C in 40 °C – odstopanje pod 1 %.",
+   "points": [
+    {
+     "tC": -40,
+     "pBarAbs": 1.755,
+     "pDewBarAbs": 1.748
+    },
+    {
+     "tC": -39,
+     "pBarAbs": 1.836,
+     "pDewBarAbs": 1.829
+    },
+    {
+     "tC": -38,
+     "pBarAbs": 1.92,
+     "pDewBarAbs": 1.913
+    },
+    {
+     "tC": -37,
+     "pBarAbs": 2.007,
+     "pDewBarAbs": 1.999
+    },
+    {
+     "tC": -36,
+     "pBarAbs": 2.096,
+     "pDewBarAbs": 2.089
+    },
+    {
+     "tC": -35,
+     "pBarAbs": 2.189,
+     "pDewBarAbs": 2.181
+    },
+    {
+     "tC": -34,
+     "pBarAbs": 2.285,
+     "pDewBarAbs": 2.277
+    },
+    {
+     "tC": -33,
+     "pBarAbs": 2.385,
+     "pDewBarAbs": 2.376
+    },
+    {
+     "tC": -32,
+     "pBarAbs": 2.487,
+     "pDewBarAbs": 2.479
+    },
+    {
+     "tC": -31,
+     "pBarAbs": 2.594,
+     "pDewBarAbs": 2.584
+    },
+    {
+     "tC": -30,
+     "pBarAbs": 2.703,
+     "pDewBarAbs": 2.693
+    },
+    {
+     "tC": -29,
+     "pBarAbs": 2.816,
+     "pDewBarAbs": 2.806
+    },
+    {
+     "tC": -28,
+     "pBarAbs": 2.933,
+     "pDewBarAbs": 2.923
+    },
+    {
+     "tC": -27,
+     "pBarAbs": 3.053,
+     "pDewBarAbs": 3.043
+    },
+    {
+     "tC": -26,
+     "pBarAbs": 3.178,
+     "pDewBarAbs": 3.166
+    },
+    {
+     "tC": -25,
+     "pBarAbs": 3.306,
+     "pDewBarAbs": 3.294
+    },
+    {
+     "tC": -24,
+     "pBarAbs": 3.438,
+     "pDewBarAbs": 3.426
+    },
+    {
+     "tC": -23,
+     "pBarAbs": 3.574,
+     "pDewBarAbs": 3.561
+    },
+    {
+     "tC": -22,
+     "pBarAbs": 3.714,
+     "pDewBarAbs": 3.701
+    },
+    {
+     "tC": -21,
+     "pBarAbs": 3.858,
+     "pDewBarAbs": 3.845
+    },
+    {
+     "tC": -20,
+     "pBarAbs": 4.007,
+     "pDewBarAbs": 3.993
+    },
+    {
+     "tC": -19,
+     "pBarAbs": 4.16,
+     "pDewBarAbs": 4.146
+    },
+    {
+     "tC": -18,
+     "pBarAbs": 4.317,
+     "pDewBarAbs": 4.302
+    },
+    {
+     "tC": -17,
+     "pBarAbs": 4.479,
+     "pDewBarAbs": 4.464
+    },
+    {
+     "tC": -16,
+     "pBarAbs": 4.646,
+     "pDewBarAbs": 4.63
+    },
+    {
+     "tC": -15,
+     "pBarAbs": 4.817,
+     "pDewBarAbs": 4.8
+    },
+    {
+     "tC": -14,
+     "pBarAbs": 4.993,
+     "pDewBarAbs": 4.976
+    },
+    {
+     "tC": -13,
+     "pBarAbs": 5.174,
+     "pDewBarAbs": 5.156
+    },
+    {
+     "tC": -12,
+     "pBarAbs": 5.359,
+     "pDewBarAbs": 5.341
+    },
+    {
+     "tC": -11,
+     "pBarAbs": 5.55,
+     "pDewBarAbs": 5.531
+    },
+    {
+     "tC": -10,
+     "pBarAbs": 5.746,
+     "pDewBarAbs": 5.727
+    },
+    {
+     "tC": -9,
+     "pBarAbs": 5.947,
+     "pDewBarAbs": 5.927
+    },
+    {
+     "tC": -8,
+     "pBarAbs": 6.154,
+     "pDewBarAbs": 6.133
+    },
+    {
+     "tC": -7,
+     "pBarAbs": 6.365,
+     "pDewBarAbs": 6.344
+    },
+    {
+     "tC": -6,
+     "pBarAbs": 6.583,
+     "pDewBarAbs": 6.561
+    },
+    {
+     "tC": -5,
+     "pBarAbs": 6.806,
+     "pDewBarAbs": 6.783
+    },
+    {
+     "tC": -4,
+     "pBarAbs": 7.034,
+     "pDewBarAbs": 7.011
+    },
+    {
+     "tC": -3,
+     "pBarAbs": 7.269,
+     "pDewBarAbs": 7.245
+    },
+    {
+     "tC": -2,
+     "pBarAbs": 7.509,
+     "pDewBarAbs": 7.484
+    },
+    {
+     "tC": -1,
+     "pBarAbs": 7.755,
+     "pDewBarAbs": 7.729
+    },
+    {
+     "tC": 0,
+     "pBarAbs": 8.007,
+     "pDewBarAbs": 7.981
+    },
+    {
+     "tC": 1,
+     "pBarAbs": 8.265,
+     "pDewBarAbs": 8.238
+    },
+    {
+     "tC": 2,
+     "pBarAbs": 8.53,
+     "pDewBarAbs": 8.502
+    },
+    {
+     "tC": 3,
+     "pBarAbs": 8.801,
+     "pDewBarAbs": 8.772
+    },
+    {
+     "tC": 4,
+     "pBarAbs": 9.078,
+     "pDewBarAbs": 9.049
+    },
+    {
+     "tC": 5,
+     "pBarAbs": 9.362,
+     "pDewBarAbs": 9.332
+    },
+    {
+     "tC": 6,
+     "pBarAbs": 9.653,
+     "pDewBarAbs": 9.621
+    },
+    {
+     "tC": 7,
+     "pBarAbs": 9.95,
+     "pDewBarAbs": 9.918
+    },
+    {
+     "tC": 8,
+     "pBarAbs": 10.254,
+     "pDewBarAbs": 10.221
+    },
+    {
+     "tC": 9,
+     "pBarAbs": 10.565,
+     "pDewBarAbs": 10.531
+    },
+    {
+     "tC": 10,
+     "pBarAbs": 10.883,
+     "pDewBarAbs": 10.848
+    },
+    {
+     "tC": 11,
+     "pBarAbs": 11.208,
+     "pDewBarAbs": 11.172
+    },
+    {
+     "tC": 12,
+     "pBarAbs": 11.541,
+     "pDewBarAbs": 11.504
+    },
+    {
+     "tC": 13,
+     "pBarAbs": 11.881,
+     "pDewBarAbs": 11.843
+    },
+    {
+     "tC": 14,
+     "pBarAbs": 12.228,
+     "pDewBarAbs": 12.189
+    },
+    {
+     "tC": 15,
+     "pBarAbs": 12.583,
+     "pDewBarAbs": 12.543
+    },
+    {
+     "tC": 16,
+     "pBarAbs": 12.945,
+     "pDewBarAbs": 12.904
+    },
+    {
+     "tC": 17,
+     "pBarAbs": 13.316,
+     "pDewBarAbs": 13.274
+    },
+    {
+     "tC": 18,
+     "pBarAbs": 13.694,
+     "pDewBarAbs": 13.651
+    },
+    {
+     "tC": 19,
+     "pBarAbs": 14.08,
+     "pDewBarAbs": 14.036
+    },
+    {
+     "tC": 20,
+     "pBarAbs": 14.475,
+     "pDewBarAbs": 14.429
+    },
+    {
+     "tC": 21,
+     "pBarAbs": 14.877,
+     "pDewBarAbs": 14.831
+    },
+    {
+     "tC": 22,
+     "pBarAbs": 15.288,
+     "pDewBarAbs": 15.241
+    },
+    {
+     "tC": 23,
+     "pBarAbs": 15.708,
+     "pDewBarAbs": 15.659
+    },
+    {
+     "tC": 24,
+     "pBarAbs": 16.136,
+     "pDewBarAbs": 16.086
+    },
+    {
+     "tC": 25,
+     "pBarAbs": 16.572,
+     "pDewBarAbs": 16.521
+    },
+    {
+     "tC": 26,
+     "pBarAbs": 17.018,
+     "pDewBarAbs": 16.966
+    },
+    {
+     "tC": 27,
+     "pBarAbs": 17.473,
+     "pDewBarAbs": 17.419
+    },
+    {
+     "tC": 28,
+     "pBarAbs": 17.936,
+     "pDewBarAbs": 17.882
+    },
+    {
+     "tC": 29,
+     "pBarAbs": 18.409,
+     "pDewBarAbs": 18.353
+    },
+    {
+     "tC": 30,
+     "pBarAbs": 18.891,
+     "pDewBarAbs": 18.834
+    },
+    {
+     "tC": 31,
+     "pBarAbs": 19.383,
+     "pDewBarAbs": 19.324
+    },
+    {
+     "tC": 32,
+     "pBarAbs": 19.884,
+     "pDewBarAbs": 19.824
+    },
+    {
+     "tC": 33,
+     "pBarAbs": 20.395,
+     "pDewBarAbs": 20.334
+    },
+    {
+     "tC": 34,
+     "pBarAbs": 20.916,
+     "pDewBarAbs": 20.854
+    },
+    {
+     "tC": 35,
+     "pBarAbs": 21.447,
+     "pDewBarAbs": 21.383
+    },
+    {
+     "tC": 36,
+     "pBarAbs": 21.988,
+     "pDewBarAbs": 21.923
+    },
+    {
+     "tC": 37,
+     "pBarAbs": 22.539,
+     "pDewBarAbs": 22.473
+    },
+    {
+     "tC": 38,
+     "pBarAbs": 23.101,
+     "pDewBarAbs": 23.033
+    },
+    {
+     "tC": 39,
+     "pBarAbs": 23.673,
+     "pDewBarAbs": 23.604
+    },
+    {
+     "tC": 40,
+     "pBarAbs": 24.256,
+     "pDewBarAbs": 24.186
+    },
+    {
+     "tC": 41,
+     "pBarAbs": 24.85,
+     "pDewBarAbs": 24.779
+    },
+    {
+     "tC": 42,
+     "pBarAbs": 25.455,
+     "pDewBarAbs": 25.382
+    },
+    {
+     "tC": 43,
+     "pBarAbs": 26.071,
+     "pDewBarAbs": 25.997
+    },
+    {
+     "tC": 44,
+     "pBarAbs": 26.699,
+     "pDewBarAbs": 26.624
+    },
+    {
+     "tC": 45,
+     "pBarAbs": 27.338,
+     "pDewBarAbs": 27.261
+    },
+    {
+     "tC": 46,
+     "pBarAbs": 27.988,
+     "pDewBarAbs": 27.911
+    },
+    {
+     "tC": 47,
+     "pBarAbs": 28.651,
+     "pDewBarAbs": 28.572
+    },
+    {
+     "tC": 48,
+     "pBarAbs": 29.325,
+     "pDewBarAbs": 29.246
+    },
+    {
+     "tC": 49,
+     "pBarAbs": 30.012,
+     "pDewBarAbs": 29.932
+    },
+    {
+     "tC": 50,
+     "pBarAbs": 30.711,
+     "pDewBarAbs": 30.63
+    },
+    {
+     "tC": 51,
+     "pBarAbs": 31.422,
+     "pDewBarAbs": 31.341
+    },
+    {
+     "tC": 52,
+     "pBarAbs": 32.147,
+     "pDewBarAbs": 32.065
+    },
+    {
+     "tC": 53,
+     "pBarAbs": 32.884,
+     "pDewBarAbs": 32.802
+    },
+    {
+     "tC": 54,
+     "pBarAbs": 33.635,
+     "pDewBarAbs": 33.552
+    },
+    {
+     "tC": 55,
+     "pBarAbs": 34.398,
+     "pDewBarAbs": 34.316
+    },
+    {
+     "tC": 56,
+     "pBarAbs": 35.176,
+     "pDewBarAbs": 35.094
+    },
+    {
+     "tC": 57,
+     "pBarAbs": 35.967,
+     "pDewBarAbs": 35.886
+    },
+    {
+     "tC": 58,
+     "pBarAbs": 36.773,
+     "pDewBarAbs": 36.692
+    },
+    {
+     "tC": 59,
+     "pBarAbs": 37.592,
+     "pDewBarAbs": 37.513
+    },
+    {
+     "tC": 60,
+     "pBarAbs": 38.426,
+     "pDewBarAbs": 38.348
+    },
+    {
+     "tC": 61,
+     "pBarAbs": 39.276,
+     "pDewBarAbs": 39.199
+    },
+    {
+     "tC": 62,
+     "pBarAbs": 40.14,
+     "pDewBarAbs": 40.066
+    },
+    {
+     "tC": 63,
+     "pBarAbs": 41.019,
+     "pDewBarAbs": 40.949
+    },
+    {
+     "tC": 64,
+     "pBarAbs": 41.915,
+     "pDewBarAbs": 41.848
+    },
+    {
+     "tC": 65,
+     "pBarAbs": 42.826,
+     "pDewBarAbs": 42.763
+    },
+    {
+     "tC": 66,
+     "pBarAbs": 43.754,
+     "pDewBarAbs": 43.697
+    },
+    {
+     "tC": 67,
+     "pBarAbs": 44.699,
+     "pDewBarAbs": 44.648
+    },
+    {
+     "tC": 68,
+     "pBarAbs": 45.661,
+     "pDewBarAbs": 45.618
+    },
+    {
+     "tC": 69,
+     "pBarAbs": 46.641,
+     "pDewBarAbs": 46.607
+    },
+    {
+     "tC": 70,
+     "pBarAbs": 47.639,
+     "pDewBarAbs": 47.617
+    }
+   ]
+  },
+  {
+   "id": "R290",
+   "name": "R290 (propan)",
+   "safety": "A3",
+   "source": "CoolProp 6.6 (enačbe stanja kot v NIST REFPROP), tekočina \"n-Propane\". Preverjeno z referenčnimi točkami NIST pri vrelišču, 0 °C in 40 °C – odstopanje pod 1 %.",
+   "points": [
+    {
+     "tC": -40,
+     "pBarAbs": 1.111
+    },
+    {
+     "tC": -39,
+     "pBarAbs": 1.16
+    },
+    {
+     "tC": -38,
+     "pBarAbs": 1.211
+    },
+    {
+     "tC": -37,
+     "pBarAbs": 1.263
+    },
+    {
+     "tC": -36,
+     "pBarAbs": 1.317
+    },
+    {
+     "tC": -35,
+     "pBarAbs": 1.372
+    },
+    {
+     "tC": -34,
+     "pBarAbs": 1.43
+    },
+    {
+     "tC": -33,
+     "pBarAbs": 1.489
+    },
+    {
+     "tC": -32,
+     "pBarAbs": 1.55
+    },
+    {
+     "tC": -31,
+     "pBarAbs": 1.613
+    },
+    {
+     "tC": -30,
+     "pBarAbs": 1.678
+    },
+    {
+     "tC": -29,
+     "pBarAbs": 1.745
+    },
+    {
+     "tC": -28,
+     "pBarAbs": 1.814
+    },
+    {
+     "tC": -27,
+     "pBarAbs": 1.886
+    },
+    {
+     "tC": -26,
+     "pBarAbs": 1.959
+    },
+    {
+     "tC": -25,
+     "pBarAbs": 2.034
+    },
+    {
+     "tC": -24,
+     "pBarAbs": 2.112
+    },
+    {
+     "tC": -23,
+     "pBarAbs": 2.192
+    },
+    {
+     "tC": -22,
+     "pBarAbs": 2.274
+    },
+    {
+     "tC": -21,
+     "pBarAbs": 2.358
+    },
+    {
+     "tC": -20,
+     "pBarAbs": 2.445
+    },
+    {
+     "tC": -19,
+     "pBarAbs": 2.534
+    },
+    {
+     "tC": -18,
+     "pBarAbs": 2.626
+    },
+    {
+     "tC": -17,
+     "pBarAbs": 2.72
+    },
+    {
+     "tC": -16,
+     "pBarAbs": 2.817
+    },
+    {
+     "tC": -15,
+     "pBarAbs": 2.916
+    },
+    {
+     "tC": -14,
+     "pBarAbs": 3.018
+    },
+    {
+     "tC": -13,
+     "pBarAbs": 3.123
+    },
+    {
+     "tC": -12,
+     "pBarAbs": 3.23
+    },
+    {
+     "tC": -11,
+     "pBarAbs": 3.34
+    },
+    {
+     "tC": -10,
+     "pBarAbs": 3.453
+    },
+    {
+     "tC": -9,
+     "pBarAbs": 3.568
+    },
+    {
+     "tC": -8,
+     "pBarAbs": 3.687
+    },
+    {
+     "tC": -7,
+     "pBarAbs": 3.808
+    },
+    {
+     "tC": -6,
+     "pBarAbs": 3.933
+    },
+    {
+     "tC": -5,
+     "pBarAbs": 4.06
+    },
+    {
+     "tC": -4,
+     "pBarAbs": 4.191
+    },
+    {
+     "tC": -3,
+     "pBarAbs": 4.325
+    },
+    {
+     "tC": -2,
+     "pBarAbs": 4.461
+    },
+    {
+     "tC": -1,
+     "pBarAbs": 4.601
+    },
+    {
+     "tC": 0,
+     "pBarAbs": 4.745
+    },
+    {
+     "tC": 1,
+     "pBarAbs": 4.891
+    },
+    {
+     "tC": 2,
+     "pBarAbs": 5.041
+    },
+    {
+     "tC": 3,
+     "pBarAbs": 5.194
+    },
+    {
+     "tC": 4,
+     "pBarAbs": 5.351
+    },
+    {
+     "tC": 5,
+     "pBarAbs": 5.511
+    },
+    {
+     "tC": 6,
+     "pBarAbs": 5.675
+    },
+    {
+     "tC": 7,
+     "pBarAbs": 5.842
+    },
+    {
+     "tC": 8,
+     "pBarAbs": 6.013
+    },
+    {
+     "tC": 9,
+     "pBarAbs": 6.188
+    },
+    {
+     "tC": 10,
+     "pBarAbs": 6.366
+    },
+    {
+     "tC": 11,
+     "pBarAbs": 6.548
+    },
+    {
+     "tC": 12,
+     "pBarAbs": 6.734
+    },
+    {
+     "tC": 13,
+     "pBarAbs": 6.924
+    },
+    {
+     "tC": 14,
+     "pBarAbs": 7.117
+    },
+    {
+     "tC": 15,
+     "pBarAbs": 7.315
+    },
+    {
+     "tC": 16,
+     "pBarAbs": 7.517
+    },
+    {
+     "tC": 17,
+     "pBarAbs": 7.723
+    },
+    {
+     "tC": 18,
+     "pBarAbs": 7.932
+    },
+    {
+     "tC": 19,
+     "pBarAbs": 8.146
+    },
+    {
+     "tC": 20,
+     "pBarAbs": 8.365
+    },
+    {
+     "tC": 21,
+     "pBarAbs": 8.587
+    },
+    {
+     "tC": 22,
+     "pBarAbs": 8.814
+    },
+    {
+     "tC": 23,
+     "pBarAbs": 9.045
+    },
+    {
+     "tC": 24,
+     "pBarAbs": 9.281
+    },
+    {
+     "tC": 25,
+     "pBarAbs": 9.521
+    },
+    {
+     "tC": 26,
+     "pBarAbs": 9.765
+    },
+    {
+     "tC": 27,
+     "pBarAbs": 10.014
+    },
+    {
+     "tC": 28,
+     "pBarAbs": 10.268
+    },
+    {
+     "tC": 29,
+     "pBarAbs": 10.527
+    },
+    {
+     "tC": 30,
+     "pBarAbs": 10.79
+    },
+    {
+     "tC": 31,
+     "pBarAbs": 11.058
+    },
+    {
+     "tC": 32,
+     "pBarAbs": 11.331
+    },
+    {
+     "tC": 33,
+     "pBarAbs": 11.608
+    },
+    {
+     "tC": 34,
+     "pBarAbs": 11.891
+    },
+    {
+     "tC": 35,
+     "pBarAbs": 12.179
+    },
+    {
+     "tC": 36,
+     "pBarAbs": 12.472
+    },
+    {
+     "tC": 37,
+     "pBarAbs": 12.769
+    },
+    {
+     "tC": 38,
+     "pBarAbs": 13.072
+    },
+    {
+     "tC": 39,
+     "pBarAbs": 13.381
+    },
+    {
+     "tC": 40,
+     "pBarAbs": 13.694
+    },
+    {
+     "tC": 41,
+     "pBarAbs": 14.013
+    },
+    {
+     "tC": 42,
+     "pBarAbs": 14.337
+    },
+    {
+     "tC": 43,
+     "pBarAbs": 14.667
+    },
+    {
+     "tC": 44,
+     "pBarAbs": 15.002
+    },
+    {
+     "tC": 45,
+     "pBarAbs": 15.343
+    },
+    {
+     "tC": 46,
+     "pBarAbs": 15.69
+    },
+    {
+     "tC": 47,
+     "pBarAbs": 16.042
+    },
+    {
+     "tC": 48,
+     "pBarAbs": 16.4
+    },
+    {
+     "tC": 49,
+     "pBarAbs": 16.763
+    },
+    {
+     "tC": 50,
+     "pBarAbs": 17.133
+    },
+    {
+     "tC": 51,
+     "pBarAbs": 17.509
+    },
+    {
+     "tC": 52,
+     "pBarAbs": 17.89
+    },
+    {
+     "tC": 53,
+     "pBarAbs": 18.278
+    },
+    {
+     "tC": 54,
+     "pBarAbs": 18.672
+    },
+    {
+     "tC": 55,
+     "pBarAbs": 19.072
+    },
+    {
+     "tC": 56,
+     "pBarAbs": 19.478
+    },
+    {
+     "tC": 57,
+     "pBarAbs": 19.891
+    },
+    {
+     "tC": 58,
+     "pBarAbs": 20.31
+    },
+    {
+     "tC": 59,
+     "pBarAbs": 20.735
+    },
+    {
+     "tC": 60,
+     "pBarAbs": 21.168
+    },
+    {
+     "tC": 61,
+     "pBarAbs": 21.606
+    },
+    {
+     "tC": 62,
+     "pBarAbs": 22.052
+    },
+    {
+     "tC": 63,
+     "pBarAbs": 22.504
+    },
+    {
+     "tC": 64,
+     "pBarAbs": 22.963
+    },
+    {
+     "tC": 65,
+     "pBarAbs": 23.43
+    },
+    {
+     "tC": 66,
+     "pBarAbs": 23.903
+    },
+    {
+     "tC": 67,
+     "pBarAbs": 24.383
+    },
+    {
+     "tC": 68,
+     "pBarAbs": 24.871
+    },
+    {
+     "tC": 69,
+     "pBarAbs": 25.365
+    },
+    {
+     "tC": 70,
+     "pBarAbs": 25.868
+    }
+   ]
+  }
+ ]
 }

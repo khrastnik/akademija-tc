@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.9.1 – 2026-11-14
+
+### Kalkulator SH/SC
+- **Vnos tlaka z manometra** za R32, R410A in R290: P-T tabela nasičenja od −40 do +70 °C (1 K korak) v `data/refrigerants.json`.
+  Izračunana s CoolProp 6.6 (`scripts/gen-pt.mjs`) in preverjena z referenčnimi točkami NIST pri vrelišču, 0 °C in 40 °C –
+  največje odstopanje 0,24 %. Pri R410A se za pregrevanje uporabi rosišče, za podhlajevanje vrelišče.
+- Kalkulator privzeto sprejme nadtlak z manometra in pokaže temperaturo nasičenja; vnos temperature s skale ostane na voljo.
+- Novi testi na pravih podatkih (nadtlak pri 0 °C za vsa tri hladiva, primer SH za R32).
+
 ## 0.9.0 – 2026-11-14
 
 ### Novo

@@ -59,7 +59,8 @@ function Result({ value, name, formula, lowText }: { value: number | null; name:
 
 export default function ShScCalc({ tables, lessonSh, lessonSc }: Props) {
   const [fluid, setFluid] = useState('R32');
-  const [mode, setMode] = useState<'p' | 't'>('t');
+  // s preverjeno P-T tabelo je privzeto vnos tlaka, sicer temperatura s skale
+  const [mode, setMode] = useState<'p' | 't'>(tables.length ? 'p' : 't');
   const [lp, setLp] = useState('');
   const [tSuc, setTSuc] = useState('');
   const [hp, setHp] = useState('');
