@@ -156,6 +156,8 @@ li {
   align-items: center;
   gap: 12px;
   min-height: 56px;
+  /* glava je širša od besedila, da gre ves meni v eno vrstico */
+  max-width: 1240px;
 }
 .brand {
   font-weight: 800;
@@ -216,7 +218,7 @@ li {
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
 }
-@media (max-width: 860px) {
+@media (max-width: 1080px) {
   .nav {
     display: none;
   }
@@ -664,7 +666,7 @@ main {
     display: none;
   }
 }
-@media (max-width: 860px) {
+@media (max-width: 1080px) {
   /* telefon: ime levo, desno tema in meni */
   .theme-toggle {
     order: 2;

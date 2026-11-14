@@ -1,5 +1,18 @@
 # Spremembe
 
+## 0.9.3 – 2026-11-14
+
+### Kalkulator SH/SC
+- Dodani **R454B** (R32/R1234yf, do +55 °C) in **R452B** (R32/R125/R1234yf, do +53 °C). CoolProp ju nima vnaprej pripravljenih,
+  zato sta izračunana kot mešanici iz sestavin (molski deleži iz masne sestave).
+  - R454B preverjen s Honeywellovo tabelo pri 40 psig: vrelišče 0,05 K, rosišče 0,13 K odstopanja; pri 1 atm 0,41 K.
+  - R452B preverjen le z ASHRAE 34 pri 1 atm (0,33 K in 0,50 K) – v kalkulatorju ima vidno opozorilo, naj se za natančno delo primerja s tabelo proizvajalca.
+  - Nad zgornjo mejo tabele kalkulator izpiše »Tlak je zunaj tabele« (pri višjih temperaturah izračun mešanice ne konvergira).
+
+### Navigacija
+- **SH/SC je v glavi** na računalniku. Glava je širša od besedila, da gre vseh 9 povezav v eno vrstico;
+  hamburger meni se zdaj uporablja do širine 1080 px (prej 860 px), nad tem je meni v glavi.
+
 ## 0.9.2 – 2026-11-14
 
 ### Kalkulator SH/SC

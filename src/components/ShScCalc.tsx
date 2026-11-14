@@ -34,6 +34,18 @@ const FLUIDS = [
     safety: 'A1',
     note: 'CO₂: zelo visoki tlaki (pri 0 °C okoli 34 bar). Nad 31 °C ni kondenzacije – visoka stran dela nadkritično, podhlajevanje tam ni definirano. Manometri in cevi morajo biti za CO₂.',
   },
+  {
+    id: 'R454B',
+    label: 'R454B',
+    safety: 'A2L',
+    note: 'Rahlo gorljiva mešanica R32/R1234yf z drsenjem okoli 1 K – za SH rosišče, za SC vrelišče. Tabela do +55 °C.',
+  },
+  {
+    id: 'R452B',
+    label: 'R452B',
+    safety: 'A2L',
+    note: 'Rahlo gorljiva mešanica R32/R125/R1234yf z drsenjem okoli 1 K. Tabela do +53 °C. Manj preverjena: potrjena le pri atmosferskem tlaku (odstopanje do 0,5 K) – za natančno delo primerjaj s tabelo proizvajalca hladiva.',
+  },
 ];
 const KEY = 'akademija-tc:shsc';
 const num = (s: string) => {

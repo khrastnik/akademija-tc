@@ -65,6 +65,18 @@ describe('P-T kalkulator', () => {
     // tabela se konča pod kritično točko – nad njo ni kondenzacije
     expect(r.points.at(-1)!.tC).toBeLessThan(r.tCritC!);
   });
+  it('R454B: ujemanje s Honeywellovo tabelo pri 40 psig (vrelišče −20,3 °C, rosišče −19,2 °C)', () => {
+    const t = loadRefrigerants().find((r) => r.id === 'R454B')!.points;
+    const p = 3.771; // 40 psig = 377,1 kPa abs
+    expect(Math.abs(satTemp(t, p, 'bubble')! - -20.3)).toBeLessThan(0.3);
+    expect(Math.abs(satTemp(t, p, 'dew')! - -19.2)).toBeLessThan(0.3);
+  });
+  it('R452B: pri 0 °C nekoliko nižji tlak kot R410A, z majhnim drsenjem', () => {
+    const all = loadRefrigerants();
+    const at0 = (id: string) => all.find((r) => r.id === id)!.points.find((p) => p.tC === 0)!;
+    expect(at0('R452B').pBarAbs).toBeLessThan(at0('R410A').pBarAbs);
+    expect(at0('R452B').pBarAbs - at0('R452B').pDewBarAbs!).toBeGreaterThan(0);
+  });
   it('objavljene tabele hladiv so naraščajoče in imajo vir', () => {
     for (const r of loadRefrigerants()) {
       expect(r.source.length).toBeGreaterThan(10);
