@@ -1,5 +1,18 @@
 # Spremembe
 
+## 0.8.0 – 2026-11-14
+
+### Novo
+- **Kode napak** (`/kode/`): 35 kod za Daikin Altherma, Panasonic Aquarea, Mitsubishi Ecodan, Vaillant aroTHERM,
+  Samsung EHS in LG Therma V. Pri vsaki kodi: pomen, kaj najprej preveriti, kdo sme poseg narediti in povezava na okvaro dela.
+  Iskanje razume različne zapise (F.022 = F22 = f022), filter po proizvajalcu, povezava `?q=koda`.
+  Kode, pri katerih si viri nasprotujejo, imajo oznako »Odvisno od modela«. Pri vsakem proizvajalcu so navedeni viri.
+  Kronoterm in Viessmann sta »v pripravi«, ker javnega uradnega vira nismo našli.
+- **Vprašanja za izpit F-plini**: 55 vprašanj v slogu izpita v 10 temah kategorije I, vsako z razlago.
+  Simulacija izpita (30 naključnih vprašanj, 45 minut, rezultat in ocena po temah na koncu), vaja po temah
+  s takojšnjo razlago, »Ponovi napačne« in zgodovina poskusov v brskalniku.
+- Gradnja preveri vire kod, povezave na dele in pravila za vprašanja (en pravilen odgovor, uravnotežene dolžine, vsaj 3 vprašanja na temo).
+
 ## 0.7.0 – 2026-11-14
 
 ### Novo

@@ -26,6 +26,7 @@ const items = repairs
   <p class="eyebrow">Servisni priročnik</p>
   <h1>Okvare in popravila delov</h1>
   <p class="lead muted">Za vsak del: zakaj se pokvari, kako to prepoznaš, kako se popravi ali zamenja in kdo to sme narediti.</p>
+  <p class="tocode"><a href={url('kode')}>Imaš kodo napake z zaslona? → Kode napak</a></p>
 
   <div class="notice">
     <span>
@@ -154,6 +155,12 @@ const items = repairs
 <style>
   .lead {
     margin-top: 0;
+  }
+  .tocode a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
   }
   .legend {
     display: flex;

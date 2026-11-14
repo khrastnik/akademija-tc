@@ -1,0 +1,332 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadCodes, loadSim } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const { brands, pending } = loadCodes();
+const partName = new Map(loadSim().parts.map((p) => [p.id, p.name]));
+const WHO: Record<string, string> = {
+  lastnik: 'Lastnik lahko preveri',
+  serviser: 'Serviser',
+  elektro: 'Električna dela',
+  spricevalo: '🔒 Spričevalo F-plini',
+};
+const total = brands.reduce((s, b) => s + b.codes.length, 0);
+const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
+// za iskanje: brez pik, presledkov in vodilnih ničel (F.022 = F22 = f022)
+const norm = (s: string) =>
+  s
+    .toUpperCase()
+    .replace(/[^A-Z0-9/]/g, '')
+    .split('/')
+    .map((x) => x.replace(/^([A-Z]*)0+(?=\d)/, '$1'))
+    .join(' ');
+---
+<Base
+  title="Kode napak"
+  description="Kode napak toplotnih črpalk Daikin, Panasonic, Mitsubishi, Vaillant, Samsung in LG: kaj pomenijo, kaj najprej preveriti in kdo sme poseg narediti."
+  current="kode"
+  source="content/kode/kode.yaml"
+>
+  <p class="eyebrow">Servisni priročnik</p>
+  <h1>Kode napak</h1>
+  <p class="lead muted">Vpiši kodo z zaslona in poglej, kaj pomeni, kaj najprej preveriš in kdo sme popravljati.</p>
+
+  <p class="notice">
+    <span>
+      <strong>Koda je simptom, ne vzrok.</strong> Pove, kaj je krmilnik zaznal – ne, kateri del je pokvarjen.
+      »Visok tlak« lahko povzroči zamašen filter vode, ne kompresor. <a href={url('lekcija/m00-l01/')}>Lekcija 0.1: simptom, vzrok, meritev</a>.
+      Pomen kode se razlikuje po seriji – pred naročilom dela vedno preveri servisni priročnik svoje naprave.
+    </span>
+  </p>
+
+  <div class="search">
+    <label for="q" class="sr-only">Išči kodo</label>
+    <input id="q" type="search" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Koda, npr. 7H, H62, L9, F.022" data-q />
+  </div>
+  <div class="filters" role="group" aria-label="Proizvajalec">
+    <button type="button" class="chip on" data-brand="vse" aria-pressed="true">Vsi</button>
+    {brands.map((b) => <button type="button" class="chip" data-brand={b.id} aria-pressed="false">{b.name}</button>)}
+  </div>
+  <p class="count muted" aria-live="polite" data-count>{total} kod</p>
+
+  {brands.map((b) => (
+    <section class="mfr" data-brand-section={b.id} id={b.id}>
+      <h2>{b.name} <span class="series">{b.series}</span></h2>
+      {b.note && <p class="muted note">{b.note}</p>}
+      <ul class="codes">
+        {b.codes.map((c) => (
+          <li class="code" data-key={norm(c.code)} data-text={`${c.meaning}`.toLowerCase()}>
+            <div class="code-top">
+              <span class="code-id">{c.code}</span>
+              <span class="code-meaning">{c.meaning}</span>
+            </div>
+            <div class="tags">
+              <span class={`tag who-${c.who}`}>{WHO[c.who]}</span>
+              {c.sure === 'model' && <span class="tag tag-model">Odvisno od modela – preveri priročnik</span>}
+            </div>
+            <details>
+              <summary>Kaj najprej preverim</summary>
+              <ol>{c.check.map((x) => <li>{x}</li>)}</ol>
+              {c.parts.length > 0 && (
+                <p class="parts">
+                  Okvare in popravila:{' '}
+                  {c.parts.map((p) => <a href={url(`okvare/#${p}`)}>{partName.get(p)}</a>)}
+                </p>
+              )}
+            </details>
+          </li>
+        ))}
+      </ul>
+      <p class="sources">
+        Viri:{' '}
+        {b.sources.map((s) => <a href={s} rel="noopener noreferrer" target="_blank">{host(s)}</a>)}
+      </p>
+    </section>
+  ))}
+
+  <p class="empty muted" data-empty hidden>
+    Te kode ni na seznamu. Poišči jo v servisnem priročniku svoje naprave – in jo <a href="https://github.com/khrastnik/akademija-tc/issues/new?title=Nova%20koda%20napake">predlagaj</a> z virom.
+  </p>
+
+  {pending.length > 0 && (
+    <section class="pending">
+      <h2>V pripravi</h2>
+      <ul>
+        {pending.map((p) => <li><strong>{p.name}</strong> – {p.reason}</li>)}
+      </ul>
+    </section>
+  )}
+</Base>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>('[data-q]')!;
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-brand]')];
+  const items = [...document.querySelectorAll<HTMLElement>('.code')];
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-brand-section]')];
+  const count = document.querySelector<HTMLElement>('[data-count]')!;
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  let brand = 'vse';
+  const norm = (s: string) => s.toUpperCase().replace(/[^A-Z0-9]/g, '').replace(/^([A-Z]*)0+(?=\d)/, '$1');
+  const plural = (n: number) => (n % 100 === 1 ? 'koda' : n % 100 === 2 ? 'kodi' : n % 100 === 3 || n % 100 === 4 ? 'kode' : 'kod');
+
+  function apply() {
+    const raw = input.value.trim();
+    const q = norm(raw);
+    const words = raw.toLowerCase();
+    let n = 0;
+    for (const s of sections) {
+      const inBrand = brand === 'vse' || s.dataset.brandSection === brand;
+      let shown = 0;
+      for (const it of s.querySelectorAll<HTMLElement>('.code')) {
+        const keys = it.dataset.key!.split(' ');
+        const hit = !raw || (q && keys.some((k) => k.startsWith(q))) || (words.length > 2 && it.dataset.text!.includes(words));
+        const show = inBrand && !!hit;
+        it.hidden = !show;
+        // natančen zadetek: odpri »kaj preverim«
+        it.querySelector('details')!.open = show && !!q && keys.includes(q);
+        if (show) shown++;
+      }
+      s.hidden = shown === 0;
+      n += shown;
+    }
+    count.textContent = `${n} ${plural(n)}`;
+    empty.hidden = n > 0;
+  }
+  input.addEventListener('input', apply);
+  chips.forEach((c) =>
+    c.addEventListener('click', () => {
+      brand = c.dataset.brand!;
+      chips.forEach((x) => {
+        x.classList.toggle('on', x === c);
+        x.setAttribute('aria-pressed', String(x === c));
+      });
+      apply();
+    }),
+  );
+  // ?q=H62 v povezavi
+  const pre = new URLSearchParams(location.search).get('q');
+  if (pre) input.value = pre;
+  apply();
+</script>
+
+<style>
+  .lead {
+    margin-top: 0;
+  }
+  .search input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 16px;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .search input:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .filters {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 10px -2px 0;
+    padding: 2px;
+  }
+  .chip {
+    flex: none;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .chip.on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  .count {
+    margin: 6px 0 0;
+    font-size: 0.9rem;
+  }
+  .mfr {
+    margin-top: 22px;
+    scroll-margin-top: 76px;
+  }
+  .mfr h2 {
+    margin: 0 0 4px;
+  }
+  .series {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .note {
+    margin: 0 0 10px;
+    font-size: 0.92rem;
+  }
+  .codes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .code {
+    max-width: none;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .code-top {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .code-id {
+    min-width: 64px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: #0d2a24;
+    color: #7dffcf;
+    font: 800 1.05rem/1.2 ui-monospace, 'SFMono-Regular', Consolas, monospace;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .code-meaning {
+    font-weight: 600;
+    padding-top: 4px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 8px 0 0;
+  }
+  .tag {
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .who-lastnik {
+    background: var(--ok-bg);
+    color: var(--ok);
+  }
+  .who-serviser {
+    background: color-mix(in srgb, var(--low) 16%, transparent);
+    color: var(--low);
+  }
+  .who-elektro {
+    background: var(--warn-bg);
+    color: var(--ochre);
+  }
+  .who-spricevalo {
+    background: var(--bad-bg);
+    color: var(--bad);
+  }
+  .tag-model {
+    background: var(--surface-2);
+    color: var(--ink-2);
+  }
+  details {
+    margin-top: 4px;
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--accent);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  details ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+  details li {
+    margin: 4px 0;
+  }
+  .parts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 12px;
+    margin: 8px 0 0;
+    font-size: 0.92rem;
+  }
+  .parts a,
+  .sources a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .sources {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 12px;
+    margin: 8px 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+  .empty {
+    margin-top: 16px;
+  }
+  .pending {
+    margin-top: 28px;
+  }
+</style>

@@ -1,13 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import Quiz from '../components/Quiz.tsx';
-import { loadFgas, loadGlossary, loadLessons, lessonNumber } from '../lib/content.js';
+import ExamSim from '../components/ExamSim.tsx';
+import { loadFgas, loadFgasExam, loadGlossary, loadLessons, lessonNumber } from '../lib/content.js';
 import { url } from '../lib/site.js';
 
 const { topics, practical, quiz } = loadFgas();
 const lessons = new Map(loadLessons().map((l) => [l.id, l]));
 const terms = Object.fromEntries(loadGlossary().map((t) => [t.id, { id: t.id, sl: t.sl, en: t.en, kratkaRazlaga: t.kratkaRazlaga }]));
 const total = topics.length + practical.length;
+const exam = loadFgasExam();
 ---
 <Base
   title="Izpit F-plini"
@@ -27,12 +29,13 @@ const total = topics.length + practical.length;
   </div>
 
   <nav class="toc" aria-label="Na tej strani">
+    <a href="#vprasanja">Vprašanja za izpit</a>
     <a href="#kategorije">Kategorije</a>
     <a href="#izpit">Potek izpita</a>
     <a href="#snov">Snov</a>
     <a href="#izracun">Izračun CO₂e</a>
     <a href="#praksa">Praktični del</a>
-    <a href="#vaja">Vaja</a>
+    <a href="#vaja">Kratek kviz</a>
   </nav>
 
   <div class="ready panel" aria-live="polite">
@@ -40,6 +43,12 @@ const total = topics.length + practical.length;
     <div class="ready-bar"><span data-ready-bar></span></div>
     <p class="muted">Ob vsaki temi in vaji označi »To znam«. Shrani se samo v tem brskalniku.</p>
   </div>
+
+  <section id="vprasanja" class="exam-sec">
+    <h2>Vprašanja za izpit</h2>
+    <p class="muted">{exam.questions.length} vprašanj z odgovori in razlagami v {exam.topics.length} temah, ki jih zahteva izpit za kategorijo I. Reši simulacijo z omejenim časom ali vadi po temah.</p>
+    <ExamSim client:visible questions={exam.questions as any} topics={exam.topics} size={30} minutes={45} pass={70} />
+  </section>
 
   <section id="kategorije">
     <h2>Kategorije spričevala</h2>
@@ -128,7 +137,7 @@ const total = topics.length + practical.length;
   </section>
 
   <section id="vaja">
-    <h2>Vaja</h2>
+    <h2>Kratek kviz</h2>
     <p class="muted">{quiz.length} vprašanj. Napačni odgovori se vrnejo v <a href={url('ponovitev')}>Ponovitvi</a>.</p>
     <Quiz client:visible quizId="f-plini" questions={quiz as any} terms={terms} lessonBase={url('lekcija/')} />
   </section>

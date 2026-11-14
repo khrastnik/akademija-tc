@@ -273,6 +273,38 @@ export function loadRepairs() {
   return parsed.data;
 }
 
+// ---------- kode napak proizvajalcev ----------
+const codesSchema = z.object({
+  brands: z.array(
+    z.object({
+      id,
+      name: z.string(),
+      series: z.string(),
+      note: z.string().optional(),
+      sources: z.array(z.string().url()).min(1, 'vsak proizvajalec potrebuje vsaj en vir'),
+      codes: z
+        .array(
+          z.object({
+            code: z.coerce.string(),
+            meaning: z.string().min(8),
+            sure: z.enum(['potrjeno', 'model']),
+            who: z.enum(WHO),
+            check: z.array(z.string().min(5)).min(1),
+            parts: z.array(id).default([]),
+          }),
+        )
+        .min(1),
+    }),
+  ),
+  pending: z.array(z.object({ name: z.string(), reason: z.string() })).default([]),
+});
+/** Kode napak – samo tiste, ki jih potrjuje vir. */
+export function loadCodes() {
+  const parsed = codesSchema.safeParse(parseYaml(read('content', 'kode', 'kode.yaml')));
+  if (!parsed.success) throw new Error(`content/kode/kode.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
 // ---------- priprava na izpit za F-pline ----------
 const fgasSchema = z.object({
   topics: z
@@ -289,6 +321,27 @@ const fgasSchema = z.object({
   practical: z.array(z.object({ id, title: z.string(), steps: z.array(z.string().min(5)).min(2), why: z.string().min(10) })).min(2),
   quiz: z.array(questionSchema).min(5).max(20),
 });
+const examSchema = z.object({
+  topics: z.array(z.object({ id, label: z.string(), link: id })).min(3),
+  questions: z
+    .array(
+      z.object({
+        id,
+        topic: id,
+        text: z.string().min(8),
+        options: z.array(z.object({ text: z.string().min(1), correct: z.boolean().optional() })).min(3).max(4),
+        explain: z.string().min(20),
+      }),
+    )
+    .min(20),
+});
+/** Banka vprašanj v slogu izpita F-plini (ni uradna). */
+export function loadFgasExam() {
+  const parsed = examSchema.safeParse(parseYaml(read('content', 'f-plini', 'izpit.yaml')));
+  if (!parsed.success) throw new Error(`content/f-plini/izpit.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
 /** Snov, praktični koraki in vaja za izpit iz ravnanja s F-plini. */
 export function loadFgas() {
   const parsed = fgasSchema.safeParse(parseYaml(read('content', 'f-plini', 'f-plini.yaml')));
@@ -416,6 +469,19 @@ export function validateContent() {
     if (r.procedure === 'hladivo' && !r.who.includes('spricevalo'))
       errors.push(`content/okvare/okvare.yaml ${r.part}: poseg v krog hladiva mora imeti oznako "spricevalo"`);
 
+  // kode napak: povezave na obstoječe dele, brez podvojenih kod pri istem proizvajalcu
+  const codes = tryLoad(loadCodes, { brands: [], pending: [] });
+  const repairIds = new Set(repairs.map((r) => r.part));
+  for (const b of codes.brands) {
+    const seen = new Set();
+    for (const c of b.codes) {
+      const at = `content/kode/kode.yaml ${b.id} ${c.code}`;
+      if (seen.has(c.code)) errors.push(`${at}: podvojena koda`);
+      seen.add(c.code);
+      for (const p of c.parts) if (!repairIds.has(p)) errors.push(`${at}: del "${p}" nima opisa na strani okvar`);
+    }
+  }
+
   // F-plini: vaja – ista pravila kot kvizi, povezava kaže na temo na strani (#id) ali na lekcijo
   const fgas = tryLoad(loadFgas, { topics: [], practical: [], quiz: [] });
   const topicIds = new Set([...fgas.topics.map((t) => t.id), ...fgas.practical.map((p) => p.id)]);
@@ -431,6 +497,23 @@ export function validateContent() {
     const lens = q.options.map((o) => o.text.length);
     if (Math.max(...lens) > 3 * Math.min(...lens) + 20) errors.push(`${at}: odgovori so preveč različno dolgi`);
   }
+
+  // banka izpitnih vprašanj F-plini
+  const exam = tryLoad(loadFgasExam, { topics: [], questions: [] });
+  const examTopics = new Set(exam.topics.map((t) => t.id));
+  for (const t of exam.topics) if (!topicIds.has(t.link)) errors.push(`content/f-plini/izpit.yaml: tema ${t.id} kaže na neobstoječ razdelek "#${t.link}"`);
+  const qIds = new Set();
+  for (const q of exam.questions) {
+    const at = `content/f-plini/izpit.yaml ${q.id}`;
+    if (qIds.has(q.id)) errors.push(`${at}: podvojen id`);
+    qIds.add(q.id);
+    if (!examTopics.has(q.topic)) errors.push(`${at}: neznana tema "${q.topic}"`);
+    const correct = q.options.filter((o) => o.correct).length;
+    if (correct !== 1) errors.push(`${at}: pravilen mora biti natanko en odgovor (najdenih ${correct})`);
+    const lens = q.options.map((o) => o.text.length);
+    if (Math.max(...lens) > 3 * Math.min(...lens) + 20) errors.push(`${at}: odgovori so preveč različno dolgi`);
+  }
+  for (const t of examTopics) if (exam.questions.filter((q) => q.topic === t).length < 3) errors.push(`content/f-plini/izpit.yaml: tema ${t} ima manj kot 3 vprašanja`);
 
   return errors;
 }

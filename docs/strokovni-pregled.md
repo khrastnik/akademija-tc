@@ -77,6 +77,14 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 - `src/components/StationSims.tsx` – štiri postaje v živo: ali so smeri sprememb (kje zavre, kdaj tlak raste, lačen/preplavljen uparjalnik) pravilne in besedila sodil ob vsakem stanju strokovno točna.
 - **Zalogovnik (0.5.0)** – prosimo posebej preveri: ali naj bo primarni pretok res nekoliko večji od sekundarnega (napaka »mešanje«), ali je »46 zagonov v 24 urah« prepričljiv primer taktiranja, in ali je opis meje vklopa dogrevalnika (bivalentne točke) pravilen za tipične naprave.
 
+## Kode napak in izpitna vprašanja (0.8.0)
+
+- `content/kode/kode.yaml` – pomen kod je povzet po javnih priročnikih (viri pri vsakem proizvajalcu). Preveri pomen,
+  predvsem kode z oznako `model`, in ali so prvi koraki preverjanja varni in v pravem vrstnem redu.
+- `content/f-plini/izpit.yaml` – 55 vprašanj v slogu izpita. Niso uradna. Preveri pravilnost odgovorov in razlag,
+  posebej pravna dejstva (intervali pregledov, ponoven pregled v enem mesecu po popravilu, hramba evidenc 5 let,
+  cilj odprave HFC do 2050) in tehnična (fosforna spajka za Cu-Cu, grelec karterja, POE olje).
+
 ## Okvare in izpit F-plini (0.7.0)
 
 - `content/okvare/okvare.yaml` – vzroki, posledice in postopki za 22 delov. Preveri predvsem: oznake »kdo sme«,

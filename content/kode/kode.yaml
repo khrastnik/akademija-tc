@@ -1,0 +1,338 @@
+# Kode napak najpogostejših proizvajalcev toplotnih črpalk zrak–voda.
+# PRAVILO: koda se objavi samo, če jo potrjuje vsaj en javni dokument proizvajalca ali servisni priročnik (sources).
+# sure: potrjeno = viri se ujemajo | model = viri si nasprotujejo ali se razlikuje po seriji – vedno preveri priročnik.
+# parts: id-ji iz content/sim/parts.yaml – povezava na stran »Okvare in popravila«.
+# Kode so simptom (kaj je krmilnik zaznal), ne diagnoza.
+
+brands:
+  - id: daikin
+    name: Daikin
+    series: Altherma (3 R, 3 H, 3 M, HT, hibridne)
+    note: Daikin uporablja glavno kodo in podkodo (npr. A1-00, U4-65). Tabele se med generacijami Altherme razlikujejo.
+    sources:
+      - https://www.daikinac.com/docs/default-source/daikin-altherma/sm-esie25-service-manual.pdf
+      - https://manualslib.com/manual/1740426/Daikin-Altherma-3-H-Ht-F.html?page=212
+    codes:
+      - code: 7H
+        meaning: Težava s pretokom vode – premajhen ali ga ni.
+        sure: potrjeno
+        who: lastnik
+        check:
+          - Tlak vode na manometru.
+          - Filter vode – zamašen?
+          - Zrak v sistemu (šumenje, klokotanje), zaprti ventili na radiatorjih ali talnem ogrevanju.
+          - Obtočna črpalka teče?
+        parts: [filter, obtocna, raztezna, pretok]
+      - code: U0
+        meaning: Pomanjkanje hladiva – najpogosteje zaradi puščanja.
+        sure: potrjeno
+        who: spricevalo
+        check:
+          - Oljni madeži na spojih zunanje enote (pogled brez odpiranja).
+          - Serviser s spričevalom – pregrevanje, podhlajevanje, iskanje puščanja. Ne doliti brez popravila.
+        parts: [uparjalnik, servisni, eev]
+      - code: E3
+        meaning: Visok tlak – sprožilo se je stikalo visokega tlaka. Pri nekaterih serijah ima koda drugačen pomen.
+        sure: model
+        who: serviser
+        check:
+          - Pretok vode (filter, zrak, črpalka) – najpogostejši vzrok v ogrevanju.
+          - Previsoka nastavljena temperatura vode.
+          - Pri hlajenju – umazane lamele zunanje enote.
+        parts: [filter, obtocna, kondenzator]
+      - code: E4
+        meaning: Nizek tlak sesanja.
+        sure: model
+        who: spricevalo
+        check:
+          - Zunanja enota – listje, led, ventilator se vrti?
+          - Serviser s spričevalom – količina hladiva, ekspanzijski ventil, filter sušilnik.
+        parts: [uparjalnik, ventilator, eev, susilnik]
+      - code: E9
+        meaning: Okvara elektronskega ekspanzijskega ventila.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Konektor in tuljava ventila (usposobljena oseba). Tuljava se zamenja brez posega v krog hladiva.
+        parts: [eev]
+      - code: F3
+        meaning: Previsoka temperatura tlačnega voda kompresorja.
+        sure: potrjeno
+        who: spricevalo
+        check:
+          - Zunanje lamele umazane ali zaledenele.
+          - Premalo hladiva ali zaprt ekspanzijski ventil – serviser s spričevalom.
+        parts: [uparjalnik, eev, kompresor]
+      - code: H9
+        meaning: Okvara senzorja zunanje temperature v zunanji enoti.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Konektor in kabel senzorja, upornost senzorja po tabeli proizvajalca.
+        parts: []
+      - code: J3
+        meaning: Okvara ali premaknjen senzor temperature tlačnega voda.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Ali senzor sedi na cevi in je pritrjen.
+          - Konektor, upornost senzorja.
+        parts: []
+      - code: U2
+        meaning: Napaka napajalne napetosti zunanje enote.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Ali je težava v omrežju (drugi porabniki, nihanje napetosti) – meritev samo usposobljena oseba.
+          - Priključne sponke in varovalke.
+        parts: [krmilnik]
+      - code: U4
+        meaning: Napaka komunikacije med notranjo in zunanjo enoto.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Ponovni zagon (izklop in vklop na varovalki).
+          - Povezovalni kabel, sponke, vlaga v priključni omarici.
+        parts: [krmilnik]
+      - code: A1
+        meaning: Napaka elektronske plošče (podkoda pove podrobnosti, npr. A1-00 zaznava ničle napetosti, A1-01 branje EEPROM).
+        sure: potrjeno
+        who: elektro
+        check:
+          - Ponovni zagon. Če se koda vrne – pooblaščeni serviser.
+        parts: [krmilnik]
+      - code: AA
+        meaning: Pregret električni dogrevalnik (AA-01) – sprožila se je pregrevalna zaščita.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Pretok vode – grelec se pregreje, ko voda ne teče.
+          - Zaščito ponastavi šele, ko je vzrok najden.
+        parts: [dogrevalnik, filter, obtocna]
+      - code: '81'
+        meaning: Senzor temperature izstopne vode – podkoda 81-04 pomeni, da ni pravilno nameščen.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Ali senzor sedi v tulcu oziroma na cevi s toplotno pasto.
+          - Primerjava s termometrom na cevi.
+        parts: []
+      - code: L5
+        meaning: Okvara električnega dela zunanje enote (inverter, prevelik tok).
+        sure: potrjeno
+        who: elektro
+        check:
+          - Pooblaščeni serviser – meritve inverterja in kompresorja.
+        parts: [kompresor, krmilnik]
+
+  - id: panasonic
+    name: Panasonic
+    series: Aquarea
+    note: H-kode so večinoma napake senzorjev in komunikacije, F-kode zaščite. Ista koda pri klimatski napravi lahko pomeni nekaj drugega.
+    sources:
+      - https://www.panasonicproclub.com/uploads/NL/catalogues/Storing-code%20Aquarea%20A2W.pdf
+      - https://manualslib.com/manual/1273892/Panasonic-Wh-Sdc09h3e8.html?page=159
+      - https://wiki.kanthaus.online/images/e/e9/Aquarea-service-manual.pdf
+    codes:
+      - code: H62
+        meaning: Premajhen pretok vode – sprožilo se je stikalo pretoka.
+        sure: potrjeno
+        who: lastnik
+        check:
+          - Filter vode, zrak v ceveh, tlak vode.
+          - Obtočna črpalka teče?
+        parts: [filter, obtocna, pretok]
+      - code: F12
+        meaning: Sprožilo se je stikalo tlaka (visok tlak) v zunanji enoti.
+        sure: potrjeno
+        who: serviser
+        check:
+          - Pretok vode v ogrevanju – filter, zrak, črpalka.
+          - Previsoka temperatura vode.
+        parts: [filter, obtocna, kondenzator]
+      - code: H15
+        meaning: Okvara senzorja temperature kompresorja (tlačnega voda).
+        sure: potrjeno
+        who: elektro
+        check:
+          - Konektor in pritrditev senzorja, upornost senzorja.
+        parts: []
+      - code: H23
+        meaning: Okvara senzorja temperature tekočega hladiva v notranji enoti.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Konektor in pritrditev senzorja, upornost senzorja.
+        parts: []
+      - code: H42
+        meaning: Nizek tlak na sesalni strani kompresorja.
+        sure: potrjeno
+        who: spricevalo
+        check:
+          - Zunanja enota – led, listje, ventilator.
+          - Serviser s spričevalom – zamašen ekspanzijski ventil ali sito, premalo hladiva.
+        parts: [uparjalnik, eev, susilnik]
+      - code: F20
+        meaning: Zaščita kompresorja pred pregrevanjem.
+        sure: potrjeno
+        who: spricevalo
+        check:
+          - Pretok vode in čistost zunanjih lamel.
+          - Serviser s spričevalom – količina hladiva, temperatura tlačnega voda.
+        parts: [kompresor, uparjalnik]
+
+  - id: mitsubishi
+    name: Mitsubishi Electric
+    series: Ecodan
+    note: L-kode so večinoma vodni krog, U-kode zunanja enota in krog hladiva, P-kode senzorji.
+    sources:
+      - https://library.mitsubishielectric.co.uk/pdf/download_full/4085
+      - https://www.csmtrade.eu/storage/4150/Chybove_kody_AtW_Ecodan.pdf
+      - https://manualslib.com/manual/2548942/Mitsubishi-Electric-Ecodan-Ehsc-Vm6d-Cn.html?page=51
+    codes:
+      - code: L9
+        meaning: Premajhen pretok vode v primarnem krogu (senzor pretoka).
+        sure: potrjeno
+        who: lastnik
+        check:
+          - Filter vode, tlak, zrak v sistemu.
+          - Zaprti ventili, obtočna črpalka.
+        parts: [filter, obtocna, pretok, raztezna]
+      - code: L6
+        meaning: Zaščita vode pred zmrzovanjem – pogosto zaradi premajhnega pretoka med odtajevanjem ali hlajenjem.
+        sure: potrjeno
+        who: serviser
+        check:
+          - Pretok vode, filter, zrak.
+          - Dovolj vode v sistemu za odtajevanje (zalogovnik).
+        parts: [filter, obtocna, zalogovnik]
+      - code: U1
+        meaning: Visok tlak hladiva – sprožilo se je stikalo visokega tlaka.
+        sure: potrjeno
+        who: serviser
+        check:
+          - Pretok vode – najpogostejši vzrok.
+          - Serviser preveri z manometrom, ali tlak res doseže mejo – lahko je kriva okvara stikala.
+        parts: [filter, obtocna, kondenzator]
+      - code: U2
+        meaning: Previsoka temperatura tlačnega voda – najpogosteje premalo hladiva.
+        sure: potrjeno
+        who: spricevalo
+        check:
+          - Oljni madeži na spojih.
+          - Serviser s spričevalom – pregrevanje, iskanje puščanja.
+        parts: [kompresor, eev, servisni]
+      - code: UL
+        meaning: Nizek tlak na sesalni strani – sprožilo se je zaščitno stikalo.
+        sure: potrjeno
+        who: spricevalo
+        check:
+          - Zunanja enota – led, listje, ventilator.
+          - Serviser s spričevalom potrdi z manometrom.
+        parts: [uparjalnik, ventilator, eev]
+      - code: P1
+        meaning: Napaka senzorja (termistorja) – pogosto sobni senzor ni priklopljen, nastavitev pa zahteva sobno regulacijo.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Nastavitev načina regulacije na krmilniku.
+          - Priklop in kabel senzorja.
+        parts: [krmilnik]
+
+  - id: vaillant
+    name: Vaillant
+    series: aroTHERM / aroTHERM plus
+    note: Kode imajo obliko F.xxx. Starejši aroTHERM (R410A) in aroTHERM plus (R290) imajo deloma različne tabele.
+    sources:
+      - https://www.vaillant.co.uk/service/heat-pump-fault-codes/
+      - https://manualslib.com/manual/2479851/Vaillant-Geotherm.html?page=35
+      - https://libble.eu/vaillant-arotherm-vwl-85-2/online-manual-705042/?page=0049
+    codes:
+      - code: F.022
+        meaning: Prenizek tlak vode v sistemu.
+        sure: potrjeno
+        who: lastnik
+        check:
+          - Manometer – dopolni po navodilih serviserja.
+          - Če tlak znova pade – puščanje ali raztezna posoda, poklic serviserja.
+        parts: [raztezna, varnostni]
+      - code: F.514
+        meaning: Okvara senzorja temperature na vstopu v kompresor.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Priklop senzorja, kabelski snop, zamenjava senzorja.
+        parts: []
+      - code: F.517
+        meaning: Okvara senzorja temperature na izstopu iz kompresorja.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Priklop senzorja, kabelski snop, zamenjava senzorja.
+        parts: []
+      - code: F.532
+        meaning: Premajhen pretok v ogrevalnem krogu stavbe.
+        sure: potrjeno
+        who: lastnik
+        check:
+          - Filter, zrak, zaprti ventili, obtočna črpalka.
+        parts: [filter, obtocna, pretok]
+      - code: F.685
+        meaning: Napaka komunikacije eBUS – naprava ni povezana s krmilnikom ali je obrnjena polariteta.
+        sure: model
+        who: elektro
+        check:
+          - Povezava med napravo in regulatorjem, polariteta vodnikov.
+        parts: [krmilnik]
+
+  - id: samsung
+    name: Samsung
+    series: EHS (Mono, Split)
+    note: Veliko kod je pri Samsungu deljenih s klimatskimi napravami in imajo v različnih virih različen pomen. Objavljeni sta samo kodi, pri katerih se viri ujemajo.
+    sources:
+      - https://energize.helpscoutdocs.com/article/60-samsung-gen-6-htq-r290-troubleshooting-guide
+    codes:
+      - code: E911
+        meaning: Napaka pretoka vode – črpalka teče, stikalo pretoka ne zazna pretoka.
+        sure: potrjeno
+        who: lastnik
+        check:
+          - Tlak vode, filter, zrak v sistemu.
+        parts: [filter, obtocna, pretok]
+      - code: E912
+        meaning: Stikalo pretoka kaže pretok, ko črpalka ne teče – okvara stikala ali črpalka teče stalno.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Stikalo ali senzor pretoka, krmiljenje črpalke.
+        parts: [pretok, obtocna]
+
+  - id: lg
+    name: LG
+    series: Therma V
+    note: Kode CH so skupne s klimatskimi napravami LG.
+    sources:
+      - https://www.lg.com/us/support/help-library/how-to-troubleshoot-error-codes-ch05-53-e0-ch32-33-36-38-f4-ch66-90-91-92-and-93-on-your-lg-air-conditioner--20155402834134
+      - https://manualshive.com/en/manual/lg/therma-v-series/213295?page=119
+    codes:
+      - code: CH05 / CH53
+        meaning: Napaka komunikacije med notranjo in zunanjo enoto.
+        sure: potrjeno
+        who: elektro
+        check:
+          - Ponovni zagon.
+          - Povezovalni kabel, konektorji, elektronska plošča.
+        parts: [krmilnik]
+      - code: CH38
+        meaning: Premalo hladiva.
+        sure: potrjeno
+        who: spricevalo
+        check:
+          - Serviser s spričevalom – iskanje puščanja, nato polnjenje po teži.
+        parts: [servisni, uparjalnik, kondenzator]
+
+pending:
+  - name: Kronoterm
+    reason: Javno dostopne tabele kod nismo našli. Kode dodamo, ko jih preverimo z uradnim priročnikom ali ko jih posreduje proizvajalec.
+  - name: Viessmann
+    reason: Kode še niso preverjene z uradnim virom.

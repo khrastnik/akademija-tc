@@ -1,0 +1,330 @@
+.ex {
+  display: grid;
+  gap: 12px;
+  scroll-margin-top: 76px;
+}
+.ex-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+}
+.ex-card h3,
+.ex-card p {
+  margin: 0;
+}
+.ex-main {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.ex-main h3 {
+  font-size: 1.3rem;
+}
+.btn.wide {
+  width: 100%;
+}
+.ex-hist {
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+.ex-wrong {
+  cursor: pointer;
+  border-style: dashed;
+  border-color: var(--bad);
+}
+.ex-wrong strong {
+  color: var(--bad);
+}
+.ex-wrong span {
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+.ex-topics {
+  display: grid;
+  gap: 6px;
+}
+.ex-topics button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.ex-topics button span {
+  flex: none;
+  min-width: 28px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  text-align: center;
+}
+.ex-note {
+  margin: 0;
+  font-size: 0.88rem;
+}
+.ex-bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.ex-timer {
+  font-variant-numeric: tabular-nums;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: var(--surface-2);
+}
+.ex-timer.low {
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+.ex-progress {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.ex-progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+.ex-q {
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.ex-opts {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+}
+.ex-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 14px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.ex-letter {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+.ex-opt.sel {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+}
+.ex-opt.sel .ex-letter {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.ex-opt.right {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+.ex-opt.right .ex-letter {
+  background: var(--ok);
+  color: #fff;
+}
+.ex-opt.wrong {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+}
+.ex-opt.dim {
+  opacity: 0.6;
+}
+.ex-fb {
+  padding: 12px 14px;
+  border-radius: 12px;
+}
+.ex-fb p {
+  margin: 4px 0 0;
+}
+.ex-fb.ok {
+  background: var(--ok-bg);
+}
+.ex-fb.ok strong {
+  color: var(--ok);
+}
+.ex-fb.bad {
+  background: var(--bad-bg);
+}
+.ex-fb.bad strong {
+  color: var(--bad);
+}
+.ex-nav {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--bg) 75%, transparent);
+}
+.ex-map summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+}
+.ex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 6px;
+  margin: 8px 0 12px;
+}
+.ex-grid button {
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ex-grid button.done {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.ex-grid button.cur {
+  border: 2px solid var(--accent);
+}
+.ex-quit {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.92rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.ex-score {
+  text-align: center;
+  justify-items: center;
+}
+.ex-score.ok {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+.ex-score.bad {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+}
+.ex-pct {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.ex-score.ok .ex-pct {
+  color: var(--ok);
+}
+.ex-score.bad .ex-pct {
+  color: var(--bad);
+}
+.ex-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.ex-bars li {
+  max-width: none;
+}
+.ex-bar-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.92rem;
+}
+.ex-bar {
+  height: 8px;
+  margin-top: 4px;
+  border-radius: 99px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.ex-bar span {
+  display: block;
+  height: 100%;
+}
+.ex-bar span.ok {
+  background: var(--ok);
+}
+.ex-bar span.bad {
+  background: var(--bad);
+}
+.ex-review {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 14px;
+}
+.ex-review li {
+  max-width: none;
+}
+.ex-review p {
+  margin: 2px 0;
+}
+.ex-review .ex-q {
+  font-size: 1rem;
+}
+.ex-yours {
+  color: var(--bad);
+}
+.ex-right {
+  color: var(--ok);
+  font-weight: 700;
+}
+.ex-explain {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+.ex-review a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.ex-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
