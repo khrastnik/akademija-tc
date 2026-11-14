@@ -24,7 +24,7 @@ export default function Review({ quizzes, terms, lessonBase }: Props) {
         <p><strong>Danes ni ničesar za ponoviti.</strong></p>
         <p class="muted">
           {waiting > 0
-            ? `${waiting} vprašanj čaka na kasnejšo ponovitev.`
+            ? `${waiting} ${waiting % 100 === 1 ? 'vprašanje čaka' : waiting % 100 === 2 ? 'vprašanji čakata' : waiting % 100 === 3 || waiting % 100 === 4 ? 'vprašanja čakajo' : 'vprašanj čaka'} na kasnejšo ponovitev.`
             : 'Napačno odgovorjena vprašanja se tukaj pojavijo po 1, 3 in 7 dneh.'}
         </p>
       </div>

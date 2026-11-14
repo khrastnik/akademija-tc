@@ -1,0 +1,65 @@
+- id: f-plini
+  sl: fluorirani toplogredni plini
+  en: fluorinated greenhouse gases
+  abbr: F-plini
+  kratkaRazlaga: Umetni plini s fluorom, med njimi večina hladiv, ki ob izpustu močno segrevajo ozračje.
+  dolgaRazlaga: Med F-pline spadajo fluorirani ogljikovodiki (HFC), kot so R32, R410A, R407C in R134a. Ravnanje z njimi ureja evropska uredba o F-plinih. Delo na krogu hladiva sme opravljati le oseba s spričevalom.
+  analogija: Kot odeja okoli Zemlje – kilogram izpuščenega hladiva je debelejša odeja kot kilogram CO₂.
+
+- id: gwp
+  sl: potencial globalnega segrevanja
+  en: global warming potential
+  abbr: GWP
+  kratkaRazlaga: Koliko krat bolj plin segreva ozračje kot enaka masa CO₂.
+  dolgaRazlaga: GWP primerja učinek plina z ogljikovim dioksidom, ki ima GWP 1. Uradne vrednosti za izračune so v prilogah uredbe o F-plinih. R32 ima GWP nekaj sto, R410A okoli dva tisoč, propan R290 le nekaj enot.
+  analogija: Kot moč žarnice – nekatera hladiva »svetijo« tisočkrat močneje kot CO₂.
+
+- id: co2-ekvivalent
+  sl: ekvivalent CO₂
+  en: CO₂ equivalent
+  abbr: t CO₂e
+  kratkaRazlaga: Masa hladiva, preračunana v tone CO₂ z enakim učinkom na podnebje.
+  dolgaRazlaga: Izračun je masa hladiva v kilogramih krat GWP, deljeno s tisoč – rezultat je v tonah CO₂e. Od te vrednosti je odvisno, ali in kako pogosto mora biti naprava pregledana glede tesnosti.
+  analogija: Kot preračun valut – različna hladiva zamenjaš v isto valuto, da jih lahko primerjaš.
+
+- id: zajem-hladiva
+  sl: zajem hladiva
+  en: refrigerant recovery
+  kratkaRazlaga: Prečrpavanje hladiva iz naprave v jeklenko, ne v zrak.
+  dolgaRazlaga: Pred vsakim posegom, pri katerem se odpre krog hladiva, se hladivo z napravo za zajem prečrpa v ustrezno označeno jeklenko. Namerni izpust v ozračje je prepovedan.
+  analogija: Kot pretakanje vina v drug sod – nič ne sme steči po tleh.
+
+- id: tlacni-preizkus
+  sl: tlačni preizkus
+  en: pressure test
+  kratkaRazlaga: Preverjanje trdnosti in tesnosti kroga s suhim dušikom pod tlakom.
+  dolgaRazlaga: Po vsakem spajkanju se krog napolni s suhim dušikom na tlak po navodilih proizvajalca ali standardu in opazuje, ali tlak pade. Nikoli s kisikom ali zrakom, nikoli s hladivom kot preizkusnim plinom.
+  analogija: Kot napihovanje zračnice v vodi – vsak mehurček izda luknjo.
+
+- id: vakuumiranje
+  sl: vakuumiranje
+  en: evacuation
+  kratkaRazlaga: Odstranjevanje zraka in vlage iz kroga z vakuumsko črpalko pred polnjenjem.
+  dolgaRazlaga: Pri nizkem tlaku voda zavre že pri sobni temperaturi, zato vakuumska črpalka iz kroga izvleče tudi vlago. Po izklopu črpalke serviser opazuje, ali vakuum zdrži – če tlak raste, je v krogu še vlaga ali puščanje.
+  analogija: Kot sušenje perila v gorah – pri nizkem tlaku voda hitreje izhlapi.
+
+- id: pregled-tesnosti
+  sl: pregled tesnosti
+  en: leak check
+  kratkaRazlaga: Predpisan redni pregled, ali naprava s F-plini pušča.
+  dolgaRazlaga: Kako pogosto, določa uredba glede na količino hladiva v t CO₂e. Pregled obsega vizualni pregled spojev, preverjanje z detektorjem ali penilom in zapis v evidenco.
+  analogija: Kot tehnični pregled avtomobila – obvezen, z zapisom, ob določenem času.
+
+- id: gorljivo-hladivo
+  sl: gorljivo hladivo
+  en: flammable refrigerant
+  kratkaRazlaga: Hladivo, ki lahko v zmesi z zrakom zagori – R32 rahlo (A2L), propan R290 močno (A3).
+  dolgaRazlaga: Pri gorljivih hladivih ne sme biti virov vžiga, prostor mora biti prezračen, uporablja se detektor plina in orodje, primerno za gorljive pline. Pred spajkanjem mora biti hladivo zajeto in krog izpran z dušikom.
+  analogija: Kot plinska jeklenka za žar – varna, dokler veš, kje ne smeš prižgati ognja.
+
+- id: evidenca-opreme
+  sl: evidenca opreme
+  en: equipment records
+  kratkaRazlaga: Zapis o napravi s F-plini – katero hladivo, koliko, kdo je posegal in kdaj.
+  dolgaRazlaga: Za naprave, ki morajo imeti pregled tesnosti, se vodi evidenca – vrsta in količina hladiva, dodane in zajete količine, datumi in izidi pregledov, podatki o serviserju. Hrani se več let, kot določa uredba.
+  analogija: Kot servisna knjižica avtomobila.

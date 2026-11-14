@@ -77,6 +77,15 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 - `src/components/StationSims.tsx` – štiri postaje v živo: ali so smeri sprememb (kje zavre, kdaj tlak raste, lačen/preplavljen uparjalnik) pravilne in besedila sodil ob vsakem stanju strokovno točna.
 - **Zalogovnik (0.5.0)** – prosimo posebej preveri: ali naj bo primarni pretok res nekoliko večji od sekundarnega (napaka »mešanje«), ali je »46 zagonov v 24 urah« prepričljiv primer taktiranja, in ali je opis meje vklopa dogrevalnika (bivalentne točke) pravilen za tipične naprave.
 
+## Okvare in izpit F-plini (0.7.0)
+
+- `content/okvare/okvare.yaml` – vzroki, posledice in postopki za 22 delov. Preveri predvsem: oznake »kdo sme«,
+  postopke pri kompresorju (kislina po izgorelem navitju), kondenzatorju (zmrznjen prenosnik, R290 v vodi) in raztezni posodi (merjenje predtlaka).
+- `content/f-plini/f-plini.yaml` – **pravna dejstva je nujno preveriti z veljavnimi predpisi**: kategorije spričevala in meje
+  (3 kg / 6 kg), intervali pregledov tesnosti (5 / 50 / 500 t CO₂e), hramba evidenc, vrednosti GWP v kalkulatorju,
+  meja polnjenja jeklenke (~80 %), spodnja meja vnetljivosti R290. Uredba (EU) 2024/573 je nadomestila 517/2014 –
+  izvedbena pravila za spričevala se lahko spremenijo.
+
 ## Kaj je bilo že popravljeno ob samopregledu (različica 0.2.0)
 
 Glej `CHANGELOG.md`. Samopregled je opravil avtor vsebine in **ni** strokovni pregled.

@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Review from '../components/Review.tsx';
-import { loadQuizzes, loadGlossary } from '../lib/content.js';
+import { loadQuizzes, loadGlossary, loadFgas } from '../lib/content.js';
 import { url } from '../lib/site.js';
 
-const quizzes = Object.fromEntries(loadQuizzes().map((q) => [q.id, q.questions]));
+const quizzes: Record<string, any[]> = Object.fromEntries(loadQuizzes().map((q) => [q.id, q.questions]));
+// vaja za izpit F-plini: povezava »#tema« kaže na stran F-plini
+quizzes['f-plini'] = loadFgas().quiz.map((q) => ({ ...q, lessonLink: q.lessonLink.startsWith('#') ? url('f-plini/') + q.lessonLink : q.lessonLink }));
 const terms = Object.fromEntries(loadGlossary().map((t) => [t.id, { id: t.id, sl: t.sl, en: t.en, kratkaRazlaga: t.kratkaRazlaga }]));
 ---
 <Base title="Za ponovitev" current="ponovitev" source="src/pages/ponovitev.astro">

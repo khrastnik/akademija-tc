@@ -1,0 +1,377 @@
+# Okvare in popravila delov toplotne črpalke. `part` se ujema z id v content/sim/parts.yaml.
+# who: kdo sme poseg narediti – lastnik | serviser (vodni krog, inštalater) | elektro (usposobljena oseba za električna dela) | spricevalo (poseg v krog hladiva, spričevalo za F-pline)
+# procedure: skupni postopek na strani (hladivo | voda), ki velja poleg posebnih korakov.
+# Besedila učijo razumevanje. Vrednosti in zaporedje vedno po navodilih proizvajalca naprave.
+
+- part: kompresor
+  who: [elektro, spricevalo]
+  procedure: hladivo
+  causes:
+    - Tekočinski udar – kapljevina pride v kompresor (preveč odprt ekspanzijski ventil, prenizko pregrevanje, preveč hladiva).
+    - Pregrevanje – premalo hladiva ali previsok tlak (zamašen filter vode), zato je tlačni vod prevroč in olje razpade.
+    - Pomanjkanje olja – olje ostane v krogu (slabo vračanje, puščanje).
+    - Pogosti zagoni (taktiranje) in napake napajanja – izpad faze, prenizka napetost, okvarjen inverter.
+    - Vlaga ali nečistoče po slabem posegu – kislina razje izolacijo navitja.
+  effects:
+    - Ne zažene, krmilnik javi napako kompresorja ali inverterja, sproži se zaščita.
+    - Teče, a tlaka ne dvigne – NT in VT sta skoraj enaka, tok je nizek.
+    - Ropot, kovinski zvoki, vibracije.
+    - Izgorelo navitje – ostro dišeče, temno olje, kislina v celem krogu.
+  fix:
+    - Najprej poišči vzrok. Nov kompresor brez odpravljenega vzroka pogosto crkne v nekaj tednih.
+    - Električne meritve (napajanje, inverter, upornost in izolacija navitij) – samo usposobljena oseba, po izklopu in preverjeni odsotnosti napetosti. Kondenzatorji inverterja ostanejo nabiti še nekaj minut.
+    - Zamenjava – skupni postopek za krog hladiva. Novi kompresor mora biti enak tip z enakim oljem; pri inverterskem kompresorju se mora ujemati s krmilnikom.
+    - Pri izgorelem kompresorju preveri kislost olja, vgradi filter za kisline, po potrebi izpiraj krog in čez nekaj časa ponovno preveri olje.
+    - Vedno vgradi nov filter sušilnik.
+    - Pri monoblokih se pogosto bolj splača zamenjati celo enoto – odloči serviser po ceni in starosti.
+  verify: Tok kompresorja, pregrevanje, podhlajevanje in temperatura tlačnega voda so v območju po navodilih proizvajalca, brez ropota.
+  prevent: Pravilna količina hladiva (po teži), čist vodni krog, pravilno pregrevanje, brez taktiranja.
+
+- part: eev
+  who: [elektro, spricevalo]
+  procedure: hladivo
+  causes:
+    - Nečistoče ali opilki po posegu zataknejo iglo ventila.
+    - Okvarjena tuljava (koračni motor) ali prekinjen kabel, vlaga v konektorju.
+    - Okvara krmilnika ali senzorjev, po katerih ventil odpira (temperatura in tlak sesanja).
+    - Led v ventilu zaradi vlage v hladivu.
+  effects:
+    - Ventil preveč zaprt – visoko pregrevanje, nizka T uparjanja, slaba moč. Podobno kot premalo hladiva, a podhlajevanje je visoko.
+    - Ventil preveč odprt – prenizko pregrevanje, kapljevina v kompresor, nevarnost tekočinskega udara.
+    - Ventil ob zagonu ne odpre do konca, pregrevanje »skače«.
+  fix:
+    - Najprej preveri senzorje in tuljavo – izmeri upornost navitij tuljave in preveri konektor (usposobljena oseba).
+    - Tuljava se pri večini ventilov samo nasadi na telo – zamenja se brez posega v krog hladiva.
+    - Telo ventila – skupni postopek za krog hladiva. Med spajkanjem ventil hladi z mokro krpo ali hladilno pasto, ker vročina uniči notranje dele.
+    - Ob vsaki menjavi ventila zamenjaj tudi filter sušilnik.
+  verify: Pregrevanje se ustali v območju po navodilih proizvajalca, ventil se odziva na spremembe obremenitve.
+  prevent: Čisto delo pri posegih (dušik med spajkanjem, filter sušilnik), dober vakuum.
+
+- part: kondenzator
+  who: [serviser, spricevalo]
+  procedure: hladivo
+  causes:
+    - Vodni kamen in blato na vodni strani – brez filtra, slaba voda ali stari radiatorji.
+    - Zmrznjen prenosnik – izpad elektrike pozimi pri monobloku zunaj ali premajhen pretok med odtajevanjem. Led razpoči ploščo.
+    - Korozija zaradi neustrezne vode (kisik, pH).
+  effects:
+    - Zamašen – visok tlak kondenzacije, napaka »visok tlak«, velika ΔT vode.
+    - Počena plošča – hladivo uhaja v vodo ali voda v hladivo. Tlak vode raste, varnostni ventil izpušča, v vodi so mehurčki, kompresor je ogrožen.
+    - Pri R290 je hladivo v vodnem krogu nevarno, ker lahko pride v hišo – takoj izklop in serviser.
+  fix:
+    - Zamašen – kemično izpiranje po vodni strani s črpalko in sredstvom po navodilih proizvajalca prenosnika (serviser), nato čiščenje filtra in pregled kakovosti vode.
+    - Počen – zamenjava je poseg v krog hladiva (skupni postopek) in hkrati v vodni krog.
+    - Če je voda prišla v krog hladiva, zamenjaj filter sušilnik, pogosto tudi kompresor, in naredi večkratni globok vakuum.
+  verify: Tlak in temperatura kondenzacije normalna, tlak vode stabilen, v vodi ni plina.
+  prevent: Filter in po potrebi magnetni lovilec, pravilna voda, zaščita pred zmrzaljo po navodilih proizvajalca (glikol ali protizmrzovalni ventili).
+
+- part: uparjalnik
+  who: [lastnik, spricevalo]
+  procedure: hladivo
+  causes:
+    - Listje, prah, cvetni prah in pajčevine na lamelah.
+    - Zvite lamele – toča, udarci, pranje z visokotlačnim čistilcem.
+    - Korozija – morski zrak, gnojila, sol s ceste.
+    - Puščanje – drobne luknjice v ceveh zaradi korozije ali tresenja.
+  effects:
+    - Zrak slabo teče skozi lamele – nizka T uparjanja, več ledu, pogostejše odtajevanje, manj toplote.
+    - Puščanje – počasi zmanjkuje hladiva, oljni madeži, na koncu napaka nizkega tlaka.
+  fix:
+    - Čiščenje (lastnik) – napravo izklopi, lamele očisti z mehko krtačo ali vodo z nizkim tlakom, v smeri lamel.
+    - Zvite lamele poravnaj z glavnikom za lamele.
+    - Puščanje – serviser najprej poišče mesto (elektronski detektor, penilo). Manjše mesto se včasih popravi s trdim spajkanjem, sicer se uparjalnik zamenja po skupnem postopku za krog hladiva.
+  verify: Lamele čiste, T uparjanja normalna, ni mehurčkov na penilu, količina hladiva pravilna.
+  prevent: Prostor okrog zunanje enote prost, pregled spomladi in jeseni, brez visokotlačnega čistilca.
+
+- part: stiripotni
+  who: [elektro, spricevalo]
+  procedure: hladivo
+  causes:
+    - Zataknjen drsnik zaradi nečistoč ali premajhne razlike tlakov ob preklopu.
+    - Okvarjena tuljava pilotnega ventila ali kabel.
+    - Notranje puščanje – vroč plin uhaja skozi drsnik v sesalni vod.
+  effects:
+    - Odtajevanje ne steče – zunanja enota se zaledeni.
+    - Notranje puščanje – sesalni vod je topel, T tlačnega voda visoka, moč nizka.
+  fix:
+    - Preveri napetost na tuljavi ob ukazu za preklop in upornost tuljave (usposobljena oseba). Tuljava se zamenja brez posega v krog hladiva.
+    - Telo ventila – skupni postopek za krog hladiva. Telo med spajkanjem obvezno hladi, ker se drsnik zaradi vročine deformira.
+  verify: Ob ukazu se sliši preklop, odtajevanje se izvede, temperature vodov so pravilne.
+  prevent: Čisto delo pri posegih, pravilna količina hladiva.
+
+- part: susilnik
+  who: [spricevalo]
+  procedure: hladivo
+  causes:
+    - Nasičen z vlago po slabem vakuumu ali vdoru vlage.
+    - Zamašen z nečistočami, oksidi od spajkanja brez dušika ali s kislino po izgorelem kompresorju.
+  effects:
+    - Velika razlika temperatur pred in za filtrom, izstop orošen ali zaledenel.
+    - Visoko pregrevanje in visoko podhlajevanje – podobno kot zaprt ekspanzijski ventil.
+  fix:
+    - Zamenjava po skupnem postopku za krog hladiva. Filter sušilnik se zamenja ob vsakem odpiranju kroga, ker na zraku hitro vpije vlago.
+    - Nov filter odpri šele tik pred vgradnjo, pazi na smer toka (puščica).
+  verify: Razlika temperatur na filtru skoraj nič, pregrevanje in podhlajevanje normalna.
+  prevent: Spajkanje s pretokom dušika, globok vakuum.
+
+- part: locevalnik
+  who: [spricevalo]
+  procedure: hladivo
+  causes:
+    - Korozija od zunaj (vlaga, kondenz).
+    - Zamašena odprtina za vračanje olja.
+  effects:
+    - Puščanje hladiva.
+    - Olje se ne vrača v kompresor – obraba kompresorja.
+  fix:
+    - Zamenjava po skupnem postopku za krog hladiva. Redko se pokvari sam – ob okvari kompresorja vedno preveri tudi ločevalnik.
+  verify: Tesnost, normalno pregrevanje na vstopu v kompresor.
+  prevent: Izolacija in zaščita pred korozijo.
+
+- part: servisni
+  who: [spricevalo]
+  procedure: hladivo
+  causes:
+    - Puščanje vložka ventila (podobno kot pri kolesu).
+    - Manjkajoča ali nezatesnjena kapica.
+  effects:
+    - Počasna izguba hladiva brez drugih vidnih znakov.
+  fix:
+    - Kapica s tesnilom je del tesnjenja – vedno jo privij nazaj.
+    - Vložek se menja s posebnim orodjem, ki deluje pod tlakom, ali po zajemu hladiva (oseba s spričevalom).
+  verify: Penilo ali elektronski detektor ne pokaže puščanja.
+  prevent: Kapice vedno na mestu, manometrske cevi s pravilnimi priključki.
+
+- part: ventilator
+  who: [lastnik, elektro]
+  causes:
+    - Obraba ležajev.
+    - Okvarjen EC motor ali njegova elektronika, vlaga v konektorju.
+    - Led ali predmet ustavi lopatice, polomljena lopatica.
+  effects:
+    - Ventilator stoji – T uparjanja zelo nizka, led raste, krmilnik ustavi napravo z napako.
+    - Hrup, vibracije, ropotanje.
+  fix:
+    - Led ali predmet (lastnik) – samo pri napravi, izklopljeni na varovalki. Ne kljuvaj ledu z ostrim orodjem, lamele so mehke.
+    - Motor ali lopatice (usposobljena oseba) – izklop in preverjena odsotnost napetosti, enak tip motorja in lopatic z enako smerjo vrtenja, lopatice pravilno uravnotežene.
+  verify: Ventilator se vrti enakomerno in tiho, T uparjanja normalna.
+  prevent: Čista okolica enote, zaščita pred snegom s strehe.
+
+- part: obtocna
+  who: [serviser, elektro]
+  procedure: voda
+  causes:
+    - Zablokirana po poletnem mirovanju (vodni kamen, magnetit).
+    - Zrak v ohišju črpalke.
+    - Obraba ležajev ali okvara elektronike in krmilnega signala.
+    - Puščanje na tesnilih priključkov.
+  effects:
+    - Premajhen pretok – napaka pretoka, visok tlak, velika ΔT vode.
+    - Hrup, brnenje, črpalka greje, a ne poganja vode.
+  fix:
+    - Odzrači sistem. Veliko črpalk ima funkcijo za odzračevanje ali deblokado.
+    - Zamenjava – izklop napajanja, zapri zaporna ventila pred in za črpalko, izpusti malo vode, zamenjaj črpalko ali samo glavo z motorjem (pogosto brez praznjenja sistema), nova tesnila.
+    - Po menjavi odzrači, dopolni tlak in nastavi stopnjo ali način delovanja po projektu.
+  verify: Pretok in ΔT vode v pričakovanem območju, brez kode pretoka.
+  prevent: Filter in magnetni lovilec, poleti občasen zagon črpalke (večina krmilnikov to naredi sama).
+
+- part: sekundarna
+  who: [serviser, elektro]
+  procedure: voda
+  causes:
+    - Enako kot primarna obtočna črpalka – blokada, zrak, obraba.
+    - Napačno nastavljena stopnja – vleče več vode kot primarna.
+  effects:
+    - Ne teče – zalogovnik je vroč, radiatorji hladni.
+    - Prevelik pretok – mešanje v zalogovniku, mlačni radiatorji.
+  fix:
+    - Menjava enako kot pri primarni črpalki (zaporni ventili, glava ali cela črpalka, odzračevanje).
+    - Nastavitev – sekundarni pretok naj bo nekoliko manjši od primarnega, vrednosti po projektu.
+  verify: T vode v radiatorje le malo nižja od T iz toplotne črpalke.
+  prevent: Hidravlično uravnoteženje sistema ob zagonu.
+
+- part: filter
+  who: [lastnik, serviser]
+  procedure: voda
+  causes:
+    - Blato, rja in magnetit iz starih radiatorjev in cevi.
+    - Ostanki po montaži (opilki, kudelja).
+  effects:
+    - Premajhen pretok, velika ΔT vode, napaka visokega tlaka.
+  fix:
+    - Naprava izklopljena. Zapri ventila pred in za filtrom, pod filter postavi posodo, odvij pokrov.
+    - Mrežico izperi pod tekočo vodo, preveri tesnilo (po potrebi novo), privij nazaj.
+    - Odpri ventila, odzrači, preveri tlak vode in ga po potrebi dopolni.
+    - Lastnik to sme, ko mu serviser pokaže postopek na njegovi napravi.
+  verify: Pretok in ΔT vode normalna, tlak vode stabilen.
+  prevent: Redno čiščenje (prvo leto pogosteje), magnetni lovilec pri starih sistemih.
+
+- part: raztezna
+  who: [serviser]
+  procedure: voda
+  causes:
+    - Plin na zračni strani počasi uhaja – predtlak pade.
+    - Počena membrana.
+  effects:
+    - Tlak vode močno niha – ob segrevanju zraste, varnostni ventil kaplja, ob ohlajanju pade pod minimum.
+    - Pogosto dolivanje vode, več kisika in korozije.
+  fix:
+    - Posodo loči od sistema (zaporni ventil), vodno stran izprazni, šele nato izmeri predtlak na ventilu na zračni strani.
+    - Če iz ventila priteče voda, je membrana počena – posodo zamenjaj.
+    - Predtlak nastavi z dušikom ali zrakom na vrednost po projektu, nato ponovno odpri in nastavi tlak sistema.
+    - Nova posoda vsaj enake prostornine, predtlak nastavi pred priklopom.
+  verify: Tlak vode med ogrevanjem in ohlajanjem niha le malo, varnostni ventil ne kaplja.
+  prevent: Pregled predtlaka ob letnem servisu.
+
+- part: varnostni
+  who: [serviser]
+  procedure: voda
+  causes:
+    - Nečistoča pod sedežem – ventil po proženju ne zatesni.
+    - Res previsok tlak – najpogosteje kriva raztezna posoda.
+    - Odzračevalnik – zamašen ali pušča.
+  effects:
+    - Ventil kaplja, tlak v sistemu pada.
+    - Odzračevalnik – zrak ostaja v sistemu ali voda kaplja z vrha.
+  fix:
+    - Najprej preveri razteznoposodo – kapljanje je pogosto simptom, ne vzrok.
+    - Ventil na kratko sproži (obrni kapico), da voda izplakne sedež.
+    - Če še kaplja, ga zamenjaj z ventilom z enakim nazivnim tlakom. Odtoka ventila nikoli ne zapri ali zamaši.
+    - Odzračevalnik – zapri ventilček pod njim in zamenjaj vložek ali cel odzračevalnik.
+  verify: Ventil suh pri delovnem tlaku, tlak vode stabilen.
+  prevent: Pravilen predtlak raztezne posode.
+
+- part: tripotni
+  who: [serviser, elektro]
+  procedure: voda
+  causes:
+    - Okvarjen motor oziroma pogon ventila (najpogosteje).
+    - Zataknjena gred zaradi vodnega kamna ali nečistoč.
+    - Okvarjeno končno stikalo, prekinjen kabel.
+  effects:
+    - Obtiči na bojlerju – radiatorji hladni, voda v bojlerju prevroča.
+    - Obtiči na ogrevanju – sanitarna voda se ne segreje.
+  fix:
+    - Pogon se pri večini ventilov odpne s sponko ali zatičem brez praznjenja sistema. Ročno preveri, ali se gred vrti.
+    - Če gred teče gladko, zamenjaj pogon (električni priklop strokovno).
+    - Če je gred zataknjena, zapri ali izprazni ta del kroga in zamenjaj telo ventila, nato odzrači.
+  verify: Ob preklopu se kazalec premakne, toplota gre tja, kamor jo zahteva krmilnik.
+  prevent: Filter vode, poleti občasen preklop (večina krmilnikov to naredi sama).
+
+- part: bojler
+  who: [serviser, elektro]
+  causes:
+    - Vodni kamen na tuljavi toplotne črpalke (trda voda).
+    - Izrabljena magnezijeva anoda – posoda začne rjaveti.
+    - Okvarjen senzor temperature bojlerja.
+  effects:
+    - Voda se segreva počasi ali ostane mlačna.
+    - Rjava voda, puščanje posode.
+    - Mlačna voda dalj časa – tveganje za legionelo.
+  fix:
+    - Anodo preveri po navodilih proizvajalca (pogosto vsako leto ali dve) in jo zamenjaj, ko je porabljena.
+    - Vodni kamen odstrani skozi revizijsko odprtino ali s kemičnim čiščenjem tuljave.
+    - Senzor – primerjaj odčitek s termometrom, izmeri upornost in zamenjaj.
+    - Puščajoča posoda se ne popravlja – bojler se zamenja (inštalater).
+  verify: Voda doseže nastavljeno temperaturo v pričakovanem času, protilegionelni program teče.
+  prevent: Mehčanje trde vode, redni pregled anode.
+
+- part: pretok
+  who: [serviser, elektro]
+  procedure: voda
+  causes:
+    - Umazanija na senzorju ali lopatici.
+    - Okvarjena elektronika senzorja ali kabel.
+  effects:
+    - Lažna napaka pretoka, čeprav voda teče.
+  fix:
+    - Najprej preveri, ali pretok res manjka – filter, zrak, črpalka. Senzor je kriv redkeje.
+    - Primerjaj odčitek z drugo meritvijo (ΔT vode in moč, števec toplote).
+    - Zamenjava – izklop napajanja, zapri ali izprazni del kroga, nov senzor z novimi tesnili, odzrači.
+  verify: Odčitek pretoka se ujema z drugimi meritvami, napaka izgine.
+  prevent: Čista voda in filter.
+
+- part: dogrevalnik
+  who: [elektro]
+  procedure: voda
+  causes:
+    - Pregorel grelec – delovanje brez pretoka vode, vodni kamen.
+    - Sprožena pregrevalna varovalka (STB).
+    - Zlepljen kontaktor – grelec dela ves čas.
+  effects:
+    - V hudem mrazu premalo toplote.
+    - Zlepljen kontaktor ali previsoka meja vklopa – visok račun za elektriko.
+  fix:
+    - Pregrevalno varovalko ponastavi šele, ko najdeš vzrok (najpogosteje premajhen pretok).
+    - Meritve upornosti in izolacije grelca ter menjava kontaktorja – samo usposobljena oseba.
+    - Grelec – izprazni ta del kroga, zamenjaj grelec z novim tesnilom, odzrači.
+  verify: Grelec dela samo, ko ga krmilnik zahteva, tok je v pričakovanem območju.
+  prevent: Pravilen pretok, meja vklopa po projektu.
+
+- part: krmilnik
+  who: [elektro]
+  causes:
+    - Prenapetost (strela, nihanja v omrežju).
+    - Vlaga, kondenz, insekti v ohišju.
+    - Staranje elektronskih elementov.
+    - Napaka programske opreme.
+  effects:
+    - Temen zaslon, ponovni zagoni, napaka komunikacije med notranjo in zunanjo enoto.
+    - Napačne odločitve – naprava greje, ko ne bi smela, ali obratno.
+  fix:
+    - Najprej preveri napajanje, varovalke na plošči in povezovalne kable (usposobljena oseba).
+    - Preveri, ali obstaja posodobitev programske opreme.
+    - Pred menjavo plošče fotografiraj vse nastavitve. Po menjavi jih vnesi nazaj.
+    - Pri delu s ploščami uporabi zaščito pred statično elektriko. V inverterju počakaj na razelektritev kondenzatorjev.
+  verify: Zaslon in komunikacija delujeta, nastavitve so enake kot prej.
+  prevent: Prenapetostna zaščita, suha in zračna kotlovnica.
+
+- part: zunanji-senzor
+  who: [lastnik, elektro]
+  causes:
+    - Postavljen na soncu ali nad oknom – kaže preveč.
+    - Prekinjen ali poškodovan kabel, vlaga v ohišju.
+    - Staranje senzorja (NTC).
+  effects:
+    - Krmilnik izbere prenizko ali previsoko temperaturo vode – hiša prehladna ali pregreta.
+    - Napaka senzorja na zaslonu.
+  fix:
+    - Lastnik – primerjaj odčitek na zaslonu s termometrom v senci.
+    - Senzor prestavi na severno steno v senco, vsaj nekaj metrov stran od oken in izpuha zunanje enote.
+    - Usposobljena oseba – izmeri upornost senzorja in jo primerjaj s tabelo proizvajalca, zamenjaj senzor ali kabel.
+  verify: Odčitek se ujema s termometrom.
+  prevent: Pravilna postavitev že ob montaži.
+
+- part: zalogovnik
+  who: [serviser]
+  procedure: voda
+  causes:
+    - Zrak na vrhu zalogovnika.
+    - Senzor zunaj potopnega tulca ali na napačni višini.
+    - Mulj na dnu, korozija in puščanje posode.
+  effects:
+    - Taktiranje, mlačni radiatorji, šumenje.
+    - Puščanje – padec tlaka vode.
+  fix:
+    - Odzrači na vrhu zalogovnika.
+    - Senzor vstavi v tulec s toplotno pasto na višino po navodilih proizvajalca.
+    - Mulj izpusti skozi izpustni ventil na dnu.
+    - Puščajoča posoda – izprazni, zamenjaj, napolni, odzrači in nastavi tlak.
+  verify: Dolgi cikli kompresorja, zalogovnik zgoraj topel, spodaj hladnejši.
+  prevent: Filter in magnetni lovilec, pravilen senzor ob zagonu.
+
+- part: radiator
+  who: [lastnik, serviser]
+  causes:
+    - Zrak na vrhu radiatorja.
+    - Zataknjen zatič termostatskega ventila po poletju.
+    - Mulj na dnu, slabo uravnotežen sistem.
+  effects:
+    - Radiator zgoraj hladen, spodaj topel (zrak) ali ves hladen (ventil).
+    - Nekateri radiatorji vroči, drugi mlačni.
+  fix:
+    - Lastnik – odzrači radiator s ključem, nato preveri tlak vode in ga po potrebi dopolni.
+    - Lastnik – sname termostatsko glavo in zatič nekajkrat potisne, da se razgiba.
+    - Serviser – hidravlično uravnoteži sistem, izpere mulj ali zamenja ventil.
+  verify: Radiatorji enakomerno topli, tlak vode stabilen.
+  prevent: Jesensko odzračevanje, uravnotežen sistem.

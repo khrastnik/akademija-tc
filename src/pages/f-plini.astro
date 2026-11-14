@@ -1,0 +1,377 @@
+---
+import Base from '../layouts/Base.astro';
+import Quiz from '../components/Quiz.tsx';
+import { loadFgas, loadGlossary, loadLessons, lessonNumber } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const { topics, practical, quiz } = loadFgas();
+const lessons = new Map(loadLessons().map((l) => [l.id, l]));
+const terms = Object.fromEntries(loadGlossary().map((t) => [t.id, { id: t.id, sl: t.sl, en: t.en, kratkaRazlaga: t.kratkaRazlaga }]));
+const total = topics.length + practical.length;
+---
+<Base
+  title="Izpit F-plini"
+  description="Priprava na izpit za spričevalo za delo s fluoriranimi toplogrednimi plini: kategorije, snov, praktični del, izračun CO₂e in vaja."
+  current="f-plini"
+  source="content/f-plini/f-plini.yaml"
+>
+  <p class="eyebrow">Priprava na izpit</p>
+  <h1>Spričevalo za delo s F-plini</h1>
+  <p class="lead muted">Brez spričevala ne smeš odpreti kroga hladiva – ne zajeti, ne doliti, ne zamenjati kompresorja. Tu se pripraviš na teoretični in praktični del izpita.</p>
+
+  <div class="notice">
+    <span>
+      <strong>To ni uradno gradivo.</strong> Pravila se spreminjajo – Uredba (EU) 2024/573 je nadomestila Uredbo 517/2014, izvedbena pravila za spričevala se posodabljajo.
+      Pred izpitom preveri aktualne zahteve, kategorije in potek pri pooblaščenem izvajalcu usposabljanja. Seznam objavlja ministrstvo, pristojno za okolje.
+    </span>
+  </div>
+
+  <nav class="toc" aria-label="Na tej strani">
+    <a href="#kategorije">Kategorije</a>
+    <a href="#izpit">Potek izpita</a>
+    <a href="#snov">Snov</a>
+    <a href="#izracun">Izračun CO₂e</a>
+    <a href="#praksa">Praktični del</a>
+    <a href="#vaja">Vaja</a>
+  </nav>
+
+  <div class="ready panel" aria-live="polite">
+    <div class="ready-top"><strong>Moja pripravljenost</strong><span data-ready-text>0 / {total}</span></div>
+    <div class="ready-bar"><span data-ready-bar></span></div>
+    <p class="muted">Ob vsaki temi in vaji označi »To znam«. Shrani se samo v tem brskalniku.</p>
+  </div>
+
+  <section id="kategorije">
+    <h2>Kategorije spričevala</h2>
+    <p>Spričevalo osebja ima štiri kategorije. Za serviserja toplotnih črpalk, ki dela na krogu hladiva, je smiselna <strong>kategorija I</strong>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kat.</th><th>Kaj smeš</th></tr></thead>
+        <tbody>
+          <tr><th>I</th><td>Vsa dela na vseh napravah – pregled tesnosti, zajem hladiva, vgradnja, popravilo in vzdrževanje, razgradnja.</td></tr>
+          <tr><th>II</th><td>Vgradnja, zajem, popravilo in razgradnja na manjših napravah (manj kot 3 kg hladiva, hermetično zaprte manj kot 6 kg) ter pregled tesnosti brez posega v krog.</td></tr>
+          <tr><th>III</th><td>Samo zajem hladiva iz manjših naprav (enake meje kot pri II).</td></tr>
+          <tr><th>IV</th><td>Samo pregled tesnosti brez posega v krog hladiva.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted small">Meje po izvedbeni uredbi (EU) 2015/2067. Nova uredba zahteva, da usposabljanje pokriva tudi naravna in gorljiva hladiva, kot sta propan in CO₂ – preveri, katera pravila trenutno veljajo.</p>
+  </section>
+
+  <section id="izpit">
+    <h2>Kako poteka izpit</h2>
+    <div class="two">
+      <div class="panel">
+        <p class="eyebrow">Teorija</p>
+        <p>Pisni test – okolje in zakonodaja, delovanje kroga, P-T odnos, pregledi tesnosti, ravnanje s hladivom, varnost pri gorljivih hladivih, evidence.</p>
+      </div>
+      <div class="panel">
+        <p class="eyebrow">Praksa</p>
+        <p>Delo pred izpraševalcem – spajkanje z dušikom, tlačni preizkus, vakuumiranje, zajem in polnjenje po teži, iskanje puščanja in zapis v evidenco.</p>
+      </div>
+    </div>
+    <p class="muted small">Pred izpitom je običajno obvezno ali priporočeno usposabljanje. Trajanje, cena in pogoji so odvisni od izvajalca.</p>
+  </section>
+
+  <section id="snov">
+    <h2>Snov po temah</h2>
+    {topics.map((t, i) => (
+      <article class="topic panel" id={t.id}>
+        <p class="eyebrow">Tema {i + 1}</p>
+        <h3>{t.title}</h3>
+        <p>{t.summary}</p>
+        <ul>{t.points.map((p) => <li>{p}</li>)}</ul>
+        {t.lessons.length > 0 && (
+          <p class="links">
+            Poglej tudi:{' '}
+            {t.lessons.map((l) => lessons.get(l) && <a href={url(`lekcija/${l}/`)}>{lessonNumber(l)} {lessons.get(l)!.title}</a>)}
+          </p>
+        )}
+        <label class="know"><input type="checkbox" data-know={`t:${t.id}`} /> To znam</label>
+      </article>
+    ))}
+  </section>
+
+  <section id="izracun">
+    <h2>Izračun CO₂e in pogostost pregledov</h2>
+    <div class="calc panel">
+      <div class="calc-row">
+        <label>Hladivo
+          <select data-gwp>
+            <option value="675">R32 (GWP 675)</option>
+            <option value="2088">R410A (GWP 2088)</option>
+            <option value="1774">R407C (GWP 1774)</option>
+            <option value="1430">R134a (GWP 1430)</option>
+            <option value="3">R290 – propan (GWP 3)</option>
+          </select>
+        </label>
+        <label>Masa hladiva (kg)
+          <input type="number" inputmode="decimal" min="0" step="0.1" value="3" data-kg />
+        </label>
+      </div>
+      <p class="calc-out"><span data-co2>2,0</span> t CO₂e</p>
+      <p class="calc-rule" data-rule></p>
+      <p class="muted small">Formula: kg × GWP ÷ 1000. Vrednosti GWP so za vajo – za uradni izračun velja priloga uredbe in tablica naprave. Hermetično zaprte naprave pod 10 t CO₂e so lahko izvzete, če so tako označene.</p>
+    </div>
+  </section>
+
+  <section id="praksa">
+    <h2>Praktični del – koraki</h2>
+    {practical.map((p) => (
+      <article class="topic panel" id={p.id}>
+        <h3>{p.title}</h3>
+        <p class="why"><strong>Zakaj:</strong> {p.why}</p>
+        <ol>{p.steps.map((s) => <li>{s}</li>)}</ol>
+        <label class="know"><input type="checkbox" data-know={`p:${p.id}`} /> To znam</label>
+      </article>
+    ))}
+  </section>
+
+  <section id="vaja">
+    <h2>Vaja</h2>
+    <p class="muted">{quiz.length} vprašanj. Napačni odgovori se vrnejo v <a href={url('ponovitev')}>Ponovitvi</a>.</p>
+    <Quiz client:visible quizId="f-plini" questions={quiz as any} terms={terms} lessonBase={url('lekcija/')} />
+  </section>
+</Base>
+
+<script>
+  // »To znam« – samo v tem brskalniku.
+  const KEY = 'akademija-tc:f-plini';
+  let known: Record<string, boolean> = {};
+  try {
+    known = JSON.parse(localStorage.getItem(KEY) || '{}');
+  } catch {}
+  const boxes = [...document.querySelectorAll<HTMLInputElement>('[data-know]')];
+  const text = document.querySelector<HTMLElement>('[data-ready-text]')!;
+  const bar = document.querySelector<HTMLElement>('[data-ready-bar]')!;
+  function render() {
+    const n = boxes.filter((b) => b.checked).length;
+    text.textContent = `${n} / ${boxes.length}`;
+    bar.style.width = `${(100 * n) / boxes.length}%`;
+  }
+  for (const b of boxes) {
+    b.checked = !!known[b.dataset.know!];
+    b.addEventListener('change', () => {
+      known[b.dataset.know!] = b.checked;
+      try {
+        localStorage.setItem(KEY, JSON.stringify(known));
+      } catch {}
+      render();
+    });
+  }
+  render();
+
+  // Izračun CO₂e in obveznega pregleda tesnosti.
+  const gwp = document.querySelector<HTMLSelectElement>('[data-gwp]')!;
+  const kg = document.querySelector<HTMLInputElement>('[data-kg]')!;
+  const out = document.querySelector<HTMLElement>('[data-co2]')!;
+  const rule = document.querySelector<HTMLElement>('[data-rule]')!;
+  const fmt = (x: number) => x.toLocaleString('sl-SI', { maximumFractionDigits: x < 10 ? 2 : 1 });
+  function calc() {
+    const t = (Math.max(0, Number(kg.value.replace(',', '.')) || 0) * Number(gwp.value)) / 1000;
+    out.textContent = fmt(t);
+    rule.textContent =
+      t >= 500
+        ? 'Pregled tesnosti vsaj na 3 mesece (s sistemom za odkrivanje puščanja na 6).'
+        : t >= 50
+          ? 'Pregled tesnosti vsaj na 6 mesecev (s sistemom za odkrivanje puščanja na 12).'
+          : t >= 5
+            ? 'Pregled tesnosti vsaj na 12 mesecev (s sistemom za odkrivanje puščanja na 24).'
+            : 'Pod 5 t CO₂e – rednega pregleda tesnosti uredba ne zahteva. Poseg v krog še vedno samo s spričevalom.';
+  }
+  gwp.addEventListener('change', calc);
+  kg.addEventListener('input', calc);
+  calc();
+</script>
+
+<style>
+  .lead {
+    margin-top: 0;
+  }
+  section {
+    margin-top: 28px;
+    scroll-margin-top: 76px;
+  }
+  section > h2 {
+    margin: 0 0 10px;
+  }
+  .toc {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -2px 14px;
+    padding: 2px;
+  }
+  .toc a {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .ready {
+    display: grid;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+  .ready-top {
+    display: flex;
+    justify-content: space-between;
+  }
+  .ready-bar {
+    height: 10px;
+    border-radius: 99px;
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .ready-bar span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--ok);
+    transition: width 0.25s ease;
+  }
+  .ready p {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  th,
+  td {
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  thead th {
+    background: var(--surface-2);
+  }
+  tbody th {
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  .small {
+    font-size: 0.88rem;
+  }
+  .two {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .two .panel p:last-child {
+    margin-bottom: 0;
+  }
+  .topic {
+    margin-top: 10px;
+    scroll-margin-top: 76px;
+  }
+  .topic h3 {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+  }
+  .topic ul,
+  .topic ol {
+    padding-left: 20px;
+  }
+  .topic li {
+    margin: 5px 0;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    font-size: 0.92rem;
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .know {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .know input {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--ok);
+  }
+  .why {
+    margin: 0 0 6px;
+  }
+  .calc {
+    display: grid;
+    gap: 8px;
+  }
+  .calc-row {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+  .calc label {
+    display: grid;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .calc select,
+  .calc input {
+    min-height: 48px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: 1rem;
+  }
+  .calc-out {
+    margin: 6px 0 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  /* vprašanja brez okvirja v okvirju, kot v lekcijah */
+  #vaja :global(.q) {
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    padding: 14px 0 0;
+    background: transparent;
+  }
+  #vaja :global(.q legend) {
+    padding: 0 6px 0 0;
+  }
+  .calc-rule {
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    font-weight: 600;
+  }
+</style>

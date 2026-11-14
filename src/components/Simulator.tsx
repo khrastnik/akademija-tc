@@ -743,6 +743,12 @@ function LearnPanel({
             <li key={f}>{f}</li>
           ))}
         </ul>
+        {selected.id !== 'stevec' && (
+          <p>
+            {/* stran okvar je ob strani lekcij: …/lekcija/m00-l01/ → …/okvare/#del */}
+            <a href={`${lessonUrl.replace(/lekcija\/.*$/, 'okvare/')}#${selected.id}`}>Zakaj se pokvari in kako se zamenja →</a>
+          </p>
+        )}
         <button type="button" class="btn secondary" onClick={() => selectPart(null)}>
           ← Vsi deli
         </button>

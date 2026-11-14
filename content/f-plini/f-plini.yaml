@@ -1,0 +1,352 @@
+# Priprava na izpit za spričevalo za delo s F-plini (hladilna oprema in toplotne črpalke).
+# Pravna podlaga se spreminja – Uredba (EU) 2024/573 je nadomestila Uredbo 517/2014. Pred izpitom
+# vedno preveri aktualne zahteve pri izvajalcu usposabljanja. Ta stran ni uradno gradivo.
+
+topics:
+  - id: zakonodaja
+    title: Okolje in zakonodaja
+    summary: Zakaj F-plini sploh niso dovoljeni v zrak, kaj zahteva uredba in kdo sme delati na krogu hladiva.
+    points:
+      - Kaj so F-plini in zakaj hladiva prispevajo k segrevanju ozračja (GWP, ekvivalent CO₂).
+      - Uredba (EU) 2024/573 o F-plinih – prepoved namernega izpusta, preprečevanje puščanja, postopno zmanjševanje hladiv z visokim GWP.
+      - Kategorije spričevala in dela, ki jih posamezna kategorija dovoljuje.
+      - Obveznosti lastnika naprave in serviserja – pregledi tesnosti, evidenca, zajem hladiva ob razgradnji.
+      - Označevanje opreme – vrsta hladiva, količina v kg in t CO₂e.
+    lessons: []
+
+  - id: termodinamika
+    title: Kako deluje hladilni krog
+    summary: Osnova vsakega izpita – štiri postaje, tlak in temperatura, pregrevanje in podhlajevanje.
+    points:
+      - Kompresor, kondenzator, ekspanzijski ventil, uparjalnik – kaj se v vsakem zgodi s tlakom, temperaturo in stanjem.
+      - Povezava tlaka in temperature nasičenja, branje P-T tabel na manometru.
+      - Pregrevanje in podhlajevanje – kako ju izmeriš in kaj povesta o količini hladiva.
+      - Monoblok in split – kje je hladivo in kdaj je potreben poseg na terenu.
+    lessons: [m02-l01, m04-l01, m07-l01, m08-l01, m01-l02]
+
+  - id: tesnost
+    title: Pregled tesnosti in iskanje puščanja
+    summary: Kdaj je pregled obvezen, kako ga opraviš in kako zapišeš izid.
+    points:
+      - Izračun t CO₂e – masa hladiva v kg × GWP / 1000.
+      - Pogostost pregledov – od 5 t CO₂e vsaj na 12 mesecev, od 50 t na 6 mesecev, od 500 t na 3 mesece. S sistemom za odkrivanje puščanja se intervali podaljšajo.
+      - Neposredne metode – elektronski detektor, penilo, UV barvilo (če ga proizvajalec dovoli). Posredne – meritve tlakov in temperatur, pregled evidence.
+      - Mesta, kjer najpogosteje pušča – spoji, holandske matice, servisni ventili, mesta tresenja.
+      - Po popravilu puščanja ponoven pregled v predpisanem roku.
+    lessons: [m14-l01]
+
+  - id: ravnanje
+    title: Zajem, polnjenje in ravnanje z jeklenkami
+    summary: Hladivo nikoli v zrak – kako ga varno prečrpaš, shraniš in napolniš nazaj.
+    points:
+      - Zajem v jeklenko za zajem, označeno za to hladivo. Hladiv ne mešaj.
+      - Jeklenke ne napolni čez dovoljeno mejo (približno 80 % prostornine), med zajemom jo tehtaj.
+      - Polnjenje po teži z natančno tehtnico – količina s tablice naprave in dodatek za dolžino cevi po navodilih.
+      - Mešanice (na primer R407C) polni v tekoči fazi, ker se sestava v plinski fazi spremeni.
+      - Zajeto hladivo se reciklira, regenerira ali uniči pri pooblaščenem prevzemniku – ne odvrže se.
+    lessons: [m08-l02]
+
+  - id: gorljiva
+    title: Gorljiva in naravna hladiva
+    summary: R32 je rahlo gorljiv, propan R290 močno. Za oba veljajo posebna varnostna pravila.
+    points:
+      - Varnostne skupine – A1 negorljivo, A2L rahlo gorljivo (R32), A3 močno gorljivo (R290).
+      - Pri R290 spodnja meja vnetljivosti okoli 2 % volumna v zraku – že majhna količina v zaprtem prostoru je nevarna.
+      - Pred delom – brez virov vžiga, prezračevanje, detektor plina v delovnem območju, orodje primerno za gorljive pline.
+      - Pred spajkanjem hladivo zajemi in krog izperi z dušikom – nikoli ne spajkaj na krogu s hladivom.
+      - CO₂ (R744) ni gorljiv, a dela pri zelo visokih tlakih – potrebna je ustrezna oprema in znanje.
+    lessons: [m01-l02]
+
+  - id: dokumentacija
+    title: Evidenca, poročilo in oznake
+    summary: Kar ni zapisano, se ni zgodilo – evidenca je del vsakega posega.
+    points:
+      - V evidenco opreme zapiši vrsto in količino hladiva, dodane in zajete količine, datum in izid pregleda tesnosti ter podatke o serviserju.
+      - Evidenco hrani tako dolgo, kot določa uredba (najmanj 5 let).
+      - Servisno poročilo stranki – kaj je bilo izmerjeno, kaj popravljeno, kaj priporočeno.
+    lessons: [m19-l01]
+
+practical:
+  - id: spajkanje
+    title: Trdo spajkanje z dušikom
+    why: Brez dušika se v cevi pri spajkanju naredijo oksidi (škaja), ki kasneje zamašijo filter in ekspanzijski ventil.
+    steps:
+      - Cevi odreži z rezalnikom, posnemi robove, očisti.
+      - Skozi cev spusti majhen pretok suhega dušika (OFN), da izpodrine zrak.
+      - Segrej spoj enakomerno in dodaj spajko, ko je spoj dovolj vroč.
+      - Ventile in občutljive dele hladi z mokro krpo ali hladilno pasto.
+      - Dušik naj teče, dokler se spoj ne ohladi.
+
+  - id: tlacni
+    title: Tlačni preizkus z dušikom
+    why: Puščanje je treba najti, preden je v krogu hladivo – kasneje je dražje in škodi okolju.
+    steps:
+      - Napolni krog s suhim dušikom postopoma, na tlak po navodilih proizvajalca ali standardu.
+      - Uporabi reducirni ventil – nikoli neposredno iz jeklenke brez regulatorja.
+      - Zapiši tlak in temperaturo, počakaj predpisani čas in primerjaj.
+      - Spoje preveri s penilom. Dušik izpusti varno, preden začneš vakuumirati.
+
+  - id: vakuum
+    title: Vakuumiranje in preizkus vakuuma
+    why: Zrak in vlaga v krogu povzročata visok tlak, led v ventilu in kislino, ki uniči kompresor.
+    steps:
+      - Priklopi vakuumsko črpalko s čim krajšimi in čim širšimi cevmi, po možnosti brez Schrader vložkov.
+      - Vakuumiraj do globine, ki jo zahteva proizvajalec, in meri z elektronskim vakuummetrom.
+      - Zapri ventil proti črpalki in opazuj, ali vakuum zdrži. Če tlak raste in se ustali, je v krogu še vlaga. Če raste ves čas, krog pušča.
+      - Šele ko vakuum zdrži, začni polniti.
+
+  - id: polnjenje
+    title: Polnjenje po teži
+    why: Prava količina hladiva je pogoj za pravilno delovanje. Polnjenje »po manometru« vodi v preveč ali premalo hladiva.
+    steps:
+      - Iz tablice odčitaj količino, dodaj ali odštej po dolžini cevi po navodilih proizvajalca.
+      - Jeklenko postavi na tehtnico in jo tariraj.
+      - Polni v tekoči fazi, kadar je hladivo mešanica ali to zahteva proizvajalec.
+      - Po zagonu preveri pregrevanje, podhlajevanje in tesnost, vse zapiši v evidenco.
+
+  - id: zajem
+    title: Zajem hladiva
+    why: Hladivo je prepovedano izpustiti – zajeto se lahko ponovno uporabi ali varno uniči.
+    steps:
+      - Pripravi prazno jeklenko za zajem, označeno za to hladivo, in tehtnico.
+      - Priklopi napravo za zajem po navodilih, najprej iz tekoče strani, nato iz plinske.
+      - Pazi na največjo dovoljeno polnitev jeklenke.
+      - Zapiši zajeto količino v evidenco, jeklenko označi.
+
+quiz:
+  - id: f1
+    type: single
+    text: Naprava ima 3 kg hladiva z GWP 2088. Koliko je to ton ekvivalenta CO₂?
+    understand:
+      simpler: Pomnoži maso v kilogramih z GWP in deli s tisoč.
+      terms: [co2-ekvivalent, gwp]
+      hint: 3 × 2088 = 6264 kg CO₂e.
+    options:
+      - id: a
+        text: Približno 6,3 t CO₂e
+        correct: true
+        why: 3 kg × 2088 = 6264 kg CO₂e, kar je 6,3 t. To je nad mejo 5 t, zato je potreben redni pregled tesnosti.
+      - id: b
+        text: Približno 0,6 t CO₂e
+        why: Ena decimalka preveč – deliti je treba s tisoč, ne z deset tisoč.
+      - id: c
+        text: Približno 63 t CO₂e
+        why: Ena decimalka premalo. Iz kilogramov v tone deliš s tisoč.
+    lessonLink: '#tesnost'
+
+  - id: f2
+    type: single
+    text: Kako pogosto mora biti pregledana naprava s 6 t CO₂e brez sistema za odkrivanje puščanja?
+    understand:
+      simpler: Med katerima mejama leži 6 t CO₂e?
+      terms: [pregled-tesnosti, co2-ekvivalent]
+      hint: Meje so 5, 50 in 500 t CO₂e.
+    options:
+      - id: a
+        text: Vsaj enkrat na 12 mesecev
+        correct: true
+        why: Od 5 do 50 t CO₂e je pregled obvezen vsaj na 12 mesecev, s sistemom za odkrivanje puščanja na 24 mesecev.
+      - id: b
+        text: Vsaj enkrat na 3 mesece
+        why: Tako pogosto je predpisano šele od 500 t CO₂e.
+      - id: c
+        text: Pregled ni potreben
+        why: Pod mejo 5 t ni obveznega pregleda, 6 t pa je nad njo.
+    lessonLink: '#tesnost'
+
+  - id: f3
+    type: single
+    text: S katerim plinom narediš tlačni preizkus kroga po spajkanju?
+    understand:
+      simpler: Kateri plin je suh, ne gori in ne reagira z oljem?
+      terms: [tlacni-preizkus]
+      hint: Isti plin teče skozi cev med spajkanjem.
+    options:
+      - id: a
+        text: S suhim dušikom
+        correct: true
+        why: Suh dušik je inerten, ne vsebuje vlage in ne gori. Tlak se nastavi z reducirnim ventilom.
+      - id: b
+        text: S stisnjenim zrakom
+        why: Zrak vnese vlago in kisik – v krogu nastane kislina, olje oksidira.
+      - id: c
+        text: S kisikom
+        why: Kisik z oljem pod tlakom lahko eksplodira. Nikoli ga ne uporabljaj v krogu hladiva.
+    lessonLink: '#tlacni'
+
+  - id: f4
+    type: single
+    text: Zakaj med trdim spajkanjem skozi cev spuščaš dušik?
+    understand:
+      simpler: Kaj se zgodi z notranjostjo bakrene cevi, ko jo segreješ na zraku?
+      terms: [tlacni-preizkus]
+      hint: Pomisli na črno plast v cevi.
+    options:
+      - id: a
+        text: Da v cevi ne nastanejo oksidi
+        correct: true
+        why: Brez dušika se notranjost cevi oksidira. Luske škaje kasneje zamašijo filter sušilnik in ekspanzijski ventil.
+      - id: b
+        text: Da se spoj hitreje ohladi
+        why: Pretok dušika je majhen in spoja ne hladi opazno. Namen je odstraniti kisik.
+      - id: c
+        text: Da preveriš tesnost spoja
+        why: Tesnost preveriš kasneje s tlačnim preizkusom, ne med spajkanjem.
+    lessonLink: '#spajkanje'
+
+  - id: f5
+    type: single
+    text: Po vakuumiranju zapreš ventil. Tlak počasi raste, nato se ustali. Kaj to pomeni?
+    understand:
+      simpler: Ali v krogu nekaj pušča ali nekaj še izhlapeva?
+      terms: [vakuumiranje]
+      hint: Pri puščanju tlak raste brez konca.
+    options:
+      - id: a
+        text: V krogu je še vlaga
+        correct: true
+        why: Vlaga izhlapeva, dokler se tlak ne izenači s tlakom nasičenja vode. Vakuumiraj dlje.
+      - id: b
+        text: Krog pušča na spoju
+        why: Pri puščanju tlak raste ves čas proti atmosferskemu, ne ustali se.
+      - id: c
+        text: Vakuum je popoln
+        why: Pri popolnem vakuumu bi tlak ostal enak. Dvig pomeni, da je v krogu še nekaj.
+    lessonLink: '#vakuum'
+
+  - id: f6
+    type: single
+    text: Hladivo R407C je mešanica. Kako ga polniš?
+    understand:
+      simpler: Ali ima plin nad tekočino v jeklenki enako sestavo kot tekočina?
+      terms: [hladivo]
+      hint: Sestavine mešanice ne vrejo enako hitro.
+    options:
+      - id: a
+        text: V tekoči fazi, po teži
+        correct: true
+        why: Komponente mešanice izhlapevajo različno hitro, zato ima plin drugačno sestavo. V tekoči fazi gre v napravo prava mešanica.
+      - id: b
+        text: V plinski fazi, po tlaku
+        why: Plinska faza ima drugačno sestavo, polnjenje po tlaku pa ne da prave količine.
+      - id: c
+        text: Kakor koli, sestava je enaka
+        why: Pri mešanicah z drsenjem temperature (glide) to ne velja.
+    lessonLink: '#ravnanje'
+
+  - id: f7
+    type: single
+    text: Kaj je prvo, kar narediš pred spajkanjem na napravi z R290?
+    understand:
+      simpler: Kaj se zgodi, če plamen pride do propana?
+      terms: [gorljivo-hladivo, zajem-hladiva]
+      hint: Hladivo mora iz kroga, preden prižgeš gorilnik.
+    options:
+      - id: a
+        text: Zajameš hladivo in krog izpereš z dušikom
+        correct: true
+        why: Propan je močno gorljiv. Krog mora biti brez hladiva, preden se približaš s plamenom, prostor pa prezračen in brez virov vžiga.
+      - id: b
+        text: Spajkaš hitro, da hladivo ne uide
+        why: Spajkanje na krogu z gorljivim hladivom je smrtno nevarno. Nikoli.
+      - id: c
+        text: Zapreš servisne ventile in spajkaš
+        why: Zaprti ventili ne zagotavljajo, da v cevi ni propana. Hladivo moraš zajeti.
+    lessonLink: '#gorljiva'
+
+  - id: f8
+    type: single
+    text: Do koliko napolniš jeklenko pri zajemu hladiva?
+    understand:
+      simpler: Kaj se zgodi s tekočino v polni jeklenki, ko se segreje?
+      terms: [zajem-hladiva]
+      hint: Tekočina se ob segrevanju razteza.
+    options:
+      - id: a
+        text: Do približno 80 % prostornine
+        correct: true
+        why: Prostor nad tekočino je potreben, ker se tekočina ob segrevanju razteza. Prepolna jeklenka lahko poči.
+      - id: b
+        text: Do roba, da je čim manj voženj
+        why: Prepolna jeklenka ob segrevanju nima prostora za raztezanje – tlak naglo naraste.
+      - id: c
+        text: Do polovice, ne več
+        why: Varno, a nepotrebno malo. Mejo določa predpis za jeklenko, običajno okoli 80 %.
+    lessonLink: '#zajem'
+
+  - id: f9
+    type: truefalse
+    text: Če naprava hladivo izgublja počasi, ga smeš doliti brez iskanja puščanja.
+    understand:
+      simpler: Ali je dovoljeno vedno znova dolivati v napravo, ki pušča?
+      terms: [pregled-tesnosti]
+      hint: Uredba zahteva popravilo puščanja.
+    options:
+      - id: a
+        text: Ne drži
+        correct: true
+        why: Puščanje je treba najti in popraviti brez nepotrebnega odlašanja, nato ponovno preveriti tesnost. Dolivanje brez popravila je prepovedano.
+      - id: b
+        text: Drži
+        why: Dolivanje brez popravila pomeni zavestno izpuščanje hladiva v zrak, kar je prepovedano.
+    lessonLink: '#tesnost'
+
+  - id: f10
+    type: single
+    text: Kaj mora biti zapisano v evidenci po dolivanju hladiva?
+    understand:
+      simpler: Kaj bi moral izvedeti naslednji serviser?
+      terms: [evidenca-opreme]
+      hint: Kaj, koliko, kdaj in kdo.
+    options:
+      - id: a
+        text: Vrsta in količina hladiva, datum, serviser
+        correct: true
+        why: Evidenca vsebuje vrsto in količino dodanega hladiva, datum, razlog in podatke o serviserju ali podjetju.
+      - id: b
+        text: Samo datum zadnjega servisa
+        why: Iz datuma ne vidiš, koliko hladiva je izginilo – ključni podatek za iskanje puščanja.
+      - id: c
+        text: Nič, dolivanje se ne zapisuje
+        why: Vsako dodajanje ali zajem hladiva se zapiše.
+    lessonLink: '#dokumentacija'
+
+  - id: f11
+    type: single
+    text: Katero hladivo spada v varnostno skupino A3?
+    understand:
+      simpler: Katero od teh hladiv je najbolj gorljivo?
+      terms: [gorljivo-hladivo]
+      hint: A3 = močno gorljivo.
+    options:
+      - id: a
+        text: Propan R290
+        correct: true
+        why: Propan je močno gorljiv (A3). R32 je rahlo gorljiv (A2L), R410A ni gorljiv (A1).
+      - id: b
+        text: R32
+        why: R32 je rahlo gorljiv, skupina A2L.
+      - id: c
+        text: R410A
+        why: R410A ni gorljiv, skupina A1.
+    lessonLink: '#gorljiva'
+
+  - id: f12
+    type: single
+    text: Po vakuumiranju tlak raste ves čas in se ne ustavi. Kaj narediš?
+    understand:
+      simpler: Kaj pomeni, da zrak ves čas prihaja v krog?
+      terms: [vakuumiranje, tlacni-preizkus]
+      hint: Vlaga bi se ustalila.
+    options:
+      - id: a
+        text: Poiščeš puščanje s tlačnim preizkusom
+        correct: true
+        why: Stalen dvig tlaka pomeni puščanje. Krog ponovno napolni z dušikom in poišči mesto, šele nato vakuumiraj.
+      - id: b
+        text: Kljub temu napolniš hladivo
+        why: Hladivo bi uhajalo v zrak, v krogu bi ostala vlaga in zrak.
+      - id: c
+        text: Vakuumiraš še eno uro
+        why: Pri puščanju daljše vakuumiranje ne pomaga – zrak vedno znova prihaja v krog.
+    lessonLink: '#vakuum'

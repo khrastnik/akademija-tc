@@ -252,6 +252,50 @@ export function loadSim() {
   return /** @type {{parts: any[], faults: any[], days: any[]}} */ (out);
 }
 
+// ---------- okvare in popravila delov ----------
+const WHO = ['lastnik', 'serviser', 'elektro', 'spricevalo'];
+const repairSchema = z.array(
+  z.object({
+    part: id,
+    who: z.array(z.enum(WHO)).min(1),
+    procedure: z.enum(['hladivo', 'voda']).optional(),
+    causes: z.array(z.string().min(10)).min(1),
+    effects: z.array(z.string().min(10)).min(1),
+    fix: z.array(z.string().min(10)).min(1),
+    verify: z.string().min(10),
+    prevent: z.string().min(5).optional(),
+  }),
+);
+/** Okvare delov: zakaj se pokvari, posledice, popravilo. */
+export function loadRepairs() {
+  const parsed = repairSchema.safeParse(parseYaml(read('content', 'okvare', 'okvare.yaml')));
+  if (!parsed.success) throw new Error(`content/okvare/okvare.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
+// ---------- priprava na izpit za F-pline ----------
+const fgasSchema = z.object({
+  topics: z
+    .array(
+      z.object({
+        id,
+        title: z.string(),
+        summary: z.string().min(20),
+        points: z.array(z.string().min(5)).min(2),
+        lessons: z.array(z.string()).default([]),
+      }),
+    )
+    .min(3),
+  practical: z.array(z.object({ id, title: z.string(), steps: z.array(z.string().min(5)).min(2), why: z.string().min(10) })).min(2),
+  quiz: z.array(questionSchema).min(5).max(20),
+});
+/** Snov, praktični koraki in vaja za izpit iz ravnanja s F-plini. */
+export function loadFgas() {
+  const parsed = fgasSchema.safeParse(parseYaml(read('content', 'f-plini', 'f-plini.yaml')));
+  if (!parsed.success) throw new Error(`content/f-plini/f-plini.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
 export function loadRefrigerants() {
   return refrigerantsSchema.parse(JSON.parse(read('data', 'refrigerants.json'))).refrigerants;
 }
@@ -359,6 +403,33 @@ export function validateContent() {
       if (Math.max(...lens) > 3 * Math.min(...lens) + 20)
         errors.push(`${at} ${q.id}: odgovori so preveč različno dolgi (dolžina ne sme izdati pravilnega)`);
     }
+  }
+
+  // okvare: vsak del hladilnega in vodnega kroga ima opis okvare, vsak opis pripada obstoječemu delu
+  const repairs = tryLoad(loadRepairs, []);
+  const partIds = new Set(sim.parts.map((p) => p.id));
+  for (const r of repairs) if (!partIds.has(r.part)) errors.push(`content/okvare/okvare.yaml: del "${r.part}" ni v parts.yaml`);
+  for (const p of sim.parts)
+    if ((p.group === 'hladivo' || p.group === 'voda') && !repairs.some((r) => r.part === p.id))
+      errors.push(`content/okvare/okvare.yaml: manjka opis okvare za del "${p.id}"`);
+  for (const r of repairs)
+    if (r.procedure === 'hladivo' && !r.who.includes('spricevalo'))
+      errors.push(`content/okvare/okvare.yaml ${r.part}: poseg v krog hladiva mora imeti oznako "spricevalo"`);
+
+  // F-plini: vaja – ista pravila kot kvizi, povezava kaže na temo na strani (#id) ali na lekcijo
+  const fgas = tryLoad(loadFgas, { topics: [], practical: [], quiz: [] });
+  const topicIds = new Set([...fgas.topics.map((t) => t.id), ...fgas.practical.map((p) => p.id)]);
+  for (const t of fgas.topics) for (const l of t.lessons) if (!lessonIds.has(l)) errors.push(`content/f-plini: tema ${t.id} kaže na neobstoječo lekcijo "${l}"`);
+  for (const q of fgas.quiz) {
+    const at = `content/f-plini/f-plini.yaml ${q.id}`;
+    const correct = q.options.filter((o) => o.correct).length;
+    if (correct !== 1) errors.push(`${at}: pravilen mora biti natanko en odgovor (najdenih ${correct})`);
+    for (const t of q.understand.terms) if (!termIds.has(t)) errors.push(`${at}: pojem "${t}" ni v slovarju`);
+    if (q.lessonLink.startsWith('#')) {
+      if (!topicIds.has(q.lessonLink.slice(1))) errors.push(`${at}: povezava "${q.lessonLink}" ne kaže na temo`);
+    } else if (!lessonIds.has(q.lessonLink.split('#')[0])) errors.push(`${at}: lessonLink "${q.lessonLink}" kaže na neobstoječo lekcijo`);
+    const lens = q.options.map((o) => o.text.length);
+    if (Math.max(...lens) > 3 * Math.min(...lens) + 20) errors.push(`${at}: odgovori so preveč različno dolgi`);
   }
 
   return errors;

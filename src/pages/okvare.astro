@@ -1,0 +1,329 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadRepairs, loadSim } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const repairs = loadRepairs();
+const parts = new Map(loadSim().parts.map((p) => [p.id, p]));
+const GROUP_ORDER = ['hladivo', 'voda', 'krmiljenje'] as const;
+const GROUP_LABEL: Record<string, string> = { hladivo: 'Krog hladiva', voda: 'Vodni krog', krmiljenje: 'Krmiljenje in senzorji' };
+const WHO: Record<string, { label: string; short: string }> = {
+  lastnik: { label: 'Lastnik sme sam', short: 'Lastnik' },
+  serviser: { label: 'Serviser ali inštalater', short: 'Serviser' },
+  elektro: { label: 'Električna dela – samo usposobljena oseba', short: 'Elektrika' },
+  spricevalo: { label: 'Samo serviser s spričevalom za F-pline', short: '🔒 Spričevalo' },
+};
+const items = repairs
+  .map((r) => ({ ...r, p: parts.get(r.part)! }))
+  .sort((a, b) => GROUP_ORDER.indexOf(a.p.group) - GROUP_ORDER.indexOf(b.p.group));
+---
+<Base
+  title="Okvare in popravila"
+  description="Zakaj se pokvari kompresor, ekspanzijski ventil, kondenzator, raztezna posoda in ostali deli toplotne črpalke, kako se okvara pokaže in kako se popravi ali zamenja."
+  current="okvare"
+  source="content/okvare/okvare.yaml"
+>
+  <p class="eyebrow">Servisni priročnik</p>
+  <h1>Okvare in popravila delov</h1>
+  <p class="lead muted">Za vsak del: zakaj se pokvari, kako to prepoznaš, kako se popravi ali zamenja in kdo to sme narediti.</p>
+
+  <div class="notice">
+    <span>
+      <strong>Najprej varnost.</strong> Poseg v krog hladiva sme opraviti le serviser s spričevalom za F-pline, pri propanu (R290) z znanjem o gorljivih hladivih.
+      Dela na 230/400 V le usposobljena oseba. Poseg nepooblaščene osebe lahko izniči garancijo. Zaporedje in vrednosti vedno po navodilih proizvajalca.
+    </span>
+  </div>
+
+  <div class="legend" aria-label="Kdo sme">
+    {Object.entries(WHO).map(([k, w]) => <span class={`who who-${k}`}>{w.label}</span>)}
+  </div>
+
+  <section class="procs">
+    <details class="proc" id="postopek-hladivo">
+      <summary><span class="who who-spricevalo">🔒</span> Skupni postopek: zamenjava dela v krogu hladiva</summary>
+      <p class="muted">Velja za vse dele z oznako »Krog hladiva«. Opisano je, kaj naredi serviser s spričevalom in zakaj – ni navodilo za samostojno delo.</p>
+      <ol>
+        <li><strong>Dokaz pred posegom.</strong> Okvaro potrdi z meritvami. Odpiranje kroga naj bo zadnji, ne prvi korak.</li>
+        <li><strong>Varno delovno mesto.</strong> Izklop napajanja in preverjena odsotnost napetosti. Pri R32 in R290 prezračevanje, detektor plina, brez virov vžiga.</li>
+        <li><strong>Zajem hladiva</strong> v označeno jeklenko na tehtnici – nikoli v zrak. Zajeto količino zapiši.</li>
+        <li><strong>Izpiranje z dušikom</strong> pri gorljivih hladivih, preden se približaš s plamenom.</li>
+        <li><strong>Demontaža.</strong> Odprte cevi takoj zapri, da ne vstopa vlaga.</li>
+        <li><strong>Vgradnja.</strong> Trdo spajkanje s pretokom dušika, občutljive dele hladi z mokro krpo.</li>
+        <li><strong>Nov filter sušilnik</strong> ob vsakem odpiranju kroga.</li>
+        <li><strong>Tlačni preizkus</strong> s suhim dušikom na tlak po navodilih proizvajalca.</li>
+        <li><strong>Vakuumiranje</strong> in preizkus, ali vakuum zdrži.</li>
+        <li><strong>Polnjenje po teži</strong> – količina s tablice naprave, mešanice v tekoči fazi.</li>
+        <li><strong>Zagon in preverjanje</strong> – pregrevanje, podhlajevanje, tok, tesnost. Vse zapiši v evidenco opreme.</li>
+      </ol>
+      <p><a href={url('f-plini')}>Priprava na izpit za spričevalo F-plini →</a></p>
+    </details>
+    <details class="proc" id="postopek-voda">
+      <summary><span class="who who-serviser">💧</span> Skupni postopek: zamenjava dela v vodnem krogu</summary>
+      <ol>
+        <li><strong>Izklop naprave</strong>, pri delih z elektriko tudi napajanja (preverjena odsotnost napetosti).</li>
+        <li><strong>Zapri zaporne ventile</strong> pred in za delom. Če jih ni, izprazni ta del sistema.</li>
+        <li><strong>Zapiši tlak vode</strong>, pripravi posodo in krpe.</li>
+        <li><strong>Zamenjaj del</strong> z novimi tesnili, spoje ne zategni čez mero.</li>
+        <li><strong>Napolni in odzrači</strong> – večkrat, ker zrak potuje po sistemu.</li>
+        <li><strong>Nastavi tlak</strong> po projektu, preveri tesnost spojev po segrevanju.</li>
+        <li><strong>Preveri delovanje</strong> – pretok, ΔT vode, brez kod napak.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="filters" role="group" aria-label="Pokaži dele">
+    <button type="button" class="chip on" data-filter="vse" aria-pressed="true">Vsi deli</button>
+    <button type="button" class="chip" data-filter="g:hladivo" aria-pressed="false">Krog hladiva</button>
+    <button type="button" class="chip" data-filter="g:voda" aria-pressed="false">Vodni krog</button>
+    <button type="button" class="chip" data-filter="g:krmiljenje" aria-pressed="false">Krmiljenje</button>
+    <button type="button" class="chip" data-filter="w:lastnik" aria-pressed="false">Kar smem sam</button>
+  </div>
+  <p class="count muted" aria-live="polite" data-count>{items.length} delov</p>
+
+  <div class="list">
+    {GROUP_ORDER.map((g) => (
+      <section class="group" data-group-section={g}>
+        <h2>{GROUP_LABEL[g]}</h2>
+        {items.filter((r) => r.p.group === g).map((r) => (
+          <details class="rep" id={r.part} data-group={g} data-who={r.who.join(' ')}>
+            <summary>
+              <span class="rep-name">{r.p.name}</span>
+              <span class="rep-where">{r.p.where}</span>
+              <span class="rep-who">{r.who.map((w) => <span class={`who who-${w}`}>{WHO[w].short}</span>)}</span>
+            </summary>
+            <div class="rep-body">
+              <h3>Zakaj se pokvari</h3>
+              <ul>{r.causes.map((c) => <li>{c}</li>)}</ul>
+              <h3>Kako se pokaže – posledice</h3>
+              <ul>{r.effects.map((c) => <li>{c}</li>)}</ul>
+              <h3>Popravilo ali zamenjava</h3>
+              <ol>{r.fix.map((c) => <li>{c}</li>)}</ol>
+              {r.procedure && (
+                <p class="proc-link">
+                  Poleg tega velja <a href={`#postopek-${r.procedure}`} data-open-proc>{r.procedure === 'hladivo' ? 'skupni postopek za krog hladiva' : 'skupni postopek za vodni krog'}</a>.
+                </p>
+              )}
+              <h3>Kako preveriš, da je popravljeno</h3>
+              <p>{r.verify}</p>
+              {r.prevent && (<><h3>Kako preprečiš</h3><p>{r.prevent}</p></>)}
+            </div>
+          </details>
+        ))}
+      </section>
+    ))}
+  </div>
+  <p class="notice model-note">Opisi so splošni in še niso strokovno pregledani. Na terenu vedno veljajo navodila proizvajalca tvoje naprave.</p>
+</Base>
+
+<script>
+  // Filtri: skupina ali »kar smem sam«.
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const reps = [...document.querySelectorAll<HTMLDetailsElement>('.rep')];
+  const count = document.querySelector<HTMLElement>('[data-count]')!;
+  function apply(f: string) {
+    let n = 0;
+    for (const r of reps) {
+      const show = f === 'vse' || (f.startsWith('g:') && r.dataset.group === f.slice(2)) || (f.startsWith('w:') && r.dataset.who!.split(' ').includes(f.slice(2)));
+      r.hidden = !show;
+      if (show) n++;
+    }
+    document.querySelectorAll<HTMLElement>('[data-group-section]').forEach((s) => (s.hidden = !s.querySelector('.rep:not([hidden])')));
+    count.textContent = n === 1 ? '1 del' : n === 2 ? '2 dela' : n < 5 ? `${n} deli` : `${n} delov`;
+    chips.forEach((c) => {
+      const on = c.dataset.filter === f;
+      c.classList.toggle('on', on);
+      c.setAttribute('aria-pressed', String(on));
+    });
+  }
+  chips.forEach((c) => c.addEventListener('click', () => apply(c.dataset.filter!)));
+
+  // Povezava #del ali #postopek-… odpre ustrezen razdelek.
+  function openHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = id && document.getElementById(id);
+    if (el instanceof HTMLDetailsElement) {
+      if (el.hidden) apply('vse');
+      el.open = true;
+      el.scrollIntoView({ block: 'start' });
+    }
+  }
+  addEventListener('hashchange', openHash);
+  openHash();
+</script>
+
+<style>
+  .lead {
+    margin-top: 0;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 18px;
+  }
+  .who {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+  .who-lastnik {
+    background: var(--ok-bg);
+    color: var(--ok);
+  }
+  .who-serviser {
+    background: color-mix(in srgb, var(--low) 16%, transparent);
+    color: var(--low);
+  }
+  .who-elektro {
+    background: var(--warn-bg);
+    color: var(--ochre);
+  }
+  .who-spricevalo {
+    background: var(--bad-bg);
+    color: var(--bad);
+  }
+  .procs {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .proc,
+  .rep {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    scroll-margin-top: 76px;
+  }
+  .proc summary,
+  .rep summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 14px 44px 14px 16px;
+    position: relative;
+    min-height: 52px;
+  }
+  .proc summary::-webkit-details-marker,
+  .rep summary::-webkit-details-marker {
+    display: none;
+  }
+  .proc summary::after,
+  .rep summary::after {
+    content: '';
+    position: absolute;
+    right: 18px;
+    top: 22px;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--ink-2);
+    border-bottom: 2px solid var(--ink-2);
+    transform: rotate(45deg);
+    transition: transform 0.15s ease;
+  }
+  details[open] > summary::after {
+    transform: rotate(-135deg);
+    top: 26px;
+  }
+  .proc summary {
+    font-weight: 700;
+  }
+  .proc > :not(summary) {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .proc ol {
+    padding-left: 20px;
+  }
+  .proc li {
+    margin: 6px 0;
+  }
+  .filters {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 2px 2px 6px;
+    margin: 0 -2px;
+    scrollbar-width: none;
+  }
+  .chip {
+    flex: none;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .chip.on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  .count {
+    margin: 4px 0 8px;
+    font-size: 0.9rem;
+  }
+  .group h2 {
+    margin: 22px 0 10px;
+  }
+  .list .rep + .rep {
+    margin-top: 8px;
+  }
+  .rep summary {
+    display: grid;
+    gap: 2px;
+  }
+  .rep-name {
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+  .rep-where {
+    color: var(--ink-2);
+    font-size: 0.88rem;
+  }
+  .rep-who {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .rep-body {
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--line);
+  }
+  .rep-body h3 {
+    margin: 16px 0 6px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ochre);
+  }
+  .rep-body ul,
+  .rep-body ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .rep-body li {
+    margin: 5px 0;
+  }
+  .rep-body p {
+    margin: 0;
+  }
+  .proc-link {
+    margin-top: 10px !important;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    font-size: 0.95rem;
+  }
+  .model-note {
+    margin-top: 24px;
+  }
+</style>

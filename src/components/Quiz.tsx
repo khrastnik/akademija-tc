@@ -48,6 +48,8 @@ function seededShuffle<T>(items: T[], seed: string): T[] {
 }
 
 const linkFor = (base: string, lessonLink: string) => {
+  // »#tema« = razlaga na isti strani (npr. priprava na izpit F-plini)
+  if (lessonLink.startsWith('#') || lessonLink.startsWith('/')) return lessonLink;
   const [lesson, anchor] = lessonLink.split('#');
   return `${base}${lesson}/${anchor ? `#${anchor}` : ''}`;
 };
@@ -127,7 +129,7 @@ export default function Quiz({ quizId, questions, terms, lessonBase, mode = 'les
                     </li>
                   ))}
                 </ul>
-                <a href={linkFor(lessonBase, q.lessonLink)}>Preberi v lekciji →</a>
+                <a href={linkFor(lessonBase, q.lessonLink)}>{q.lessonLink.startsWith('#') ? 'Preberi razlago zgoraj ↑' : q.lessonLink.startsWith('/') ? 'Preberi razlago →' : 'Preberi v lekciji →'}</a>
               </div>
             )}
           </fieldset>
