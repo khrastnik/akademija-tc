@@ -1,0 +1,307 @@
+# Merilna oprema serviserja toplotnih črpalk. id se ujema s src/components/tool-ids.ts (delujoča naprava v ToolSims.tsx).
+# cat: hladivo | temperatura | elektrika | voda
+# who: lastnik | serviser | elektro | spricevalo – kdo sme z napravo delati na toplotni črpalki.
+# Vrednosti in postopki vedno po navodilih proizvajalca naprave in merilnika.
+
+- id: manometrska-baterija
+  name: Analogna manometrska baterija
+  en: gauge manifold
+  cat: hladivo
+  who: [spricevalo]
+  measures: Tlak na nizkotlačni (modri) in visokotlačni (rdeči) strani kroga hladiva. Na skali odčitaš tudi temperaturo nasičenja za izbrano hladivo.
+  where:
+    - Servisna priključka na krogu hladiva – pri splitu na zapornih ventilih zunanje enote, pri monobloku v ohišju zunanje enote.
+    - Pri splitu v ogrevanju je plinski (debelejši) vod visokotlačen – v navodilih preveri, kateri priključek je NT in kateri VT v katerem načinu.
+  how:
+    - Preveri, da je baterija za tvoje hladivo (skala, tlačno območje, primernost za gorljiva hladiva).
+    - Ventile na bateriji zapri, cevi priklopi na servisna priključka – modro na NT, rdečo na VT.
+    - Zaženi napravo in počakaj, da se ustali.
+    - Odčitaj tlak in temperaturo nasičenja, s termometrom na cevi izračunaj SH in SC.
+    - Pri odklopu uporabi cevi s krogelnimi ventili, da uide čim manj hladiva.
+  mistakes:
+    - Odprt modri in rdeči ventil hkrati med delovanjem – visoki tlak teče v nizko stran.
+    - Branje na skali za napačno hladivo.
+    - Merjenje v mirovanju ali takoj po zagonu.
+  lessons: [m04-l01, m07-l01, m08-l01]
+
+- id: digitalna-baterija
+  name: Digitalna manometrska baterija
+  en: digital manifold
+  cat: hladivo
+  who: [spricevalo]
+  measures: Tlak na obeh straneh, temperaturo nasičenja iz vgrajenih P-T tabel in s tipali temperature tudi pregrevanje in podhlajevanje.
+  where:
+    - Enako kot analogna baterija – servisna priključka kroga hladiva.
+    - Tipali temperature na sesalnem in tekočinskem vodu, blizu mest merjenja tlaka.
+  how:
+    - Na bateriji izberi hladivo s tablice naprave.
+    - Pred priklopom izvedi ničenje tlaka pri odprtih priključkih na zrak.
+    - Priklopi cevi in tipali, tipali izoliraj od zraka.
+    - Po ustalitvi odčitaj SH in SC na zaslonu.
+  mistakes:
+    - Napačno izbrano hladivo – tlak je pravi, vse temperature pa napačne.
+    - Tipalo temperature ni dobro pritrjeno ali ni izolirano.
+  lessons: [m07-l01, m08-l01]
+
+- id: termometer-cevni
+  name: Kleščni termometer za cevi
+  en: pipe clamp thermometer
+  cat: temperatura
+  who: [serviser]
+  measures: Temperaturo površine cevi – sesalnega in tekočinskega voda hladiva ali dvižnega in povratnega voda vode.
+  where:
+    - Sesalni vod na izstopu iz uparjalnika (za pregrevanje).
+    - Tekočinski vod na izstopu iz kondenzatorja (za podhlajevanje).
+    - Dvižni in povratni vod vode (za ΔT vode).
+  how:
+    - Cev na mestu merjenja očisti (oksid, barva).
+    - Klešče pritrdi tako, da se tipalo dotika cevi.
+    - Tipalo z izolacijo zaščiti pred okoliškim zrakom.
+    - Počakaj, da se odčitek ustali.
+  mistakes:
+    - Neizolirano tipalo – zrak ga greje ali hladi, napaka več kot 1 K.
+    - Merjenje na kolenu, ventilu ali pod izolacijo z vlago.
+  lessons: [m03-l01, m18-l01]
+
+- id: termometer-vbodni
+  name: Vbodni termometer s tipalom
+  en: probe thermometer
+  cat: temperatura
+  who: [lastnik, serviser]
+  measures: Temperaturo vode v potopnem tulcu, zraka ali površine.
+  where:
+    - Potopni tulci na dvižnem in povratnem vodu ali v bojlerju.
+    - Zrak na vstopu v zunanjo enoto.
+  how:
+    - Tipalo vstavi v tulec do dna, po možnosti s toplotno pasto.
+    - Počakaj, da se odčitek ustali, šele nato zapiši.
+  mistakes:
+    - Odčitek, zapisan prezgodaj (gumb HOLD pritisnjen pred ustalitvijo).
+    - Tulec brez paste – zrak upočasni in zmanjša odčitek.
+  lessons: [m03-l01]
+
+- id: ir-termometer
+  name: Infrardeči (brezkontaktni) termometer
+  en: infrared thermometer
+  cat: temperatura
+  who: [lastnik, serviser]
+  measures: Temperaturo površine na daljavo – hitro iskanje razlik med cevmi, radiatorji, spoji.
+  where:
+    - Radiatorji, izolirane površine, ohišja.
+    - Na cevi le, če je površina matirana ali prelepljena s črnim trakom.
+  how:
+    - Na svetle kovinske površine nalepi črn izolirni trak in meri trak.
+    - Meri pravokotno in od blizu – merilna pega raste z razdaljo.
+    - Za meritve SH in SC raje uporabi kontaktni termometer.
+  mistakes:
+    - Merjenje svetlega bakra – zaradi nizke emisivnosti napaka več K ali več.
+    - Merjenje s prevelike razdalje – pega zajame okolico.
+  lessons: [m03-l01, m18-l01]
+
+- id: klescni-ampermeter
+  name: Kleščni ampermeter
+  en: clamp meter
+  cat: elektrika
+  who: [elektro]
+  measures: Električni tok v vodniku brez prekinitve tokokroga – tok kompresorja, ventilatorja, dogrevalnika.
+  where:
+    - Posamezni vodnik dovoda naprave ali dela (L1, L2, L3 ali L).
+    - Pri inverterskih napravah je tok kompresorja pogosto viden tudi v servisnem meniju – brez odpiranja ohišja.
+  how:
+    - Na stikalu izberi izmenični tok (A~).
+    - Čeljusti zapri okoli enega vodnika, ne okoli celega kabla.
+    - Odčitaj tok med ustaljenim delovanjem in primerjaj s podatki proizvajalca.
+  mistakes:
+    - Cel kabel v čeljustih – L in N se odštejeta, kaže 0 A.
+    - Delo v ohišju pod napetostjo brez usposobljenosti.
+  lessons: [m10-l04]
+
+- id: multimeter
+  name: Multimeter
+  en: multimeter
+  cat: elektrika
+  who: [elektro]
+  measures: Napetost, upornost (npr. senzorjev NTC), neprekinjenost vodnikov.
+  where:
+    - Senzorji temperature – odklopljeni, upornost primerjaš s tabelo proizvajalca.
+    - Napajalne sponke – samo usposobljena oseba, z merilnikom ustrezne kategorije (CAT).
+  how:
+    - Konici vstavi v pravi vtičnici (COM in VΩ).
+    - Izberi območje, šele nato se dotakni merilnega mesta.
+    - Upornost meri le brez napetosti in z odklopljenim elementom.
+  mistakes:
+    - Merjenje upornosti pod napetostjo.
+    - Konica v vtičnici za tok (A) pri merjenju napetosti – kratek stik.
+  lessons: [m10-l04, m10-l01]
+
+- id: tester-napetosti
+  name: Dvopolni preizkuševalnik napetosti
+  en: two-pole voltage tester
+  cat: elektrika
+  who: [elektro]
+  measures: Ali je na vodniku napetost – za potrditev, da je naprava res brez napetosti, preden se je dotakneš.
+  where:
+    - Sponke dovoda naprave po izklopu varovalke ali glavnega stikala.
+  how:
+    - Preizkusi preizkuševalnik na znanem viru napetosti.
+    - Preizkusi vodnike, ki morajo biti brez napetosti (vse kombinacije).
+    - Še enkrat preizkusi na znanem viru – potrdiš, da preizkuševalnik še dela.
+  mistakes:
+    - Preizkus brez kontrole na znanem viru – pokvarjen preizkuševalnik kaže »ni napetosti«.
+    - Uporaba enopolnega »izvijača s tlivko« namesto dvopolnega preizkuševalnika.
+  lessons: [m10-l01, m10-l04]
+
+- id: merilnik-izolacije
+  name: Merilnik izolacijske upornosti
+  en: insulation resistance tester
+  cat: elektrika
+  who: [elektro]
+  measures: Izolacijsko upornost navitij kompresorja in motorjev proti ohišju – ali je izolacija zdrava.
+  where:
+    - Sponke navitja kompresorja proti ozemljitvi, z odklopljeno elektroniko.
+  how:
+    - Napravo izklopi in preveri odsotnost napetosti.
+    - Odklopi inverter in elektroniko po navodilih proizvajalca.
+    - Izberi preizkusno napetost po navodilih (pogosto 500 V za naprave na 230/400 V) in pritisni TEST.
+  mistakes:
+    - Preizkus s priključeno elektroniko – lahko jo uniči.
+    - Zagon kompresorja z nizko izolacijsko upornostjo.
+  lessons: [m10-l04]
+
+- id: vakuumska-crpalka
+  name: Vakuumska črpalka
+  en: vacuum pump
+  cat: hladivo
+  who: [spricevalo]
+  measures: Ne meri – iz kroga hladiva izčrpa zrak in vlago pred polnjenjem. Globino vakuuma meri elektronski vakuummeter.
+  where:
+    - Srednja (rumena) cev manometrske baterije ali neposredno na servisna priključka.
+  how:
+    - Preveri olje – mora biti bistro, sicer ga zamenjaj.
+    - Krog mora biti brez tlaka (hladivo zajeto, dušik izpuščen).
+    - Vakuumiraj z vakuummetrom na sistemu, do globine po navodilih proizvajalca.
+    - Pri gorljivih hladivih uporabi črpalko, primerno za ta hladiva.
+  mistakes:
+    - Vlažno, staro olje – vakuum ne doseže zahtevane globine.
+    - Dolge, ozke cevi – vakuumiranje traja predolgo.
+  lessons: [m08-l02]
+
+- id: vakuummeter
+  name: Elektronski vakuummeter
+  en: micron gauge
+  cat: hladivo
+  who: [spricevalo]
+  measures: Globino vakuuma v mikronih ali milibarih in ali krog po vakuumiranju zdrži – vlaga ali puščanje.
+  where:
+    - Na sistemu, čim dlje od črpalke – ne na črpalki.
+  how:
+    - Vakuumiraj do zahtevane globine.
+    - Zapri ventil proti črpalki in opazuj tlak.
+    - Če naraste in obstane, je v krogu vlaga – vakuumiraj dlje. Če raste ves čas, krog pušča.
+  mistakes:
+    - Vakuummeter na črpalki – kaže vakuum črpalke, ne kroga.
+    - Polnjenje brez preizkusa, ali vakuum zdrži.
+  lessons: [m08-l02]
+
+- id: detektor-puscanja
+  name: Elektronski detektor puščanja
+  en: electronic leak detector
+  cat: hladivo
+  who: [spricevalo]
+  measures: Sledi hladiva v zraku ob spojih – najde mesto puščanja.
+  where:
+    - Spoji, holandske matice, servisni ventili, mesta tresenja – tudi pod spoji, ker je hladivo težje od zraka.
+  how:
+    - Detektor vklopi in umeri na čistem zraku.
+    - Sondo vodi počasi, nekaj cm na sekundo, tik ob spojih.
+    - Ob alarmu mesto potrdi s penilom.
+  mistakes:
+    - Prehitro premikanje sonde ali prepih.
+    - Iskanje le nad spoji.
+  lessons: [m14-l01]
+
+- id: tehtnica
+  name: Tehtnica za hladivo
+  en: refrigerant scale
+  cat: hladivo
+  who: [spricevalo]
+  measures: Maso hladiva, ki gre v napravo ali iz nje – polnjenje po teži in zajem.
+  where:
+    - Jeklenka stoji na tehtnici med polnjenjem ali zajemom.
+  how:
+    - Jeklenko postavi na tehtnico in pritisni TARA.
+    - Polni, dokler tehtnica ne pokaže količine s tablice naprave.
+    - Zapri ventil in količino zapiši v evidenco.
+  mistakes:
+    - Polnjenje »po manometru« namesto po teži.
+    - Pozabljena TARA – odčitek je teža jeklenke, ne polnitve.
+  lessons: [m08-l02]
+
+- id: naprava-za-zajem
+  name: Naprava za zajem hladiva in jeklenka
+  en: recovery unit and cylinder
+  cat: hladivo
+  who: [spricevalo]
+  measures: Ne meri – prečrpa hladivo iz naprave v jeklenko za zajem, da ne uide v ozračje.
+  where:
+    - Vhod na servisne priključke naprave, izhod na ventil jeklenke za zajem.
+  how:
+    - Jeklenka mora biti za zajem, označena za to hladivo, na tehtnici.
+    - Odpri ventil jeklenke, nato vklopi napravo.
+    - Ustavi pri okoli 80 % polnitve jeklenke.
+    - Zajeto količino zapiši v evidenco.
+  mistakes:
+    - Zaprt ventil jeklenke – naprava se ustavi zaradi visokega tlaka.
+    - Prepolna jeklenka ali mešanje različnih hladiv.
+  lessons: [m08-l02]
+
+- id: dusik-regulator
+  name: Jeklenka dušika z reducirnim ventilom
+  en: nitrogen with pressure regulator
+  cat: hladivo
+  who: [spricevalo]
+  measures: Reducirni ventil nastavi in pokaže tlak dušika za tlačni preizkus in pretok med spajkanjem.
+  where:
+    - Srednja cev baterije ali servisni priključek pri tlačnem preizkusu, odprt konec cevi pri spajkanju.
+  how:
+    - Uporabi samo suh dušik in reducirni ventil.
+    - Pred odprtjem jeklenke vijak reducirnega ventila odvij (nič na izhodu).
+    - Tlak dviguj postopoma, do vrednosti po navodilih proizvajalca, nato zapri in opazuj.
+  mistakes:
+    - Dušik brez reducirnega ventila ali s previsokim tlakom.
+    - Kisik ali stisnjen zrak namesto dušika.
+  lessons: []
+
+- id: manometer-vode
+  name: Manometer vodnega kroga
+  en: water pressure gauge
+  cat: voda
+  who: [lastnik]
+  measures: Tlak vode v ogrevalnem krogu.
+  where:
+    - Notranja enota, ob raztezni posodi ali na polnilni skupini.
+  how:
+    - Odčitaj pri hladnem sistemu in primerjaj z oznako inštalaterja.
+    - Opazuj, koliko tlak naraste ob segrevanju.
+    - Doliva se po navodilih inštalaterja, z ustrezno vodo.
+  mistakes:
+    - Pogosto dolivanje brez iskanja vzroka (puščanje, raztezna posoda).
+    - Primerjava tlaka v toplem in hladnem stanju.
+  lessons: [m09-l01, m00-l02]
+
+- id: termokamera
+  name: Termokamera
+  en: thermal camera
+  cat: temperatura
+  who: [lastnik, serviser]
+  measures: Sliko temperatur površin – razporeditev toplote v radiatorju, talnem ogrevanju, na ceveh.
+  where:
+    - Radiatorji, zanke talnega ogrevanja, razdelilniki, zunanja enota.
+  how:
+    - Meri, ko sistem greje in je ustaljen.
+    - Pri svetlih kovinah upoštevaj emisivnost ali uporabi trak.
+    - Primerjaj slike med seboj – iščeš razlike, ne točne številke.
+  mistakes:
+    - Branje temperature svetlih kovin brez popravka emisivnosti.
+    - Meritev, ko sistem ne greje.
+  lessons: [m03-l01]

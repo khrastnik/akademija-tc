@@ -274,6 +274,28 @@ export function loadRepairs() {
   return parsed.data;
 }
 
+// ---------- merilna oprema ----------
+const toolSchema = z.array(
+  z.object({
+    id,
+    name: z.string(),
+    en: z.string(),
+    cat: z.enum(['hladivo', 'temperatura', 'elektrika', 'voda']),
+    who: z.array(z.enum(WHO)).min(1),
+    measures: z.string().min(20),
+    where: z.array(z.string().min(10)).min(1),
+    how: z.array(z.string().min(10)).min(2),
+    mistakes: z.array(z.string().min(10)).min(1),
+    lessons: z.array(z.string()).default([]),
+  }),
+);
+/** Merilna oprema: kaj meri, kje in kako. */
+export function loadTools() {
+  const parsed = toolSchema.safeParse(parseYaml(read('content', 'oprema', 'oprema.yaml')));
+  if (!parsed.success) throw new Error(`content/oprema/oprema.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
 // ---------- kode napak proizvajalcev ----------
 const codesSchema = z.object({
   brands: z.array(
@@ -497,6 +519,15 @@ export function validateContent() {
     } else if (!lessonIds.has(q.lessonLink.split('#')[0])) errors.push(`${at}: lessonLink "${q.lessonLink}" kaže na neobstoječo lekcijo`);
     const lens = q.options.map((o) => o.text.length);
     if (Math.max(...lens) > 3 * Math.min(...lens) + 20) errors.push(`${at}: odgovori so preveč različno dolgi`);
+  }
+
+  // merilna oprema: povezave na obstoječe lekcije, brez podvojenih naprav
+  const tools = tryLoad(loadTools, []);
+  const toolIds = new Set();
+  for (const t of tools) {
+    if (toolIds.has(t.id)) errors.push(`content/oprema/oprema.yaml: podvojena naprava "${t.id}"`);
+    toolIds.add(t.id);
+    for (const l of t.lessons) if (!lessonIds.has(l)) errors.push(`content/oprema/oprema.yaml ${t.id}: lekcija "${l}" ne obstaja`);
   }
 
   // banka izpitnih vprašanj F-plini

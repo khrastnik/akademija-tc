@@ -9,7 +9,7 @@ interface Props {
   /** Datoteka v repozitoriju, iz katere je stran (za povezavo »Vir«). */
   source?: string;
   updated?: string;
-  current?: 'domov' | 'pot' | 'simulator' | 'slovar' | 'ponovitev' | 'izpit' | 'orodja' | 'okvare' | 'kode' | 'f-plini' | 'sh-sc';
+  current?: 'domov' | 'pot' | 'simulator' | 'slovar' | 'ponovitev' | 'izpit' | 'orodja' | 'okvare' | 'kode' | 'f-plini' | 'sh-sc' | 'oprema';
   /** Široka postavitev (simulator). */
   wide?: boolean;
 }
@@ -23,6 +23,7 @@ const nav = [
   { id: 'okvare', href: url('okvare'), label: 'Okvare' },
   { id: 'kode', href: url('kode'), label: 'Kode' },
   { id: 'sh-sc', href: url('sh-sc'), label: 'SH/SC' },
+  { id: 'oprema', href: url('oprema'), label: 'Oprema' },
   { id: 'f-plini', href: url('f-plini'), label: 'F-plini' },
   { id: 'slovar', href: url('slovar'), label: 'Slovar' },
   { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev' },
@@ -38,6 +39,7 @@ const I: Record<string, string> = {
   izpit: '<path d="M9 4h6v3H9z"/><path d="M7 5H5v16h14V5h-2"/><path d="M9 14l2 2 4-4"/>',
   okvare: '<path d="M10.3 4.3L2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/><path d="M12 9v5M12 17.5v.01"/>',
   kode: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h3M7 14h6M14 10h3"/>',
+  oprema: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/>',
   'sh-sc': '<path d="M12 3v11"/><circle cx="12" cy="17" r="4"/><path d="M15 5h3M15 8h3M15 11h3"/>',
   'f-plini': '<path d="M9 3h6"/><path d="M10 3v4l-4 9a3 3 0 0 0 2.7 4h6.6a3 3 0 0 0 2.7-4l-4-9V3"/><path d="M7.5 14h9"/>',
   orodja: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-2.5z"/>',
@@ -47,6 +49,7 @@ const menu = [
   { id: 'pot', href: url('pot'), label: 'Učna pot', hint: 'Vsi moduli in tvoj napredek' },
   { id: 'simulator', href: url('simulator'), label: '3D simulator', hint: 'Kako deluje in igra »Dan na terenu«' },
   { id: 'okvare', href: url('okvare'), label: 'Okvare in popravila', hint: 'Zakaj se del pokvari in kako se zamenja' },
+  { id: 'oprema', href: url('oprema'), label: 'Merilna oprema', hint: 'Manometri, termometri, multimeter … – preizkusi jih' },
   { id: 'sh-sc', href: url('sh-sc'), label: 'Kalkulator SH/SC', hint: 'Pregrevanje in podhlajevanje – R32, R410A, R290' },
   { id: 'kode', href: url('kode'), label: 'Kode napak', hint: 'Daikin, Panasonic, Mitsubishi, Vaillant …' },
   { id: 'f-plini', href: url('f-plini'), label: 'Izpit F-plini', hint: 'Priprava na spričevalo za delo s hladivi' },

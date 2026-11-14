@@ -1,5 +1,21 @@
 # Spremembe
 
+## 0.10.0 – 2026-11-15
+
+### Novo
+- **Merilna oprema** (`/oprema/`): 17 delujočih naprav, ki jih klikaš – vsaka ima stanje, odčitke in razlago, kaj se je zgodilo in zakaj:
+  - krog hladiva: analogna in digitalna manometrska baterija, vakuumska črpalka, elektronski vakuummeter, detektor puščanja,
+    tehtnica, naprava za zajem z jeklenko, dušik z reducirnim ventilom;
+  - temperatura: kleščni termometer za cevi, vbodni termometer, IR termometer, termokamera;
+  - elektrika: kleščni ampermeter, multimeter, dvopolni preizkuševalnik napetosti, merilnik izolacijske upornosti;
+  - voda: manometer vodnega kroga.
+- Naprave pokažejo tipične napake: oba ventila baterije odprta, napačno hladivo na digitalni bateriji, neizoliran termometer,
+  IR na svetlem bakru, cel kabel v kleščah, upornost pod napetostjo, preizkus brez znanega vira, megger s priključeno elektroniko,
+  vlažno olje v črpalki, vlaga ali puščanje pri vakuumu, prepolna jeklenka, previsok tlak dušika, prazna raztezna posoda.
+- Pri vsaki napravi: kaj meri, kje, kako, pogoste napake, kdo jo sme uporabljati in povezave na lekcije.
+- Meni, glava in Orodja: povezava »Oprema«.
+- Test preveri, da ima vsaka naprava opis in delujočo izvedbo ter da so naprave za krog hladiva in elektriko pravilno označene.
+
 ## 0.9.4 – 2026-11-15
 
 ### Kalkulator SH/SC

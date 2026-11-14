@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import ToolBox from '../components/ToolBox.tsx';
+import { loadTools, loadRefrigerants, loadLessons, lessonNumber } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const tools = loadTools();
+const tables = loadRefrigerants().map((r) => ({ id: r.id, points: r.points }));
+const lessonTitles = Object.fromEntries(loadLessons().map((l) => [l.id, `${lessonNumber(l.id)} ${l.title}`]));
+---
+<Base
+  title="Merilna oprema"
+  description="Manometrska baterija, termometri, kleščni ampermeter, multimeter, vakuumska črpalka, detektor puščanja in ostala oprema – delujoče naprave, ki jih klikaš, z opisom, kaj se meri, kje in kako."
+  current="oprema"
+  source="content/oprema/oprema.yaml"
+>
+  <p class="eyebrow">Servisna torba</p>
+  <h1>Merilna oprema</h1>
+  <p class="lead muted">Izberi napravo in jo preizkusi: odpri ventil, zavrti stikalo, pritrdi tipalo. Pod napravo piše, kaj meri, kje in kako.</p>
+  <p class="notice">
+    <span>
+      Naprave za krog hladiva sme na pravi toplotni črpalki uporabljati le serviser s spričevalom za F-pline, električne meritve pa usposobljena oseba.
+      Vrednosti so učni primer – na terenu veljajo navodila proizvajalca naprave in merilnika.
+    </span>
+  </p>
+  <ToolBox client:load tools={tools as any} tables={tables} lessonTitles={lessonTitles} lessonBase={url('lekcija/')} />
+</Base>
+
+<style>
+  .lead {
+    margin-top: 0;
+  }
+</style>

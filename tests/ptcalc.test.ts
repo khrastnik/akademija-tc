@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { satTemp, superheat, subcooling, gaugeToAbs, check, type PTPoint } from '../packages/engine/src/ptcalc';
+import { satTemp, satPressure, superheat, subcooling, gaugeToAbs, check, type PTPoint } from '../packages/engine/src/ptcalc';
 import { loadRefrigerants } from '../src/lib/content.js';
 
 // Umetna tabela s točno eksponentno odvisnostjo: p = 2^(t/10) bar → interpolacija v ln(p) mora biti točna.
@@ -12,6 +12,11 @@ describe('P-T kalkulator', () => {
   });
   it('med točkami interpolira v logaritmu tlaka', () => {
     expect(satTemp(T, 2 ** 0.55, 'bubble')).toBeCloseTo(5.5, 6);
+  });
+  it('tlak iz temperature je obratna funkcija temperature iz tlaka', () => {
+    expect(satPressure(T, 5.5, 'bubble')!).toBeCloseTo(2 ** 0.55, 6);
+    expect(satTemp(T, satPressure(T, 12.3, 'bubble')!, 'bubble')!).toBeCloseTo(12.3, 6);
+    expect(satPressure(T, 99, 'bubble')).toBeNull();
   });
   it('zunaj tabele ne ugiba', () => {
     expect(satTemp(T, 100, 'bubble')).toBeNull();

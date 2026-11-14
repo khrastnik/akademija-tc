@@ -34,6 +34,20 @@ export function satTemp(points: PTPoint[], pBarAbs: number, phase: 'bubble' | 'd
   return null;
 }
 
+/** Absolutni tlak nasičenja pri temperaturi (obratno od satTemp). Vrne null zunaj tabele. */
+export function satPressure(points: PTPoint[], tC: number, phase: 'bubble' | 'dew'): number | null {
+  const p = (pt: PTPoint) => (phase === 'dew' ? (pt.pDewBarAbs ?? pt.pBarAbs) : pt.pBarAbs);
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1];
+    const b = points[i];
+    if (tC >= a.tC && tC <= b.tC) {
+      const k = (tC - a.tC) / (b.tC - a.tC);
+      return Math.exp(Math.log(p(a)) + k * (Math.log(p(b)) - Math.log(p(a))));
+    }
+  }
+  return null;
+}
+
 /** Pregrevanje = T sesalnega voda − T uparjanja (rosišče). */
 export const superheat = (tSuctionC: number, tSatC: number) => tSuctionC - tSatC;
 /** Podhlajevanje = T kondenzacije (vrelišče) − T tekočinskega voda. */

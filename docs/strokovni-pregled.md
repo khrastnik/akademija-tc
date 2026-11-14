@@ -77,6 +77,11 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 - `src/components/StationSims.tsx` – štiri postaje v živo: ali so smeri sprememb (kje zavre, kdaj tlak raste, lačen/preplavljen uparjalnik) pravilne in besedila sodil ob vsakem stanju strokovno točna.
 - **Zalogovnik (0.5.0)** – prosimo posebej preveri: ali naj bo primarni pretok res nekoliko večji od sekundarnega (napaka »mešanje«), ali je »46 zagonov v 24 urah« prepričljiv primer taktiranja, in ali je opis meje vklopa dogrevalnika (bivalentne točke) pravilen za tipične naprave.
 
+## Merilna oprema (0.10.0)
+
+- `content/oprema/oprema.yaml` – opisi naprav: kaj meri, kje, kako, napake in kdo sme.
+- `src/components/ToolSims.tsx` – besedila razlag ob kliku in učne vrednosti (npr. 500 V za merilnik izolacije, 80 % polnitev jeklenke, primer 40 bar za tlačni preizkus).
+
 ## P-T tabela in kalkulator SH/SC (0.9.1)
 
 - `data/refrigerants.json` – izračunano s CoolProp 6.6 (`scripts/gen-pt.mjs`), preverjeno s točkami NIST (odstopanje ≤ 0,24 %).
