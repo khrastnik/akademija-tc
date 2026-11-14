@@ -1,5 +1,11 @@
 # Spremembe
 
+## 0.9.4 – 2026-11-15
+
+### Kalkulator SH/SC
+- Poenostavljen na **najpogostejša hladiva: R32, R410A in R290**. Odstranjeni R407C, R744, R454B in R452B
+  (iz kalkulatorja, P-T tabele, skripte in testov) – tudi R452B, ki je bil preverjen le pri atmosferskem tlaku.
+
 ## 0.9.3 – 2026-11-14
 
 ### Kalkulator SH/SC

@@ -10,19 +10,8 @@
 }
 .sc-fluids {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-}
-.sc-result.supercrit {
-  background: color-mix(in srgb, var(--low) 14%, var(--surface));
-}
-.sc-result.supercrit .sc-big {
-  color: var(--low);
-  font-size: 1.4rem;
-}
-.sc-result.supercrit p + p {
-  margin-top: 6px;
-  font-size: 0.92rem;
 }
 .sc-fluids button,
 .sc-mode button {

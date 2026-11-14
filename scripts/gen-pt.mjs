@@ -16,38 +16,8 @@ const FLUIDS = [
   { id: 'R32', name: 'R32', cp: 'R32', safety: 'A2L', from: -40, to: 70, p: [[-51.65, 101.3], [0, 813], [40, 2478]] },
   { id: 'R410A', name: 'R410A', cp: 'R410A', safety: 'A1', from: -40, to: 70, p: [[-51.4, 101.3], [0, 799], [40, 2421]] },
   { id: 'R290', name: 'R290 (propan)', cp: 'n-Propane', safety: 'A3', from: -40, to: 70, p: [[-42.1, 101.3], [0, 474], [40, 1369]] },
-  { id: 'R407C', name: 'R407C', cp: 'R407C', safety: 'A1', from: -40, to: 70, t: [[0, -43.8], [1, -36.7]] },
-  // CO₂: trojna točka −56,6 °C, kritična 31,0 °C – tabela do 30 °C, nad tem ni kondenzacije
-  { id: 'R744', name: 'R744 (CO₂)', cp: 'CarbonDioxide', safety: 'A1', from: -40, to: 30, p: [[-20, 1970], [0, 3485], [20, 5729]] },
-  // Novejši mešanici – CoolProp nima vnaprej pripravljenih, zato mešanica iz sestavin (molski deleži iz masnih).
-  // R454B = R32/R1234yf 68,9/31,1 masno. Reference: Chemours vrelišče −50,9 °C pri 1 atm; Honeywell pri 40 psig (377,1 kPa abs) vrelišče −20,3 °C, rosišče −19,2 °C.
-  {
-    id: 'R454B',
-    name: 'R454B',
-    cp: mix({ R32: [68.9, 52.024], R1234yf: [31.1, 114.04] }),
-    safety: 'A2L',
-    from: -40,
-    to: 55,
-    t: [[0, -50.9], [0, -20.3, 377.1], [1, -19.2, 377.1]],
-  },
-  // R452B = R32/R125/R1234yf 67/7/26 masno. Referenca ASHRAE 34: vrelišče −51,0 °C, rosišče −50,3 °C pri 1 atm.
-  {
-    id: 'R452B',
-    name: 'R452B',
-    cp: mix({ R32: [67, 52.024], R125: [7, 120.02], R1234yf: [26, 114.04] }),
-    safety: 'A2L',
-    from: -40,
-    to: 53, // pri 54 °C postopek za mešanico ne konvergira
-    t: [[0, -51.0], [1, -50.3]],
-  },
 ];
 
-/** Masni deleži [masa %, molska masa g/mol] → niz za CoolProp HEOS z molskimi deleži. */
-function mix(parts) {
-  const moles = Object.entries(parts).map(([n, [w, M]]) => [n, w / M]);
-  const sum = moles.reduce((s, [, m]) => s + m, 0);
-  return 'HEOS::' + moles.map(([n, m]) => `${n}[${(m / sum).toFixed(5)}]`).join('&');
-}
 
 const out = { _opomba: '', refrigerants: [] };
 let fail = [];
@@ -88,11 +58,6 @@ for (const f of FLUIDS) {
     source: `CoolProp 6.6 (enačbe stanja kot v NIST REFPROP), tekočina "${f.cp}". Preverjeno z referenčnimi točkami NIST/ASHRAE.`,
     points,
   };
-  if (f.id === 'R744') {
-    r.tCritC = Math.round(((await PropsSI('Tcrit', '', 0, '', 0, f.cp)) - 273.15) * 100) / 100;
-    r.pCritBarAbs = Math.round(((await PropsSI('pcrit', '', 0, '', 0, f.cp)) / 1e5) * 100) / 100;
-    console.log(`R744 kritična točka: ${r.tCritC} °C, ${r.pCritBarAbs} bar abs`);
-  }
   out.refrigerants.push(r);
 }
 if (fail.length) throw new Error(`Odstopanje od reference preveliko: ${fail.join(', ')} – tabela NI zapisana.`);
