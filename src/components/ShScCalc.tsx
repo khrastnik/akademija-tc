@@ -7,6 +7,8 @@ interface Refrigerant {
   name: string;
   safety?: string;
   source: string;
+  tCritC?: number;
+  pCritBarAbs?: number;
   points: PTPoint[];
 }
 interface Props {
@@ -20,6 +22,18 @@ const FLUIDS = [
   { id: 'R32', label: 'R32', safety: 'A2L', note: 'Rahlo gorljivo – brez virov vžiga, prezračevanje.' },
   { id: 'R410A', label: 'R410A', safety: 'A1', note: 'Mešanica s skoraj nič drsenja – polni v tekoči fazi.' },
   { id: 'R290', label: 'R290', safety: 'A3', note: 'Propan, močno gorljiv – detektor plina, orodje brez iskrenja, nikoli plamen na krogu s hladivom.' },
+  {
+    id: 'R407C',
+    label: 'R407C',
+    safety: 'A1',
+    note: 'Mešanica z drsenjem nekaj K: za pregrevanje velja rosišče, za podhlajevanje vrelišče – kalkulator ju izbere sam. Polni v tekoči fazi.',
+  },
+  {
+    id: 'R744',
+    label: 'R744',
+    safety: 'A1',
+    note: 'CO₂: zelo visoki tlaki (pri 0 °C okoli 34 bar). Nad 31 °C ni kondenzacije – visoka stran dela nadkritično, podhlajevanje tam ni definirano. Manometri in cevi morajo biti za CO₂.',
+  },
 ];
 const KEY = 'akademija-tc:shsc';
 const num = (s: string) => {
@@ -91,6 +105,21 @@ export default function ShScCalc({ tables, lessonSh, lessonSc }: Props) {
   const tEvap = satFrom(lp, 'dew');
   const tCond = satFrom(hp, 'bubble');
   const outOfRange = (s: string, t: number | null) => pMode && num(s) !== null && t === null;
+  // mešanice z drsenjem (R407C): pokaži tudi drugo fazo, da je jasno, katera je uporabljena
+  const glide = (s: string, used: number | null, other: 'bubble' | 'dew') => {
+    const v = num(s);
+    if (!pMode || v === null || used === null) return '';
+    const o = satTemp(table!.points, gaugeToAbs(v), other);
+    return o !== null && Math.abs(o - used) >= 0.5 ? ` (${other === 'bubble' ? 'vrelišče' : 'rosišče'} ${f1(o)} °C, drsenje ${f1(Math.abs(o - used))} K)` : '';
+  };
+  // R744: nad kritično točko ni kondenzacije – podhlajevanje ni definirano
+  const hpVal = num(hp);
+  const supercrit =
+    !!table?.pCritBarAbs &&
+    hpVal !== null &&
+    (pMode ? gaugeToAbs(hpVal) >= table.pCritBarAbs : table.tCritC !== undefined && hpVal >= table.tCritC);
+  const pointsLabel = (t: number | null, s: string, name: string, other: 'bubble' | 'dew') =>
+    t !== null ? `${name} ${f1(t)} °C${glide(s, t, other)}` : outOfRange(s, t) ? 'Tlak je zunaj tabele.' : undefined;
   const ts = num(tSuc);
   const tl = num(tLiq);
   const sh = tEvap !== null && ts !== null ? superheat(ts, tEvap) : null;
@@ -128,7 +157,7 @@ export default function ShScCalc({ tables, lessonSh, lessonSc }: Props) {
           <h3>Pregrevanje (SH)</h3>
           <p class="sc-where">Nizkotlačna stran – sesalni vod na izstopu iz uparjalnika.</p>
           {pMode ? (
-            <Field label="NT tlak (nadtlak)" unit="bar" value={lp} onInput={setLp} hint={tEvap !== null ? `T uparjanja ${f1(tEvap)} °C` : outOfRange(lp, tEvap) ? 'Tlak je zunaj tabele.' : undefined} />
+            <Field label="NT tlak (nadtlak)" unit="bar" value={lp} onInput={setLp} hint={pointsLabel(tEvap, lp, 'T uparjanja (rosišče)', 'bubble')} />
           ) : (
             <Field label="T uparjanja s skale" unit="°C" value={lp} onInput={setLp} hint="Na skali za izbrano hladivo, pri nizkem tlaku." />
           )}
@@ -146,17 +175,33 @@ export default function ShScCalc({ tables, lessonSh, lessonSc }: Props) {
           <h3>Podhlajevanje (SC)</h3>
           <p class="sc-where">Visokotlačna stran – tekočinski vod na izstopu iz kondenzatorja.</p>
           {pMode ? (
-            <Field label="VT tlak (nadtlak)" unit="bar" value={hp} onInput={setHp} hint={tCond !== null ? `T kondenzacije ${f1(tCond)} °C` : outOfRange(hp, tCond) ? 'Tlak je zunaj tabele.' : undefined} />
+            <Field
+              label="VT tlak (nadtlak)"
+              unit="bar"
+              value={hp}
+              onInput={setHp}
+              hint={supercrit ? `Nad kritičnim tlakom (${f1(table!.pCritBarAbs! - 1.01325)} bar nadtlaka).` : pointsLabel(tCond, hp, 'T kondenzacije (vrelišče)', 'dew')}
+            />
           ) : (
             <Field label="T kondenzacije s skale" unit="°C" value={hp} onInput={setHp} hint="Na skali za izbrano hladivo, pri visokem tlaku." />
           )}
           <Field label="T tekočinskega voda (termometer)" unit="°C" value={tLiq} onInput={setTLiq} hint="Tipalo na cevi, izolirano od zraka." />
+          {supercrit ? (
+            <div class="sc-result supercrit" aria-live="polite">
+              <p class="sc-big">Nadkritično</p>
+              <p>
+                CO₂ nad {f1(table!.tCritC!)} °C in {f1(table!.pCritBarAbs! - 1.01325)} bar nadtlaka ne kondenzira – visokotlačni prenosnik je hladilnik plina, podhlajevanja ni.
+                Pomembna je temperatura na izstopu iz hladilnika plina in visoki tlak, ki ga krmilnik nastavlja za najboljši izkoristek – vrednosti po navodilih proizvajalca.
+              </p>
+            </div>
+          ) : (
           <Result
             value={sc}
             name="SC"
             formula={sc !== null ? `${f1(tCond!)} − ${f1(tl!)} = ${f1(sc)} K` : ''}
             lowText="Podhlajevanja skoraj ni – v tekočinskem vodu je lahko para (premalo hladiva ali zožitev). Preveri skupaj s pregrevanjem."
           />
+          )}
           <a href={lessonSc}>SH in SC berimo skupaj →</a>
         </section>
       </div>

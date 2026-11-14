@@ -80,7 +80,7 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 ## P-T tabela in kalkulator SH/SC (0.9.1)
 
 - `data/refrigerants.json` – izračunano s CoolProp 6.6 (`scripts/gen-pt.mjs`), preverjeno s točkami NIST (odstopanje ≤ 0,24 %).
-  Preveri še z uradno tabelo proizvajalca hladiva, posebej R410A (rosišče/vrelišče) in območje nad 60 °C.
+  Preveri še z uradno tabelo proizvajalca hladiva, posebej R410A in R407C (rosišče/vrelišče), območje nad 60 °C in R744 blizu kritične točke.
 - `src/components/ShScCalc.tsx` – besedila opozoril in tabela »SH in SC skupaj«.
 
 ## Kode napak in izpitna vprašanja (0.8.0)

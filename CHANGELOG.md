@@ -1,5 +1,15 @@
 # Spremembe
 
+## 0.9.2 – 2026-11-14
+
+### Kalkulator SH/SC
+- Dodani **R407C** in **R744 (CO₂)**. P-T tabeli izračunani s CoolProp in preverjeni z referenčnimi vrednostmi:
+  R407C vrelišče in rosišče pri 1 atm (odstopanje ≤ 0,17 K), R744 pri −20, 0 in 20 °C (≤ 0,02 %).
+- R407C: kalkulator pod poljem pokaže rosišče, vrelišče in drsenje; za pregrevanje uporabi rosišče, za podhlajevanje vrelišče.
+- R744: tabela do 30 °C, zapisana kritična točka (30,98 °C, 73,77 bar abs). Nad kritičnim tlakom kalkulator namesto podhlajevanja
+  izpiše »Nadkritično« in razloži, zakaj pri CO₂ v ogrevanju podhlajevanja ni.
+- Testi za drsenje R407C in kritično točko R744.
+
 ## 0.9.1 – 2026-11-14
 
 ### Kalkulator SH/SC

@@ -99,6 +99,9 @@ const refrigerantSchema = z.object({
   name: z.string(),
   source: z.string({ error: 'vsaka številka potrebuje vir' }).min(5),
   safety: z.string().optional(),
+  /** Kritična točka – nad njo ni kondenzacije (R744). */
+  tCritC: z.number().optional(),
+  pCritBarAbs: z.number().optional(),
   points: z.array(z.object({ tC: z.number(), pBarAbs: z.number(), pDewBarAbs: z.number().optional() })).min(2),
 });
 export const refrigerantsSchema = z.object({ refrigerants: z.array(refrigerantSchema) });
