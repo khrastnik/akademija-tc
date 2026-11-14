@@ -1,5 +1,12 @@
 # Spremembe
 
+## 0.10.1 – 2026-11-15
+
+### Popravek
+- **Merilna oprema: klik na napravo ni odprl ničesar.** Globalni slog `button:active { transform: scale(.98) }` je ob pritisku
+  skrčil prekrivno plast gumba kartice na napis – spust prsta nad sliko naprave zato ni sprožil klika.
+  Gumb kartice ob pritisku ne dobi več transform, odziv na pritisk pokaže kartica. Preverjeno s pravim klikom na sliko in na dele naprave.
+
 ## 0.10.0 – 2026-11-15
 
 ### Novo

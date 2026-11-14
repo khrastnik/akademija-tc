@@ -68,6 +68,14 @@
   text-align: left;
   cursor: pointer;
 }
+/* Gumb ob pritisku ne sme dobiti transform: sicer postane okvir za ::after, ta se skrči na napis
+   in spust prsta nad sličico ne sproži klika. Odziv na pritisk naj zato pokaže kartica. */
+.tl-card-btn:active {
+  transform: none;
+}
+.tl-card:active {
+  transform: scale(0.98);
+}
 /* gumb pokrije celo kartico, tudi sličico */
 .tl-card-btn::after {
   content: '';
