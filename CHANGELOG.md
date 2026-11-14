@@ -1,5 +1,15 @@
 # Spremembe
 
+## 0.9.0 – 2026-11-14
+
+### Novo
+- **Kalkulator pregrevanja in podhlajevanja** (`/sh-sc/`) za R32, R410A in R290: vpis odčitkov z manometrov in termometra,
+  izračun SH in SC s prikazom formule, opozorila za negativne vrednosti in SH/SC blizu 0 K, tabela »kako brati SH in SC skupaj«,
+  varnostne oznake hladiv (A2L, A1, A3). Zaenkrat se vpiše temperatura nasičenja s skale manometra – vnos tlaka se vklopi sam,
+  ko bo v `data/refrigerants.json` preverjena P-T tabela z virom. Računski del je pokrit s testi (`tests/ptcalc.test.ts`).
+- **Vprašanja za izpit F-plini**: banka razširjena s 55 na 102 vprašanji, vsaka tema ima 9–12 vprašanj.
+- Meni in Orodja: povezava na kalkulator SH/SC.
+
 ## 0.8.0 – 2026-11-14
 
 ### Novo

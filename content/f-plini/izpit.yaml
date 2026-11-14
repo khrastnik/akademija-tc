@@ -575,3 +575,474 @@ questions:
       - { text: "Ima zelo visok GWP" }
       - { text: "Škodi ozonski plasti" }
     explain: CO₂ ni gorljiv in ima GWP 1, a deluje pri tlakih, ki so večkrat višji kot pri HFC – potrebna je ustrezna oprema in znanje.
+
+  # ---------- dodatna vprašanja (0.9.0) ----------
+  - id: t8
+    topic: termo
+    text: Kaj je nasičena para?
+    options:
+      - { text: "Para, ki je v ravnovesju s tekočino pri danem tlaku", correct: true }
+      - { text: "Para, ki je toplejša od temperature vrelišča" }
+      - { text: "Para, pomešana z oljem iz kompresorja" }
+      - { text: "Para pri najvišjem tlaku v krogu" }
+    explain: Nasičena para je ravno na meji vrenja – ob najmanjši izgubi toplote začne kondenzirati. Para, toplejša od vrelišča, je pregreta.
+
+  - id: t9
+    topic: termo
+    text: V katerem delu kroga je hladivo podhlajena tekočina?
+    options:
+      - { text: "Med kondenzatorjem in ekspanzijskim ventilom", correct: true }
+      - { text: "Med uparjalnikom in kompresorjem" }
+      - { text: "Med kompresorjem in kondenzatorjem" }
+      - { text: "V sredini uparjalnika" }
+    explain: Na koncu kondenzatorja je vse hladivo tekoče in se še malo ohladi pod temperaturo kondenzacije – to je podhlajevanje.
+
+  - id: t10
+    topic: termo
+    text: Kaj se zgodi s temperaturo hladiva v ekspanzijskem ventilu?
+    options:
+      - { text: "Pade, ker pade tlak in del tekočine izpari", correct: true }
+      - { text: "Naraste, ker se hladivo stisne" }
+      - { text: "Ostane enaka, spremeni se le tlak" }
+      - { text: "Naraste, ker ventil odda toploto" }
+    explain: Ob padcu tlaka del tekočine takoj izpari. Za to porabi toploto preostale tekočine, ki se ohladi na novo, nižjo temperaturo nasičenja.
+
+  - id: t11
+    topic: termo
+    text: Kaj je temperaturno drsenje (glide)?
+    options:
+      - { text: "Sprememba temperature med vrenjem zeotropne mešanice pri istem tlaku", correct: true }
+      - { text: "Počasno ohlajanje cevi po izklopu naprave" }
+      - { text: "Razlika med temperaturo vode in zraka" }
+      - { text: "Dvig temperature v kompresorju" }
+    explain: Sestavine zeotropne mešanice (npr. R407C) vrejo pri različnih temperaturah, zato se temperatura med vrenjem pri istem tlaku spreminja.
+
+  - id: t12
+    topic: termo
+    text: V katero smer teče toplota sama od sebe?
+    options:
+      - { text: "S toplejšega na hladnejše telo", correct: true }
+      - { text: "S hladnejšega na toplejše telo" }
+      - { text: "Vedno od hladiva k vodi" }
+      - { text: "V smer višjega tlaka" }
+    explain: Toplota sama teče le s toplejšega na hladnejše. Zato mora kompresor dvigniti temperaturo hladiva nad temperaturo vode, ki jo greje.
+
+  - id: o8
+    topic: okolje
+    text: Kdo sme zajeti hladivo iz toplotne črpalke z F-plini?
+    options:
+      - { text: "Oseba z ustreznim spričevalom", correct: true }
+      - { text: "Vsak, ki ima napravo za zajem" }
+      - { text: "Lastnik naprave" }
+      - { text: "Vsak električar" }
+    explain: Zajem hladiva je dejavnost, za katero uredba zahteva spričevalo ustrezne kategorije.
+
+  - id: o9
+    topic: okolje
+    text: Kaj je hermetično zaprta oprema?
+    options:
+      - { text: "Oprema, katere deli s hladivom so trajno spojeni z varjenjem ali spajkanjem", correct: true }
+      - { text: "Oprema, ki je zaprta v kovinsko ohišje" }
+      - { text: "Oprema brez servisnih priključkov za manometre" }
+      - { text: "Oprema z manj kot 3 kg hladiva" }
+    explain: Hermetično zaprta oprema ima vse dele s hladivom trajno spojene. Lahko ima zaprte ventile in servisne priključke s kapico.
+
+  - id: o10
+    topic: okolje
+    text: Kaj ureja Kigalijski amandma k Montrealskemu protokolu?
+    options:
+      - { text: "Postopno zmanjšanje uporabe HFC hladiv", correct: true }
+      - { text: "Prepoved hladiv, ki škodijo ozonu" }
+      - { text: "Pravila za prevoz jeklenk" }
+      - { text: "Izdajo spričeval za serviserje" }
+    explain: Montrealski protokol je odpravil snovi, ki škodijo ozonu. Kigalijski amandma je dodal postopno zmanjšanje HFC zaradi njihovega vpliva na podnebje.
+
+  - id: o11
+    topic: okolje
+    text: Ali smeš danes v EU doliti R22 v obstoječo napravo?
+    options:
+      - { text: "Ne, uporaba HCFC za servisiranje je prepovedana", correct: true }
+      - { text: "Da, če je hladivo reciklirano" }
+      - { text: "Da, če je naprava starejša od 2010" }
+      - { text: "Da, če količina ne presega 3 kg" }
+    explain: R22 je HCFC, ki škodi ozonu. Njegova uporaba za servisiranje v EU ni več dovoljena – naprave se zamenjajo ali predelajo.
+
+  - id: o12
+    topic: okolje
+    text: Komu se sme prodati hladivo F-plin za vgradnjo ali servisiranje naprav?
+    options:
+      - { text: "Podjetjem in osebam z ustreznim spričevalom", correct: true }
+      - { text: "Vsakomur, ki ima račun" }
+      - { text: "Samo lastnikom naprav" }
+      - { text: "Samo proizvajalcem naprav" }
+    explain: Uredba omejuje prodajo F-plinov za vgradnjo in servisiranje na podjetja in osebe s spričevalom, da hladivo ne pride v neusposobljene roke.
+
+  - id: z6
+    topic: zagon
+    text: Kaj zapišeš ob tlačnem preizkusu poleg tlaka?
+    options:
+      - { text: "Temperaturo okolice in čas", correct: true }
+      - { text: "Barvo cevi in izolacije" }
+      - { text: "Tok kompresorja" }
+      - { text: "Zunanjo vlago" }
+    explain: Tlak plina se spreminja s temperaturo. Brez temperature ne veš, ali je padec tlaka puščanje ali le ohladitev.
+
+  - id: z7
+    topic: zagon
+    text: S čim meriš globino vakuuma?
+    options:
+      - { text: "Z elektronskim vakuummetrom", correct: true }
+      - { text: "Z nizkotlačnim manometrom baterije" }
+      - { text: "S termometrom na cevi" }
+      - { text: "Z merilnikom toka" }
+    explain: Kazalčni manometer ne pokaže dovolj nizkih tlakov. Elektronski vakuummeter meri v mikronih ali milibarih.
+
+  - id: z8
+    topic: zagon
+    text: Kaj narediš z dušikom po tlačnem preizkusu?
+    options:
+      - { text: "Izpustiš ga varno in krog vakuumiraš", correct: true }
+      - { text: "Pustiš ga v krogu in doliješ hladivo" }
+      - { text: "Zajameš ga v jeklenko za hladivo" }
+      - { text: "Pomešaš ga s hladivom za boljši tlak" }
+    explain: Dušik ni F-plin in se sme izpustiti. Nato sledi vakuumiranje – dušik v krogu bi motil delovanje.
+
+  - id: z9
+    topic: zagon
+    text: Zakaj naj bodo cevi med vakuumsko črpalko in krogom kratke in široke?
+    options:
+      - { text: "Da je vakuumiranje hitrejše in globlje", correct: true }
+      - { text: "Da se cevi ne segrejejo" }
+      - { text: "Da črpalka ne potegne olja" }
+      - { text: "Da ne pride do iskrenja" }
+    explain: Pri nizkem tlaku dolge in ozke cevi močno zavirajo pretok. Kratke in široke cevi skrajšajo čas vakuumiranja.
+
+  - id: z10
+    topic: zagon
+    text: Kdaj meriš pregrevanje in podhlajevanje po zagonu?
+    options:
+      - { text: "Ko se obratovanje ustali", correct: true }
+      - { text: "Takoj ob vklopu kompresorja" }
+      - { text: "Med odtajevanjem" }
+      - { text: "Ko je naprava izklopljena" }
+    explain: Ob zagonu se tlaki in temperature še spreminjajo. Meritve so smiselne šele, ko se naprava ustali.
+
+  - id: z11
+    topic: zagon
+    text: Kaj preveriš na tablici naprave pred polnjenjem?
+    options:
+      - { text: "Vrsto in količino hladiva", correct: true }
+      - { text: "Datum izdelave kompresorja" }
+      - { text: "Barvo ohišja" }
+      - { text: "Ime monterja" }
+    explain: Tablica pove, katero hladivo in koliko kilogramov gre v napravo. Drugo hladivo ali druga količina pomeni napačno delovanje.
+
+  - id: p7
+    topic: tesnost
+    text: Katera je posredna metoda preverjanja tesnosti?
+    options:
+      - { text: "Analiza tlakov, temperatur in evidence polnjenja", correct: true }
+      - { text: "Elektronski detektor ob spojih" }
+      - { text: "Penilo na holandskih maticah" }
+      - { text: "UV svetilka ob spojih" }
+    explain: Posredne metode sklepajo na puščanje iz obnašanja naprave in zapisov. Neposredne iščejo plin na mestu.
+
+  - id: p8
+    topic: tesnost
+    text: Kako uporabljaš elektronski detektor puščanja?
+    options:
+      - { text: "Sondo počasi vodiš okrog spojev, tudi pod njimi", correct: true }
+      - { text: "Sondo hitro premikaš od spoja do spoja" }
+      - { text: "Detektor držiš v zraku sredi prostora" }
+      - { text: "Detektor uporabljaš le pri delujočem ventilatorju" }
+    explain: Hladiva so težja od zraka, zato se zbirajo pod spoji. Prehitro gibanje ali prepih lahko puščanje zgrešita.
+
+  - id: p9
+    topic: tesnost
+    text: Kdaj smeš za iskanje puščanja uporabiti UV barvilo?
+    options:
+      - { text: "Le, če ga proizvajalec naprave dovoli", correct: true }
+      - { text: "Vedno, ko ne najdeš puščanja drugače" }
+      - { text: "Le pri napravah z R290" }
+      - { text: "Nikoli, je prepovedano" }
+    explain: Barvilo ostane v krogu in v olju. Uporabi ga le, če ga proizvajalec dovoli, sicer lahko vpliva na garancijo in delovanje.
+
+  - id: p10
+    topic: tesnost
+    text: Katera naprava mora imeti sistem za odkrivanje puščanja?
+    options:
+      - { text: "Naprava s 500 t CO₂e ali več", correct: true }
+      - { text: "Vsaka naprava nad 5 t CO₂e" }
+      - { text: "Vsaka toplotna črpalka" }
+      - { text: "Samo naprave z gorljivim hladivom" }
+    explain: Pri velikih količinah, od 500 t CO₂e naprej, uredba zahteva sistem za samodejno odkrivanje puščanja.
+
+  - id: r7
+    topic: ravnanje
+    text: Zakaj jeklenko med zajemom tehtaš?
+    options:
+      - { text: "Da ne preseže največje polnitve in veš zajeto količino", correct: true }
+      - { text: "Da preveriš, ali je jeklenka tesna" }
+      - { text: "Da izmeriš tlak v jeklenki" }
+      - { text: "Da ugotoviš vrsto hladiva" }
+    explain: Tehtnica prepreči prepolnitev in da podatek o zajeti količini za evidenco.
+
+  - id: r8
+    topic: ravnanje
+    text: Kaj je regeneracija hladiva?
+    options:
+      - { text: "Obdelava do kakovosti novega hladiva pri pooblaščenem podjetju", correct: true }
+      - { text: "Osnovno čiščenje hladiva na terenu" }
+      - { text: "Mešanje starega in novega hladiva" }
+      - { text: "Uničenje hladiva v sežigalnici" }
+    explain: Regenerirano hladivo doseže predpisano kakovost novega. Recikliranje je le osnovno čiščenje za ponovno uporabo.
+
+  - id: r9
+    topic: ravnanje
+    text: Ali smeš hladivo zajeti v jeklenko za enkratno uporabo?
+    options:
+      - { text: "Ne, take jeklenke se ne smejo ponovno polniti", correct: true }
+      - { text: "Da, če je prazna" }
+      - { text: "Da, če je za isto hladivo" }
+      - { text: "Da, če jo potem zavržeš" }
+    explain: Jeklenke za enkratno uporabo za F-pline so v EU prepovedane in niso narejene za ponovno polnjenje. Uporabi jeklenko za zajem.
+
+  - id: r10
+    topic: ravnanje
+    text: Zakaj pri zajemu najprej zajameš tekočo fazo?
+    options:
+      - { text: "Ker gre zajem tako hitreje", correct: true }
+      - { text: "Ker je plinska faza strupena" }
+      - { text: "Ker tekočina ne sme v jeklenko" }
+      - { text: "Ker plinske faze ni treba zajeti" }
+    explain: Tekočina ima mnogo večjo gostoto, zato se večji del hladiva zajame hitro. Ostanek se nato zajame iz plinske faze.
+
+  - id: k6
+    topic: kompresor
+    text: Zakaj je previsoka temperatura tlačnega voda nevarna?
+    options:
+      - { text: "Olje razpada in kompresor se obrablja", correct: true }
+      - { text: "Voda v radiatorjih zavre" }
+      - { text: "Hladivo zamrzne v cevi" }
+      - { text: "Uparjalnik se zaledeni" }
+    explain: Visoka temperatura razgrajuje olje in tesnila. Pogost vzrok je premalo hladiva ali previsoko pregrevanje.
+
+  - id: k7
+    topic: kompresor
+    text: Kako hitro preveriš, ali kompresor res stiska?
+    options:
+      - { text: "Primerjaš tlaka na sesalni in tlačni strani ter tok", correct: true }
+      - { text: "Poslušaš, ali brni" }
+      - { text: "Otipaš ohišje kompresorja" }
+      - { text: "Pogledaš barvo olja" }
+    explain: Kompresor, ki teče, a ne stiska, ima skoraj enaka tlaka in nizek tok. Zvok in toplota tega ne povesta zanesljivo.
+
+  - id: k8
+    topic: kompresor
+    text: Kaj stori inverter pri kompresorju?
+    options:
+      - { text: "Spreminja hitrost kompresorja s frekvenco", correct: true }
+      - { text: "Obrača smer toka hladiva" }
+      - { text: "Hladi olje v kompresorju" }
+      - { text: "Meri količino hladiva" }
+    explain: Inverter spreminja frekvenco napajanja motorja, zato kompresor teče počasneje ali hitreje glede na potrebo.
+
+  - id: k9
+    topic: kompresor
+    text: Kaj narediš pred zamenjavo okvarjenega kompresorja?
+    options:
+      - { text: "Poiščeš vzrok okvare", correct: true }
+      - { text: "Doliješ hladivo" }
+      - { text: "Zamenjaš le olje" }
+      - { text: "Napravo izklopiš za en dan" }
+    explain: Kompresor redko crkne sam. Brez odprave vzroka (tekočinski udar, pregrevanje, vlaga) se okvara ponovi.
+
+  - id: h5
+    topic: prenosniki
+    text: Pregrevanje je visoko, podhlajevanje nizko. Kaj je najverjetneje narobe?
+    options:
+      - { text: "Premalo hladiva", correct: true }
+      - { text: "Preveč hladiva" }
+      - { text: "Zamašen ekspanzijski ventil" }
+      - { text: "Umazan filter vode" }
+    explain: Premalo hladiva pomeni lačen uparjalnik (visoko SH) in premalo tekočine v kondenzatorju (nizko SC).
+
+  - id: h6
+    topic: prenosniki
+    text: Tlak kondenzacije in podhlajevanje sta visoka, pretok vode je normalen. Kaj je verjeten vzrok?
+    options:
+      - { text: "Preveč hladiva", correct: true }
+      - { text: "Premalo hladiva" }
+      - { text: "Umazan uparjalnik" }
+      - { text: "Okvarjen ventilator zunanje enote" }
+    explain: Odvečna tekočina zalije del kondenzatorja, zato je manj površine za kondenzacijo – tlak in podhlajevanje narasteta.
+
+  - id: h7
+    topic: prenosniki
+    text: Zakaj mora kondenzat z zunanje enote nemoteno odtekati?
+    options:
+      - { text: "Ker pozimi zamrzne in poškoduje lamele ali ventilator", correct: true }
+      - { text: "Ker vsebuje hladivo" }
+      - { text: "Ker zviša tlak kondenzacije" }
+      - { text: "Ker zmanjša moč kompresorja" }
+    explain: Voda pri odtajevanju odteče. Če zamrzne pod enoto, led raste v lamele in ovira ventilator.
+
+  - id: h8
+    topic: prenosniki
+    text: Kje je prenosnik hladivo–voda pri monoblok toplotni črpalki?
+    options:
+      - { text: "V zunanji enoti", correct: true }
+      - { text: "V notranji enoti v hiši" }
+      - { text: "V bojlerju" }
+      - { text: "V radiatorjih" }
+    explain: Pri monobloku je ves krog hladiva v zunanji enoti. V hišo vodijo samo vodne cevi.
+
+  - id: h9
+    topic: prenosniki
+    text: Kaj se zgodi z močjo gretja, ko se na zunanjih lamelah nabira led?
+    options:
+      - { text: "Pada, ker skozi lamele teče manj zraka", correct: true }
+      - { text: "Raste, ker led odda toploto" }
+      - { text: "Ostane enaka" }
+      - { text: "Raste, ker se zviša tlak uparjanja" }
+    explain: Led izolira in zapira pot zraku. Uparjalnik dobi manj toplote, tlak uparjanja pade, zato je potrebno odtajevanje.
+
+  - id: v6
+    topic: ventili
+    text: Kdaj potrebuje termostatski ekspanzijski ventil zunanje izenačenje tlaka?
+    options:
+      - { text: "Pri uparjalniku z velikim padcem tlaka", correct: true }
+      - { text: "Pri zelo kratkem uparjalniku" }
+      - { text: "Pri gorljivem hladivu" }
+      - { text: "Pri monoblok napravah" }
+    explain: Pri velikem padcu tlaka v uparjalniku bi ventil z notranjim izenačenjem napačno ocenil pregrevanje. Zunanja povezava meri tlak na izhodu.
+
+  - id: v7
+    topic: ventili
+    text: Čemu služi stikalo visokega tlaka?
+    options:
+      - { text: "Izklopi kompresor, ko tlak preseže mejo", correct: true }
+      - { text: "Uravnava pregrevanje" }
+      - { text: "Odpre ventil za odtajevanje" }
+      - { text: "Vklopi dogrevalnik" }
+    explain: Stikalo visokega tlaka je varnostna naprava. Ko se sproži, pomeni simptom – vzrok je treba poiskati.
+
+  - id: v8
+    topic: ventili
+    text: Čemu služi ločevalnik kapljevine na sesalnem vodu?
+    options:
+      - { text: "Prepreči, da tekočina pride v kompresor", correct: true }
+      - { text: "Loči olje od vode" }
+      - { text: "Ujame nečistoče iz vodnega kroga" }
+      - { text: "Zmanjša hrup ventilatorja" }
+    explain: Ločevalnik zadrži kapljevino, ki bi lahko prišla iz uparjalnika, in kompresor varuje pred tekočinskim udarom.
+
+  - id: v9
+    topic: ventili
+    text: Kaj lahko pomenijo mehurčki v kontrolnem steklu tekočinskega voda?
+    options:
+      - { text: "Premalo hladiva ali premajhno podhlajevanje", correct: true }
+      - { text: "Preveč olja v krogu" }
+      - { text: "Pregret kompresor" }
+      - { text: "Zamašen filter vode" }
+    explain: Mehurčki pomenijo, da tekočina ni povsem tekoča. Vzrok je lahko premalo hladiva, zožitev ali premajhno podhlajevanje – preveri z meritvami.
+
+  - id: v10
+    topic: ventili
+    text: Kaj krmili elektronski ekspanzijski ventil?
+    options:
+      - { text: "Krmilnik na podlagi tipal tlaka in temperature", correct: true }
+      - { text: "Tipalo s polnitvijo na sesalnem vodu brez elektronike" }
+      - { text: "Pretok vode v kondenzatorju" }
+      - { text: "Ročna nastavitev serviserja" }
+    explain: Krmilnik iz tlaka in temperature izračuna pregrevanje in s koračnim motorjem nastavi odprtost ventila.
+
+  - id: c6
+    topic: cevi
+    text: Zakaj cevi in dele kroga ne puščaš odprtih?
+    options:
+      - { text: "Ker vanje vstopata vlaga in nečistoče", correct: true }
+      - { text: "Ker bi se baker oksidiral od zunaj" }
+      - { text: "Ker bi iz njih izhlapelo olje" }
+      - { text: "Ker bi se cevi skrivile" }
+    explain: Vlaga in prah v krogu povzročita kislino, led v ventilu in zamašitve. Odprte konce takoj zapri.
+
+  - id: c7
+    topic: cevi
+    text: Kaj je pri polaganju sesalnega voda pomembno za vračanje olja?
+    options:
+      - { text: "Naklon in izvedba po navodilih proizvajalca", correct: true }
+      - { text: "Čim več kolen" }
+      - { text: "Čim tanjša cev" }
+      - { text: "Cev brez pritrditev" }
+    explain: Olje potuje skupaj s hladivom. Pravi naklon in hitrost toka zagotovita, da se olje vrne v kompresor.
+
+  - id: c8
+    topic: cevi
+    text: Kako upogneš bakreno cev za hladilni krog?
+    options:
+      - { text: "Z upogibalom, da se prerez ne zmanjša", correct: true }
+      - { text: "Z roko čez koleno" }
+      - { text: "S segrevanjem in upogibom s kleščami" }
+      - { text: "Z rezanjem in lepljenjem" }
+    explain: Zmečkana cev zoži prerez in poveča padec tlaka. Upogibalo ohrani okrogel prerez.
+
+  - id: c9
+    topic: cevi
+    text: Kaj preprečuje puščanje zaradi tresenja cevi?
+    options:
+      - { text: "Pravilne pritrditve in protivibracijski elementi", correct: true }
+      - { text: "Debelejša izolacija" }
+      - { text: "Več hladiva v krogu" }
+      - { text: "Višja temperatura kondenzacije" }
+    explain: Tresenje utruja baker na spojih. Cevi morajo biti pritrjene, prehodi pri kompresorju pa izvedeni tako, da dušijo tresljaje.
+
+  - id: g6
+    topic: gorljiva
+    text: Kaj je spodnja meja vnetljivosti (LFL)?
+    options:
+      - { text: "Najmanjša koncentracija v zraku, pri kateri zmes lahko zagori", correct: true }
+      - { text: "Najnižja temperatura, pri kateri hladivo gori" }
+      - { text: "Najmanjša količina hladiva v napravi" }
+      - { text: "Tlak, pri katerem hladivo eksplodira" }
+    explain: Pod to koncentracijo zmes ne more zagoreti. Detektorji opozarjajo že precej pod to mejo.
+
+  - id: g7
+    topic: gorljiva
+    text: Zakaj je količina R290 v napravi v prostoru omejena?
+    options:
+      - { text: "Da ob puščanju koncentracija ne doseže nevarne meje", correct: true }
+      - { text: "Ker R290 dela pri zelo visokem tlaku" }
+      - { text: "Ker R290 škodi ozonu" }
+      - { text: "Ker je R290 drag" }
+    explain: Največja dovoljena polnitev je odvisna od velikosti prostora, da celotna količina ob puščanju ne ustvari vnetljive zmesi.
+
+  - id: g8
+    topic: gorljiva
+    text: Kam se ob puščanju zbira propan (R290)?
+    options:
+      - { text: "Pri tleh, ker je težji od zraka", correct: true }
+      - { text: "Pod stropom, ker je lažji od zraka" }
+      - { text: "Enakomerno po prostoru" }
+      - { text: "Takoj se razkroji" }
+    explain: Propan je težji od zraka in se nabira pri tleh, v jaških in kleteh. Tam je nevarnost vžiga največja.
+
+  - id: g9
+    topic: gorljiva
+    text: Kaj pomeni črka »B« v varnostni skupini hladiva, npr. B2L?
+    options:
+      - { text: "Večjo strupenost", correct: true }
+      - { text: "Večjo gorljivost" }
+      - { text: "Višji tlak" }
+      - { text: "Višji GWP" }
+    explain: Črka pove strupenost (A nižja, B višja), številka gorljivost. Amoniak je B2L – strupen in rahlo gorljiv.
+
+  - id: g10
+    topic: gorljiva
+    text: V katero varnostno skupino spada R32?
+    options:
+      - { text: "A2L – rahlo gorljivo", correct: true }
+      - { text: "A3 – močno gorljivo" }
+      - { text: "A1 – negorljivo" }
+      - { text: "B1 – strupeno" }
+    explain: R32 je rahlo gorljiv (A2L). Zato veljajo posebna pravila za količino v prostoru in za opremo.

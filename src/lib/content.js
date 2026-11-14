@@ -98,7 +98,8 @@ const refrigerantSchema = z.object({
   id: z.string(),
   name: z.string(),
   source: z.string({ error: 'vsaka številka potrebuje vir' }).min(5),
-  points: z.array(z.object({ tC: z.number(), pBarAbs: z.number() })).min(2),
+  safety: z.string().optional(),
+  points: z.array(z.object({ tC: z.number(), pBarAbs: z.number(), pDewBarAbs: z.number().optional() })).min(2),
 });
 export const refrigerantsSchema = z.object({ refrigerants: z.array(refrigerantSchema) });
 

@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import ShScCalc from '../components/ShScCalc.tsx';
+import { loadRefrigerants } from '../lib/content.js';
+import { url } from '../lib/site.js';
+
+const tables = loadRefrigerants();
+---
+<Base
+  title="Kalkulator SH/SC"
+  description="Kalkulator pregrevanja (superheat) in podhlajevanja (subcooling) za R32, R410A in R290 – za diagnostiko z manometri na terenu."
+  current="sh-sc"
+  source="src/components/ShScCalc.tsx"
+>
+  <p class="eyebrow">Orodje za teren</p>
+  <h1>Pregrevanje in podhlajevanje</h1>
+  <p class="lead muted">Vpiši odčitke z manometrov in termometra – izračun SH in SC za R32, R410A in R290.</p>
+  <p class="notice">
+    <span>
+      <strong>Priklop manometrov je poseg v krog hladiva</strong> – samo serviser s spričevalom za F-pline. Temperaturo cevi meri s tipalom, ki je dobro pritrjeno
+      in izolirano. Normalne vrednosti določi proizvajalec naprave za dano obratovalno točko.
+    </span>
+  </p>
+  <ShScCalc client:load tables={tables as any} lessonSh={url('lekcija/m07-l01/')} lessonSc={url('lekcija/m08-l01/')} />
+</Base>
+
+<style>
+  .lead {
+    margin-top: 0;
+  }
+</style>
