@@ -1,5 +1,30 @@
 # Spremembe
 
+## 0.7.0 – 2026-11-14
+
+### Novo
+- **Okvare in popravila** (`/okvare/`): 22 delov toplotne črpalke – zakaj se pokvari, kako se okvara pokaže,
+  popravilo ali zamenjava po korakih, kako preveriš in kako preprečiš. Vsak del ima oznako, kdo sme poseg narediti
+  (lastnik, serviser, električna dela, 🔒 samo s spričevalom za F-pline). Skupna postopka za zamenjavo dela
+  v krogu hladiva in v vodnem krogu. Filtri po krogu in »kar smem sam«. Iz 3D simulatorja vodi povezava na vsak del.
+- **Priprava na izpit F-plini** (`/f-plini/`): kategorije spričevala, potek izpita, snov v 6 temah,
+  5 praktičnih postopkov (spajkanje z dušikom, tlačni preizkus, vakuum, polnjenje po teži, zajem),
+  izračun t CO₂e s pogostostjo pregledov tesnosti, oznaka »To znam« z merilnikom pripravljenosti in vaja z 12 vprašanji.
+  Napačni odgovori gredo v Ponovitev.
+- Slovar: 9 novih pojmov (F-plini, GWP, ekvivalent CO₂, zajem hladiva, tlačni preizkus, vakuumiranje,
+  pregled tesnosti, gorljivo hladivo, evidenca opreme).
+- Meni in glava: novi povezavi »Okvare« in »F-plini«; »Izpit« v meniju preimenovan v »Končni izpit«.
+- Gradnja preveri, da ima vsak del hladilnega in vodnega kroga opis okvare in da je vsak poseg v krog hladiva označen s spričevalom.
+
+## 0.6.0 – 2026-11-13
+
+### Telefon
+- **Hamburger meni** do širine 860 px: predal z vsemi stranmi (ikona + kratek opis), označena trenutna stran
+  in gumb **»Nadaljuj, kjer si ostal«**. Zapre se z ✕, tipko Esc, tapom na ozadje ali tipko Nazaj.
+- Glava je lepljiva, med branjem se umakne in vrne ob drsenju navzgor.
+- Modul: povezava »← Učna pot« ter prejšnji in naslednji modul.
+- Večje dotikalne površine (vsaj 44 px), upoštevani robovi zaslona.
+
 ## 0.5.0 – 2026-11-11
 
 ### Simulator
