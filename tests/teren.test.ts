@@ -137,6 +137,17 @@ describe('teren – učni del', () => {
     }
     for (const t of Object.keys(u.meanings)) expect([t, TOOLS.some((x) => x.id === t)]).toEqual([t, true]);
   });
+  it('povezave rezultata kažejo na obstoječe lekcije in dele na strani okvar', async () => {
+    const { loadTerenUcenje, loadLessons, loadRepairs } = await import('../src/lib/content.js');
+    const lessons = new Set(loadLessons().map((l) => l.id));
+    const parts = new Set(loadRepairs().map((r) => r.part));
+    for (const [f, x] of Object.entries(loadTerenUcenje().faults)) {
+      for (const l of x.lessons) expect([f, l, lessons.has(l)]).toEqual([f, l, true]);
+      for (const p of x.parts) expect([f, p, parts.has(p)]).toEqual([f, p, true]);
+    }
+    // dodatni lekciji v rezultatu: dve okvari hkrati, napačna diagnoza
+    expect(lessons.has('m17-l01') && lessons.has('m16-l01')).toBe(true);
+  });
   it('potrditvene meritve res pokažejo okvaro (vsaj ena odstopa)', async () => {
     const { loadTerenUcenje } = await import('../src/lib/content.js');
     const u = loadTerenUcenje();

@@ -34,7 +34,7 @@ interface FaultText {
   fix: string;
 }
 interface Learn {
-  faults: Record<string, { steps: string[]; confuse: { with: FaultId; how: string }; proof: string[] }>;
+  faults: Record<string, { steps: string[]; confuse: { with: FaultId; how: string }; proof: string[]; lessons: string[]; parts: string[] }>;
   meanings: Record<string, { high?: string; low?: string }>;
 }
 interface Props {
@@ -46,6 +46,8 @@ interface Props {
   learn: Learn;
   pts: PTPoint[];
   lessonSh: string;
+  /** Povezave iz rezultata: naslovi lekcij, imena delov na strani okvar. */
+  links: { lessonBase: string; okvare: string; lessons: Record<string, string>; parts: Record<string, string> };
 }
 interface Job {
   faults: FaultId[];
@@ -125,7 +127,7 @@ const COMP_NAME: Record<Comp, string> = {
 };
 const toolLabel = (id: string) => TOOLS.find((t) => t.id === id)?.label ?? id;
 
-export default function TerenGame({ faults, models, customers, places, generic, learn: L, pts, lessonSh }: Props) {
+export default function TerenGame({ faults, models, customers, places, generic, learn: L, pts, lessonSh, links }: Props) {
   const faultText = useMemo(() => new Map(faults.map((f) => [f.id, f])), [faults]);
   const [stats, setStats] = useState<Stats>(EMPTY);
   const [phase, setPhase] = useState<Phase>('start');
@@ -488,6 +490,42 @@ export default function TerenGame({ faults, models, customers, places, generic, 
             );
           })}
           {missed.length > 0 && result.level === 'partial' && <p class="tg-key">Spregledal si: {missed.map((m) => faultText.get(m)?.name).join(', ')}. Ko najdeš eno okvaro, preveri, ali razloži vsa odstopanja.</p>}
+
+          {(() => {
+            // lekcije in deli za vse dejanske okvare; pri dveh okvarah še 17.1, pri napaki 16.1 (hipoteza)
+            const ls = [...new Set([...job.faults.flatMap((f) => L.faults[f].lessons), ...(job.faults.length > 1 ? ['m17-l01'] : []), ...(result.level !== 'ok' ? ['m16-l01'] : [])])].filter((l) => links.lessons[l]);
+            const ps = [...new Set(job.faults.flatMap((f) => L.faults[f].parts))].filter((p) => links.parts[p]);
+            return (
+              <section class="tg-explain tg-more">
+                <h3>Nauči se več</h3>
+                {ls.length > 0 && (
+                  <>
+                    <p class="tg-more-label">📘 Lekcije</p>
+                    <ul class="tg-more-list">
+                      {ls.map((l) => (
+                        <li>
+                          <a href={`${links.lessonBase}${l}/`} target="_blank" rel="noopener">{links.lessons[l]} ↗</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                {ps.length > 0 && (
+                  <>
+                    <p class="tg-more-label">🔧 Okvare in popravila delov</p>
+                    <ul class="tg-more-list">
+                      {ps.map((p) => (
+                        <li>
+                          <a href={`${links.okvare}#${p}`} target="_blank" rel="noopener">{links.parts[p]} ↗</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                <p class="tg-muted">Povezave se odprejo v novem zavihku – delovni dan ostane, kjer je.</p>
+              </section>
+            );
+          })()}
 
           <p class="tg-stats">
             Meritev: {result.meas} · na lokaciji {onSite} min

@@ -617,3 +617,33 @@
 .tg-why-not p {
   margin: 4px 0;
 }
+
+/* nauči se več */
+.tg-more-label {
+  margin: 8px 0 4px !important;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+.tg-more-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.tg-more-list li {
+  max-width: none;
+}
+.tg-more-list a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-weight: 700;
+  text-decoration: none;
+}
+.tg-more-list a:hover {
+  outline: 2px solid var(--accent);
+}

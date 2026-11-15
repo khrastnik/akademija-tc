@@ -313,6 +313,8 @@ const ucenjeSchema = z.object({
       steps: z.array(z.string().min(10)).min(2),
       confuse: z.object({ with: id, how: z.string().min(20) }),
       proof: z.array(id).min(1),
+      lessons: z.array(z.string()).min(1),
+      parts: z.array(id).min(1),
     }),
   ),
   meanings: z.record(id, z.object({ high: z.string().min(10).optional(), low: z.string().min(10).optional() })),

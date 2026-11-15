@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.15.0 – 2026-11-15
+
+### Igra Teren
+- **»Nauči se več« v rezultatu vsakega naloga**: povezave na lekcije za to okvaro (npr. 8.1 SH in SC skupaj, 5.1 premajhen pretok)
+  in na dele na strani »Okvare in popravila« (npr. ekspanzijski ventil, lovilec). Pri dveh okvarah hkrati še lekcija 17.1
+  »Ko se dve napaki skrivata«, pri napačni ali delni diagnozi 16.1 »Hipoteza – potrdi ali ovrzi«.
+- Povezave se odprejo v novem zavihku, zato delovni dan ostane, kjer je.
+- Test preveri, da vse povezave kažejo na obstoječe lekcije in dele.
+
 ## 0.14.0 – 2026-11-15
 
 ### Čiščenje

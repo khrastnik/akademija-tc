@@ -1,6 +1,7 @@
 # Igra »Teren« – učni del: zakaj je diagnoza pravilna.
 # faults.<id>.steps: pot do diagnoze v preprostih korakih (od poceni meritev do potrditve).
 # faults.<id>.confuse: s čim se okvara najpogosteje zamenja in po čem ju ločiš.
+# faults.<id>.lessons: lekcije za to okvaro, faults.<id>.parts: deli na strani »Okvare in popravila« – povezave v rezultatu igre.
 # faults.<id>.proof: id-ji meritev (packages/engine/src/teren.ts TOOLS), ki okvaro potrdijo.
 # meanings.<tool>.high/low: kaj pomeni odstopanje te meritve – pokaže se v zapisniku (učni način) in v rezultatu.
 
@@ -15,6 +16,8 @@ faults:
       with: eev-zaprt
       how: Pri zaprtem EEV je SH prav tako visoko, a SC je VISOKO – hladivo se kopiči pred ventilom. Pri puščanju SC pade, ker hladiva ni nikjer dovolj.
     proof: [sh, sc, detektor]
+    lessons: [m07-l01, m08-l01, m15-l02, m08-l02]
+    parts: [servisni, uparjalnik, kompresor]
 
   lovilec:
     steps:
@@ -26,6 +29,8 @@ faults:
       with: zrak-v-vodi
       how: Pri zraku je tlak vode NIZEK in črpalka grgra. Pri zamašenem lovilcu je tlak normalen in pretok stalno majhen, ne niha.
     proof: [pretok, dt-vode, lovilec]
+    lessons: [m05-l01, m06-l01, m15-l01]
+    parts: [filter, obtocna]
 
   ventilator:
     steps:
@@ -36,6 +41,8 @@ faults:
       with: odtajevanje
       how: Pri okvari odtajevanja se ventilator vrti, led pa pokrije ves uparjalnik. Če ventilator stoji, je kriv ventilator.
     proof: [zunanja, ventilator]
+    lessons: [m02-l02, m12-l01]
+    parts: [ventilator, uparjalnik]
 
   eev-zaprt:
     steps:
@@ -47,6 +54,8 @@ faults:
       with: filter-susilnik
       how: Zamašen filter sušilnik da enak par SH/SC. Razliko pokaže ΔT na filtru – pri filtru je velika, pri EEV skoraj nič.
     proof: [sh, sc, susilnik, eev]
+    lessons: [m07-l01, m08-l01, m02-l02]
+    parts: [eev, susilnik]
 
   eev-odprt:
     steps:
@@ -58,6 +67,8 @@ faults:
       with: prevec-hladiva
       how: Pri preveč hladiva je SC zelo visoko, SH pa normalno. Pri odprtem EEV je SH skoraj nič.
     proof: [sh, t-tlacni, eev]
+    lessons: [m07-l02, m02-l02]
+    parts: [eev, kompresor]
 
   prevec-hladiva:
     steps:
@@ -68,6 +79,8 @@ faults:
       with: lovilec
       how: Tudi zamašen lovilec dvigne tlak kondenzacije, a pri njem sta pretok majhen in ΔT velika. Pri preveč hladiva je voda v redu, SC pa visoko.
     proof: [pretok, vt, sc]
+    lessons: [m08-l01, m08-l02]
+    parts: [kondenzator, servisni]
 
   zrak-v-vodi:
     steps:
@@ -78,6 +91,8 @@ faults:
       with: lovilec
       how: Pri lovilcu je tlak normalen. Pri zraku je tlak nizek – to je meritev za 1 minuto, zato vedno najprej.
     proof: [tlak-vode, poslusaj]
+    lessons: [m09-l01, m05-l01]
+    parts: [raztezna, obtocna, varnostni]
 
   crpalka:
     steps:
@@ -89,6 +104,8 @@ faults:
       with: zrak-v-vodi
       how: Pri zraku črpalka teče in grgra, pretok niha. Pri okvarjeni črpalki je tiho in pretok je točno 0.
     proof: [pretok, poslusaj, crpalka-pregled]
+    lessons: [m05-l01, m09-l01]
+    parts: [obtocna, pretok]
 
   senzor-zunanji:
     steps:
@@ -100,6 +117,8 @@ faults:
       with: krivulja
       how: Napačna krivulja da prehladno ali pretoplo hišo, a zunanja T na zaslonu je prava. Pri okvarjenem senzorju je zunanja T nemogoča.
     proof: [zaslon, nastavitve, ntc]
+    lessons: [m11-l01, m12-l01]
+    parts: [zunanji-senzor, krmilnik]
 
   odtajevanje:
     steps:
@@ -110,6 +129,8 @@ faults:
       with: ventilator
       how: Če ventilator stoji, je kriv ventilator. Če se vrti in je vse v ledu, se ne izvede odtajevanje.
     proof: [zunanja, ventilator, tuljava4]
+    lessons: [m12-l01, m02-l02]
+    parts: [stiripotni, uparjalnik]
 
   krivulja:
     steps:
@@ -121,6 +142,8 @@ faults:
       with: tripotni
       how: Pri 3-potnem ventilu je bojler prevroč, ker gre vsa toplota tja. Pri napačni krivulji je bojler normalen.
     proof: [radiatorji, nastavitve]
+    lessons: [m12-l01, m00-l02]
+    parts: [krmilnik]
 
   tripotni:
     steps:
@@ -131,6 +154,8 @@ faults:
       with: krivulja
       how: Pri krivulji bojler ni pregret. Če je bojler nad 60 °C in hiša mrzla, poglej ventil.
     proof: [radiatorji, tripotni]
+    lessons: [m00-l01, m16-l01]
+    parts: [tripotni, bojler]
 
   filter-susilnik:
     steps:
@@ -142,6 +167,8 @@ faults:
       with: eev-zaprt
       how: Isti par SH/SC kot pri zaprtem EEV. Odloči ΔT na filtru – 4 minute s termometrom, brez menjave dragega ventila.
     proof: [sh, sc, susilnik]
+    lessons: [m08-l01, m16-l01]
+    parts: [susilnik, eev]
 
   raztezna:
     steps:
@@ -152,6 +179,8 @@ faults:
       with: zrak-v-vodi
       how: Pri zraku je tlak nizek. Pri prazni raztezni posodi tlak niha – v toplem previsok, v hladnem prenizek.
     proof: [tlak-vode, raztezna]
+    lessons: [m09-l01]
+    parts: [raztezna, varnostni]
 
   dogrevalnik:
     steps:
@@ -163,6 +192,8 @@ faults:
       with: senzor-zunanji
       how: Tudi okvarjen senzor dvigne porabo, a hiša je pregreta in zunanja T na zaslonu nemogoča. Pri dogrevalniku je hiša normalno topla.
     proof: [poraba, nastavitve]
+    lessons: [m10-l05]
+    parts: [dogrevalnik, krmilnik]
 
   vt-senzor:
     steps:
@@ -173,6 +204,8 @@ faults:
       with: prevec-hladiva
       how: Pri preveč hladiva tlak RES naraste – manometer to pokaže. Če manometer kaže normalno, krmilnik pa visoko, je kriv senzor.
     proof: [pretok, vt-senzor]
+    lessons: [m11-l01, m18-l01]
+    parts: [krmilnik]
 
 meanings:
   radiatorji:
