@@ -2,6 +2,8 @@
 # faults.<id>.steps: pot do diagnoze v preprostih korakih (od poceni meritev do potrditve).
 # faults.<id>.confuse: s čim se okvara najpogosteje zamenja in po čem ju ločiš.
 # faults.<id>.lessons: lekcije za to okvaro, faults.<id>.parts: deli na strani »Okvare in popravila« – povezave v rezultatu igre.
+# faults.<id>.also: druge okvare, ki so v modelu igre po hitrih meritvah podobne (izračunano iz modela, ne strokovna trditev –
+#   test v tests/teren.test.ts preveri, da so res podobne). Skupaj s confuse določa skupino za vajo s strani okvar.
 # faults.<id>.proof: id-ji meritev (packages/engine/src/teren.ts TOOLS), ki okvaro potrdijo.
 # meanings.<tool>.high/low: kaj pomeni odstopanje te meritve – pokaže se v zapisniku (učni način) in v rezultatu.
 
@@ -15,6 +17,7 @@ faults:
     confuse:
       with: eev-zaprt
       how: Pri zaprtem EEV je SH prav tako visoko, a SC je VISOKO – hladivo se kopiči pred ventilom. Pri puščanju SC pade, ker hladiva ni nikjer dovolj.
+    also: [prevec-hladiva, ventilator, filter-susilnik]
     proof: [sh, sc, detektor]
     lessons: [m07-l01, m08-l01, m15-l02, m08-l02]
     parts: [servisni, uparjalnik, kompresor]
@@ -28,6 +31,7 @@ faults:
     confuse:
       with: zrak-v-vodi
       how: Pri zraku je tlak vode NIZEK in črpalka grgra. Pri zamašenem lovilcu je tlak normalen in pretok stalno majhen, ne niha.
+    also: [prevec-hladiva, ventilator]
     proof: [pretok, dt-vode, lovilec]
     lessons: [m05-l01, m06-l01, m15-l01]
     parts: [filter, obtocna]
@@ -40,6 +44,7 @@ faults:
     confuse:
       with: odtajevanje
       how: Pri okvari odtajevanja se ventilator vrti, led pa pokrije ves uparjalnik. Če ventilator stoji, je kriv ventilator.
+    also: [prevec-hladiva, premalo-hladiva, eev-zaprt, lovilec]
     proof: [zunanja, ventilator]
     lessons: [m02-l02, m12-l01]
     parts: [ventilator, uparjalnik]
@@ -53,6 +58,7 @@ faults:
     confuse:
       with: filter-susilnik
       how: Zamašen filter sušilnik da enak par SH/SC. Razliko pokaže ΔT na filtru – pri filtru je velika, pri EEV skoraj nič.
+    also: [premalo-hladiva, prevec-hladiva, ventilator]
     proof: [sh, sc, susilnik, eev]
     lessons: [m07-l01, m08-l01, m02-l02]
     parts: [eev, susilnik]
@@ -66,6 +72,7 @@ faults:
     confuse:
       with: prevec-hladiva
       how: Pri preveč hladiva je SC zelo visoko, SH pa normalno. Pri odprtem EEV je SH skoraj nič.
+    also: []
     proof: [sh, t-tlacni, eev]
     lessons: [m07-l02, m02-l02]
     parts: [eev, kompresor]
@@ -78,6 +85,7 @@ faults:
     confuse:
       with: lovilec
       how: Tudi zamašen lovilec dvigne tlak kondenzacije, a pri njem sta pretok majhen in ΔT velika. Pri preveč hladiva je voda v redu, SC pa visoko.
+    also: [eev-zaprt, premalo-hladiva, ventilator, filter-susilnik, eev-odprt]
     proof: [pretok, vt, sc]
     lessons: [m08-l01, m08-l02]
     parts: [kondenzator, servisni]
@@ -90,6 +98,7 @@ faults:
     confuse:
       with: lovilec
       how: Pri lovilcu je tlak normalen. Pri zraku je tlak nizek – to je meritev za 1 minuto, zato vedno najprej.
+    also: []
     proof: [tlak-vode, poslusaj]
     lessons: [m09-l01, m05-l01]
     parts: [raztezna, obtocna, varnostni]
@@ -103,6 +112,7 @@ faults:
     confuse:
       with: zrak-v-vodi
       how: Pri zraku črpalka teče in grgra, pretok niha. Pri okvarjeni črpalki je tiho in pretok je točno 0.
+    also: []
     proof: [pretok, poslusaj, crpalka-pregled]
     lessons: [m05-l01, m09-l01]
     parts: [obtocna, pretok]
@@ -116,6 +126,7 @@ faults:
     confuse:
       with: krivulja
       how: Napačna krivulja da prehladno ali pretoplo hišo, a zunanja T na zaslonu je prava. Pri okvarjenem senzorju je zunanja T nemogoča.
+    also: [dogrevalnik, vt-senzor]
     proof: [zaslon, nastavitve, ntc]
     lessons: [m11-l01, m12-l01]
     parts: [zunanji-senzor, krmilnik]
@@ -128,6 +139,7 @@ faults:
     confuse:
       with: ventilator
       how: Če ventilator stoji, je kriv ventilator. Če se vrti in je vse v ledu, se ne izvede odtajevanje.
+    also: [krivulja, filter-susilnik, raztezna, dogrevalnik]
     proof: [zunanja, ventilator, tuljava4]
     lessons: [m12-l01, m02-l02]
     parts: [stiripotni, uparjalnik]
@@ -141,6 +153,7 @@ faults:
     confuse:
       with: tripotni
       how: Pri 3-potnem ventilu je bojler prevroč, ker gre vsa toplota tja. Pri napačni krivulji je bojler normalen.
+    also: [vt-senzor, raztezna, dogrevalnik, senzor-zunanji, odtajevanje]
     proof: [radiatorji, nastavitve]
     lessons: [m12-l01, m00-l02]
     parts: [krmilnik]
@@ -153,6 +166,7 @@ faults:
     confuse:
       with: krivulja
       how: Pri krivulji bojler ni pregret. Če je bojler nad 60 °C in hiša mrzla, poglej ventil.
+    also: [vt-senzor, raztezna, dogrevalnik]
     proof: [radiatorji, tripotni]
     lessons: [m00-l01, m16-l01]
     parts: [tripotni, bojler]
@@ -166,6 +180,7 @@ faults:
     confuse:
       with: eev-zaprt
       how: Isti par SH/SC kot pri zaprtem EEV. Odloči ΔT na filtru – 4 minute s termometrom, brez menjave dragega ventila.
+    also: [prevec-hladiva, premalo-hladiva, odtajevanje]
     proof: [sh, sc, susilnik]
     lessons: [m08-l01, m16-l01]
     parts: [susilnik, eev]
@@ -178,6 +193,7 @@ faults:
     confuse:
       with: zrak-v-vodi
       how: Pri zraku je tlak nizek. Pri prazni raztezni posodi tlak niha – v toplem previsok, v hladnem prenizek.
+    also: [krivulja, dogrevalnik, tripotni, vt-senzor, odtajevanje]
     proof: [tlak-vode, raztezna]
     lessons: [m09-l01]
     parts: [raztezna, varnostni]
@@ -191,6 +207,7 @@ faults:
     confuse:
       with: senzor-zunanji
       how: Tudi okvarjen senzor dvigne porabo, a hiša je pregreta in zunanja T na zaslonu nemogoča. Pri dogrevalniku je hiša normalno topla.
+    also: [krivulja, raztezna, tripotni, vt-senzor, odtajevanje]
     proof: [poraba, nastavitve]
     lessons: [m10-l05]
     parts: [dogrevalnik, krmilnik]
@@ -203,6 +220,7 @@ faults:
     confuse:
       with: prevec-hladiva
       how: Pri preveč hladiva tlak RES naraste – manometer to pokaže. Če manometer kaže normalno, krmilnik pa visoko, je kriv senzor.
+    also: [krivulja, tripotni, raztezna, dogrevalnik, senzor-zunanji]
     proof: [pretok, vt-senzor]
     lessons: [m11-l01, m18-l01]
     parts: [krmilnik]

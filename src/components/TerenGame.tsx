@@ -36,7 +36,7 @@ interface FaultText {
   fix: string;
 }
 interface Learn {
-  faults: Record<string, { steps: string[]; confuse: { with: FaultId; how: string }; proof: string[]; lessons: string[]; parts: string[] }>;
+  faults: Record<string, { steps: string[]; confuse: { with: FaultId; how: string }; also?: FaultId[]; proof: string[]; lessons: string[]; parts: string[] }>;
   meanings: Record<string, { high?: string; low?: string }>;
 }
 interface Props {
@@ -158,7 +158,7 @@ export default function TerenGame({ faults, models, customers, places, generic, 
   const [practicing, setPracticing] = useState(false);
   const lastPractice = useRef<FaultId | null>(null);
   const group = useMemo(
-    () => (practice ? practiceGroup(practice, Object.fromEntries(Object.entries(L.faults).map(([k, v]) => [k, v.confuse.with]))) : []),
+    () => (practice ? practiceGroup(practice, Object.fromEntries(Object.entries(L.faults).map(([k, v]) => [k, { with: v.confuse.with, also: v.also }]))) : []),
     [practice],
   );
   useEffect(() => {

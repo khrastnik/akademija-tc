@@ -614,18 +614,23 @@ export function shuffledDeck(seed: number): FaultId[] {
   return d;
 }
 /** Klic podpore izključi 5 napačnih možnosti (nikoli nobene od dejanskih okvar). */
+/** Sorodnost okvar iz učne vsebine: s čim se zamenja (confuse.with) in kaj je v modelu podobno (also). */
+export type Lookalike = Record<string, { with: FaultId; also?: FaultId[] }>;
+/** Največ okvar v skupini za vajo – več bi razredčilo izbrano okvaro. */
+export const PRACTICE_MAX = 5;
 /**
- * Skupina zamenljivih okvar za vajo: izbrana okvara, okvara, s katero jo je lahko zamenjati,
- * in vse okvare, ki jih je lahko zamenjati z njo. Izbrana je vedno prva.
+ * Skupina zamenljivih okvar za vajo. Vrstni red: izbrana, njena »ne zamenjaj z«, okvare, ki jih je lahko
+ * zamenjati z njo, nato podobne iz modela (also, od najbolj podobne). Izbrana je vedno prva.
  */
-export function practiceGroup(target: FaultId, confuse: Record<string, FaultId>): FaultId[] {
+export function practiceGroup(target: FaultId, rel: Lookalike, max = PRACTICE_MAX): FaultId[] {
   const g = [target];
   const add = (f: FaultId | undefined) => {
     if (f && FAULT_IDS.includes(f) && !g.includes(f)) g.push(f);
   };
-  add(confuse[target]);
-  for (const f of FAULT_IDS) if (confuse[f] === target) add(f);
-  return g;
+  add(rel[target]?.with);
+  for (const f of FAULT_IDS) if (rel[f]?.with === target) add(f);
+  for (const f of rel[target]?.also ?? []) add(f);
+  return g.slice(0, max);
 }
 
 /** Naključna okvara iz skupine; če je mogoče, ne ista kot prejšnjič. */

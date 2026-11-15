@@ -1,5 +1,15 @@
 # Spremembe
 
+## 0.18.0 – 2026-11-15
+
+### Igra Teren – večje skupine za vajo
+- **Več zamenljivih okvar**: nova polja `also` v `content/teren/ucenje.yaml` naštejejo okvare, ki so si v modelu igre
+  podobne po vseh hitrih (nepotrditvenih) meritvah. Izračunano iz modela, ne zapisano na pamet; test preveri, da se
+  vsak par res razlikuje v največ 4 meritvah.
+- Skupina za vajo s strani okvar ima zdaj do 5 okvar (prej 2–3); 14 od 16 skupin ima vsaj 3.
+  Primer: premalo hladiva · EEV zaprt · preveč hladiva · ventilator · filter sušilnik.
+- Izjemi: EEV zataknjen odprt in obtočna črpalka imata v modelu dovolj značilen podpis, zato ostaneta pri dveh.
+
 ## 0.17.0 – 2026-11-15
 
 ### Igra Teren – vaja s strani okvar

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { makeEnv, reading, scoreJob, scoreDiagnosis, shuffledDeck, seasonDeck, seasonForDay, supportEliminate, practiceGroup, pickPractice, FAULT_IDS, TOOLS, COMBOS, SEASONS, SEASON_ORDER, type FaultId, type Level } from '../packages/engine/src/teren';
+import { makeEnv, reading, scoreJob, scoreDiagnosis, shuffledDeck, seasonDeck, seasonForDay, supportEliminate, practiceGroup, pickPractice, PRACTICE_MAX, FAULT_IDS, TOOLS, COMBOS, SEASONS, SEASON_ORDER, type FaultId, type Level } from '../packages/engine/src/teren';
 import { loadRefrigerants } from '../src/lib/content.js';
 
 const pts = loadRefrigerants().find((r) => r.id === 'R32')!.points;
@@ -150,10 +150,12 @@ describe('teren – učni del', () => {
   });
   it('vaja s strani okvar: skupina zamenljivih ima vsaj 2 okvari, izbrana je prva, žreb ne ponovi zadnje', async () => {
     const { loadTerenUcenje } = await import('../src/lib/content.js');
-    const confuse = Object.fromEntries(Object.entries(loadTerenUcenje().faults).map(([k, v]) => [k, v.confuse.with as FaultId]));
+    const rel = Object.fromEntries(Object.entries(loadTerenUcenje().faults).map(([k, v]) => [k, { with: v.confuse.with as FaultId, also: v.also as FaultId[] }]));
+    let big = 0;
     for (const f of FAULT_IDS) {
-      const g = practiceGroup(f, confuse);
-      expect([f, g[0], g.length >= 2, new Set(g).size === g.length]).toEqual([f, f, true, true]);
+      const g = practiceGroup(f, rel);
+      expect([f, g[0], g.length >= 2, g.length <= PRACTICE_MAX, new Set(g).size === g.length]).toEqual([f, f, true, true, true]);
+      if (g.length >= 3) big += 1;
       const seen = new Set<FaultId>();
       let last: FaultId | null = null;
       for (let s = 1; s <= 60; s++) {
@@ -164,7 +166,25 @@ describe('teren – učni del', () => {
       }
       expect([f, seen.size]).toEqual([f, g.length]);
     }
-    expect(practiceGroup('eev-zaprt', confuse).sort()).toEqual(['eev-zaprt', 'filter-susilnik', 'premalo-hladiva'].sort());
+    // večina skupin ima vsaj 3 okvare – ugibanje ne zadene v polovici primerov
+    expect(big).toBeGreaterThanOrEqual(13);
+    expect(practiceGroup('eev-zaprt', rel)).toEqual(['eev-zaprt', 'filter-susilnik', 'premalo-hladiva', 'prevec-hladiva', 'ventilator']);
+  });
+  it('»also« ni izmišljen: okvari sta si v modelu res podobni po vseh nepotrditvenih meritvah', async () => {
+    const { loadTerenUcenje } = await import('../src/lib/content.js');
+    const quick = TOOLS.filter((t) => !t.confirm).map((t) => t.id);
+    const profile = (f: FaultId) =>
+      quick.map((t) => {
+        const c: Record<string, number> = {};
+        for (const l of LEVELS) for (let s = 1; s <= 30; s++) c[zone(t, makeEnv(f, s * 7919, l))] = (c[zone(t, makeEnv(f, s * 7919, l))] ?? 0) + 1;
+        return Object.entries(c).sort((a, b) => b[1] - a[1])[0][0];
+      });
+    const P = Object.fromEntries(FAULT_IDS.map((f) => [f, profile(f)]));
+    for (const [f, x] of Object.entries(loadTerenUcenje().faults))
+      for (const g of x.also as FaultId[]) {
+        const d = P[f].filter((z, i) => z !== P[g][i]).length;
+        expect([f, g, g !== f && g !== x.confuse.with, d <= 4]).toEqual([f, g, true, true]);
+      }
   });
   it('potrditvene meritve res pokažejo okvaro (vsaj ena odstopa)', async () => {
     const { loadTerenUcenje } = await import('../src/lib/content.js');
