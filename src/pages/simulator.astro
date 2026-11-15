@@ -19,6 +19,7 @@ const { parts, faults, days } = loadSim();
     <h1>3D simulator toplotne črpalke</h1>
     <p class="muted">Poglej, kako toplota iz zraka pride v radiatorje – nato se kot serviser loti pravih klicev strank.</p>
     <p class="jump"><a href="#postaje">↓ Štiri postaje v živo – vsaka posebej</a></p>
+    <p class="jump"><a href={url('teren')}>🧰 Nova igra »Teren« – cel delovni dan, 16 okvar, ugled in zaslužek →</a></p>
   </header>
   <Simulator client:only="preact" parts={parts} faults={faults} days={days} lessonUrl={url('lekcija/m00-l01')}>
     <!-- Okostje iste velikosti, dokler se simulator ne naloži: stran ne poskoči. -->

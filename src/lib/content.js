@@ -296,6 +296,32 @@ export function loadTools() {
   return parsed.data;
 }
 
+// ---------- igra Teren ----------
+const terenSchema = z.object({
+  faults: z
+    .array(
+      z.object({
+        id,
+        name: z.string(),
+        complaints: z.array(z.string().min(10)).min(2),
+        indicators: z.array(z.string().min(5)).length(3),
+        why: z.string().min(20),
+        fix: z.string().min(10),
+      }),
+    )
+    .min(5),
+  models: z.array(z.string()).min(3),
+  customers: z.array(z.string()).min(5),
+  places: z.array(z.string()).min(5),
+  generic: z.object({ complaints: z.array(z.string().min(10)).min(2), faults: z.array(id) }),
+});
+/** Besedila igre »Teren«: okvare, stranke, kraji, izmišljeni modeli. */
+export function loadTeren() {
+  const parsed = terenSchema.safeParse(parseYaml(read('content', 'teren', 'teren.yaml')));
+  if (!parsed.success) throw new Error(`content/teren/teren.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
 // ---------- kode napak proizvajalcev ----------
 const codesSchema = z.object({
   brands: z.array(

@@ -1,5 +1,26 @@
 # Spremembe
 
+## 0.11.0 – 2026-11-15
+
+### Nova igra »Teren« (`/teren/`) – po PRD »Serviser TČ«
+- **Delovni dan 480 minut**: vožnja 15–35 min, nov nalog le, če ostane vožnja + 40 min; ura, preostanek dneva, zaslužek in ugled ★ (začetek 3 ★, pri 0 ★ konec igre).
+- **Plačilo po PRD**: (140 € − 1,2 € × min nad 20 min na lokaciji) × (0,6 + 0,1 × ugled), najmanj 40 €; diagnoza z ≤ 1 meritvijo ×0,7;
+  napaka −30 € in −1 ★; pravilno v ≤ 35 min +1 ★. Klic podpore (−15 min) enkrat na nalog izloči 5 napačnih možnosti.
+- **16 okvar**: 11 iz PRD (premalo/preveč hladiva, zamašen lovilec, ventilator, EEV zaprt/odprt, zrak v vodi, črpalka, senzor zunanje T,
+  odtajevanje, krivulja) + 5 realnih iz v0.3 (3-potni ventil, filter sušilnik, raztezna posoda, dogrevalnik, tlačni senzor VT).
+- **Model po PRD**: zdravo izhodišče (T uparjanja = T zunaj − 6…8 K, T kondenzacije = T dovoda + 2,5…4 K, SH 4–6,5 K, SC 3–5 K, ΔT 4,5–6 K,
+  pretok 1,15–1,35 m³/h, tlak 1,4–1,8 bar), tlaki iz preverjene P-T tabele R32, šum, koda napake le z verjetnostjo 40–75 %,
+  stara nepovezana koda v zgodovini, splošne prijave strank (prijava sama ne izda vzroka), več variant prijav na okvaro.
+- **28 meritev** s ceno 1–10 min; SH, SC in primerjava VT zahtevajo priklopljeno manometrsko baterijo; drage potrditvene meritve označene.
+- **Klikljiva shema** zunanje enote, notranje enote in hiše: klik na del pokaže njegova orodja; shema pokaže izmerjeno
+  (ventilator stoji, led, koda na krmilniku, kazalci manometrov, barva radiatorjev, zamašen lovilec …). Na telefonu pomična v berljivi velikosti.
+- **Servisni zapisnik** (najnovejše zgoraj, ura, minute, oznaka VISOKO/NIZKO tudi z besedo, ne le barvo), učni način z normalnimi območji
+  in referenčno tabelo, **namig**, ki se prilagodi izmerjenemu, rezultat s 3 ključnimi indikatorji, razlago in popravilom.
+- **3 težavnostne stopnje** (vajenec, serviser, mojster) – šum, pogostost kod, stare kode, učni način.
+- **Statistika v brskalniku** (metrike iz PRD): točnost, povprečno število meritev pri pravilni diagnozi, točnost po dnevih, najboljši dan.
+- Testi: podpis vsake okvare na 3 stopnjah × 40 nalogov, formula plačila, ugled, kupček, podpora, ponovljivost.
+- Povezave: glava (»Teren«), meni, Orodja in stran Simulator.
+
 ## 0.10.1 – 2026-11-15
 
 ### Popravek

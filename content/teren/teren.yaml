@@ -1,0 +1,178 @@
+# Igra »Teren« – besedila okvar, strank in naprav. id okvare se ujema s packages/engine/src/teren.ts (FAULT_MODS).
+# complaints: različice prijave (izbere se naključno) – več variant na okvaro, da igralec ne izloča po prijavi.
+# indicators: 3 ključni indikatorji, ki jih rezultat pokaže po diagnozi. Modeli naprav so izmišljeni (PRD: brez pravih znamk).
+
+faults:
+  - id: premalo-hladiva
+    name: Premalo hladiva (puščanje)
+    complaints:
+      - Greje vedno slabše, vsako zimo malo bolj.
+      - Pri zunanji enoti so oljni madeži, hiša pa mlačna.
+      - Serviser je lani dolil plin, zdaj je spet isto.
+    indicators: [Pregretje zelo visoko, Podhladitev skoraj nič, Detektor najde puščanje]
+    why: Hladiva je premalo, zato je uparjalnik »lačen« – para se pregreje že na začetku, v kondenzatorju pa ni zaloge tekočine.
+    fix: Poišči in popravi puščanje, vakuumiraj, napolni po teži. Doliti brez popravila ni dovoljeno.
+
+  - id: lovilec
+    name: Zamašen lovilec nesnage
+    complaints:
+      - Naprava se ustavlja z napako, radiatorji so mlačni.
+      - Po menjavi starih radiatorjev greje slabše.
+      - Zjutraj vse dela, popoldne napaka in mrzla hiša.
+    indicators: ["Pretok pod 0,45 m³/h", "ΔT vode nad 10 K", "Tlak vode normalen"]
+    why: Voda ne teče skozi kondenzator, toplote ni kam oddati – tlak kondenzacije naraste in krmilnik ustavlja napravo.
+    fix: Očisti lovilec, poišči vir mulja, po potrebi magnetni lovilec.
+
+  - id: ventilator
+    name: Okvara zunanjega ventilatorja
+    complaints:
+      - Zunanja enota je tiho, a se na njej dela led.
+      - Črpalka brni, ampak ne piha.
+      - Ponoči se je slišal ropot, zdaj je hiša mrzla.
+    indicators: [Ventilator stoji, Led na uparjalniku, Nizka T uparjanja]
+    why: Brez zraka uparjalnik ne dobi toplote – T uparjanja pade, na lamelah se nabira led.
+    fix: Preveri motor ventilatorja, napajanje in krmilni signal (usposobljena oseba), zamenjaj motor.
+
+  - id: eev-zaprt
+    name: EEV zataknjen zaprt
+    complaints:
+      - Greje slabo, zunanja enota pa se ne zaledeni.
+      - Od zadnjega servisa slabo greje.
+      - Moč je na pol, računi pa enaki.
+    indicators: [Pregretje visoko, Podhladitev visoka, EEV se ne odpre]
+    why: Ventil spusti premalo hladiva – uparjalnik je lačen (visoko SH), hladivo se kopiči v kondenzatorju (visoko SC).
+    fix: Preveri tuljavo in konektor; telo ventila zamenja serviser s spričevalom, z novim filtrom sušilnikom.
+
+  - id: eev-odprt
+    name: EEV zataknjen odprt
+    complaints:
+      - Kompresor čudno ropota.
+      - Na cevi pri kompresorju je led.
+      - Greje, a se sliši klokotanje v zunanji enoti.
+    indicators: [Pregretje skoraj nič, Zaledenel sesalni vod, Nizka T tlačnega voda]
+    why: Ventil spusti preveč hladiva – v kompresor pride kapljevina, kar ga lahko uniči.
+    fix: Takoj ustavi napravo, preveri EEV in krmilnik; poseg v krog s spričevalom.
+
+  - id: prevec-hladiva
+    name: Preveč hladiva
+    complaints:
+      - Po jesenskem servisu se občasno ustavi z napako.
+      - Lani so polnili plin, odtlej porabi več.
+      - Kompresor je glasnejši kot prej.
+    indicators: [Podhladitev nad 10 K, Visoka T kondenzacije, Vodna stran v redu]
+    why: Odvečna tekočina zalije kondenzator – manj površine za kondenzacijo, tlak in tok narasteta.
+    fix: Zajem do prave količine po tablici, preveri evidenco polnjenja.
+
+  - id: zrak-v-vodi
+    name: Zrak / nizek tlak vode
+    complaints:
+      - V ceveh šumi in klokota.
+      - Po menjavi radiatorja šumi in javi napako.
+      - Tlak na manometru je skoraj na nič.
+    indicators: ["Tlak vode pod 0,6 bar", "Pretok niha", "Črpalka grgra"]
+    why: Premalo vode in zrak v sistemu – črpalka ne potiska vode, pretok niha.
+    fix: Dolij in odzrači, poišči vzrok izgube vode (puščanje, raztezna posoda).
+
+  - id: crpalka
+    name: Okvarjena obtočna črpalka
+    complaints:
+      - Naprava se sploh ne zažene, na zaslonu napaka.
+      - Po poletju se ne odzove, hiša mrzla.
+      - Vse je tiho, nič ne greje.
+    indicators: [Pretok 0, Kompresor ne teče, Črpalka se ne vrti]
+    why: Brez pretoka krmilnik iz zaščite ne zažene kompresorja.
+    fix: Deblokiraj ali zamenjaj črpalko (zaporni ventili, nova tesnila), odzrači.
+
+  - id: senzor-zunanji
+    name: Okvarjen senzor zunanje T
+    complaints:
+      - Hiša je pregreta, odpiramo okna.
+      - Radiatorji so vroči tudi pri sončnem vremenu.
+      - Račun za elektriko je zrasel, v hiši 26 stopinj.
+    indicators: [Krmilnik bere −40 °C, Dovod okoli 55 °C, NTC kaže ∞]
+    why: Prekinjen senzor krmilnik prebere kot hud mraz – po krivulji zahteva najvišjo T vode.
+    fix: Preveri kabel in senzor, zamenjaj senzor, postavi ga v senco na severno steno.
+
+  - id: odtajevanje
+    name: Okvara odtajevanja (4-potni ventil)
+    complaints:
+      - Zunanja enota je cela bela od ledu.
+      - Pozimi greje vedno slabše, enota je kot hladilnik.
+      - Javlja napako odtajevanja.
+    indicators: [Ves uparjalnik v ledu, Ventilator se vrti, Tuljava 4-potnega ventila ∞ Ω]
+    why: 4-potni ventil se ne preklopi, odtajevanje ne steče – led raste in zapira pot zraku.
+    fix: Zamenjaj tuljavo 4-potnega ventila (brez posega v hladivo); če je kriv ventil, poseg s spričevalom.
+
+  - id: krivulja
+    name: Napačna ogrevalna krivulja
+    complaints:
+      - Naprava dela brez napake, v hiši pa le 17 stopinj.
+      - Po posodobitvi krmilnika je hladneje.
+      - Vse se vrti, radiatorji pa mlačni.
+    indicators: [Vse meritve normalne, Nizka zahtevana T dovoda, Sobna T nizka]
+    why: Naprava dela pravilno, a po napačni krivulji – zahteva prenizko T vode.
+    fix: Nastavi krivuljo po projektu in odzivu hiše.
+
+  - id: tripotni
+    name: 3-potni ventil obtičal na bojlerju
+    complaints:
+      - Tuš je vroč kot še nikoli, hiša pa mrzla.
+      - Topla voda je super, radiatorji hladni.
+      - Od včeraj je v dnevni sobi 17 stopinj.
+    indicators: [Kazalec ventila na sanitarni vodi, Bojler nad 60 °C, Sobe hladne]
+    why: Vsa toplota gre v bojler, ker ventil ne preklopi nazaj na ogrevanje.
+    fix: Zamenjaj pogon ventila (pogosto brez praznjenja), preveri gred.
+
+  - id: filter-susilnik
+    name: Zamašen filter sušilnik
+    complaints:
+      - Lani so menjali kompresor, odtlej greje slabo.
+      - Po popravilu je moč na pol.
+      - Prejšnji serviser pravi, da plina ne manjka.
+    indicators: [Pregretje in podhladitev visoka, ΔT na filtru 6–9 K, EEV v redu]
+    why: Zožitev pred ventilom – kot zaprt EEV, a razliko pokaže ΔT na filtru sušilniku.
+    fix: Zamenjaj filter sušilnik in poišči vzrok nečistoč (poseg s spričevalom).
+
+  - id: raztezna
+    name: Raztezna posoda brez predtlaka
+    complaints:
+      - Varnostni ventil kaplja, vsak teden dolivam vodo.
+      - Tlak skače gor in dol.
+      - Pod notranjo enoto je mokro.
+    indicators: [Tlak vode okoli 3 bar v toplem, Predtlak skoraj 0, Varnostni ventil kaplja]
+    why: Posoda brez plina ne sprejme raztezanja vode – tlak naraste do varnostnega ventila.
+    fix: Nastavi predtlak po projektu ali zamenjaj posodo, nato tlak sistema.
+
+  - id: dogrevalnik
+    name: Dogrevalnik se vklaplja pri blagem vremenu
+    complaints:
+      - Toplo je, ampak račun je skoraj dvojen.
+      - Saj ni bilo tako mrzlo, poraba pa ogromna.
+      - Sosed ima isto napravo in plača pol manj.
+    indicators: [Dogrevalnik vklopljen, Meja vklopa +10 °C, Poraba skoraj dvojna]
+    why: Električni grelec greje z elektriko 1:1, toplotna črpalka večkrat bolj učinkovito.
+    fix: Nastavi mejo vklopa dogrevalnika po projektu.
+
+  - id: vt-senzor
+    name: Okvarjen tlačni senzor VT
+    complaints:
+      - Ustavlja se z napako visokega tlaka, brez pravega razloga.
+      - Pri vsakem zagonu po nekaj minutah napaka.
+      - Že tretji serviser ne najde nič.
+    indicators: [Krmilnik bere okoli 40 bar, Manometer kaže normalno, Hladivo v redu]
+    why: Senzor laže – krmilnik misli, da je tlak previsok, in ustavlja kompresor.
+    fix: Zamenjaj tlačni senzor (pogosto na Schrader ventilu, po navodilih proizvajalca).
+
+# Splošne prijave: pri okvarah s seznama generic se v 45 % nalogov uporabi ena od teh – kot v praksi, kjer stranka pove le »mrzlo je«.
+generic:
+  complaints:
+    - Hiša je mrzla, ne vem, kaj je narobe.
+    - Greje slabše kot lani.
+    - Zjutraj je v hiši hladno, popoldne gre.
+    - Na zaslonu je bila napaka, zdaj je ni, a ne greje prav.
+    - Že nekaj dni ni prave toplote.
+  faults: [premalo-hladiva, lovilec, ventilator, eev-zaprt, eev-odprt, prevec-hladiva, zrak-v-vodi, crpalka, odtajevanje, krivulja, tripotni, filter-susilnik, vt-senzor]
+
+models: [Termix AW 8, Nordair Mono 10, Kalora HP 6, Vitaterm Split 9, Borealis M7, Aquilo 12 T]
+customers: [Gospa Mojca, Gospod Janez, Družina Novak, Gospa Petra, Gospod Marko, Gospa Ana, Gospod Tomaž, Gospa Nina, Gospod Rok, Gospa Irena, Gospod Bojan, Gospa Tanja]
+places: [Domžale, Kranj, Celje, Novo mesto, Ptuj, Velenje, Koper, Kamnik, Škofja Loka, Murska Sobota, Nova Gorica, Slovenj Gradec]

@@ -77,6 +77,11 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 - `src/components/StationSims.tsx` – štiri postaje v živo: ali so smeri sprememb (kje zavre, kdaj tlak raste, lačen/preplavljen uparjalnik) pravilne in besedila sodil ob vsakem stanju strokovno točna.
 - **Zalogovnik (0.5.0)** – prosimo posebej preveri: ali naj bo primarni pretok res nekoliko večji od sekundarnega (napaka »mešanje«), ali je »46 zagonov v 24 urah« prepričljiv primer taktiranja, in ali je opis meje vklopa dogrevalnika (bivalentne točke) pravilen za tipične naprave.
 
+## Igra Teren (0.11.0)
+
+- `packages/engine/src/teren.ts` – zdravo izhodišče, vpliv vsake okvare na meritve in normalna območja v učnem načinu. Vrednosti so iz PRD »Serviser TČ« in jih mora potrditi serviser (PRD: »Kdo strokovno potrdi vrednosti meritev?«).
+- `content/teren/teren.yaml` – prijave strank, 3 ključni indikatorji, razlage in popravila za 16 okvar.
+
 ## Merilna oprema (0.10.0)
 
 - `content/oprema/oprema.yaml` – opisi naprav: kaj meri, kje, kako, napake in kdo sme.
