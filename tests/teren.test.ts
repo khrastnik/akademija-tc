@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { makeEnv, reading, scoreJob, scoreDiagnosis, shuffledDeck, seasonDeck, seasonForDay, supportEliminate, FAULT_IDS, TOOLS, COMBOS, SEASONS, SEASON_ORDER, type FaultId, type Level } from '../packages/engine/src/teren';
+import { makeEnv, reading, scoreJob, scoreDiagnosis, shuffledDeck, seasonDeck, seasonForDay, supportEliminate, practiceGroup, pickPractice, FAULT_IDS, TOOLS, COMBOS, SEASONS, SEASON_ORDER, type FaultId, type Level } from '../packages/engine/src/teren';
 import { loadRefrigerants } from '../src/lib/content.js';
 
 const pts = loadRefrigerants().find((r) => r.id === 'R32')!.points;
@@ -147,6 +147,24 @@ describe('teren – učni del', () => {
     }
     // dodatni lekciji v rezultatu: dve okvari hkrati, napačna diagnoza
     expect(lessons.has('m17-l01') && lessons.has('m16-l01')).toBe(true);
+  });
+  it('vaja s strani okvar: skupina zamenljivih ima vsaj 2 okvari, izbrana je prva, žreb ne ponovi zadnje', async () => {
+    const { loadTerenUcenje } = await import('../src/lib/content.js');
+    const confuse = Object.fromEntries(Object.entries(loadTerenUcenje().faults).map(([k, v]) => [k, v.confuse.with as FaultId]));
+    for (const f of FAULT_IDS) {
+      const g = practiceGroup(f, confuse);
+      expect([f, g[0], g.length >= 2, new Set(g).size === g.length]).toEqual([f, f, true, true]);
+      const seen = new Set<FaultId>();
+      let last: FaultId | null = null;
+      for (let s = 1; s <= 60; s++) {
+        const p = pickPractice(g, last, s);
+        expect([f, p !== last, g.includes(p)]).toEqual([f, true, true]);
+        seen.add(p);
+        last = p;
+      }
+      expect([f, seen.size]).toEqual([f, g.length]);
+    }
+    expect(practiceGroup('eev-zaprt', confuse).sort()).toEqual(['eev-zaprt', 'filter-susilnik', 'premalo-hladiva'].sort());
   });
   it('potrditvene meritve res pokažejo okvaro (vsaj ena odstopa)', async () => {
     const { loadTerenUcenje } = await import('../src/lib/content.js');

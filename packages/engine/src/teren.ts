@@ -614,6 +614,26 @@ export function shuffledDeck(seed: number): FaultId[] {
   return d;
 }
 /** Klic podpore izključi 5 napačnih možnosti (nikoli nobene od dejanskih okvar). */
+/**
+ * Skupina zamenljivih okvar za vajo: izbrana okvara, okvara, s katero jo je lahko zamenjati,
+ * in vse okvare, ki jih je lahko zamenjati z njo. Izbrana je vedno prva.
+ */
+export function practiceGroup(target: FaultId, confuse: Record<string, FaultId>): FaultId[] {
+  const g = [target];
+  const add = (f: FaultId | undefined) => {
+    if (f && FAULT_IDS.includes(f) && !g.includes(f)) g.push(f);
+  };
+  add(confuse[target]);
+  for (const f of FAULT_IDS) if (confuse[f] === target) add(f);
+  return g;
+}
+
+/** Naključna okvara iz skupine; če je mogoče, ne ista kot prejšnjič. */
+export function pickPractice(group: FaultId[], last: FaultId | null, seed: number): FaultId {
+  const pool = group.length > 1 && last ? group.filter((f) => f !== last) : group;
+  return pool[rng(seed).int(0, pool.length - 1)];
+}
+
 export function supportEliminate(fault: FaultId | FaultId[], seed: number, n = 5): FaultId[] {
   const actual = Array.isArray(fault) ? fault : [fault];
   const r = rng(seed ^ 0x5bd1e995);

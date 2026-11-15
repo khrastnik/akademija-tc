@@ -6,6 +6,8 @@ import {
   seasonDeck,
   seasonForDay,
   supportEliminate,
+  practiceGroup,
+  pickPractice,
   comboPartner,
   rng,
   TOOLS,
@@ -150,9 +152,15 @@ export default function TerenGame({ faults, models, customers, places, generic, 
   const [flash, setFlash] = useState<string | null>(null);
   const top = useRef<HTMLDivElement>(null);
 
-  // Vaja ene okvare: povezava s strani okvar (?vaja=<id>) – en nalog s to okvaro, brez vpliva na kampanjo in statistiko.
+  // Vaja s strani okvar (?vaja=<id>): en nalog z naključno okvaro iz skupine zamenljivih (izbrana + »ne zamenjaj z«),
+  // brez vpliva na kampanjo in statistiko. Katera je, igralec ne ve – ugotovi jo z meritvami.
   const [practice, setPractice] = useState<FaultId | null>(null);
   const [practicing, setPracticing] = useState(false);
+  const lastPractice = useRef<FaultId | null>(null);
+  const group = useMemo(
+    () => (practice ? practiceGroup(practice, Object.fromEntries(Object.entries(L.faults).map(([k, v]) => [k, v.confuse.with]))) : []),
+    [practice],
+  );
   useEffect(() => {
     setStats(loadStats());
     const v = new URLSearchParams(location.search).get('vaja') as FaultId | null;
@@ -179,7 +187,9 @@ export default function TerenGame({ faults, models, customers, places, generic, 
     setMoney(0);
     setRep(START_REP);
     setDayJobs([]);
-    nextJob(0, deck, practice);
+    const f = pickPractice(group, lastPractice.current, (Date.now() ^ Math.floor(Math.random() * 1e9)) >>> 0);
+    lastPractice.current = f;
+    nextJob(0, deck, f);
   }
   function nextJob(minNow: number, d: FaultId[], forced?: FaultId) {
     const seed = (Date.now() ^ Math.floor(Math.random() * 1e9)) >>> 0;
@@ -350,9 +360,12 @@ export default function TerenGame({ faults, models, customers, places, generic, 
         <div class="tg-card tg-intro">
           {practice && (
             <div class="tg-practice">
-              <p class="eyebrow">Vaja ene okvare</p>
-              <h3>{faultText.get(practice)?.name}</h3>
-              <p class="tg-muted">En nalog s to okvaro – brez kombinacij, brez vpliva na kampanjo in statistiko. Stranka okvare ne pove, poiščeš jo z meritvami.</p>
+              <p class="eyebrow">Vaja: zamenljive okvare</p>
+              <h3>{faultText.get(practice)?.name} in podobne</h3>
+              <p class="tg-muted">
+                Vsak nalog je naključno ena od: <strong>{group.map((f) => faultText.get(f)?.name).join(' · ')}</strong>. Na zunaj so si
+                podobne – katera je, ugotoviš z meritvami. Brez kombinacij, brez vpliva na kampanjo in statistiko.
+              </p>
               <button type="button" class="btn wide" onClick={startPractice}>
                 ▶ Začni vajo
               </button>
@@ -567,7 +580,7 @@ export default function TerenGame({ faults, models, customers, places, generic, 
             {practicing ? (
               <>
                 <button type="button" class="btn" onClick={startPractice}>
-                  ↻ Še enkrat ista okvara
+                  ↻ Še ena iz te skupine
                 </button>
                 <button type="button" class="btn secondary" onClick={afterResult}>
                   Na začetek igre

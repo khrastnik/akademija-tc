@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.17.0 – 2026-11-15
+
+### Igra Teren – vaja s strani okvar
+- **Vaja ne pove več odgovora vnaprej.** Povezava s strani okvar zdaj odpre vajo zamenljivih okvar: vsak nalog je
+  naključno ena od izbrane okvare, okvare »ne zamenjaj z« in okvar, ki jih je lahko zamenjati z njo
+  (npr. EEV zataknjen zaprt · zamašen filter sušilnik · premalo hladiva). Ista okvara ne pride dvakrat zapored.
+- Gumb po rezultatu: »Še ena iz te skupine«.
+- Test: vsaka skupina ima vsaj dve okvari, žreb pokrije vse in ne ponovi zadnje.
+
 ## 0.16.0 – 2026-11-15
 
 ### Okvare ↔ igra Teren
