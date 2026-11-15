@@ -1,5 +1,24 @@
 # Spremembe
 
+## 0.12.0 – 2026-11-15
+
+### Igra Teren
+- **Kombinirane okvare**: na stopnji Serviser v 15 %, na stopnji Mojster v 35 % nalogov ima naprava dve okvari hkrati
+  (12 realnih parov, npr. puščanje + zamašen lovilec, odtajevanje + dogrevalnik, napačna krivulja + dogrevalnik).
+  V diagnozi označiš eno ali dve okvari: vse pravilno = plačilo ×1,25, delno = pol plačila brez spremembe ugleda.
+- **Letni časi – kampanja**: jesen (zagon sezone), zima (mraz in led), pomlad (računi in servisi), vsak po 2 dni.
+  Vsak ima svoje zunanje temperature, tipične okvare (v kupčku dvakrat pogosteje) in uvod z nasveti; napredek se shrani v brskalniku.
+- **Razlaga vsake diagnoze** (novo `content/teren/ucenje.yaml`):
+  - pot do pravilne diagnoze v preprostih korakih,
+  - zakaj in 3 ključni indikatorji,
+  - potrditev – katere meritve okvaro dokažejo in katerih nisi izmeril,
+  - »Ne zamenjaj z …« – najpogostejša zamenjava in po čem ju ločiš,
+  - »Kaj so povedale tvoje meritve« – pomen vsake meritve, ki je odstopala,
+  - pri napaki »Zakaj ne …« – kaj bi videl pri tvoji diagnozi in katera meritev bi jo potrdila.
+- **Zapisnik v učnem načinu**: ob vsaki odstopajoči meritvi 💡 kratko pojasnilo, kaj pomeni.
+- **Namig** opozori na možnost dveh okvar; referenčna tabela ima pravilo za branje SH in SC.
+- Testi: obe okvari v vsakem paru dokazljivi (3 stopnje × 30 nalogov), ocena delne diagnoze, letni časi, učne vsebine.
+
 ## 0.11.0 – 2026-11-15
 
 ### Nova igra »Teren« (`/teren/`) – po PRD »Serviser TČ«

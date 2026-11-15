@@ -258,18 +258,84 @@ export const FAULT_MODS: Record<FaultId, { mod: Mod; code?: string; p?: number }
 export const FAULT_IDS = Object.keys(FAULT_MODS) as FaultId[];
 
 const STALE = ['E-PW izpad napajanja (pred 3 tedni)', 'E-CM komunikacija (lani)', 'E-DF odtajevanje (pred 2 mesecema, enkrat)'];
-export const LEVELS: Record<Level, { noise: number; codeMul: number; stale: number; learn: boolean; label: string }> = {
-  vajenec: { noise: 0.5, codeMul: 1.2, stale: 0, learn: true, label: 'Vajenec' },
-  serviser: { noise: 1, codeMul: 1, stale: 0.2, learn: true, label: 'Serviser' },
-  mojster: { noise: 1.6, codeMul: 0.7, stale: 0.3, learn: false, label: 'Mojster' },
+export const LEVELS: Record<Level, { noise: number; codeMul: number; stale: number; learn: boolean; combo: number; label: string }> = {
+  vajenec: { noise: 0.5, codeMul: 1.2, stale: 0, learn: true, combo: 0, label: 'Vajenec' },
+  serviser: { noise: 1, codeMul: 1, stale: 0.2, learn: true, combo: 0.15, label: 'Serviser' },
+  mojster: { noise: 1.6, codeMul: 0.7, stale: 0.3, learn: false, combo: 0.35, label: 'Mojster' },
 };
 
-/** Zgradi stanje naprave za nalog: zdravo izhodišče (PRD), okvara, šum in kode. */
-export function makeEnv(fault: FaultId, seed: number, level: Level = 'serviser'): Env {
+// ---------- kombinirane okvare ----------
+/**
+ * Pari okvar, ki se na terenu pojavijo skupaj in se v modelu ne prekrivajo (vsaka spremeni druge veličine),
+ * zato ostaneta oba podpisa vidna. Pogosto ena prikrije drugo – zato je diagnoza težja.
+ */
+export const COMBOS: [FaultId, FaultId][] = [
+  ['premalo-hladiva', 'lovilec'], // stara naprava: puščanje + mulj
+  ['premalo-hladiva', 'raztezna'],
+  ['ventilator', 'raztezna'],
+  ['odtajevanje', 'raztezna'],
+  ['odtajevanje', 'dogrevalnik'], // led – grelec pomaga, računi rastejo
+  ['krivulja', 'dogrevalnik'], // napačne nastavitve na dveh mestih
+  ['eev-zaprt', 'tripotni'],
+  ['filter-susilnik', 'zrak-v-vodi'], // po popravilu: nečistoče v krogu + zrak v vodi
+  ['prevec-hladiva', 'dogrevalnik'],
+  ['vt-senzor', 'raztezna'],
+  ['ventilator', 'krivulja'],
+  ['lovilec', 'krivulja'],
+];
+/** Možni partner za kombinirano okvaro (ali null). */
+export function comboPartner(f: FaultId, r: Rng): FaultId | null {
+  const opts = COMBOS.filter((c) => c.includes(f)).map((c) => (c[0] === f ? c[1] : c[0]));
+  return opts.length ? r.pick(opts) : null;
+}
+
+// ---------- letni časi (kampanja) ----------
+export type Season = 'jesen' | 'zima' | 'pomlad';
+export const SEASONS: Record<Season, { label: string; tOut: [number, number]; typical: FaultId[]; intro: string; icon: string }> = {
+  jesen: {
+    label: 'Jesen – zagon sezone',
+    icon: '🍂',
+    tOut: [3, 12],
+    typical: ['crpalka', 'zrak-v-vodi', 'krivulja', 'raztezna', 'lovilec'],
+    intro: 'Prvi zagon po poletju. Črpalke so po mirovanju lahko zablokirane, v sistemu je zrak, krivulje so ostale od lani. Listje pada na zunanje enote.',
+  },
+  zima: {
+    label: 'Zima – mraz in led',
+    icon: '❄️',
+    tOut: [-12, 2],
+    typical: ['odtajevanje', 'ventilator', 'premalo-hladiva', 'senzor-zunanji', 'eev-zaprt'],
+    intro: 'Najbolj obremenjen čas. Led na zunanjih enotah, odtajevanje dela ves čas, slabosti v krogu hladiva pridejo na dan. Klici so nujni – hiše so mrzle.',
+  },
+  pomlad: {
+    label: 'Pomlad – računi in servisi',
+    icon: '🌱',
+    tOut: [5, 16],
+    typical: ['dogrevalnik', 'prevec-hladiva', 'filter-susilnik', 'tripotni', 'vt-senzor'],
+    intro: 'Pridejo računi za zimo in posledice zimskih popravil. Stranke sprašujejo, zakaj je poraba visoka, naprave po posegih ne delajo prav.',
+  },
+};
+export const SEASON_ORDER: Season[] = ['jesen', 'zima', 'pomlad'];
+export const DAYS_PER_SEASON = 2;
+/** Letni čas za zaporedni dan kampanje (0, 1, 2 …). */
+export const seasonForDay = (day: number): Season => SEASON_ORDER[Math.floor(day / DAYS_PER_SEASON) % SEASON_ORDER.length];
+/** Kupček za letni čas: tipične okvare dvakrat, ostale enkrat, premešano. */
+export function seasonDeck(season: Season, seed: number): FaultId[] {
+  const r = rng(seed);
+  const d = [...FAULT_IDS, ...SEASONS[season].typical];
+  for (let i = d.length - 1; i > 0; i--) {
+    const j = Math.floor(r.next() * (i + 1));
+    [d[i], d[j]] = [d[j], d[i]];
+  }
+  return d;
+}
+
+/** Zgradi stanje naprave za nalog: zdravo izhodišče (PRD), ena ali dve okvari, šum in kode. */
+export function makeEnv(fault: FaultId | FaultId[], seed: number, level: Level = 'serviser', tOutRange: [number, number] = [-7, 7]): Env {
+  const faults = Array.isArray(fault) ? fault : [fault];
   const r = rng(seed);
   const L = LEVELS[level];
   const heating = r.chance(0.6) ? 'radiatorji' : 'talno';
-  const tOut = Math.round(r.range(-7, 7));
+  const tOut = Math.round(r.range(tOutRange[0], tOutRange[1]));
   const tFlowSet = heating === 'radiatorji' ? 35 + (2 - tOut) * 0.7 : 30 + (2 - tOut) * 0.35;
   const e: Env = {
     heating,
@@ -316,8 +382,7 @@ export function makeEnv(fault: FaultId, seed: number, level: Level = 'serviser')
   // NTC 10 kΩ pri 25 °C, B ≈ 3950 – pričakovana upornost pri zunanji T
   e.ntcExpected = 10000 * Math.exp(3950 * (1 / (tOut + 273.15) - 1 / 298.15));
   e.ntcOhm = e.ntcExpected * r.range(0.98, 1.02);
-  const f = FAULT_MODS[fault];
-  f.mod(e, r);
+  for (const id of faults) FAULT_MODS[id].mod(e, r);
   if (Number.isNaN(e.tRadIn)) e.tRadIn = e.tFlow - r.range(0.3, 1);
   // šum na vseh merjenih vrednostih
   const n = (v: number, s: number) => v + (r.next() * 2 - 1) * s * L.noise;
@@ -332,7 +397,8 @@ export function makeEnv(fault: FaultId, seed: number, level: Level = 'serviser')
   e.tDis = n(e.tDis, 1.5);
   if (e.iComp > 0) e.iComp = n(e.iComp, 0.2);
   // koda napake: le z verjetnostjo; včasih stara, nepovezana koda v zgodovini
-  if (f.code && r.chance(Math.min(0.95, (f.p ?? 0.5) * L.codeMul))) e.code = f.code;
+  const codes = faults.map((id) => FAULT_MODS[id]).filter((m) => m.code && r.chance(Math.min(0.95, (m.p ?? 0.5) * L.codeMul))).map((m) => m.code!);
+  e.code = codes.length ? [...new Set(codes)].join('; ') : null;
   if (r.chance(L.stale)) e.staleCode = r.pick(STALE);
   return e;
 }
@@ -509,6 +575,34 @@ export function scoreJob(correct: boolean, onSiteMin: number, measurements: numb
   return { correct, pay: Math.round(pay), repDelta, notes };
 }
 
+/**
+ * Ocena diagnoze z eno ali dvema okvarama. Vse pravilno = polno plačilo (pri dveh okvarah ×1,25);
+ * delno pravilno (ena od dveh ali ena preveč) = pol plačila brez spremembe ugleda; nič pravilnega = napaka.
+ */
+export function scoreDiagnosis(actual: FaultId[], guess: FaultId[], onSiteMin: number, measurements: number, rep: number): JobResult & { level: 'ok' | 'partial' | 'wrong' } {
+  const hit = guess.filter((g) => actual.includes(g)).length;
+  const exact = hit === actual.length && guess.length === actual.length;
+  if (exact) {
+    const res = scoreJob(true, onSiteMin, measurements, rep);
+    if (actual.length > 1) {
+      res.pay = Math.round(res.pay * 1.25);
+      res.notes.push('Obe okvari najdeni: ×1,25');
+    }
+    return { ...res, level: 'ok' };
+  }
+  if (hit > 0) {
+    const res = scoreJob(true, onSiteMin, measurements, rep);
+    return {
+      correct: false,
+      pay: Math.round(res.pay * 0.5),
+      repDelta: 0,
+      notes: [actual.length > guess.length ? 'Delno: našel si eno od dveh okvar – stranka bo poklicala znova. ×0,5' : 'Delno: ena diagnoza je bila odveč – nepotreben del. ×0,5'],
+      level: 'partial',
+    };
+  }
+  return { ...scoreJob(false, onSiteMin, measurements, rep), level: 'wrong' };
+}
+
 /** Kupček okvar: vsaka enkrat v naključnem vrstnem redu, nato nov kupček. */
 export function shuffledDeck(seed: number): FaultId[] {
   const r = rng(seed);
@@ -519,10 +613,11 @@ export function shuffledDeck(seed: number): FaultId[] {
   }
   return d;
 }
-/** Klic podpore izključi 5 napačnih možnosti. */
-export function supportEliminate(fault: FaultId, seed: number, n = 5): FaultId[] {
+/** Klic podpore izključi 5 napačnih možnosti (nikoli nobene od dejanskih okvar). */
+export function supportEliminate(fault: FaultId | FaultId[], seed: number, n = 5): FaultId[] {
+  const actual = Array.isArray(fault) ? fault : [fault];
   const r = rng(seed ^ 0x5bd1e995);
-  const wrong = FAULT_IDS.filter((f) => f !== fault);
+  const wrong = FAULT_IDS.filter((f) => !actual.includes(f));
   for (let i = wrong.length - 1; i > 0; i--) {
     const j = Math.floor(r.next() * (i + 1));
     [wrong[i], wrong[j]] = [wrong[j], wrong[i]];

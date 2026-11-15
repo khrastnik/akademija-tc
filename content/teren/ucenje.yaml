@@ -1,0 +1,236 @@
+# Igra »Teren« – učni del: zakaj je diagnoza pravilna.
+# faults.<id>.steps: pot do diagnoze v preprostih korakih (od poceni meritev do potrditve).
+# faults.<id>.confuse: s čim se okvara najpogosteje zamenja in po čem ju ločiš.
+# faults.<id>.proof: id-ji meritev (packages/engine/src/teren.ts TOOLS), ki okvaro potrdijo.
+# meanings.<tool>.high/low: kaj pomeni odstopanje te meritve – pokaže se v zapisniku (učni način) in v rezultatu.
+
+faults:
+  premalo-hladiva:
+    steps:
+      - Voda je v redu – tlak, pretok in ΔT so normalni. Težava ni na vodni strani.
+      - Zunanja enota je čista, ventilator se vrti. Zrak ni kriv.
+      - Priklopi baterijo – pregretje je zelo visoko, podhladitev skoraj nič.
+      - Visoko SH + nizko SC = v krogu manjka hladiva. Detektor najde mesto puščanja.
+    confuse:
+      with: eev-zaprt
+      how: Pri zaprtem EEV je SH prav tako visoko, a SC je VISOKO – hladivo se kopiči pred ventilom. Pri puščanju SC pade, ker hladiva ni nikjer dovolj.
+    proof: [sh, sc, detektor]
+
+  lovilec:
+    steps:
+      - Na zaslonu pogosto napaka pretoka ali visokega tlaka.
+      - Tlak vode je normalen – voda je v sistemu, a ne teče.
+      - Pretok je majhen in ΔT vode velika – vsak liter vode odnese preveč toplote, ker ga je premalo.
+      - Odpri lovilec – mrežica je polna mulja.
+    confuse:
+      with: zrak-v-vodi
+      how: Pri zraku je tlak vode NIZEK in črpalka grgra. Pri zamašenem lovilcu je tlak normalen in pretok stalno majhen, ne niha.
+    proof: [pretok, dt-vode, lovilec]
+
+  ventilator:
+    steps:
+      - Pri zunanji enoti je tiho, na lamelah se dela led.
+      - T uparjanja je zelo nizka – uparjalnik ne dobi toplote iz zraka.
+      - Ventilator ob zahtevi ne zažene – vzrok je motor ali njegovo napajanje.
+    confuse:
+      with: odtajevanje
+      how: Pri okvari odtajevanja se ventilator vrti, led pa pokrije ves uparjalnik. Če ventilator stoji, je kriv ventilator.
+    proof: [zunanja, ventilator]
+
+  eev-zaprt:
+    steps:
+      - Voda in zrak sta v redu.
+      - Priklopi baterijo – SH je visoko IN SC je visoko.
+      - Hladivo se kopiči pred ventilom (visoko SC), uparjalnik je lačen (visoko SH) – ventil spusti premalo.
+      - Filter sušilnik nima razlike temperatur, ventil pa se ob ukazu ne odpre.
+    confuse:
+      with: filter-susilnik
+      how: Zamašen filter sušilnik da enak par SH/SC. Razliko pokaže ΔT na filtru – pri filtru je velika, pri EEV skoraj nič.
+    proof: [sh, sc, susilnik, eev]
+
+  eev-odprt:
+    steps:
+      - Pri kompresorju je led, sliši se klokotanje.
+      - Pregretje je skoraj nič – v kompresor prihaja mokra para ali kapljevina.
+      - T tlačnega voda je nizka, ker kompresor stiska mokro paro.
+      - Ventil ostane odprt tudi ob ukazu za zapiranje.
+    confuse:
+      with: prevec-hladiva
+      how: Pri preveč hladiva je SC zelo visoko, SH pa normalno. Pri odprtem EEV je SH skoraj nič.
+    proof: [sh, t-tlacni, eev]
+
+  prevec-hladiva:
+    steps:
+      - Vodna stran je v redu – pretok in ΔT normalna.
+      - Priklopi baterijo – podhladitev je zelo visoka, T kondenzacije povišana.
+      - Odvečna tekočina zalije kondenzator. Preveri evidenco – ali je kdo nedavno dolival?
+    confuse:
+      with: lovilec
+      how: Tudi zamašen lovilec dvigne tlak kondenzacije, a pri njem sta pretok majhen in ΔT velika. Pri preveč hladiva je voda v redu, SC pa visoko.
+    proof: [pretok, vt, sc]
+
+  zrak-v-vodi:
+    steps:
+      - Najprej tlak vode – je pod 0,6 bar.
+      - Črpalka grgra, pretok niha.
+      - V sistemu je premalo vode in zrak. Ko doliješ, poišči še, kje voda odteka.
+    confuse:
+      with: lovilec
+      how: Pri lovilcu je tlak normalen. Pri zraku je tlak nizek – to je meritev za 1 minuto, zato vedno najprej.
+    proof: [tlak-vode, poslusaj]
+
+  crpalka:
+    steps:
+      - Na zaslonu napaka pretoka, kompresor ne teče.
+      - Pretok je 0, črpalke se ne sliši.
+      - Tlak vode je normalen – voda je, a je nič ne poganja.
+      - Črpalka ima napajanje, gred pa se ne vrti.
+    confuse:
+      with: zrak-v-vodi
+      how: Pri zraku črpalka teče in grgra, pretok niha. Pri okvarjeni črpalki je tiho in pretok je točno 0.
+    proof: [pretok, poslusaj, crpalka-pregled]
+
+  senzor-zunanji:
+    steps:
+      - Hiša je pregreta, ne mrzla.
+      - Zaslon kaže zunanjo T −40 °C, čeprav je zunaj blago.
+      - Po krivulji krmilnik zato zahteva zelo toplo vodo.
+      - Upornost senzorja je neskončna – kabel ali senzor prekinjen.
+    confuse:
+      with: krivulja
+      how: Napačna krivulja da prehladno ali pretoplo hišo, a zunanja T na zaslonu je prava. Pri okvarjenem senzorju je zunanja T nemogoča.
+    proof: [zaslon, nastavitve, ntc]
+
+  odtajevanje:
+    steps:
+      - Ves uparjalnik je v ledu, ventilator se vrti.
+      - Na zaslonu pogosto napaka odtajevanja.
+      - Ob odtajevanju se 4-potni ventil ne preklopi – tuljava ima neskončno upornost.
+    confuse:
+      with: ventilator
+      how: Če ventilator stoji, je kriv ventilator. Če se vrti in je vse v ledu, se ne izvede odtajevanje.
+    proof: [zunanja, ventilator, tuljava4]
+
+  krivulja:
+    steps:
+      - Ni kode, naprava dela.
+      - Voda in hladivo so normalni – vse meritve v območju.
+      - Hiša je hladna, ker je zahtevana T dovoda prenizka za to zunanjo T.
+      - Nastavitve pokažejo zamaknjeno krivuljo.
+    confuse:
+      with: tripotni
+      how: Pri 3-potnem ventilu je bojler prevroč, ker gre vsa toplota tja. Pri napačni krivulji je bojler normalen.
+    proof: [radiatorji, nastavitve]
+
+  tripotni:
+    steps:
+      - Hiša je mrzla, topla voda pa zelo vroča – to je ključ.
+      - Naprava dela s polno močjo, toplota gre nekam drugam.
+      - Kazalec 3-potnega ventila je na sanitarni vodi, čeprav krmilnik zahteva ogrevanje.
+    confuse:
+      with: krivulja
+      how: Pri krivulji bojler ni pregret. Če je bojler nad 60 °C in hiša mrzla, poglej ventil.
+    proof: [radiatorji, tripotni]
+
+  filter-susilnik:
+    steps:
+      - Pogosto po popravilu kroga hladiva (menjava kompresorja).
+      - SH in SC sta oba visoka – zožitev pred ekspanzijskim ventilom.
+      - Razlika temperatur na filtru sušilniku je velika, izhod je hladen in orošen.
+      - Ekspanzijski ventil se odziva normalno.
+    confuse:
+      with: eev-zaprt
+      how: Isti par SH/SC kot pri zaprtem EEV. Odloči ΔT na filtru – 4 minute s termometrom, brez menjave dragega ventila.
+    proof: [sh, sc, susilnik]
+
+  raztezna:
+    steps:
+      - Stranka doliva vodo, varnostni ventil kaplja.
+      - Tlak vode je v toplem visok, okoli 3 bar – voda se razteza in nima prostora.
+      - Predtlak plinske strani raztezne posode je skoraj nič.
+    confuse:
+      with: zrak-v-vodi
+      how: Pri zraku je tlak nizek. Pri prazni raztezni posodi tlak niha – v toplem previsok, v hladnem prenizek.
+    proof: [tlak-vode, raztezna]
+
+  dogrevalnik:
+    steps:
+      - V hiši je toplo, naprava dela – težava je strošek.
+      - Vse meritve hladiva in vode so normalne.
+      - Števec pokaže skoraj dvojno porabo, dogrevalnik je vklopljen pri blagem vremenu.
+      - V nastavitvah je meja vklopa previsoka.
+    confuse:
+      with: senzor-zunanji
+      how: Tudi okvarjen senzor dvigne porabo, a hiša je pregreta in zunanja T na zaslonu nemogoča. Pri dogrevalniku je hiša normalno topla.
+    proof: [poraba, nastavitve]
+
+  vt-senzor:
+    steps:
+      - Na zaslonu napaka visokega tlaka, kompresor se pogosto ustavlja.
+      - Voda je v redu – pretok in ΔT normalna, ni razloga za visok tlak.
+      - Manometer kaže normalen tlak, krmilnik pa bere okoli 40 bar – senzor laže.
+    confuse:
+      with: prevec-hladiva
+      how: Pri preveč hladiva tlak RES naraste – manometer to pokaže. Če manometer kaže normalno, krmilnik pa visoko, je kriv senzor.
+    proof: [pretok, vt-senzor]
+
+meanings:
+  radiatorji:
+    low: Hiša je hladna – naprava ne odda dovolj toplote ali jo pošilja drugam.
+    high: Hiša je pregreta – krmilnik zahteva preveč toplote.
+  zaslon:
+    high: Koda je simptom – pove, kaj je krmilnik zaznal, ne zakaj. Lahko je tudi stara.
+  pretok:
+    low: Voda teče premalo – zamašen lovilec, zrak ali črpalka.
+  tlak-vode:
+    low: V sistemu je premalo vode – verjetno zrak ali puščanje.
+    high: Tlak previsok – voda se ob segrevanju nima kam raztezati (raztezna posoda).
+  dt-vode:
+    high: Velika razlika dovod–povratek pomeni premajhen pretok vode.
+    low: Majhna razlika – voda teče, a toplote ne prenaša (ali je naprava ugasnjena).
+  poslusaj:
+    high: Nenavaden zvok črpalke – zrak (grgranje) ali črpalka ne teče.
+  crpalka-pregled:
+    high: Črpalka ne poganja vode – brez pretoka krmilnik ne zažene kompresorja.
+  lovilec:
+    high: Zamašen lovilec – voda ne more teči skozi napravo.
+  tripotni:
+    high: Ventil pošilja vso toploto v bojler – hiša ostane mrzla.
+  raztezna:
+    low: Raztezna posoda nima plina – ne sprejme raztezanja vode.
+  poraba:
+    high: Visoka poraba ob normalnem delovanju – greje elektrika namesto toplotne črpalke.
+  zunanja:
+    high: Led ali ovira na zunanji enoti – uparjalnik ne dobi zraka ali se ne odtaja.
+  ventilator:
+    high: Ventilator stoji – brez zraka uparjalnik ne dobi toplote.
+  ntc:
+    high: Senzor ne meri – krmilnik bere nemogočo zunanjo temperaturo.
+  nt:
+    low: T uparjanja prenizka – uparjalnik dobi premalo toplote ali premalo hladiva.
+    high: T uparjanja previsoka – kompresor ne vleče dovolj ali je v krogu preveč tekočine.
+  vt:
+    high: T kondenzacije previsoka – toplota ne gre v vodo (pretok) ali je preveč hladiva.
+    low: T kondenzacije prenizka – premalo hladiva ali prenizka zahtevana T.
+  sh:
+    high: Visoko pregretje – uparjalnik je lačen. Poglej še SC – visoko SC pomeni zožitev, nizko premalo hladiva.
+    low: Pregretje skoraj nič – v kompresor prihaja kapljevina. Nevarno za kompresor.
+  sc:
+    high: Visoka podhladitev – tekočina se kopiči (zožitev pred ventilom ali preveč hladiva).
+    low: Nizka podhladitev – v kondenzatorju ni zaloge tekočine (premalo hladiva).
+  vt-senzor:
+    high: Krmilnik in manometer se ne ujemata – senzor laže.
+  detektor:
+    high: Najdeno puščanje – hladiva je premalo, ker uhaja.
+  t-tlacni:
+    high: Prevroč tlačni vod – kompresor stiska presuho paro (premalo hladiva, lačen uparjalnik).
+    low: Prehladen tlačni vod – v kompresor prihaja mokra para.
+  tok:
+    low: Kompresor ne teče ali vleče malo – ni pretoka, premalo hladiva.
+    high: Kompresor dela težko – visok tlak kondenzacije.
+  eev:
+    high: Ekspanzijski ventil ne sledi ukazom – zataknjen.
+  tuljava4:
+    high: Tuljava 4-potnega ventila je prekinjena – odtajevanje ne more steči.
+  susilnik:
+    high: Velika razlika na filtru sušilniku – filter je zamašen.

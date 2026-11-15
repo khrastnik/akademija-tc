@@ -515,3 +515,105 @@
 .btn.wide {
   width: 100%;
 }
+
+/* letni čas */
+.tg-season {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+.tg-season p {
+  margin: 0 0 6px;
+}
+.tg-season p:last-child {
+  margin: 0;
+}
+/* izbira dveh diagnoz */
+.tg-options button.on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+.tg-check {
+  font-size: 1.1rem;
+  margin-right: 4px;
+}
+/* razlaga v rezultatu */
+.tg-result.part {
+  border-color: var(--ochre);
+}
+.tg-result.part .tg-verdict {
+  color: var(--ochre);
+}
+.tg-daylist li.part {
+  color: var(--ochre);
+}
+.tg-explain {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.tg-explain h3 {
+  margin: 12px 0 6px;
+}
+.tg-explain h3:first-child {
+  margin-top: 0;
+}
+.tg-steps li,
+.tg-meas li,
+.tg-proof li {
+  margin: 5px 0;
+}
+.tg-meas,
+.tg-proof {
+  margin: 0;
+  padding-left: 18px;
+}
+.tg-means {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+.tg-log .tg-means {
+  margin: 4px 0 0;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--warn-bg);
+  color: var(--ink);
+}
+.tg-proof {
+  list-style: none;
+  padding-left: 0 !important;
+}
+.tg-proof li.ok {
+  color: var(--ok);
+}
+.tg-proof li.miss {
+  color: var(--ink-2);
+}
+.tg-key {
+  margin: 8px 0 0 !important;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+.tg-confuse {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border-left: 4px solid var(--ochre);
+  background: var(--warn-bg);
+}
+.tg-confuse p {
+  margin: 4px 0 0;
+}
+.tg-why-not {
+  border-top-color: var(--bad);
+}
+.tg-why-not h3 {
+  color: var(--bad);
+}
+.tg-why-not p {
+  margin: 4px 0;
+}

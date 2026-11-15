@@ -80,6 +80,8 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 ## Igra Teren (0.11.0)
 
 - `packages/engine/src/teren.ts` – zdravo izhodišče, vpliv vsake okvare na meritve in normalna območja v učnem načinu. Vrednosti so iz PRD »Serviser TČ« in jih mora potrditi serviser (PRD: »Kdo strokovno potrdi vrednosti meritev?«).
+- `content/teren/ucenje.yaml` – poti do diagnoze, zamenjave (»ne zamenjaj z«) in pomen meritev; to je jedro učenja, zato najprej to.
+- `packages/engine/src/teren.ts` COMBOS in SEASONS – ali so pari okvar in tipične okvare po letnih časih realni.
 - `content/teren/teren.yaml` – prijave strank, 3 ključni indikatorji, razlage in popravila za 16 okvar.
 
 ## Merilna oprema (0.10.0)

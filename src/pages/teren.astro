@@ -1,15 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
 import TerenGame from '../components/TerenGame.tsx';
-import { loadTeren, loadRefrigerants } from '../lib/content.js';
+import { loadTeren, loadTerenUcenje, loadRefrigerants } from '../lib/content.js';
 import { url } from '../lib/site.js';
 
 const { faults, models, customers, places, generic } = loadTeren();
+const learn = loadTerenUcenje();
 const pts = loadRefrigerants().find((r) => r.id === 'R32')!.points;
 ---
 <Base
   title="Teren – igra"
-  description="Igra serviserja toplotnih črpalk: delovni dan, 16 realnih okvar, meritve s ceno v minutah, ugled in zaslužek. Najdi vzrok s čim manj meritvami."
+  description="Igra serviserja toplotnih črpalk: delovni dan, 16 realnih okvar, kombinirane okvare, letni časi, razlaga vsake diagnoze. Najdi vzrok s čim manj meritvami."
   current="teren"
   source="packages/engine/src/teren.ts"
   wide
@@ -17,7 +18,7 @@ const pts = loadRefrigerants().find((r) => r.id === 'R32')!.points;
   <p class="eyebrow">Igra</p>
   <h1>Teren – delovni dan serviserja</h1>
   <p class="lead muted">Stranke kličejo, ura teče. Z meritvami najdi vzrok – najprej poceni in informativne, drage le za potrditev.</p>
-  <TerenGame client:load faults={faults as any} models={models} customers={customers} places={places} generic={generic as any} pts={pts} lessonSh={url('lekcija/m08-l01/')} />
+  <TerenGame client:load faults={faults as any} models={models} customers={customers} places={places} generic={generic as any} learn={learn as any} pts={pts} lessonSh={url('lekcija/m08-l01/')} />
   <p class="notice model-note">
     <span>Učni model: vrednosti so parametrični modeli okvar (R32), modeli naprav in kode so izmišljeni. Na terenu veljajo navodila proizvajalca tvoje naprave.</span>
   </p>

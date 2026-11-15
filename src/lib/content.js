@@ -315,6 +315,24 @@ const terenSchema = z.object({
   places: z.array(z.string()).min(5),
   generic: z.object({ complaints: z.array(z.string().min(10)).min(2), faults: z.array(id) }),
 });
+const ucenjeSchema = z.object({
+  faults: z.record(
+    id,
+    z.object({
+      steps: z.array(z.string().min(10)).min(2),
+      confuse: z.object({ with: id, how: z.string().min(20) }),
+      proof: z.array(id).min(1),
+    }),
+  ),
+  meanings: z.record(id, z.object({ high: z.string().min(10).optional(), low: z.string().min(10).optional() })),
+});
+/** Učni del igre »Teren«: pot do diagnoze, zamenjave, pomen meritev. */
+export function loadTerenUcenje() {
+  const parsed = ucenjeSchema.safeParse(parseYaml(read('content', 'teren', 'ucenje.yaml')));
+  if (!parsed.success) throw new Error(`content/teren/ucenje.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
 /** Besedila igre »Teren«: okvare, stranke, kraji, izmišljeni modeli. */
 export function loadTeren() {
   const parsed = terenSchema.safeParse(parseYaml(read('content', 'teren', 'teren.yaml')));
