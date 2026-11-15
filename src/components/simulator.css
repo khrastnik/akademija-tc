@@ -30,6 +30,15 @@
 .sim-tab-link:hover {
   background: var(--surface);
 }
+.sim-tab-on {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 11px;
+  font-weight: 700;
+}
+.sim-tab-on,
 .sim-tabs button.on {
   background: var(--surface);
   color: var(--ink);
@@ -152,16 +161,6 @@
   background: #a4502a;
   color: #fff;
 }
-.chip.measure .n {
-  background: #221d17;
-  color: #fff;
-  border-color: #e0a54a;
-}
-.chip.done .n {
-  background: #2c7a3f;
-  border-color: #2c7a3f;
-  color: #fff;
-}
 .legend {
   position: absolute;
   left: 10px;
@@ -196,34 +195,6 @@
   color: #5b5246;
   pointer-events: none;
 }
-.hud {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 8px;
-}
-.hud span {
-  padding: 6px 10px;
-  border-radius: 10px;
-  background: #221d17;
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-.toast {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  max-width: 60%;
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-weight: 600;
-  font-size: 0.88rem;
-  box-shadow: var(--shadow);
-}
 
 /* ---------- stranski panel ---------- */
 .side {
@@ -242,9 +213,6 @@
   margin: 18px 0 8px;
   font-size: 1rem;
 }
-.panel-in.center {
-  text-align: center;
-}
 .lead-s {
   font-size: 1.05rem;
 }
@@ -262,9 +230,6 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 12px;
-}
-.panel-in.center .row {
-  justify-content: center;
 }
 .part-list,
 .diag {
@@ -286,14 +251,6 @@
   text-align: left;
   cursor: pointer;
 }
-.diag button {
-  font-weight: 600;
-}
-.diag button.wrong {
-  background: var(--bad-bg);
-  border-color: var(--bad);
-  text-decoration: line-through;
-}
 .steps {
   display: flex;
   gap: 6px;
@@ -309,194 +266,14 @@
   color: var(--accent-ink);
   border-color: var(--accent);
 }
-
-.days {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: 8px;
-}
-.day {
-  display: grid;
-  gap: 4px;
-  width: 100%;
-  padding: 14px;
-  text-align: left;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--bg);
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
-}
-.day:disabled {
-  cursor: not-allowed;
-  color: var(--ink-2);
-  border-style: dashed;
-}
-.day span {
-  font-size: 0.9rem;
-  color: var(--ink-2);
-}
 .stars,
 .big-stars {
   color: var(--ochre);
   letter-spacing: 2px;
 }
-.big-stars {
-  font-size: 2.2rem;
-  margin: 4px 0;
-}
-.callq {
-  margin: 8px 0 12px;
-  padding: 12px 14px;
-  border-left: 4px solid var(--ochre);
-  background: var(--surface-2);
-  border-radius: 0 12px 12px 0;
-  font-size: 1.05rem;
-}
-.callq.small {
-  font-size: 0.92rem;
-  padding: 8px 12px;
-}
-
-.measures {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-.meas {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  min-height: 52px;
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-left-width: 4px;
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--ink);
-  font: inherit;
-  font-size: 0.86rem;
-  font-weight: 600;
-  text-align: left;
-  cursor: pointer;
-}
-.meas small {
-  font-weight: 400;
-  color: var(--ink-2);
-}
 .meas.k-easy,
 .meas.k-visual {
   border-left-color: #2c7a3f;
-}
-.meas.k-water {
-  border-left-color: #3fb8b0;
-}
-.meas.k-refrigerant {
-  border-left-color: var(--high);
-}
-.meas.done {
-  background: var(--ok-bg);
-}
-
-.log {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 6px;
-}
-.reading {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 2px 10px;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: var(--bg);
-  border: 1px solid var(--line);
-  font-size: 0.9rem;
-}
-.reading.info {
-  grid-template-columns: 1fr;
-}
-.reading.info span {
-  color: var(--ink-2);
-}
-.reading .val {
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-.zone {
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 6px;
-}
-.zone.z-ok {
-  background: var(--ok-bg);
-  color: var(--ok);
-}
-.zone.z-low {
-  background: color-mix(in srgb, var(--low) 18%, transparent);
-  color: var(--low);
-}
-.zone.z-high {
-  background: var(--bad-bg);
-  color: var(--high);
-}
-.scale {
-  grid-column: 1 / -1;
-  position: relative;
-  height: 6px;
-  border-radius: 99px;
-  background: var(--surface-2);
-}
-.okband {
-  position: absolute;
-  left: 33.3%;
-  width: 33.4%;
-  top: 0;
-  bottom: 0;
-  background: color-mix(in srgb, var(--ok) 35%, transparent);
-  border-radius: 99px;
-}
-.dot {
-  position: absolute;
-  top: 50%;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--ink);
-  transform: translate(-50%, -50%);
-}
-.notes {
-  list-style: none;
-  padding: 0;
-  margin: 8px 0;
-}
-.notes li {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 0.92rem;
-}
-.notes .neg {
-  color: var(--bad);
-}
-.notes .sum {
-  font-weight: 800;
-  border-bottom: 0;
-}
-.safety {
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: var(--warn-bg);
-  font-size: 0.9rem;
 }
 
 .num-dot {
@@ -508,10 +285,6 @@
   border-radius: 50%;
   background: var(--surface-2);
   font-size: 0.75rem;
-}
-.meas.done .num-dot {
-  background: var(--ok);
-  color: #fff;
 }
 @media (max-width: 899px) {
   /* Na telefonu oder po meri širine: naprava je široka, zato visok oder ostane prazen. */

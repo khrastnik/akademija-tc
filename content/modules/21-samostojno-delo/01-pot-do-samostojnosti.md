@@ -92,4 +92,4 @@ Dve napačni prepričanji:
 - Za posege potrebuješ spričevalo, opremo in dejavnost.
 - Zahteve se spreminjajo – preveri jih.
 
-**Kaj sledi:** zadnji korak je končni izpit. Preizkusi se tudi v igri »Dan na terenu« v simulatorju.
+**Kaj sledi:** zadnji korak je končni izpit. Preizkusi se tudi v igri [Teren](../../teren/) na stopnji Mojster.

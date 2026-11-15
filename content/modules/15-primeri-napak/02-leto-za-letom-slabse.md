@@ -31,7 +31,7 @@ Primer po verigi:
 - **vzorec**: visoko **[[pregrevanje]]** in nizko **[[podhlajevanje]]**,
 - **vzrok**: puščanje na spoju.
 
-V [3D simulatorju](../../simulator/) je ta primer v igri »Dan na terenu«, torek.
+Ta primer srečaš tudi v igri [Teren](../../teren/) – pogosteje pozimi.
 
 ::card{type=imagine}
 Pomisli na kolo s počasi puščajočo zračnico. Vsak dan je malo trša vožnja. Nikoli ne opaziš trenutka, ko je šlo narobe.

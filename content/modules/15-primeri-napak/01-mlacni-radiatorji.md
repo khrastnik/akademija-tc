@@ -33,7 +33,7 @@ V tem primeru:
 - **vzorec**: velika ΔT vode skupaj z visokim tlakom na visokotlačni strani,
 - **[[diagnoza]]**: premajhen pretok vode zaradi zamašenega filtra.
 
-Več takih klicev lahko vadiš v [3D simulatorju](../../simulator/) v igri »Dan na terenu«.
+Več takih klicev lahko vadiš v igri [Teren](../../teren/) – zamašen lovilec je ena od njenih okvar.
 
 ::card{type=imagine}
 Detektiv ne obtoži prvega, ki ga vidi blizu kraja zločina. Zbira sledi, dokler ne kažejo vse na istega.

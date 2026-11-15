@@ -70,9 +70,7 @@ Krepko označene lekcije pregledaj najprej: tam napačna razlaga lahko vodi v na
 
 ## 3D simulator
 
-- `content/sim/faults.yaml` – vzorec, vzrok, popravilo in preverjanje za 14 napak.
-- `packages/engine/src/sim.ts` – učni model: v katero smer se ob vsaki napaki premaknejo meritve.
-  Testi v `tests/sim.test.ts` zapišejo vzorce, ki jih igra uči – če je kateri napačen, popravi tudi test.
+- Stara igra »Dan na terenu« je odstranjena (0.14.0). Model okvar in normalna območja so zdaj samo v `packages/engine/src/teren.ts` (glej razdelek Igra Teren).
 - `content/sim/parts.yaml` – opisi 23 delov naprave.
 - `src/components/StationSims.tsx` – štiri postaje v živo: ali so smeri sprememb (kje zavre, kdaj tlak raste, lačen/preplavljen uparjalnik) pravilne in besedila sodil ob vsakem stanju strokovno točna.
 - **Zalogovnik (0.5.0)** – prosimo posebej preveri: ali naj bo primarni pretok res nekoliko večji od sekundarnega (napaka »mešanje«), ali je »46 zagonov v 24 urah« prepričljiv primer taktiranja, in ali je opis meje vklopa dogrevalnika (bivalentne točke) pravilen za tipične naprave.

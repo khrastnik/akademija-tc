@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.14.0 – 2026-11-15
+
+### Čiščenje
+- **Stara igra »Dan na terenu« odstranjena iz kode**: način igre v `Simulator.tsx`, model `packages/engine/src/sim.ts`,
+  `content/sim/faults.yaml`, `content/sim/days.yaml`, njeni testi in 40 blokov slogov, ki jih je uporabljala le ona.
+  Model okvar in normalna območja so zdaj samo v `packages/engine/src/teren.ts` – ena igra, en vir številk.
+- 3D simulator ostane za razumevanje: ogled kroga, načini delovanja, deli z opisom in povezavo na okvare.
+- Lekcije 15.1, 15.2 in 21.1 namesto stare igre vodijo v igro Teren.
+
 ## 0.13.0 – 2026-11-15
 
 ### Zgradba strani

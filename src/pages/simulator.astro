@@ -5,7 +5,7 @@ import StationSims from '../components/StationSims.tsx';
 import { loadSim } from '../lib/content.js';
 import { url } from '../lib/site.js';
 
-const { parts, faults, days } = loadSim();
+const { parts } = loadSim();
 ---
 <Base
   title="3D simulator"
@@ -21,10 +21,10 @@ const { parts, faults, days } = loadSim();
     <p class="jump"><a href="#postaje">↓ Štiri postaje v živo – vsaka posebej</a></p>
     <p class="jump"><a href={url('teren')}>🧰 Nova igra »Teren« – cel delovni dan, 16 okvar, ugled in zaslužek →</a></p>
   </header>
-  <Simulator client:only="preact" parts={parts} faults={faults} days={days} lessonUrl={url('lekcija/m00-l01')} terenUrl={url('teren')}>
+  <Simulator client:only="preact" parts={parts} lessonUrl={url('lekcija/m00-l01')} terenUrl={url('teren')} okvareUrl={url('okvare')}>
     <!-- Okostje iste velikosti, dokler se simulator ne naloži: stran ne poskoči. -->
     <div slot="fallback" class="sim" aria-busy="true">
-      <div class="sim-tabs"><button disabled>Kako deluje</button><a class="sim-tab-link" href={url('teren')}>Igra Teren 🧰 →</a></div>
+      <div class="sim-tabs"><span class="sim-tab-on">Kako deluje</span><a class="sim-tab-link" href={url('teren')}>Igra Teren 🧰 →</a></div>
       <div class="sim-layout">
         <div class="stage"><div class="stage-msg">Nalagam 3D model …</div></div>
         <div class="side"><div class="panel-in"><p class="eyebrow">3D model</p><h2>Kako toplotna črpalka greje</h2><p>Toplota iz zunanjega zraka gre v vodo radiatorjev – tudi pri mrazu.</p></div></div>
