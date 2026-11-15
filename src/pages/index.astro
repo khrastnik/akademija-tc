@@ -1,18 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
-import { loadLessons, loadModules } from '../lib/content.js';
+import { loadLessons, loadModules, loadFgasExam, loadCodes } from '../lib/content.js';
 import { SITE, url } from '../lib/site.js';
 import ShareButton from '../components/ShareButton.astro';
 
 const lessons = loadLessons();
 const modules = loadModules();
 const first = lessons[0];
+const examCount = loadFgasExam().questions.length;
+const codeCount = loadCodes().brands.reduce((s, b) => s + b.codes.length, 0);
 ---
 <Base title={SITE.name} source="src/pages/index.astro">
   <section class="hero">
     <p class="eyebrow">Brezplačno · odprto · na telefonu</p>
     <h1>Od nič do serviserja toplotnih črpalk</h1>
-    <p class="lead">Kratke kartice, vaje in kvizi, ki razložijo <em>zakaj</em>. Pot vodi od razumevanja, kako črpalka deluje, do samostojnega servisnega obiska.</p>
+    <p class="lead">Kratke lekcije, igra iz prakse in orodja za teren – vse razloži <em>zakaj</em>.</p>
     <div class="hero-actions">
       <a class="btn big" href={url(`lekcija/${first.id}/`)} data-continue>Začni prvo lekcijo →</a>
       <ShareButton shareUrl={new URL(url(''), Astro.site).href} />
@@ -20,35 +22,62 @@ const first = lessons[0];
     <p class="progress-line muted" data-progress hidden></p>
   </section>
 
-  <a class="sim-teaser" href={url('simulator')}>
-    <span class="sim-badge">NOVO · 3D</span>
-    <strong>Simulator in igra »Dan na terenu«</strong>
-    <span>Zavrti 3D model črpalke, poglej, kako teče hladivo, nato kot serviser z meritvami poišči napako. Zberi tri zvezdice.</span>
-    <span class="go">Odpri simulator →</span>
-  </a>
-
-  <section class="paths">
-    <article class="panel">
-      <p class="eyebrow">Pot za lastnike</p>
-      <h2>Razumem svojo črpalko</h2>
-      <p>Moduli 0–2: kako črpalka deluje, najpogostejši simptomi in kdaj poklicati serviserja.</p>
-      <a href={url('modul/m00')}>Začni z modulom 0 →</a>
+  <h2 class="choose">Kaj danes potrebuješ?</h2>
+  <section class="routes">
+    <article class="route r-learn">
+      <p class="route-tag">📘 Učim se od začetka</p>
+      <h3>Razumeti, kako toplotna črpalka deluje</h3>
+      <p>Pot v {modules.length} modulih: od toplote iz zraka do diagnostike. Kartice, vaje in kvizi; napačni odgovori se vrnejo v ponovitev.</p>
+      <ul class="route-links">
+        <li><a href={url('pot')}><strong>Učna pot</strong><span>vsi moduli in napredek</span></a></li>
+        <li><a href={url('simulator')}><strong>3D simulator</strong><span>kako deluje, del za delom</span></a></li>
+        <li><a href={url('slovar')}><strong>Slovar pojmov</strong><span>vsi strokovni izrazi</span></a></li>
+      </ul>
     </article>
-    <article class="panel">
-      <p class="eyebrow">Glavna pot</p>
-      <h2>Postani serviser</h2>
-      <p>Vseh {modules.length} modulov do profesionalne ravni, s simulacijami in končnim izpitom.</p>
-      <a href={url('pot')}>Poglej celo pot →</a>
+    <article class="route r-exam">
+      <p class="route-tag">🎓 Pripravljam se na izpit</p>
+      <h3>Spričevalo za delo s F-plini</h3>
+      <p>{examCount} vprašanj v slogu izpita z razlagami, simulacija izpita z omejenim časom, praktični postopki in izračun CO₂e.</p>
+      <ul class="route-links">
+        <li><a href={url('f-plini#vprasanja')}><strong>Simulacija izpita</strong><span>30 vprašanj, 45 minut</span></a></li>
+        <li><a href={url('f-plini#snov')}><strong>Snov po temah</strong><span>s kljukico »to znam«</span></a></li>
+        <li><a href={url('teren')}><strong>Igra Teren</strong><span>vaja diagnostike na delovni dan</span></a></li>
+      </ul>
+    </article>
+    <article class="route r-field">
+      <p class="route-tag">🧰 Sem na terenu</p>
+      <h3>Hitra pomoč ob napravi</h3>
+      <p>Koda na zaslonu, odčitek z manometra, pokvarjen del – pomen, prvi koraki in kdo sme poseg narediti.</p>
+      <ul class="route-links">
+        <li><a href={url('kode')}><strong>Kode napak</strong><span>{codeCount} kod šestih proizvajalcev</span></a></li>
+        <li><a href={url('sh-sc')}><strong>Kalkulator SH/SC</strong><span>R32, R410A, R290</span></a></li>
+        <li><a href={url('okvare')}><strong>Okvare in popravila</strong><span>zakaj se pokvari, kako se zamenja</span></a></li>
+        <li><a href={url('oprema')}><strong>Merilna oprema</strong><span>naprave, ki jih preizkusiš</span></a></li>
+      </ul>
     </article>
   </section>
+
+  <a class="sim-teaser" href={url('teren')}>
+    <span class="sim-badge">IGRA</span>
+    <strong>Teren – delovni dan serviserja</strong>
+    <span>Stranke kličejo, ura teče. Z meritvami poišči vzrok – 16 realnih okvar, dve hkrati, letni časi. Po vsakem nalogu izveš, zakaj je diagnoza pravilna.</span>
+    <span class="go">Igraj →</span>
+  </a>
+
+  <p class="notice trust">
+    <span>
+      <strong>Vsebina še ni strokovno pregledana.</strong> Pišemo jo odprto in jo bo pred uporabo pri pouku pregledal serviser. Ne nadomešča uradnega usposabljanja ali
+      spričevala za delo s hladivi – na terenu vedno veljajo navodila proizvajalca. Napako lahko javiš na dnu vsake strani.
+    </span>
+  </p>
 
   <section class="how">
     <h2>Kako se učiš</h2>
     <ol>
       <li><strong>Ena ideja na kartico</strong> – največ 120 besed, nato »Naprej«.</li>
       <li><strong>Vedno »zakaj«</strong> – vsak koncept v 3 do 5 korakih od vzroka do posledice.</li>
-      <li><strong>Kvizi, ki učijo</strong> – vsak odgovor ima razlago, napačni se vrnejo v ponovitev.</li>
-      <li><strong>Brez računa</strong> – napredek ostane v tem brskalniku. Izvozi ga lahko kot datoteko.</li>
+      <li><strong>Vaja iz prakse</strong> – v igri meriš, sklepaš in dobiš razlago, ne le točke.</li>
+      <li><strong>Brez računa</strong> – napredek ostane v tem brskalniku. Izvoziš ga lahko kot datoteko na strani <a href={url('pot')}>Pot</a>.</li>
     </ol>
   </section>
 </Base>
@@ -71,7 +100,7 @@ const first = lessons[0];
 
 <style>
   .hero {
-    padding: 12px 0 28px;
+    padding: 12px 0 20px;
   }
   .lead {
     font-size: 1.15rem;
@@ -88,6 +117,73 @@ const first = lessons[0];
     min-height: 56px;
     padding: 0 26px;
     font-size: 1.1rem;
+  }
+  .choose {
+    margin: 8px 0 12px;
+  }
+  .routes {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: 16px;
+  }
+  .route {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-top: 5px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .r-learn {
+    border-top-color: var(--low);
+  }
+  .r-exam {
+    border-top-color: var(--ochre);
+  }
+  .r-field {
+    border-top-color: var(--ok);
+  }
+  .route h3,
+  .route p {
+    margin: 0;
+  }
+  .route > p:not(.route-tag) {
+    color: var(--ink-2);
+    font-size: 0.95rem;
+  }
+  .route-tag {
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+  .route-links {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+  }
+  .route-links li {
+    max-width: none;
+  }
+  .route-links a {
+    display: grid;
+    min-height: 48px;
+    align-content: center;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .route-links a:hover {
+    outline: 2px solid var(--accent);
+  }
+  .route-links span {
+    font-size: 0.82rem;
+    color: var(--ink-2);
   }
   .sim-teaser {
     display: grid;
@@ -116,25 +212,11 @@ const first = lessons[0];
     font-weight: 800;
     letter-spacing: 0.06em;
   }
-  .paths {
-    display: grid;
-    gap: 14px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  }
-  .paths h2 {
-    margin: 0 0 6px;
-  }
-  .paths p {
-    margin: 0 0 8px;
-  }
-  .paths a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-weight: 700;
+  .trust {
+    margin-top: 6px;
   }
   .how {
-    margin-top: 32px;
+    margin-top: 28px;
   }
   .how li {
     margin: 8px 0;

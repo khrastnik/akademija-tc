@@ -1,5 +1,17 @@
 # Spremembe
 
+## 0.13.0 – 2026-11-15
+
+### Zgradba strani
+- **Meni v treh skupinah** namesto 11 povezav: *Učenje* (Učna pot, Slovar, Ponovitev), *Vaja* (Teren, 3D simulator, Izpit F-plini)
+  in *Na terenu* (Kode napak, SH/SC, Okvare, Merilna oprema). Na računalniku spustni seznami z opisom vsake strani
+  (hkrati odprt le eden, zapre se ob kliku drugam ali Esc), na telefonu isti meni s skupinami. Hamburger spet do 860 px.
+- **»Končni izpit« in »Orodja« nista več v meniju** – izpit je še v pripravi, Orodja podvajajo skupino »Na terenu«. Strani ostaneta dosegljivi.
+- **Nova domača stran** s tremi vstopnimi potmi: »Učim se od začetka«, »Pripravljam se na izpit«, »Sem na terenu«,
+  predstavitev igre Teren in jasno opozorilo, da vsebina še ni strokovno pregledana.
+- **Ena igra**: v 3D simulatorju je zavihek »Dan na terenu« zamenjala povezava na igro Teren, tako da igralec ne naleti na
+  dva modela z različnimi normalnimi vrednostmi. Simulator ostane za razumevanje delovanja.
+
 ## 0.12.0 – 2026-11-15
 
 ### Igra Teren

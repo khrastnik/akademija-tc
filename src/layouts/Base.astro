@@ -17,19 +17,7 @@ const { title, description = 'Brezplačna, odprta spletna pot od nič do servise
 const pageTitle = title === SITE.name ? title : `${title} · ${SITE.short}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(url('og.png'), Astro.site).href;
-const nav = [
-  { id: 'pot', href: url('pot'), label: 'Pot' },
-  { id: 'simulator', href: url('simulator'), label: 'Simulator' },
-  { id: 'teren', href: url('teren'), label: 'Teren' },
-  { id: 'okvare', href: url('okvare'), label: 'Okvare' },
-  { id: 'kode', href: url('kode'), label: 'Kode' },
-  { id: 'sh-sc', href: url('sh-sc'), label: 'SH/SC' },
-  { id: 'oprema', href: url('oprema'), label: 'Oprema' },
-  { id: 'f-plini', href: url('f-plini'), label: 'F-plini' },
-  { id: 'slovar', href: url('slovar'), label: 'Slovar' },
-  { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev' },
-  { id: 'izpit', href: url('izpit'), label: 'Izpit' },
-];
+
 // Meni na telefonu: vsak vnos z ikono in eno vrstico, kaj tam najdeš.
 const I: Record<string, string> = {
   domov: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
@@ -46,21 +34,39 @@ const I: Record<string, string> = {
   'f-plini': '<path d="M9 3h6"/><path d="M10 3v4l-4 9a3 3 0 0 0 2.7 4h6.6a3 3 0 0 0 2.7-4l-4-9V3"/><path d="M7.5 14h9"/>',
   orodja: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-2.5z"/>',
 };
-const menu = [
-  { id: 'domov', href: url(''), label: 'Domov', hint: 'Začetek in kratek pregled' },
-  { id: 'pot', href: url('pot'), label: 'Učna pot', hint: 'Vsi moduli in tvoj napredek' },
-  { id: 'simulator', href: url('simulator'), label: '3D simulator', hint: 'Kako deluje in igra »Dan na terenu«' },
-  { id: 'teren', href: url('teren'), label: 'Teren – igra', hint: 'Delovni dan serviserja: meri, ugotovi, zasluži' },
-  { id: 'okvare', href: url('okvare'), label: 'Okvare in popravila', hint: 'Zakaj se del pokvari in kako se zamenja' },
-  { id: 'oprema', href: url('oprema'), label: 'Merilna oprema', hint: 'Manometri, termometri, multimeter … – preizkusi jih' },
-  { id: 'sh-sc', href: url('sh-sc'), label: 'Kalkulator SH/SC', hint: 'Pregrevanje in podhlajevanje – R32, R410A, R290' },
-  { id: 'kode', href: url('kode'), label: 'Kode napak', hint: 'Daikin, Panasonic, Mitsubishi, Vaillant …' },
-  { id: 'f-plini', href: url('f-plini'), label: 'Izpit F-plini', hint: 'Priprava na spričevalo za delo s hladivi' },
-  { id: 'slovar', href: url('slovar'), label: 'Slovar pojmov', hint: 'Vsi strokovni izrazi na enem mestu' },
-  { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev', hint: 'Vprašanja, ki si jih zgrešil' },
-  { id: 'izpit', href: url('izpit'), label: 'Končni izpit', hint: 'Preveri znanje iz celotne poti' },
-  { id: 'orodja', href: url('orodja'), label: 'Orodja', hint: 'Simulator in orodja v pripravi' },
+// Meni v treh skupinah – ista struktura za glavo (spustni seznami) in meni na telefonu.
+// »Končni izpit« in »Orodja« nista v meniju: izpit je še v pripravi, Orodja pa podvajajo skupino »Na terenu«.
+const groups = [
+  {
+    id: 'ucenje',
+    label: 'Učenje',
+    items: [
+      { id: 'pot', href: url('pot'), label: 'Učna pot', hint: 'Vsi moduli in tvoj napredek' },
+      { id: 'slovar', href: url('slovar'), label: 'Slovar pojmov', hint: 'Vsi strokovni izrazi na enem mestu' },
+      { id: 'ponovitev', href: url('ponovitev'), label: 'Ponovitev', hint: 'Vprašanja, ki si jih zgrešil' },
+    ],
+  },
+  {
+    id: 'vaja',
+    label: 'Vaja',
+    items: [
+      { id: 'teren', href: url('teren'), label: 'Teren – igra', hint: 'Delovni dan serviserja: meri, ugotovi, zasluži' },
+      { id: 'simulator', href: url('simulator'), label: '3D simulator', hint: 'Kako toplotna črpalka deluje, del za delom' },
+      { id: 'f-plini', href: url('f-plini'), label: 'Izpit F-plini', hint: 'Priprava na spričevalo za delo s hladivi' },
+    ],
+  },
+  {
+    id: 'teren-orodja',
+    label: 'Na terenu',
+    items: [
+      { id: 'kode', href: url('kode'), label: 'Kode napak', hint: 'Daikin, Panasonic, Mitsubishi, Vaillant …' },
+      { id: 'sh-sc', href: url('sh-sc'), label: 'Kalkulator SH/SC', hint: 'Pregrevanje in podhlajevanje – R32, R410A, R290' },
+      { id: 'okvare', href: url('okvare'), label: 'Okvare in popravila', hint: 'Zakaj se del pokvari in kako se zamenja' },
+      { id: 'oprema', href: url('oprema'), label: 'Merilna oprema', hint: 'Manometri, termometri, multimeter … – preizkusi jih' },
+    ],
+  },
 ];
+const home = { id: 'domov', href: url(''), label: 'Domov', hint: 'Začetek in kratek pregled' };
 const isHome = Astro.url.pathname.replace(/\/+$/, '') === url('').replace(/\/+$/, '');
 const active = current ?? (isHome ? 'domov' : undefined);
 ---
@@ -104,7 +110,25 @@ const active = current ?? (isHome ? 'domov' : undefined);
       <div class="wrap">
         <a class="brand" href={url('')}>Akademija <span>TČ</span></a>
         <nav class="nav" aria-label="Glavni meni">
-          {nav.map((n) => <a href={n.href} aria-current={current === n.id ? 'page' : undefined}>{n.label}</a>)}
+          {groups.map((g) => {
+            const on = g.items.some((i) => i.id === current);
+            return (
+              <details class="nav-group" data-nav-group>
+                <summary class={on ? 'on' : ''}>
+                  {g.label}
+                  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6" /></svg>
+                </summary>
+                <div class="nav-pop">
+                  {g.items.map((i) => (
+                    <a href={i.href} aria-current={current === i.id ? 'page' : undefined}>
+                      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={I[i.id]} />
+                      <span><strong>{i.label}</strong><small>{i.hint}</small></span>
+                    </a>
+                  ))}
+                </div>
+              </details>
+            );
+          })}
         </nav>
         <button type="button" class="menu-btn" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="meni">
           <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -129,15 +153,28 @@ const active = current ?? (isHome ? 'domov' : undefined);
       </a>
       <nav aria-label="Meni strani">
         <ul class="menu-list">
-          {menu.map((m) => (
-            <li>
-              <a href={m.href} aria-current={active === m.id ? 'page' : undefined}>
-                <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={I[m.id]} />
-                <span><strong>{m.label}</strong><small>{m.hint}</small></span>
-              </a>
-            </li>
-          ))}
+          <li>
+            <a href={home.href} aria-current={active === home.id ? 'page' : undefined}>
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={I[home.id]} />
+              <span><strong>{home.label}</strong><small>{home.hint}</small></span>
+            </a>
+          </li>
         </ul>
+        {groups.map((g) => (
+          <section class="menu-group" aria-label={g.label}>
+            <p class="menu-group-title">{g.label}</p>
+            <ul class="menu-list">
+              {g.items.map((m) => (
+                <li>
+                  <a href={m.href} aria-current={active === m.id ? 'page' : undefined}>
+                    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={I[m.id]} />
+                    <span><strong>{m.label}</strong><small>{m.hint}</small></span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </nav>
       <p class="menu-foot">Napredek se shranjuje samo v tem brskalniku. <a href={issueUrl(title)}>Javi napako</a></p>
     </dialog>
@@ -174,7 +211,28 @@ const active = current ?? (isHome ? 'domov' : undefined);
         dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
         // ob vrnitvi s tipko Nazaj (bfcache) meni ne ostane odprt
         addEventListener('pageshow', function () { if (dlg.open) dlg.close(); });
-        matchMedia('(min-width: 1081px)').addEventListener('change', function (q) { if (q.matches && dlg.open) dlg.close(); });
+        matchMedia('(min-width: 861px)').addEventListener('change', function (q) { if (q.matches && dlg.open) dlg.close(); });
+      })();
+      // Spustni seznami v glavi: hkrati odprt le en, zapri ob kliku drugam ali tipki Esc.
+      (function () {
+        var gs = Array.prototype.slice.call(document.querySelectorAll('[data-nav-group]'));
+        gs.forEach(function (g) {
+          g.addEventListener('toggle', function () {
+            if (g.open) gs.forEach(function (o) { if (o !== g) o.open = false; });
+          });
+        });
+        document.addEventListener('click', function (e) {
+          gs.forEach(function (g) { if (g.open && !g.contains(e.target)) g.open = false; });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape') return;
+          gs.forEach(function (g) {
+            if (g.open) {
+              g.open = false;
+              g.querySelector('summary').focus();
+            }
+          });
+        });
       })();
       // Na telefonu se glava med branjem skrije (drsenje navzdol) in vrne ob drsenju navzgor.
       (function () {

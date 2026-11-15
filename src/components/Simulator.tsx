@@ -49,6 +49,8 @@ interface Props {
   faults: FaultText[];
   days: Day[];
   lessonUrl: string;
+  /** Igra z diagnostiko je na ločeni strani »Teren« – en model, ena igra. */
+  terenUrl?: string;
 }
 
 // ---------- shranjevanje rezultatov igre (samo v brskalniku) ----------
@@ -155,7 +157,7 @@ const MODES: { id: OperatingMode; label: string; part: string; text: string }[] 
 
 const clockText = (min: number) => `${String(Math.floor(min / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
 
-export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
+export default function Simulator({ parts, faults, days, lessonUrl, terenUrl }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<SimScene | null>(null);
@@ -404,9 +406,15 @@ export default function Simulator({ parts, faults, days, lessonUrl }: Props) {
         <button role="tab" aria-selected={mode === 'learn'} class={mode === 'learn' ? 'on' : ''} onClick={() => switchMode('learn')}>
           Kako deluje
         </button>
-        <button role="tab" aria-selected={mode === 'game'} class={mode === 'game' ? 'on' : ''} onClick={() => switchMode('game')}>
-          Dan na terenu 🛠
-        </button>
+        {terenUrl ? (
+          <a class="sim-tab-link" href={terenUrl}>
+            Igra Teren 🧰 →
+          </a>
+        ) : (
+          <button role="tab" aria-selected={mode === 'game'} class={mode === 'game' ? 'on' : ''} onClick={() => switchMode('game')}>
+            Dan na terenu 🛠
+          </button>
+        )}
       </div>
 
       <div class="sim-layout">
@@ -691,6 +699,8 @@ function LearnPanel({
   goTour: (n: number) => void;
   selectPart: (id: string | null) => void;
   lessonUrl: string;
+  /** Igra z diagnostiko je na ločeni strani »Teren« – en model, ena igra. */
+  terenUrl?: string;
 }) {
   if (step > 0) {
     const p = tourParts[step - 1];
