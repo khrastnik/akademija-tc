@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.16.0 – 2026-11-15
+
+### Okvare ↔ igra Teren
+- **»🎮 Vadi v igri Teren« pri vsakem delu** na strani »Okvare in popravila«: povezave na okvare v igri, ki vključujejo
+  ta del (npr. ekspanzijski ventil → EEV zataknjen zaprt / odprt). Seznam se gradi iz istih podatkov kot »Nauči se več«
+  v igri, zato sta smeri vedno usklajeni.
+- **Vaja ene okvare** (`teren/?vaja=<okvara>`): en nalog z izbrano okvaro, brez kombinacij, brez vpliva na kampanjo
+  in statistiko. Po rezultatu »Še enkrat ista okvara« ali »Na začetek igre«.
+
 ## 0.15.0 – 2026-11-15
 
 ### Igra Teren

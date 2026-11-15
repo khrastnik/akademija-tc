@@ -647,3 +647,18 @@
 .tg-more-list a:hover {
   outline: 2px solid var(--accent);
 }
+
+/* vaja ene okvare */
+.tg-practice {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 14px;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+.tg-practice h3,
+.tg-practice p {
+  margin: 0;
+}

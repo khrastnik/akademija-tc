@@ -1,9 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
-import { loadRepairs, loadSim } from '../lib/content.js';
+import { loadRepairs, loadSim, loadTeren, loadTerenUcenje } from '../lib/content.js';
 import { url } from '../lib/site.js';
 
 const repairs = loadRepairs();
+// obratna povezava z igro Teren: katere okvare v igri vključujejo ta del (content/teren/ucenje.yaml → parts)
+const terenName = new Map(loadTeren().faults.map((f) => [f.id, f.name]));
+const inGame = new Map<string, { id: string; name: string }[]>();
+for (const [fid, u] of Object.entries(loadTerenUcenje().faults))
+  for (const part of u.parts) inGame.set(part, [...(inGame.get(part) ?? []), { id: fid, name: terenName.get(fid) ?? fid }]);
 const parts = new Map(loadSim().parts.map((p) => [p.id, p]));
 const GROUP_ORDER = ['hladivo', 'voda', 'krmiljenje'] as const;
 const GROUP_LABEL: Record<string, string> = { hladivo: 'Krog hladiva', voda: 'Vodni krog', krmiljenje: 'Krmiljenje in senzorji' };
@@ -107,6 +112,16 @@ const items = repairs
               <h3>Kako preveriš, da je popravljeno</h3>
               <p>{r.verify}</p>
               {r.prevent && (<><h3>Kako preprečiš</h3><p>{r.prevent}</p></>)}
+              {inGame.get(r.part) && (
+                <div class="ingame">
+                  <h3>🎮 Vadi v igri Teren</h3>
+                  <ul>
+                    {inGame.get(r.part)!.map((g) => (
+                      <li><a href={`${url('teren')}?vaja=${g.id}`}>{g.name} →</a></li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </details>
         ))}
@@ -329,6 +344,27 @@ const items = repairs
     border-radius: 10px;
     background: var(--surface-2);
     font-size: 0.95rem;
+  }
+  .ingame {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--surface-2);
+  }
+  .ingame h3 {
+    margin-top: 0 !important;
+  }
+  .ingame ul {
+    list-style: none;
+    padding: 0 !important;
+    display: grid;
+    gap: 2px;
+  }
+  .ingame a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
   }
   .model-note {
     margin-top: 24px;

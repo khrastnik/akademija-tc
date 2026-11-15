@@ -150,7 +150,14 @@ export default function TerenGame({ faults, models, customers, places, generic, 
   const [flash, setFlash] = useState<string | null>(null);
   const top = useRef<HTMLDivElement>(null);
 
-  useEffect(() => setStats(loadStats()), []);
+  // Vaja ene okvare: povezava s strani okvar (?vaja=<id>) – en nalog s to okvaro, brez vpliva na kampanjo in statistiko.
+  const [practice, setPractice] = useState<FaultId | null>(null);
+  const [practicing, setPracticing] = useState(false);
+  useEffect(() => {
+    setStats(loadStats());
+    const v = new URLSearchParams(location.search).get('vaja') as FaultId | null;
+    if (v && faultText.has(v)) setPractice(v);
+  }, []);
   const season: Season = seasonForDay(stats.campaignDay);
   const S = SEASONS[season];
   const multi = LEVELS[level].combo > 0;
@@ -166,7 +173,15 @@ export default function TerenGame({ faults, models, customers, places, generic, 
     const d = seasonDeck(season, (Date.now() >>> 0) ^ 0x9e3779b9);
     nextJob(0, d);
   }
-  function nextJob(minNow: number, d: FaultId[]) {
+  function startPractice() {
+    if (!practice) return;
+    setPracticing(true);
+    setMoney(0);
+    setRep(START_REP);
+    setDayJobs([]);
+    nextJob(0, deck, practice);
+  }
+  function nextJob(minNow: number, d: FaultId[], forced?: FaultId) {
     const seed = (Date.now() ^ Math.floor(Math.random() * 1e9)) >>> 0;
     const r = rng(seed);
     const drive = r.int(15, 35);
@@ -176,10 +191,10 @@ export default function TerenGame({ faults, models, customers, places, generic, 
       return;
     }
     const pile = d.length ? d : seasonDeck(season, seed);
-    const [first, ...rest] = pile;
-    const partner = r.chance(LEVELS[level].combo) ? comboPartner(first, r) : null;
+    const [first, ...rest] = forced ? [forced, ...pile] : pile;
+    const partner = !forced && r.chance(LEVELS[level].combo) ? comboPartner(first, r) : null;
     const fs = partner ? [first, partner] : [first];
-    setDeck(rest);
+    if (!forced) setDeck(rest);
     const env = makeEnv(fs, seed, level, S.tOut);
     const t = faultText.get(first)!;
     setJob({
@@ -253,19 +268,27 @@ export default function TerenGame({ faults, models, customers, places, generic, 
     setMoney(money + res.pay);
     setResult({ ...res, guess, meas: log.length });
     setDayJobs([...dayJobs, { level: res.level, meas: log.length, pay: res.pay, faults: job.faults }]);
-    const s = { ...loadStats() };
-    s.jobs += 1;
-    if (res.level === 'ok') {
-      s.correct += 1;
-      s.measCorrect += log.length;
+    if (!practicing) {
+      const s = { ...loadStats() };
+      s.jobs += 1;
+      if (res.level === 'ok') {
+        s.correct += 1;
+        s.measCorrect += log.length;
+      }
+      saveStats(s);
+      setStats(s);
     }
-    saveStats(s);
-    setStats(s);
     setDiagOpen(false);
     setPhase('result');
     scrollTop();
   }
   function afterResult() {
+    if (practicing) {
+      setPracticing(false);
+      setPhase('start');
+      scrollTop();
+      return;
+    }
     if (rep <= 0) {
       setPhase('over');
       scrollTop();
@@ -292,7 +315,7 @@ export default function TerenGame({ faults, models, customers, places, generic, 
   const left = DAY_MIN - minutes;
   const header = (
     <div class="tg-head" aria-live="polite">
-      <span title="Letni čas">{S.icon} {season}</span>
+      <span title={practicing ? 'Vaja' : 'Letni čas'}>{practicing ? '🎯 vaja' : `${S.icon} ${season}`}</span>
       <span title="Ura">🕒 {clock(minutes)}</span>
       <span title="Preostanek dneva">⏳ {Math.max(0, left)} min</span>
       <span title="Zaslužek dneva">💶 {money} €</span>
@@ -325,6 +348,16 @@ export default function TerenGame({ faults, models, customers, places, generic, 
     return (
       <div class="tg" ref={top}>
         <div class="tg-card tg-intro">
+          {practice && (
+            <div class="tg-practice">
+              <p class="eyebrow">Vaja ene okvare</p>
+              <h3>{faultText.get(practice)?.name}</h3>
+              <p class="tg-muted">En nalog s to okvaro – brez kombinacij, brez vpliva na kampanjo in statistiko. Stranka okvare ne pove, poiščeš jo z meritvami.</p>
+              <button type="button" class="btn wide" onClick={startPractice}>
+                ▶ Začni vajo
+              </button>
+            </div>
+          )}
           <h2>Delovni dan serviserja</h2>
           {seasonCard}
           <p>
@@ -531,9 +564,20 @@ export default function TerenGame({ faults, models, customers, places, generic, 
             Meritev: {result.meas} · na lokaciji {onSite} min
           </p>
           <div class="tg-actions">
-            <button type="button" class="btn" onClick={afterResult}>
-              {rep <= 0 ? 'Konec igre' : DAY_MIN - minutes < 55 ? 'Konec dneva →' : 'Naslednji nalog →'}
-            </button>
+            {practicing ? (
+              <>
+                <button type="button" class="btn" onClick={startPractice}>
+                  ↻ Še enkrat ista okvara
+                </button>
+                <button type="button" class="btn secondary" onClick={afterResult}>
+                  Na začetek igre
+                </button>
+              </>
+            ) : (
+              <button type="button" class="btn" onClick={afterResult}>
+                {rep <= 0 ? 'Konec igre' : DAY_MIN - minutes < 55 ? 'Konec dneva →' : 'Naslednji nalog →'}
+              </button>
+            )}
           </div>
         </div>
       </div>
