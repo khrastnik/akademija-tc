@@ -1,5 +1,22 @@
 # Spremembe
 
+## 0.19.0 – 2026-11-16
+
+### Pregled razumljivosti
+- **Lekcija 16.1 ne vodi več v slepo ulico**: namesto starega simulatorja z »dvanajstimi klici« kaže na igro Teren.
+  Modul 16 se zdaj imenuje »Diagnostika korak za korakom« (vaja v igri Teren).
+- **Učna pot po vrstnem redu**: modul 18 »Napake meritev« je prestavljen za modul 17 (faza »F2 · Diagnoza v praksi«),
+  zato si številke sledijo 0–21 in se ujemajo z »Kaj sledi« v lekcijah. Modul 15 je »Primeri napak iz prakse«
+  (prej »30 realnih primerov«, čeprav sta lekciji dve).
+- **En izraz za isto stvar**: igra zdaj povsod uporablja »pregrevanje« in »podhlajevanje« kot lekcije in kalkulator
+  (prej »pregretje« in »podhladitev«).
+- **Kratice ostanejo velike**: »senzor zunanje T«, »EEV zataknjen zaprt« (prej »senzor zunanje t«, »eev …«).
+- **Domača stran**: igra Teren je pod »Učim se od začetka« (prej pod izpitom F-plini); pri izpitu je zdaj izračun CO₂e.
+  »102 vprašanji« (slovnica), »16 tipičnih okvar« namesto »realnih«.
+- **Začetni zaslon igre je krajši**: na telefonu je »Začni delovni dan« na prvem zaslonu. Pravila in opis letnega časa
+  so pod »Kako se igra«, opis težavnosti se na telefonu pokaže samo pri izbrani.
+- **Predznanje**: pod gumbom »Prvič tukaj?« s povezavo na module 5–8 (pretok, ΔT, pregrevanje, podhlajevanje).
+
 ## 0.18.0 – 2026-11-15
 
 ### Igra Teren – večje skupine za vajo

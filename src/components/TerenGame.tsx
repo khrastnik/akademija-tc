@@ -49,7 +49,7 @@ interface Props {
   pts: PTPoint[];
   lessonSh: string;
   /** Povezave iz rezultata: naslovi lekcij, imena delov na strani okvar. */
-  links: { lessonBase: string; okvare: string; lessons: Record<string, string>; parts: Record<string, string> };
+  links: { lessonBase: string; okvare: string; pot: string; lessons: Record<string, string>; parts: Record<string, string> };
 }
 interface Job {
   faults: FaultId[];
@@ -128,6 +128,9 @@ const COMP_NAME: Record<Comp, string> = {
   susilnik: 'Filter sušilnik',
 };
 const toolLabel = (id: string) => TOOLS.find((t) => t.id === id)?.label ?? id;
+
+/** Ime okvare sredi stavka: prva črka mala, kratice (EEV, VT …) ostanejo velike. */
+const lc = (s = '') => (/^[A-ZČŠŽ]{2}/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
 
 export default function TerenGame({ faults, models, customers, places, generic, learn: L, pts, lessonSh, links }: Props) {
   const faultText = useMemo(() => new Map(faults.map((f) => [f.id, f])), [faults]);
@@ -343,11 +346,8 @@ export default function TerenGame({ faults, models, customers, places, generic, 
       <p class="eyebrow">
         Kampanja · dan {stats.campaignDay + 1} · {S.icon} {S.label}
       </p>
-      <p>{S.intro}</p>
       <p class="tg-muted">
-        Zunaj {S.tOut[0]} do {S.tOut[1]} °C. Pogosteje: {S.typical.map((f) => faultText.get(f)?.name.toLowerCase()).join(', ')}.
-        {' '}
-        {DAYS_PER_SEASON - (stats.campaignDay % DAYS_PER_SEASON)} {DAYS_PER_SEASON - (stats.campaignDay % DAYS_PER_SEASON) === 1 ? 'dan' : 'dneva'} do naslednjega letnega časa.
+        Zunaj {S.tOut[0]} do {S.tOut[1]} °C · {DAYS_PER_SEASON - (stats.campaignDay % DAYS_PER_SEASON)} {DAYS_PER_SEASON - (stats.campaignDay % DAYS_PER_SEASON) === 1 ? 'dan' : 'dneva'} do naslednjega letnega časa.
       </p>
     </div>
   );
@@ -371,19 +371,7 @@ export default function TerenGame({ faults, models, customers, places, generic, 
               </button>
             </div>
           )}
-          <h2>Delovni dan serviserja</h2>
           {seasonCard}
-          <p>
-            Imaš <strong>480 minut</strong>. Vsak klic je skrita okvara. Vsaka meritev stane čas. Ko misliš, da veš, postavi diagnozo. Pravilna in hitra diagnoza prinese denar in
-            ugled ★, ugibanje in napake ga vzamejo. Pri 0 ★ je igre konec.
-          </p>
-          <ul class="tg-rules">
-            <li>Klikni del na shemi – pokažejo se orodja zanj.</li>
-            <li>SH in SC zahtevata priklopljeno manometrsko baterijo (8 min).</li>
-            <li>Koda na zaslonu je simptom – včasih je ni, včasih je v zgodovini stara, nepovezana.</li>
-            <li>Enkrat na nalog lahko pokličeš podporo (−15 min, izloči 5 napačnih možnosti).</li>
-            <li>Po vsakem nalogu izveš, kako bi do diagnoze prišel in zakaj je pravilna.</li>
-          </ul>
           <fieldset class="tg-levels">
             <legend>Težavnost</legend>
             {(Object.keys(LEVELS) as Level[]).map((l) => (
@@ -403,6 +391,24 @@ export default function TerenGame({ faults, models, customers, places, generic, 
           <button type="button" class="btn wide" onClick={() => startDay(START_REP)}>
             ▶ Začni delovni dan
           </button>
+          <p class="tg-prereq">
+            Prvič tukaj? Igra predpostavlja, da poznaš pretok, ΔT, pregrevanje in podhlajevanje – <a href={links.pot}>moduli 5–8 na učni poti</a>. Brez njih boš
+            ugibal.
+          </p>
+          <details class="tg-how">
+            <summary>Kako se igra</summary>
+            <p>
+              {S.intro} Pogosteje: {S.typical.map((f) => lc(faultText.get(f)?.name)).join(', ')}.
+            </p>
+            <ul class="tg-rules">
+              <li>Vsak klic je skrita okvara. Vsaka meritev stane čas – najprej poceni in informativne, drage le za potrditev.</li>
+              <li>Klikni del na shemi – pokažejo se orodja zanj.</li>
+              <li>Pregrevanje (SH) in podhlajevanje (SC) zahtevata priklopljeno manometrsko baterijo (8 min).</li>
+              <li>Koda na zaslonu je simptom – včasih je ni, včasih je v zgodovini stara, nepovezana.</li>
+              <li>Enkrat na nalog lahko pokličeš podporo (−15 min, izloči 5 napačnih možnosti).</li>
+              <li>Pri 0 ★ je igre konec. Po vsakem nalogu izveš, kako bi prišel do diagnoze in zakaj je pravilna.</li>
+            </ul>
+          </details>
           {stats.jobs > 0 && (
             <p class="tg-stats">
               Odigranih dni: {stats.days} · nalogov: {stats.jobs} · točnost: {acc} % · povprečno meritev pri pravilni diagnozi: {stats.correct ? (stats.measCorrect / stats.correct).toFixed(1) : '–'} · najboljši dan: {stats.bestDay} €
@@ -528,7 +534,7 @@ export default function TerenGame({ faults, models, customers, places, generic, 
             const gu = L.faults[g];
             return (
               <section class="tg-explain tg-why-not">
-                <h3>Zakaj ne {gt.name.toLowerCase()}?</h3>
+                <h3>Zakaj ne {lc(gt.name)}?</h3>
                 <p>Pri tej okvari bi videl: {gt.indicators.join(' · ')}.</p>
                 <p>Potrdila bi jo meritev: {gu.proof.map(toolLabel).join(', ')}.</p>
                 {job.faults.includes(gu.confuse.with) && <p class="tg-key">{gu.confuse.how}</p>}
@@ -667,7 +673,7 @@ export default function TerenGame({ faults, models, customers, places, generic, 
               <input type="checkbox" checked={learn} onChange={() => setLearn(!learn)} /> Učni način (normalna območja in pomen meritev)
             </label>
             {hint && <p class="tg-hint">{hint}</p>}
-            {support && <p class="tg-hint">Podpora: »Ni {support.map((s) => faultText.get(s)?.name.toLowerCase()).join(', ni ')}.«</p>}
+            {support && <p class="tg-hint">Podpora: »Ni {support.map((s) => lc(faultText.get(s)?.name)).join(', ni ')}.«</p>}
           </div>
           <div class="tg-card">
             <h3>Servisni zapisnik</h3>
@@ -695,8 +701,8 @@ export default function TerenGame({ faults, models, customers, places, generic, 
                 <tbody>
                   <tr><th>T uparjanja</th><td>T zunaj − 6…8 K</td></tr>
                   <tr><th>T kondenzacije</th><td>T dovoda + 2,5…4 K</td></tr>
-                  <tr><th>Pregretje</th><td>4–6,5 K</td></tr>
-                  <tr><th>Podhladitev</th><td>3–5 K</td></tr>
+                  <tr><th>Pregrevanje</th><td>4–6,5 K</td></tr>
+                  <tr><th>Podhlajevanje</th><td>3–5 K</td></tr>
                   <tr><th>ΔT vode</th><td>4,5–6 K</td></tr>
                   <tr><th>Pretok</th><td>1,15–1,35 m³/h</td></tr>
                   <tr><th>Tlak vode</th><td>1,4–1,8 bar</td></tr>

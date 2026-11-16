@@ -33,7 +33,7 @@ Dobra hipoteza je:
 - **poceni preverljiva** – meritev je hitra in brez posega,
 - **konkretna** – »zamašen filter«, ne »nekaj z vodo«.
 
-V [3D simulatorju](../../simulator/) lahko hipoteze vadiš na dvanajstih klicih.
+V [igri Teren](../../teren/) hipoteze vadiš na 16 okvarah: vsaka meritev stane čas, po vsakem nalogu pa izveš, katera meritev bi hipotezo potrdila ali ovrgla.
 
 ::card{type=imagine}
 Pomisli na igro »Kdo je kdo?«. Ne ugibaš imena takoj. Vprašaš: »Ima očala?« – in polovica kart pade.

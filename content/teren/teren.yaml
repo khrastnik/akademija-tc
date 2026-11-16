@@ -9,7 +9,7 @@ faults:
       - Greje vedno slabše, vsako zimo malo bolj.
       - Pri zunanji enoti so oljni madeži, hiša pa mlačna.
       - Serviser je lani dolil plin, zdaj je spet isto.
-    indicators: [Pregretje zelo visoko, Podhladitev skoraj nič, Detektor najde puščanje]
+    indicators: [Pregrevanje zelo visoko, Podhlajevanje skoraj nič, Detektor najde puščanje]
     why: Hladiva je premalo, zato je uparjalnik »lačen« – para se pregreje že na začetku, v kondenzatorju pa ni zaloge tekočine.
     fix: Poišči in popravi puščanje, vakuumiraj, napolni po teži. Doliti brez popravila ni dovoljeno.
 
@@ -39,7 +39,7 @@ faults:
       - Greje slabo, zunanja enota pa se ne zaledeni.
       - Od zadnjega servisa slabo greje.
       - Moč je na pol, računi pa enaki.
-    indicators: [Pregretje visoko, Podhladitev visoka, EEV se ne odpre]
+    indicators: [Pregrevanje visoko, Podhlajevanje visoko, EEV se ne odpre]
     why: Ventil spusti premalo hladiva – uparjalnik je lačen (visoko SH), hladivo se kopiči v kondenzatorju (visoko SC).
     fix: Preveri tuljavo in konektor; telo ventila zamenja serviser s spričevalom, z novim filtrom sušilnikom.
 
@@ -49,7 +49,7 @@ faults:
       - Kompresor čudno ropota.
       - Na cevi pri kompresorju je led.
       - Greje, a se sliši klokotanje v zunanji enoti.
-    indicators: [Pregretje skoraj nič, Zaledenel sesalni vod, Nizka T tlačnega voda]
+    indicators: [Pregrevanje skoraj nič, Zaledenel sesalni vod, Nizka T tlačnega voda]
     why: Ventil spusti preveč hladiva – v kompresor pride kapljevina, kar ga lahko uniči.
     fix: Takoj ustavi napravo, preveri EEV in krmilnik; poseg v krog s spričevalom.
 
@@ -59,7 +59,7 @@ faults:
       - Po jesenskem servisu se občasno ustavi z napako.
       - Lani so polnili plin, odtlej porabi več.
       - Kompresor je glasnejši kot prej.
-    indicators: [Podhladitev nad 10 K, Visoka T kondenzacije, Vodna stran v redu]
+    indicators: [Podhlajevanje nad 10 K, Visoka T kondenzacije, Vodna stran v redu]
     why: Odvečna tekočina zalije kondenzator – manj površine za kondenzacijo, tlak in tok narasteta.
     fix: Zajem do prave količine po tablici, preveri evidenco polnjenja.
 
@@ -129,7 +129,7 @@ faults:
       - Lani so menjali kompresor, odtlej greje slabo.
       - Po popravilu je moč na pol.
       - Prejšnji serviser pravi, da plina ne manjka.
-    indicators: [Pregretje in podhladitev visoka, ΔT na filtru 6–9 K, EEV v redu]
+    indicators: [Pregrevanje in podhlajevanje visoko, ΔT na filtru 6–9 K, EEV v redu]
     why: Zožitev pred ventilom – kot zaprt EEV, a razliko pokaže ΔT na filtru sušilniku.
     fix: Zamenjaj filter sušilnik in poišči vzrok nečistoč (poseg s spričevalom).
 

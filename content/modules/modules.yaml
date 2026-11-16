@@ -92,26 +92,26 @@
   dir: 14-merilna-oprema
 - id: m15
   number: 15
-  title: 30 realnih primerov napak
+  title: Primeri napak iz prakse
   phase: F1 · Primeri
-  goal: Na 30 primerih vidiš celo diagnostično verigo od simptoma do preverjanja.
+  goal: Na primerih vidiš celo diagnostično verigo od simptoma do preverjanja.
   dir: 15-primeri-napak
 - id: m16
   number: 16
-  title: Diagnostične simulacije korak za korakom
-  phase: F2 · Simulacije
-  goal: Sam vodiš diagnozo v simulatorju in izbereš meritve, ki res nekaj povedo.
+  title: Diagnostika korak za korakom
+  phase: F2 · Diagnoza v praksi
+  goal: Sam vodiš diagnozo v igri Teren in izbereš meritve, ki res nekaj povedo.
   dir: 16-diagnosticne-simulacije
 - id: m17
   number: 17
   title: Napredne kombinacije napak
-  phase: F2 · Simulacije
+  phase: F2 · Diagnoza v praksi
   goal: Prepoznaš, kdaj se dve napaki prekrivata in skrivata druga drugo.
   dir: 17-kombinacije-napak
 - id: m18
   number: 18
   title: Napake meritev
-  phase: E · Orodje in meritve
+  phase: F2 · Diagnoza v praksi
   goal: Veš, kdaj meritev laže, in znaš to preveriti, preden iz nje sklepaš.
   dir: 18-napake-meritev
 - id: m19

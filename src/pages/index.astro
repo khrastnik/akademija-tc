@@ -8,6 +8,8 @@ const lessons = loadLessons();
 const modules = loadModules();
 const first = lessons[0];
 const examCount = loadFgasExam().questions.length;
+/** slovenska množina: 1 vprašanje, 2 vprašanji, 3–4 vprašanja, 5+ vprašanj (po zadnjih dveh števkah) */
+const vprasanj = (n: number) => { const r = n % 100; return r === 1 ? 'vprašanje' : r === 2 ? 'vprašanji' : r === 3 || r === 4 ? 'vprašanja' : 'vprašanj'; };
 const codeCount = loadCodes().brands.reduce((s, b) => s + b.codes.length, 0);
 ---
 <Base title={SITE.name} source="src/pages/index.astro">
@@ -32,16 +34,17 @@ const codeCount = loadCodes().brands.reduce((s, b) => s + b.codes.length, 0);
         <li><a href={url('pot')}><strong>Učna pot</strong><span>vsi moduli in napredek</span></a></li>
         <li><a href={url('simulator')}><strong>3D simulator</strong><span>kako deluje, del za delom</span></a></li>
         <li><a href={url('slovar')}><strong>Slovar pojmov</strong><span>vsi strokovni izrazi</span></a></li>
+        <li><a href={url('teren')}><strong>Igra Teren</strong><span>vaja diagnostike – po modulih 5–8</span></a></li>
       </ul>
     </article>
     <article class="route r-exam">
       <p class="route-tag">🎓 Pripravljam se na izpit</p>
       <h3>Spričevalo za delo s F-plini</h3>
-      <p>{examCount} vprašanj v slogu izpita z razlagami, simulacija izpita z omejenim časom, praktični postopki in izračun CO₂e.</p>
+      <p>{examCount} {vprasanj(examCount)} v slogu izpita z razlagami, simulacija izpita z omejenim časom, praktični postopki in izračun CO₂e.</p>
       <ul class="route-links">
         <li><a href={url('f-plini#vprasanja')}><strong>Simulacija izpita</strong><span>30 vprašanj, 45 minut</span></a></li>
         <li><a href={url('f-plini#snov')}><strong>Snov po temah</strong><span>s kljukico »to znam«</span></a></li>
-        <li><a href={url('teren')}><strong>Igra Teren</strong><span>vaja diagnostike na delovni dan</span></a></li>
+        <li><a href={url('f-plini#izracun')}><strong>Izračun CO₂e</strong><span>in pogostost pregledov tesnosti</span></a></li>
       </ul>
     </article>
     <article class="route r-field">
@@ -60,7 +63,7 @@ const codeCount = loadCodes().brands.reduce((s, b) => s + b.codes.length, 0);
   <a class="sim-teaser" href={url('teren')}>
     <span class="sim-badge">IGRA</span>
     <strong>Teren – delovni dan serviserja</strong>
-    <span>Stranke kličejo, ura teče. Z meritvami poišči vzrok – 16 realnih okvar, dve hkrati, letni časi. Po vsakem nalogu izveš, zakaj je diagnoza pravilna.</span>
+    <span>Stranke kličejo, ura teče. Z meritvami poišči vzrok – 16 tipičnih okvar, dve hkrati, letni časi. Po vsakem nalogu izveš, zakaj je diagnoza pravilna.</span>
     <span class="go">Igraj →</span>
   </a>
 

@@ -10,6 +10,7 @@ const partName = new Map(loadSim().parts.map((x) => [x.id, x.name]));
 const links = {
   lessonBase: url('lekcija/'),
   okvare: url('okvare'),
+  pot: url('pot'),
   lessons: Object.fromEntries(loadLessons().map((l) => [l.id, `${lessonNumber(l.id)} ${l.title}`])),
   parts: Object.fromEntries(loadRepairs().map((r) => [r.part, partName.get(r.part) ?? r.part])),
 };
@@ -17,14 +18,14 @@ const pts = loadRefrigerants().find((r) => r.id === 'R32')!.points;
 ---
 <Base
   title="Teren – igra"
-  description="Igra serviserja toplotnih črpalk: delovni dan, 16 realnih okvar, kombinirane okvare, letni časi, razlaga vsake diagnoze. Najdi vzrok s čim manj meritvami."
+  description="Igra serviserja toplotnih črpalk: delovni dan, 16 tipičnih okvar, kombinirane okvare, letni časi, razlaga vsake diagnoze. Najdi vzrok s čim manj meritvami."
   current="teren"
   source="packages/engine/src/teren.ts"
   wide
 >
   <p class="eyebrow">Igra</p>
   <h1>Teren – delovni dan serviserja</h1>
-  <p class="lead muted">Stranke kličejo, ura teče. Z meritvami najdi vzrok – najprej poceni in informativne, drage le za potrditev.</p>
+  <p class="lead muted">Imaš 480 minut in 3 ★ ugleda. Z meritvami poišči okvaro – hitra in pravilna diagnoza prinese denar, ugibanje vzame ★.</p>
   <TerenGame client:load faults={faults as any} models={models} customers={customers} places={places} generic={generic as any} learn={learn as any} links={links} pts={pts} lessonSh={url('lekcija/m08-l01/')} />
   <p class="notice model-note">
     <span>Učni model: vrednosti so parametrični modeli okvar (R32), modeli naprav in kode so izmišljeni. Na terenu veljajo navodila proizvajalca tvoje naprave.</span>

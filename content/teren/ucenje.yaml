@@ -12,7 +12,7 @@ faults:
     steps:
       - Voda je v redu – tlak, pretok in ΔT so normalni. Težava ni na vodni strani.
       - Zunanja enota je čista, ventilator se vrti. Zrak ni kriv.
-      - Priklopi baterijo – pregretje je zelo visoko, podhladitev skoraj nič.
+      - Priklopi baterijo – pregrevanje je zelo visoko, podhlajevanje skoraj nič.
       - Visoko SH + nizko SC = v krogu manjka hladiva. Detektor najde mesto puščanja.
     confuse:
       with: eev-zaprt
@@ -66,7 +66,7 @@ faults:
   eev-odprt:
     steps:
       - Pri kompresorju je led, sliši se klokotanje.
-      - Pregretje je skoraj nič – v kompresor prihaja mokra para ali kapljevina.
+      - Pregrevanje je skoraj nič – v kompresor prihaja mokra para ali kapljevina.
       - T tlačnega voda je nizka, ker kompresor stiska mokro paro.
       - Ventil ostane odprt tudi ob ukazu za zapiranje.
     confuse:
@@ -80,7 +80,7 @@ faults:
   prevec-hladiva:
     steps:
       - Vodna stran je v redu – pretok in ΔT normalna.
-      - Priklopi baterijo – podhladitev je zelo visoka, T kondenzacije povišana.
+      - Priklopi baterijo – podhlajevanje je zelo visoko, T kondenzacije povišana.
       - Odvečna tekočina zalije kondenzator. Preveri evidenco – ali je kdo nedavno dolival?
     confuse:
       with: lovilec
@@ -264,11 +264,11 @@ meanings:
     high: T kondenzacije previsoka – toplota ne gre v vodo (pretok) ali je preveč hladiva.
     low: T kondenzacije prenizka – premalo hladiva ali prenizka zahtevana T.
   sh:
-    high: Visoko pregretje – uparjalnik je lačen. Poglej še SC – visoko SC pomeni zožitev, nizko premalo hladiva.
-    low: Pregretje skoraj nič – v kompresor prihaja kapljevina. Nevarno za kompresor.
+    high: Visoko pregrevanje – uparjalnik je lačen. Poglej še SC – visoko SC pomeni zožitev, nizko premalo hladiva.
+    low: Pregrevanje skoraj nič – v kompresor prihaja kapljevina. Nevarno za kompresor.
   sc:
-    high: Visoka podhladitev – tekočina se kopiči (zožitev pred ventilom ali preveč hladiva).
-    low: Nizka podhladitev – v kondenzatorju ni zaloge tekočine (premalo hladiva).
+    high: Visoko podhlajevanje – tekočina se kopiči (zožitev pred ventilom ali preveč hladiva).
+    low: Nizko podhlajevanje – v kondenzatorju ni zaloge tekočine (premalo hladiva).
   vt-senzor:
     high: Krmilnik in manometer se ne ujemata – senzor laže.
   detektor:

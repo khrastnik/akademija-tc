@@ -453,8 +453,8 @@ export const TOOLS: Tool[] = [
   { id: 'baterija', label: 'Priklopi manometrsko baterijo', comp: 'servisni', min: 8 },
   { id: 'nt', label: 'NT tlak + T uparjanja', comp: 'servisni', min: 1, needs: 'baterija' },
   { id: 'vt', label: 'VT tlak + T kondenzacije', comp: 'servisni', min: 1, needs: 'baterija' },
-  { id: 'sh', label: 'Pregretje (SH)', comp: 'servisni', min: 3, needs: 'baterija' },
-  { id: 'sc', label: 'Podhladitev (SC)', comp: 'servisni', min: 3, needs: 'baterija' },
+  { id: 'sh', label: 'Pregrevanje (SH)', comp: 'servisni', min: 3, needs: 'baterija' },
+  { id: 'sc', label: 'Podhlajevanje (SC)', comp: 'servisni', min: 3, needs: 'baterija' },
   { id: 'vt-senzor', label: 'VT: krmilnik proti manometru', comp: 'krmilnik', min: 2, needs: 'baterija' },
   { id: 'detektor', label: 'Detektor puščanja', comp: 'servisni', min: 10, confirm: true },
   { id: 't-tlacni', label: 'T tlačnega voda', comp: 'kompresor', min: 3 },
@@ -524,9 +524,9 @@ export function reading(tool: string, e: Env, pts: PTPoint[]): Reading {
     case 'vt':
       return { zone: run ? z(e.tCond - e.tFlow, 2, 4.5) : 'info', text: run ? `VT ${f1(bar(pts, e.tCond))} bar → T kondenzacije ${f1(e.tCond)} °C.` : 'Kompresor stoji – tlaka sta izenačena.', normal: 'T kondenzacije = T dovoda + 2,5…4 K' };
     case 'sh':
-      return { zone: run ? z(e.sh, 3.5, 7.5) : 'info', text: run ? `Pregretje ${f1(e.sh)} K.` : 'Kompresor stoji – ni meritve.', normal: '4–6,5 K' };
+      return { zone: run ? z(e.sh, 3.5, 7.5) : 'info', text: run ? `Pregrevanje ${f1(e.sh)} K.` : 'Kompresor stoji – ni meritve.', normal: '4–6,5 K' };
     case 'sc':
-      return { zone: run ? z(e.sc, 2.5, 6) : 'info', text: run ? `Podhladitev ${f1(e.sc)} K.` : 'Kompresor stoji – ni meritve.', normal: '3–5 K' };
+      return { zone: run ? z(e.sc, 2.5, 6) : 'info', text: run ? `Podhlajevanje ${f1(e.sc)} K.` : 'Kompresor stoji – ni meritve.', normal: '3–5 K' };
     case 'vt-senzor': {
       const real = bar(pts, e.tCond);
       const ctrl = Number.isFinite(e.ctrlHp) ? e.ctrlHp : real + 0.1;
