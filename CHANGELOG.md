@@ -1,5 +1,10 @@
 # Spremembe
 
+## 0.21.3 – 2026-11-22
+
+- Lekcija 8.1: primer s številkami za R32 (nadtlak + 1 bar, P-T tabela, SH 6 K, SC 5 K), okvirna normalna območja in
+  primeri vrednosti za tri vzorce napak; opozorilo, da številke niso pri vseh napravah enake.
+
 ## 0.21.2 – 2026-11-22
 
 - Lekcija 8.1: preprosta tabela, kje meriš pregrevanje in kje podhlajevanje (stran kroga, manometer, cev za tipalo, račun).

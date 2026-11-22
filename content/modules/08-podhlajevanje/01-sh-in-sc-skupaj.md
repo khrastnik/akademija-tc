@@ -51,15 +51,20 @@ Zakaj SC loči napake, ki jih SH ne?
 Kaj povzroči visoko in kaj nizko podhlajevanje?
 
 ::card{type=numbers}
-Primer za računanje: temperatura kondenzacije 38 °C, tekočinski vod 34 °C – SC je **4 K**.
+Primer, R32 pri ogrevanju (manometer kaže nadtlak, zato prišteješ 1 bar):
+
+- nizka stran: 7,1 bar → 8,1 bar → vre pri 0 °C; cev v kompresor 6 °C → **SH 6 K**,
+- visoka stran: 23,8 bar → 24,8 bar → utekočini se pri 40 °C; cev za kondenzatorjem 35 °C → **SC 5 K**.
+
+Pogosto normalno: okoli 4–8 K SH in 3–7 K SC.
 
 | Vzorec | SH | SC |
 |---|---|---|
-| Premalo hladiva | visok | nizek |
-| Zatikajoč ventil | visok | visok |
-| Preveč hladiva | normalen | visok |
+| Premalo hladiva | visok, npr. 15 K | nizek, 0–2 K |
+| Zatikajoč ventil | visok, npr. 15 K | visok, npr. 10 K |
+| Preveč hladiva | normalen ali nizek | visok, npr. 10 K |
 
-Normalna območja za tvojo napravo so v navodilih proizvajalca.
+Številke niso pri vseh napravah enake – odvisne so od ventila, zbiralnika tekočine, načina delovanja in zunanje temperature. Velja območje iz navodil proizvajalca.
 
 ::card{type=measure}
 Kaj meriš, pove **mesto**: pregrevanje tam, kjer hladivo kot para pride iz uparjalnika, podhlajevanje tam, kjer kot tekočina pride iz kondenzatorja.
