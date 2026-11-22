@@ -384,3 +384,36 @@
   width: 2px;
   background: var(--ink-2);
 }
+.ex-openq {
+  cursor: pointer;
+  border-style: dashed;
+  border-color: var(--accent);
+}
+.ex-openq strong {
+  color: var(--accent);
+}
+.ex-openq span {
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+.ex-answer {
+  width: 100%;
+  min-height: 96px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  resize: vertical;
+}
+.ex-rate {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.ex-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}

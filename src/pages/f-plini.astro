@@ -46,8 +46,8 @@ const exam = loadFgasExam();
 
   <section id="vprasanja" class="exam-sec">
     <h2>Vprašanja za izpit</h2>
-    <p class="muted">{exam.questions.length} vprašanj z odgovori in razlagami po vsebinah izpitnega kataloga. Simulacija je sestavljena kot pisni izpit: 51 vprašanj, 90 minut, več pravilnih odgovorov, ocena po uradnih mejah.</p>
-    <ExamSim client:visible questions={exam.questions as any} topics={exam.topics} groups={exam.groups} minutes={90} />
+    <p class="muted">{exam.questions.length} vprašanj z odgovori in razlagami ter {exam.open.length} odprtih vprašanj z vzorčnimi odgovori, po vsebinah izpitnega kataloga. Simulacija je sestavljena kot pisni izpit: 51 vprašanj, 90 minut, več pravilnih odgovorov, ocena po uradnih mejah.</p>
+    <ExamSim client:visible questions={exam.questions as any} topics={exam.topics} groups={exam.groups} open={exam.open} minutes={90} />
   </section>
 
   <section id="kategorije">

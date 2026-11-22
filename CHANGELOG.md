@@ -1,5 +1,17 @@
 # Spremembe
 
+## 0.21.0 – 2026-11-22
+
+### Izpit F-plini: kar je manjkalo iz načrta za aplikacijo
+- **Odprta vprašanja s samooceno** (13, za vsako temo pisnega izpita): odgovoriš sam, pogledaš vzorčni odgovor in se oceniš
+  »znal / delno / ne še«; česar ne znaš, ponoviš. Na pravem pisnem izpitu so tudi vprašanja odprtega tipa.
+- **Pripravljenost po temah**: na začetku simulacije vidiš, kolikšen delež vprašanj vsake teme si nazadnje odgovoril prav
+  in koliko vprašanj teme si že videl. Izidi se shranijo že ob »Preveri«, ne šele ob koncu vaje.
+- **Vadi šibke teme**: gumb po izpitu in pri pripravljenosti vzame vsa vprašanja tem pod 50 %.
+- **Javi napako v vprašanju**: povezava pri razlagi in v pregledu napačnih odgovorov odpre prijavo s številko vprašanja.
+- Opis točkovanja ločuje pravilo kataloga (napačen ali pravilen + napačen = 0) od strožjega pravila simulacije (izpuščen
+  pravilen = 0).
+
 ## 0.20.0 – 2026-11-19
 
 ### Izpit F-plini po uradnem izpitnem katalogu

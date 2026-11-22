@@ -1313,3 +1313,72 @@ questions:
       - { text: "Daljši cevni razvod med enotama" }
       - { text: "Večji zbiralnik tekočine" }
     explain: Manj notranje prostornine pomeni manj hladiva. Daljše cevi in večji zbiralniki polnitev povečajo.
+
+# Odprta vprašanja: na pisnem izpitu so poleg zaprtih tudi vprašanja odprtega tipa (izpitni katalog A).
+# Kandidat odgovori sam (na glas ali pisno), nato primerja z vzorčnim odgovorom in se oceni sam.
+# answer: vzorčni odgovor – kaj mora odgovor vsebovati, ne edina pravilna formulacija.
+open:
+  - id: od1
+    topic: termo
+    text: Naštej štiri glavne dele hladilnega kroga in povej, kaj se v vsakem zgodi s hladivom.
+    answer: "Kompresor stisne paro – tlak in temperatura narasteta. V kondenzatorju para odda toploto in se utekočini. Ekspanzijski ventil (ali kapilara) zniža tlak kapljevine. V uparjalniku hladivo prejme toploto in upari. Para se vrne v kompresor."
+
+  - id: od2
+    topic: termo
+    text: Kako izmeriš pregretje na izhodu uparjalnika?
+    answer: "Z manometrom izmeriš tlak uparjanja na sesalni strani. Če tabela velja za absolutni tlak, prišteješ okoli 1 bar. Iz tlačno-temperaturne tabele hladiva odčitaš temperaturo uparjanja. S kontaktnim tipalom izmeriš temperaturo sesalne cevi na izhodu uparjalnika. Pregretje = izmerjena temperatura cevi − temperatura uparjanja, v K."
+
+  - id: od3
+    topic: termo
+    text: Kaj je podhladitev, kako jo izmeriš in kaj ti pove?
+    answer: "Podhladitev je razlika med temperaturo kondenzacije in dejansko temperaturo kapljevine za kondenzatorjem. Temperaturo kondenzacije odčitaš iz tlaka na tlačni strani in P-T tabele, temperaturo kapljevinskega voda izmeriš s tipalom. Pove, ali je za kondenzatorjem samo kapljevina; nizka podhladitev lahko pomeni premalo hladiva, visoka preveč hladiva."
+
+  - id: od4
+    topic: okolje
+    text: Kako izračunaš CO₂ ekvivalent polnitve in kako pogosto je treba pregledati tesnost opreme brez sistema za odkrivanje uhajanja?
+    answer: "CO₂e v tonah = masa hladiva v kg × GWP ÷ 1000. Pregled tesnosti: od 5 do 50 t CO₂e vsakih 12 mesecev, od 50 do 500 t vsakih 6 mesecev, nad 500 t vsake 3 mesece. S sistemom za odkrivanje uhajanja se roki podvojijo."
+
+  - id: od5
+    topic: okolje
+    text: Kaj je razlika med GWP in ODP? Navedi primer hladiva z visokim GWP in ODP 0.
+    answer: "GWP pove, kako močno snov segreva ozračje v primerjavi s CO₂ (GWP 1). ODP pove, kako močno snov razgrajuje ozon v primerjavi z R11 (ODP 1). Ozon razgrajujejo snovi s klorom (CFC, HCFC). HFC, na primer R410A (GWP 2088), imajo ODP 0, so pa močni toplogredni plini."
+
+  - id: od6
+    topic: okolje
+    text: Kaj vpišeš v evidenco o opremi, za katero velja pregled tesnosti?
+    answer: "Vrsto in količino hladiva v napravi, dodane količine in razlog za dodajanje, zajete količine, datume in rezultate pregledov tesnosti, ugotovljena puščanja in popravila ter ime serviserja oziroma podjetja, ki je delo opravilo."
+
+  - id: od7
+    topic: tesnost
+    text: Opiši pregled tesnosti z elektronskim detektorjem.
+    answer: "Preveriš, da detektor deluje in je primeren za hladivo. Najprej pregledaš napravo na oko – sledi olja kažejo na puščanje. Sondo počasi vodiš ob spojih, ventilih, priključkih in mestih z vibracijami; hladiva so težja od zraka, zato preverjaš tudi pod spoji. Najdeno mesto potrdiš s penilom. Po popravilu v enem mesecu ponovno preveriš tesnost in vse vpišeš v evidenco."
+
+  - id: od8
+    topic: ravnanje
+    text: Opiši zajem hladiva iz naprave v jeklenko.
+    answer: "Uporabiš namensko jeklenko za zajem, označeno za to hladivo – različnih hladiv ne mešaš. Jeklenko postaviš na tehtnico in poznaš njeno največjo dovoljeno polnitev (okoli 80 % prostornine). Napravo za zajem priključiš na servisne priključke in zajemaš, dokler v krogu ni hladiva. Jeklenko zapreš, označiš in zajeto maso vpišeš v evidenco. Odpadno hladivo oddaš zbiralcu."
+
+  - id: od9
+    topic: ravnanje
+    text: Zakaj krog vakuumiraš pred polnjenjem in kako preveriš, da je vakuum dober?
+    answer: "Vakuumiranje odstrani vlago in zrak oziroma druge nekondenzirajoče pline. Vlaga tvori kisline in led, zrak zvišuje tlak kondenzacije. Vakuum meriš z vakuummetrom. Ko črpalko odklopiš, tlak ne sme opazno narasti – to pokaže, da je krog suh in tesen. Ciljne vrednosti in čas določi proizvajalec."
+
+  - id: od10
+    topic: kompresor
+    text: Zakaj kapljevina ne sme priti v kompresor in kako to preprečimo?
+    answer: "Kapljevine ni mogoče stisniti – povzroči hidravlični udar in izpere olje, zato se kompresor poškoduje. Preprečimo jo s pravilnim pregretjem na izhodu uparjalnika, ločevalnikom kapljevine na sesalnem vodu in grelcem karterja, ki prepreči, da bi se hladivo v mirovanju zbralo v olju."
+
+  - id: od11
+    topic: prenosniki
+    text: Zakaj se zunanji uparjalnik toplotne črpalke pozimi odtaja in kako naprava to naredi?
+    answer: "Uparjalnik je hladnejši od zraka, zato vlaga na lamelah zmrzne. Led izolira lamele in zapira pot zraku, zato pade temperatura uparjanja in moč. Naprava ga odtaja tako, da štiripotni ventil obrne tok hladiva – vroča para gre v zunanji izmenjevalnik in led stopi. Kondenzat mora nemoteno odtekati."
+
+  - id: od12
+    topic: ventili
+    text: Kako deluje termostatski ekspanzijski ventil?
+    answer: "Tipalo je pritrjeno na sesalni vod na izhodu uparjalnika. Če pregretje naraste, tlak v tipalu naraste in ventil se bolj odpre, da v uparjalnik priteče več hladiva. Tlak uparjanja in vzmet delujeta v nasprotni smeri. Tako ventil ohranja nastavljeno pregretje."
+
+  - id: od13
+    topic: gorljiva
+    text: Katere varnostne ukrepe upoštevaš pri servisu naprave s propanom (R290)?
+    answer: "Delovno območje označiš in odstraniš vire vžiga. Prostor prezračuješ; propan je težji od zraka in se nabira pri tleh. Uporabljaš detektor vnetljivih plinov z alarmom pri 25 % spodnje meje eksplozivnosti in orodje, primerno za vnetljiva hladiva (A3). Gasilnik je pri roki. Pred spajkanjem hladivo zajameš, krog izpereš z dušikom in preveriš, da plina ni."

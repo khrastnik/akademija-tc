@@ -398,6 +398,7 @@ const examSchema = z.object({
       }),
     )
     .min(20),
+  open: z.array(z.object({ id, topic: id, text: z.string().min(8), answer: z.string().min(40) })).default([]),
 });
 /** Banka vprašanj v slogu izpita F-plini (ni uradna). */
 export function loadFgasExam() {
@@ -569,7 +570,7 @@ export function validateContent() {
   }
 
   // banka izpitnih vprašanj F-plini
-  const exam = tryLoad(loadFgasExam, { topics: [], questions: [] });
+  const exam = tryLoad(loadFgasExam, { groups: [], topics: [], questions: [], open: [] });
   const examTopics = new Set(exam.topics.map((t) => t.id));
   const examGroups = new Set(exam.groups.map((g) => g.id));
   for (const t of exam.topics) {
@@ -589,6 +590,12 @@ export function validateContent() {
     if (correct < 1 || correct === q.options.length) errors.push(`${at}: potreben je vsaj en pravilen in vsaj en napačen odgovor (pravilnih ${correct})`);
     const lens = q.options.map((o) => o.text.length);
     if (Math.max(...lens) > 3 * Math.min(...lens) + 20) errors.push(`${at}: odgovori so preveč različno dolgi`);
+  }
+  for (const q of exam.open) {
+    const at = `content/f-plini/izpit.yaml ${q.id}`;
+    if (qIds.has(q.id)) errors.push(`${at}: podvojen id`);
+    qIds.add(q.id);
+    if (!examTopics.has(q.topic)) errors.push(`${at}: neznana tema "${q.topic}"`);
   }
   for (const t of examTopics) if (exam.questions.filter((q) => q.topic === t).length < 3) errors.push(`content/f-plini/izpit.yaml: tema ${t} ima manj kot 3 vprašanja`);
 

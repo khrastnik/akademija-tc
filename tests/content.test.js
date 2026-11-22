@@ -16,6 +16,10 @@ describe('vsebina v repozitoriju', () => {
     // brez vprašanj z več pravilnimi odgovori bi kandidat ugibal, da je pravilen vedno samo eden
     expect(questions.filter((q) => q.options.filter((o) => o.correct).length > 1).length).toBeGreaterThanOrEqual(10);
   });
+  it('ima odprta vprašanja z vzorčnim odgovorom za vsako temo pisnega izpita', () => {
+    const { topics, open } = loadFgasExam();
+    for (const t of topics.filter((x) => x.exam > 0)) expect(open.some((q) => q.topic === t.id), t.id).toBe(true);
+  });
 });
 
 describe('pravila validatorja', () => {

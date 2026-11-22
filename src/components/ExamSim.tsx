@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import './exam-sim.css';
+import { issueUrl } from '../lib/site.js';
 
+export interface OpenQuestion {
+  id: string;
+  topic: string;
+  text: string;
+  /** Vzorčni odgovor – kaj mora odgovor vsebovati. */
+  answer: string;
+}
 export interface ExamQuestion {
   id: string;
   topic: string;
@@ -27,22 +35,34 @@ interface Props {
   questions: ExamQuestion[];
   topics: ExamTopic[];
   groups?: ExamGroup[];
+  /** Odprta vprašanja z vzorčnim odgovorom (samoocena). */
+  open?: OpenQuestion[];
   /** Minute za pisni del. */
   minutes?: number;
 }
 
 type Item = { q: ExamQuestion; order: number[] };
-type Mode = 'home' | 'exam' | 'practice' | 'result';
-type Saved = { history: { at: number; score: number; total: number }[]; wrong: string[] };
+type Mode = 'home' | 'exam' | 'practice' | 'result' | 'open';
+type Rate = 'ok' | 'part' | 'no';
+type Saved = {
+  history: { at: number; score: number; total: number }[];
+  wrong: string[];
+  /** Zadnji izid vsakega zaprtega vprašanja (true = pravilno). */
+  last: Record<string, boolean>;
+  /** Zadnja samoocena odprtih vprašanj. */
+  open: Record<string, Rate>;
+};
 
 const KEY = 'akademija-tc:f-plini-izpit';
+const EMPTY: Saved = { history: [], wrong: [], last: {}, open: {} };
 function load(): Saved {
   try {
-    return { history: [], wrong: [], ...JSON.parse(localStorage.getItem(KEY) || '{}') };
+    return { ...EMPTY, ...JSON.parse(localStorage.getItem(KEY) || '{}') };
   } catch {
-    return { history: [], wrong: [] };
+    return EMPTY;
   }
 }
+const report = (id: string) => issueUrl(`F-plini, vprašanje ${id}`);
 function store(s: Saved) {
   try {
     localStorage.setItem(KEY, JSON.stringify(s));
@@ -76,8 +96,11 @@ function drawExam(questions: ExamQuestion[], topics: ExamTopic[]): ExamQuestion[
   return shuffle(picked);
 }
 
-export default function ExamSim({ questions, topics, groups = [], minutes = 90 }: Props) {
-  const [saved, setSaved] = useState<Saved>({ history: [], wrong: [] });
+export default function ExamSim({ questions, topics, groups = [], open = [], minutes = 90 }: Props) {
+  const [saved, setSaved] = useState<Saved>(EMPTY);
+  const [openList, setOpenList] = useState<OpenQuestion[]>([]);
+  const [shown, setShown] = useState(false);
+  const [rates, setRates] = useState<Record<string, Rate>>({});
   const [mode, setMode] = useState<Mode>('home');
   const [items, setItems] = useState<Item[]>([]);
   const [answers, setAnswers] = useState<Record<string, number[]>>({});
@@ -119,18 +142,67 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
     scrollTop();
   }
 
-  function finish() {
-    const wrong = items.filter((it) => !isRight(it.q, answers[it.q.id])).map((it) => it.q.id);
-    const right = items.filter((it) => isRight(it.q, answers[it.q.id])).map((it) => it.q.id);
+  /** Shrani izide vprašanj: seznam napačnih za ponavljanje in zadnji izid za pripravljenost po temah. */
+  function record(results: [string, boolean][], prev: Saved = saved): Saved {
+    const right = results.filter(([, ok]) => ok).map(([id]) => id);
+    const wrong = results.filter(([, ok]) => !ok).map(([id]) => id);
     const next: Saved = {
-      history: kind === 'exam' ? [{ at: Date.now(), score: right.length, total: items.length }, ...saved.history].slice(0, 10) : saved.history,
-      wrong: [...new Set([...saved.wrong.filter((id) => !right.includes(id)), ...wrong])],
+      ...prev,
+      wrong: [...new Set([...prev.wrong.filter((id) => !right.includes(id)), ...wrong])],
+      last: { ...prev.last, ...Object.fromEntries(results) },
     };
     store(next);
     setSaved(next);
+    return next;
+  }
+
+  function finish() {
+    // v vaji je vsako preverjeno vprašanje že shranjeno ob »Preveri«; neodgovorjenih ne štejemo
+    const done = kind === 'exam' ? items : items.filter((it) => checked[it.q.id]);
+    const right = items.filter((it) => isRight(it.q, answers[it.q.id])).length;
+    const next = record(done.map((it) => [it.q.id, isRight(it.q, answers[it.q.id])]));
+    if (kind === 'exam') {
+      const withHistory = { ...next, history: [{ at: Date.now(), score: right, total: items.length }, ...next.history].slice(0, 10) };
+      store(withHistory);
+      setSaved(withHistory);
+    }
     setMode('result');
     scrollTop();
   }
+
+  function startOpen(qs: OpenQuestion[]) {
+    setOpenList(shuffle(qs));
+    setIdx(0);
+    setShown(false);
+    setRates({});
+    setMode('open');
+    scrollTop();
+  }
+  function rate(q: OpenQuestion, r: Rate) {
+    setRates((x) => ({ ...x, [q.id]: r }));
+    const next = { ...saved, open: { ...saved.open, [q.id]: r } };
+    store(next);
+    setSaved(next);
+    setShown(false);
+    setIdx((i) => i + 1);
+    scrollTop();
+  }
+
+  /** Teme pisnega izpita z deležem vprašanj, ki jih je uporabnik nazadnje odgovoril pravilno. */
+  const readiness = topics
+    .filter((t) => (t.exam ?? 0) > 0)
+    .map((t) => {
+      const qs = questions.filter((q) => q.topic === t.id);
+      const seen = qs.filter((q) => q.id in saved.last);
+      return { t, total: qs.length, seen: seen.length, ok: seen.filter((q) => saved.last[q.id]).length };
+    });
+  const weakTopics = (rows: { t: ExamTopic; ok: number; n: number }[]) => rows.filter((x) => x.n >= 3 && x.ok / x.n < 0.5).map((x) => x.t);
+  const practiceTopics = (ts: ExamTopic[]) =>
+    start(
+      'practice',
+      questions.filter((q) => ts.some((t) => t.id === q.topic)),
+      ts.length === 1 ? ts[0].label : 'Šibke teme',
+    );
 
   const toggle = (qid: string, optIdx: number) => {
     if (mode === 'practice' && checked[qid]) return; // v vaji po »Preveri« odgovor velja
@@ -154,8 +226,8 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
             {examSize} vprašanj · {minutes} minut
           </h3>
           <p>
-            Razporeditev po temah kot v izpitnem katalogu. Pri vsakem vprašanju je lahko pravilnih več odgovorov – točko dobiš samo, če označiš vse pravilne in nobenega
-            napačnega. Rezultat se pokaže šele na koncu.
+            Razporeditev po temah kot v izpitnem katalogu. Pri vsakem vprašanju je lahko pravilnih več odgovorov. Po katalogu napačen odgovor ali pravilen skupaj z
+            napačnim prinese 0 točk; tu šteje 0 tudi, če izpustiš enega od pravilnih. Rezultat se pokaže šele na koncu.
           </p>
           <button type="button" class="btn wide" onClick={() => start('exam', questions, 'Simulacija izpita')}>
             Začni izpit
@@ -171,6 +243,42 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
           <button type="button" class="ex-card ex-wrong" onClick={() => start('practice', wrongQs, 'Ponovi napačne')}>
             <strong>Ponovi napačne ({wrongQs.length})</strong>
             <span>Vprašanja, ki si jih zgrešil. Ko odgovoriš prav, izginejo s seznama.</span>
+          </button>
+        )}
+
+        {readiness.some((r) => r.seen > 0) && (
+          <div class="ex-card">
+            <p class="eyebrow">Pripravljenost po temah</p>
+            <p class="muted ex-small">Delež vprašanj, ki si jih nazadnje odgovoril pravilno, in koliko vprašanj teme si že videl. Shranjeno samo v tem brskalniku.</p>
+            <ul class="ex-bars">
+              {readiness.map(({ t, total, seen, ok }) => (
+                <li key={t.id}>
+                  <div class="ex-bar-top">
+                    <span>{t.label}</span>
+                    <span>{seen ? `${pctOf(ok, seen)} % · videl ${seen}/${total}` : `še nič od ${total}`}</span>
+                  </div>
+                  <div class="ex-bar ex-bar-mark">
+                    {seen > 0 && <span class={ok / seen >= 0.5 ? 'ok' : 'bad'} style={{ width: `${(100 * ok) / seen}%` }} />}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            {weakTopics(readiness.map((r) => ({ t: r.t, ok: r.ok, n: r.seen }))).length > 0 && (
+              <button type="button" class="btn secondary" onClick={() => practiceTopics(weakTopics(readiness.map((r) => ({ t: r.t, ok: r.ok, n: r.seen }))))}>
+                Vadi šibke teme
+              </button>
+            )}
+          </div>
+        )}
+
+        {open.length > 0 && (
+          <button type="button" class="ex-card ex-openq" onClick={() => startOpen(open)}>
+            <strong>Odprta vprašanja ({open.length})</strong>
+            <span>
+              Na pisnem izpitu so tudi vprašanja brez ponujenih odgovorov. Odgovori sam, nato primerjaj z vzorčnim odgovorom in se oceni.
+              {Object.values(saved.open).filter((r) => r !== 'ok').length > 0 &&
+                ` Še ne znaš: ${open.filter((q) => saved.open[q.id] && saved.open[q.id] !== 'ok').length}.`}
+            </span>
           </button>
         )}
 
@@ -306,7 +414,12 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
                     <p class="ex-yours">Tvoj odgovor: {a.length === 0 ? '— brez odgovora' : optList(it.q, a)}</p>
                     <p class="ex-right">Pravilno: {optList(it.q, correctSet(it.q))}</p>
                     <p class="ex-explain">{it.q.explain}</p>
-                    <a href={`#${topicById.get(it.q.topic)?.link}`}>Preberi snov →</a>
+                    <p class="ex-links">
+                      <a href={`#${topicById.get(it.q.topic)?.link}`}>Preberi snov →</a>
+                      <a href={report(it.q.id)} target="_blank" rel="noopener">
+                        Javi napako
+                      </a>
+                    </p>
                   </li>
                 );
               })}
@@ -315,6 +428,11 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
         )}
 
         <div class="ex-actions">
+          {weakTopics(byTopic).length > 0 && (
+            <button type="button" class="btn" onClick={() => practiceTopics(weakTopics(byTopic))}>
+              Vadi šibke teme
+            </button>
+          )}
           {wrong.length > 0 && (
             <button type="button" class="btn" onClick={() => start('practice', wrong.map((w) => w.q), 'Ponovi napačne')}>
               Ponovi napačne
@@ -327,6 +445,89 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
             Nazaj
           </button>
         </div>
+      </div>
+    );
+  }
+
+  // ---------- odprta vprašanja s samooceno ----------
+  if (mode === 'open') {
+    const q = openList[idx];
+    if (!q) {
+      const n = (r: Rate) => Object.values(rates).filter((x) => x === r).length;
+      const notYet = openList.filter((x) => rates[x.id] && rates[x.id] !== 'ok');
+      return (
+        <div class="ex" ref={top}>
+          <div class="ex-card ex-score">
+            <p class="eyebrow">Odprta vprašanja</p>
+            <p>
+              Znal: <strong>{n('ok')}</strong> · delno: <strong>{n('part')}</strong> · ne še: <strong>{n('no')}</strong>
+            </p>
+            <p class="muted ex-small">Samoocena je shranjena samo v tem brskalniku.</p>
+          </div>
+          <div class="ex-actions">
+            {notYet.length > 0 && (
+              <button type="button" class="btn" onClick={() => startOpen(notYet)}>
+                Ponovi, česar še ne znaš ({notYet.length})
+              </button>
+            )}
+            <button type="button" class="btn ghost" onClick={() => setMode('home')}>
+              Nazaj
+            </button>
+          </div>
+        </div>
+      );
+    }
+    const t = topicById.get(q.topic);
+    return (
+      <div class="ex" ref={top}>
+        <div class="ex-bar-head">
+          <span>
+            Odprta vprašanja · {idx + 1}/{openList.length}
+          </span>
+        </div>
+        <div class="ex-progress">
+          <span style={{ width: `${(100 * (idx + 1)) / openList.length}%` }} />
+        </div>
+        <div class="ex-card ex-qcard">
+          <p class="eyebrow">{t?.label}</p>
+          <p class="ex-q" id={`oq-${q.id}`}>
+            {q.text}
+          </p>
+          <textarea class="ex-answer" rows={4} aria-labelledby={`oq-${q.id}`} placeholder="Napiši odgovor ali ga povej na glas (ne shranjuje se)." key={q.id} />
+          {!shown ? (
+            <button type="button" class="btn" onClick={() => setShown(true)}>
+              Pokaži vzorčni odgovor
+            </button>
+          ) : (
+            <>
+              <div class="ex-fb ex-model" aria-live="polite">
+                <strong>Vzorčni odgovor</strong>
+                <p>{q.answer}</p>
+                <p class="ex-ref">
+                  {t?.ref && <>Izpitni katalog: {t.ref} · </>}
+                  <a href={report(q.id)} target="_blank" rel="noopener">
+                    Javi napako v vprašanju
+                  </a>
+                </p>
+              </div>
+              <p class="ex-hint">Kako si odgovoril?</p>
+              <div class="ex-rate">
+                <button type="button" class="btn secondary" onClick={() => rate(q, 'ok')}>
+                  Znal sem
+                </button>
+                <button type="button" class="btn secondary" onClick={() => rate(q, 'part')}>
+                  Delno
+                </button>
+                <button type="button" class="btn secondary" onClick={() => rate(q, 'no')}>
+                  Nisem znal
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+        <button type="button" class="ex-quit" onClick={() => setMode('home')}>
+          Nazaj na izbiro
+        </button>
       </div>
     );
   }
@@ -375,7 +576,12 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
             <strong>{ok ? '✓ Pravilno' : cs.length > 1 && chosen.every((i) => cs.includes(i)) ? '✗ Manjka pravilen odgovor – 0 točk' : '✗ Napačno – 0 točk'}</strong>
             {cs.length > 1 && <p>Pravilnih je {cs.length}: {cs.map((i) => it.q.options[i].text).join(' · ')}</p>}
             <p>{it.q.explain}</p>
-            {t?.ref && <p class="ex-ref">Izpitni katalog: {t.ref}</p>}
+            <p class="ex-ref">
+              {t?.ref && <>Izpitni katalog: {t.ref} · </>}
+              <a href={report(it.q.id)} target="_blank" rel="noopener">
+                Javi napako v vprašanju
+              </a>
+            </p>
           </div>
         )}
       </div>
@@ -385,7 +591,15 @@ export default function ExamSim({ questions, topics, groups = [], minutes = 90 }
           ←
         </button>
         {mode === 'practice' && !isChecked ? (
-          <button type="button" class="btn" disabled={chosen.length === 0} onClick={() => setChecked((c) => ({ ...c, [it.q.id]: true }))}>
+          <button
+            type="button"
+            class="btn"
+            disabled={chosen.length === 0}
+            onClick={() => {
+              setChecked((c) => ({ ...c, [it.q.id]: true }));
+              record([[it.q.id, ok]]);
+            }}
+          >
             Preveri
           </button>
         ) : last ? (
