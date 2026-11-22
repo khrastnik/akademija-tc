@@ -1,5 +1,10 @@
 # Spremembe
 
+## 0.21.1 – 2026-11-22
+
+- Lekcija 17.1: zgodba zdaj pove, kako serviser izmeri krog hladiva (s spričevalom, manometri) in da meritev pokaže
+  premalo hladiva, puščanje pa potrdi šele detektor.
+
 ## 0.21.0 – 2026-11-22
 
 ### Izpit F-plini: kar je manjkalo iz načrta za aplikacijo

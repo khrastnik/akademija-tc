@@ -6,7 +6,7 @@ level: L5
 minutes: 8
 buildsOn: [m16-l01]
 terms: [vzorec, diagnoza]
-updated: 2026-10-25
+updated: 2026-11-22
 reviewed: false
 sources:
   - title: Kurikulum »Akademija za diagnostiko TČ« – modul 17
@@ -18,7 +18,7 @@ Spoznal boš, zakaj ima naprava včasih dve napaki hkrati – in zakaj je prever
 ::card{type=story}
 Serviser očisti zamašen filter vode. ΔT se vrne v normalno območje. Stranka je zadovoljna, on pa pospravlja orodje.
 
-Nato se ustavi. Hiša se greje počasneje, kot bi se morala. Izmeri še krog hladiva: pregrevanje je visoko, podhlajevanje nizko.
+Nato se ustavi. Hiša se greje počasneje, kot bi se morala. Ker ima spričevalo, priklopi manometre in izmeri pregrevanje in podhlajevanje: pregrevanje je visoko, podhlajevanje nizko – v krogu je premalo hladiva. Z detektorjem najde puščanje na spoju.
 
 Dve napaki: zamašen filter in puščanje hladiva. Filter je bil glasen, puščanje tiho. Če bi zaključil, bi stranka čez teden dni spet klicala.
 
