@@ -1,5 +1,9 @@
 # Spremembe
 
+## 0.21.2 – 2026-11-22
+
+- Lekcija 8.1: preprosta tabela, kje meriš pregrevanje in kje podhlajevanje (stran kroga, manometer, cev za tipalo, račun).
+
 ## 0.21.1 – 2026-11-22
 
 - Lekcija 17.1: zgodba zdaj pove, kako serviser izmeri krog hladiva (s spričevalom, manometri) in da meritev pokaže

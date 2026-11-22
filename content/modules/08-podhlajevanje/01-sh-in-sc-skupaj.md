@@ -6,7 +6,7 @@ level: L3
 minutes: 9
 buildsOn: [m07-l01]
 terms: [podhlajevanje, pregrevanje, nasicenje]
-updated: 2026-10-25
+updated: 2026-11-22
 reviewed: false
 sources:
   - title: Kurikulum »Akademija za diagnostiko TČ« – modul 8
@@ -62,11 +62,14 @@ Primer za računanje: temperatura kondenzacije 38 °C, tekočinski vod 34 °C �
 Normalna območja za tvojo napravo so v navodilih proizvajalca.
 
 ::card{type=measure}
-Potrebuješ:
+Kaj meriš, pove **mesto**: pregrevanje tam, kjer hladivo kot para pride iz uparjalnika, podhlajevanje tam, kjer kot tekočina pride iz kondenzatorja.
 
-- manometer na visokotlačni strani – iz tlaka dobiš temperaturo kondenzacije,
-- sondo na tekočinskem vodu blizu izhoda kondenzatorja, izolirano,
-- ustaljeno delovanje.
+| | Tlak meriš | Tipalo daš | Računaš |
+|---|---|---|---|
+| Pregrevanje | na nizki strani (moder manometer) – pove, pri koliko stopinjah hladivo vre | na cev, ki pelje paro v kompresor | temperatura cevi minus temperatura vrenja |
+| Podhlajevanje | na visoki strani (rdeč manometer) – pove, pri koliko stopinjah se para utekočini | na cev s tekočino za kondenzatorjem | temperatura utekočinjanja minus temperatura cevi |
+
+Tipalo izoliraj, meri pri mirnem delovanju. Pri hlajenju enoti zamenjata vlogi – kje je kateri priključek, piše v navodilih.
 
 Priklop manometrov sme le **serviser s spričevalom**. Pri R290 (propan) brez virov vžiga in z detektorjem plina.
 
