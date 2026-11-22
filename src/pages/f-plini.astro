@@ -46,25 +46,27 @@ const exam = loadFgasExam();
 
   <section id="vprasanja" class="exam-sec">
     <h2>Vprašanja za izpit</h2>
-    <p class="muted">{exam.questions.length} vprašanj z odgovori in razlagami v {exam.topics.length} temah, ki jih zahteva izpit za kategorijo I. Reši simulacijo z omejenim časom ali vadi po temah.</p>
-    <ExamSim client:visible questions={exam.questions as any} topics={exam.topics} size={30} minutes={45} pass={70} />
+    <p class="muted">{exam.questions.length} vprašanj z odgovori in razlagami po vsebinah izpitnega kataloga. Simulacija je sestavljena kot pisni izpit: 51 vprašanj, 90 minut, več pravilnih odgovorov, ocena po uradnih mejah.</p>
+    <ExamSim client:visible questions={exam.questions as any} topics={exam.topics} groups={exam.groups} minutes={90} />
   </section>
 
   <section id="kategorije">
     <h2>Kategorije spričevala</h2>
-    <p>Spričevalo osebja ima štiri kategorije. Za serviserja toplotnih črpalk, ki dela na krogu hladiva, je smiselna <strong>kategorija I</strong>.</p>
+    <p>Izvedbena uredba (EU) 2024/2215 je uvedla nove kategorije. Za serviserja toplotnih črpalk, ki dela na krogu hladiva – tudi s propanom – je smiselna <strong>kategorija A1</strong>.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Kat.</th><th>Kaj smeš</th></tr></thead>
+        <thead><tr><th>Kat.</th><th>Kaj smeš</th><th>Prej</th></tr></thead>
         <tbody>
-          <tr><th>I</th><td>Vsa dela na vseh napravah – pregled tesnosti, zajem hladiva, vgradnja, popravilo in vzdrževanje, razgradnja.</td></tr>
-          <tr><th>II</th><td>Vgradnja, zajem, popravilo in razgradnja na manjših napravah (manj kot 3 kg hladiva, hermetično zaprte manj kot 6 kg) ter pregled tesnosti brez posega v krog.</td></tr>
-          <tr><th>III</th><td>Samo zajem hladiva iz manjših naprav (enake meje kot pri II).</td></tr>
-          <tr><th>IV</th><td>Samo pregled tesnosti brez posega v krog hladiva.</td></tr>
+          <tr><th>A1</th><td>Vsa dela s F-plini in ogljikovodiki (npr. propan) na vseh napravah – pregled tesnosti, zajem, vgradnja, popravilo, vzdrževanje, razgradnja.</td><td>I</td></tr>
+          <tr><th>A2</th><td>Enako kot A1, a samo na opremi z manj kot 3 kg hladiva (hermetično zaprti in označeni sistemi manj kot 6 kg).</td><td>II</td></tr>
+          <tr><th>B</th><td>Dela na opremi s CO₂ (R744).</td><td>–</td></tr>
+          <tr><th>C</th><td>Dela na opremi z amonijakom (R717).</td><td>–</td></tr>
+          <tr><th>D</th><td>Samo zajem hladiva iz opreme z manj kot 3 kg (hermetično zaprte manj kot 6 kg).</td><td>III</td></tr>
+          <tr><th>E</th><td>Samo pregled tesnosti brez posega v krog hladiva.</td><td>IV</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="muted small">Meje po izvedbeni uredbi (EU) 2015/2067. Nova uredba zahteva, da usposabljanje pokriva tudi naravna in gorljiva hladiva, kot sta propan in CO₂ – preveri, katera pravila trenutno veljajo.</p>
+    <p class="muted small">Po 3. členu Izvedbene uredbe (EU) 2024/2215, ki je razveljavila uredbo 2015/2067. Imetniki starih spričeval I in II jih smejo uporabljati, če znanje posodobijo na raven A1 oziroma A2 (10. člen). Kako in do kdaj, preveri pri izvajalcu usposabljanja.</p>
   </section>
 
   <section id="izpit">
@@ -72,14 +74,15 @@ const exam = loadFgasExam();
     <div class="two">
       <div class="panel">
         <p class="eyebrow">Teorija</p>
-        <p>Pisni test – okolje in zakonodaja, delovanje kroga, P-T odnos, pregledi tesnosti, ravnanje s hladivom, varnost pri gorljivih hladivih, evidence.</p>
+        <p>Pisni test: 51 vprašanj, največ 90 minut. Vprašanja so zaprtega in odprtega tipa, pri zaprtih je lahko pravilnih več odgovorov. Napačen odgovor ali pravilen skupaj z napačnim pomeni 0 točk.</p>
+        <p>Nad 60 % in vsaj 50 % pri termodinamiki, pri okolju in predpisih, pri skupini uhajanje–ravnanje–alternative ter pri sestavnih delih: brez ustnega zagovora. Med 50 in 60 %: ustni zagovor. Pod 50 %: pisni del ponoviš.</p>
       </div>
       <div class="panel">
         <p class="eyebrow">Praksa</p>
-        <p>Delo pred izpraševalcem – spajkanje z dušikom, tlačni preizkus, vakuumiranje, zajem in polnjenje po teži, iskanje puščanja in zapis v evidenco.</p>
+        <p>Šele po opravljenem pisnem delu. Obvezno: tlačni preizkus in vakuumiranje, preverjanje uhajanja, zajem in polnjenje po teži z evidenco, spajkanje cevi. Izbirno ena naloga s kompresorjem, kondenzatorjem, uparjalnikom ali ventili. Vsaka naloga mora doseči vsaj 50 %.</p>
       </div>
     </div>
-    <p class="muted small">Pred izpitom je običajno obvezno ali priporočeno usposabljanje. Trajanje, cena in pogoji so odvisni od izvajalca.</p>
+    <p class="muted small">Po izpitnem katalogu za program A (MOP/ARSO, 2016) – to je zadnji objavljeni katalog. Katalog za novo kategorijo A1 ni objavljen, zato pred izpitom preveri potek pri izvajalcu. Pred izpitom je obvezno usposabljanje s teoretičnim in praktičnim delom.</p>
   </section>
 
   <section id="snov">

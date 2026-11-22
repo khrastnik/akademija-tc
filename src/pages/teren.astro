@@ -30,6 +30,7 @@ const pts = loadRefrigerants().find((r) => r.id === 'R32')!.points;
   <p class="notice model-note">
     <span>Učni model: vrednosti so parametrični modeli okvar (R32), modeli naprav in kode so izmišljeni. Na terenu veljajo navodila proizvajalca tvoje naprave.</span>
   </p>
+  <p class="muted other-game">Diagnostiko lahko vadiš tudi v 3D: <a href="https://termoteren-servisni-simulator.klemen-hrastnik.chatgpt.site/" target="_blank" rel="noopener">Termoteren – servisni simulator ↗</a></p>
 </Base>
 
 <style>
@@ -38,5 +39,8 @@ const pts = loadRefrigerants().find((r) => r.id === 'R32')!.points;
   }
   .model-note {
     margin-top: 20px;
+  }
+  .other-game {
+    margin-top: 12px;
   }
 </style>

@@ -383,14 +383,17 @@ const fgasSchema = z.object({
   quiz: z.array(questionSchema).min(5).max(20),
 });
 const examSchema = z.object({
-  topics: z.array(z.object({ id, label: z.string(), link: id })).min(3),
+  groups: z.array(z.object({ id, label: z.string() })).default([]),
+  topics: z
+    .array(z.object({ id, label: z.string(), link: id, exam: z.number().int().min(0).default(0), group: id.optional(), ref: z.string().optional() }))
+    .min(3),
   questions: z
     .array(
       z.object({
         id,
         topic: id,
         text: z.string().min(8),
-        options: z.array(z.object({ text: z.string().min(1), correct: z.boolean().optional() })).min(3).max(4),
+        options: z.array(z.object({ text: z.string().min(1), correct: z.boolean().optional() })).min(3).max(5),
         explain: z.string().min(20),
       }),
     )
@@ -568,7 +571,14 @@ export function validateContent() {
   // banka izpitnih vprašanj F-plini
   const exam = tryLoad(loadFgasExam, { topics: [], questions: [] });
   const examTopics = new Set(exam.topics.map((t) => t.id));
-  for (const t of exam.topics) if (!topicIds.has(t.link)) errors.push(`content/f-plini/izpit.yaml: tema ${t.id} kaže na neobstoječ razdelek "#${t.link}"`);
+  const examGroups = new Set(exam.groups.map((g) => g.id));
+  for (const t of exam.topics) {
+    if (!topicIds.has(t.link)) errors.push(`content/f-plini/izpit.yaml: tema ${t.id} kaže na neobstoječ razdelek "#${t.link}"`);
+    if (t.group && !examGroups.has(t.group)) errors.push(`content/f-plini/izpit.yaml: tema ${t.id} ima neznano skupino "${t.group}"`);
+    if (t.exam > 0 && !t.group) errors.push(`content/f-plini/izpit.yaml: tema ${t.id} je na izpitu, a nima skupine`);
+    const n = exam.questions.filter((q) => q.topic === t.id).length;
+    if (t.exam > n) errors.push(`content/f-plini/izpit.yaml: tema ${t.id} ima ${n} vprašanj, izpit jih vzame ${t.exam}`);
+  }
   const qIds = new Set();
   for (const q of exam.questions) {
     const at = `content/f-plini/izpit.yaml ${q.id}`;
@@ -576,7 +586,7 @@ export function validateContent() {
     qIds.add(q.id);
     if (!examTopics.has(q.topic)) errors.push(`${at}: neznana tema "${q.topic}"`);
     const correct = q.options.filter((o) => o.correct).length;
-    if (correct !== 1) errors.push(`${at}: pravilen mora biti natanko en odgovor (najdenih ${correct})`);
+    if (correct < 1 || correct === q.options.length) errors.push(`${at}: potreben je vsaj en pravilen in vsaj en napačen odgovor (pravilnih ${correct})`);
     const lens = q.options.map((o) => o.text.length);
     if (Math.max(...lens) > 3 * Math.min(...lens) + 20) errors.push(`${at}: odgovori so preveč različno dolgi`);
   }

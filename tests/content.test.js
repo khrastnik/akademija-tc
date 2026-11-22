@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateContent, parseCards, wordCount, tables, loadLessons } from '../src/lib/content.js';
+import { validateContent, parseCards, wordCount, tables, loadLessons, loadFgasExam } from '../src/lib/content.js';
 
 describe('vsebina v repozitoriju', () => {
   it('je skladna z vsemi pravili PRD', () => {
@@ -7,6 +7,14 @@ describe('vsebina v repozitoriju', () => {
   });
   it('vsaka lekcija ima 12 kartic', () => {
     for (const l of loadLessons()) expect(l.cards).toHaveLength(12);
+  });
+  it('simulacija izpita F-plini ima obliko pisnega izpita iz kataloga A (51 vprašanj, 12/16/3/3/3/6/3/5)', () => {
+    const { topics, questions } = loadFgasExam();
+    const n = Object.fromEntries(topics.map((t) => [t.id, t.exam]));
+    expect(n).toMatchObject({ termo: 12, okolje: 16, zagon: 0, tesnost: 3, ravnanje: 3, kompresor: 3, prenosniki: 6, ventili: 3, cevi: 0, gorljiva: 5 });
+    expect(topics.reduce((s, t) => s + t.exam, 0)).toBe(51);
+    // brez vprašanj z več pravilnimi odgovori bi kandidat ugibal, da je pravilen vedno samo eden
+    expect(questions.filter((q) => q.options.filter((o) => o.correct).length > 1).length).toBeGreaterThanOrEqual(10);
   });
 });
 

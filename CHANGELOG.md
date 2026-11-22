@@ -1,5 +1,23 @@
 # Spremembe
 
+## 0.20.0 – 2026-11-19
+
+### Izpit F-plini po uradnem izpitnem katalogu
+- **Simulacija je zdaj oblike pisnega izpita** iz Izpitnega kataloga A (MOP/ARSO, 2016): 51 vprašanj, 90 minut, razporeditev
+  po poglavjih 12/16/3/3/3/6/3/5 (prej 30 naključnih vprašanj v 45 minutah).
+- **Več pravilnih odgovorov**: točka samo, če označiš vse pravilne in nobenega napačnega – kot na izpitu. Vaja ima gumb
+  »Preveri« in pokaže zgrešene pravilne odgovore.
+- **Ocena po uradnih mejah**: nad 60 % in vsaj 50 % v poglavju 1, 2, skupini 4+5+11 in skupini 6–9 = brez ustnega zagovora;
+  50–60 % = zagovor; pod 50 % = ponovno (prej lasten prag 70 %). Rezultat pokaže tudi skupine poglavij.
+- **25 novih vprašanj** (skupaj 127): računi pregrevanja in podhlajevanja z branjem P-T tabele, CO₂e, enote, p-h diagram,
+  Montrealski protokol, Pariški sporazum, ODP, Uredba 2024/573, kategorija A1; 13 vprašanj ima več pravilnih odgovorov.
+- Teme »Pregledi pred zagonom« in »Cevi« so samo v praktičnem delu, zato jih pisni izpit ne vzame (v vaji ostanejo).
+- **Kategorije spričeval po Izvedbeni uredbi (EU) 2024/2215** (A1, A2, B, C, D, E) namesto starih I–IV, s preslikavo.
+- »Kako poteka izpit« navaja dejanski obseg, točkovanje, meje in obvezne praktične naloge iz kataloga.
+
+### Termoteren 3D
+- Povezava na zunanji 3D servisni simulator Termoteren na domači strani (Učim se od začetka), na strani Orodja in pod igro Teren.
+
 ## 0.19.0 – 2026-11-16
 
 ### Pregled razumljivosti

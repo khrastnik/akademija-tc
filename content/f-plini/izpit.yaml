@@ -1,19 +1,35 @@
-# Banka vprašanj v slogu izpita za spričevalo F-plini, kategorija I.
-# NISO uradna izpitna vprašanja. Teme sledijo minimalnim zahtevam za usposabljanje (Izvedbena uredba (EU) 2015/2067, priloga I).
-# Pravila: natanko en pravilen odgovor, razlaga (explain) pove, zakaj je pravilen in zakaj ostali niso.
+# Banka vprašanj v slogu pisnega izpita za spričevalo F-plini (program A – hlajenje, klimatizacija, toplotne črpalke).
+# NISO uradna izpitna vprašanja (uradna niso javna) – so lastna, sestavljena po vsebinah izpitnega kataloga.
+# Vir za obliko izpita: Izpitni katalog A, verzija A2.0 (MOP/ARSO, 2016), https://spot.gov.si/assets/Dokumenti/Izpitni-katalog_programA.pdf
+#   - pisni del kategorije AI/AII: 51 vprašanj, največ 90 minut, vprašanja odprtega in zaprtega tipa
+#   - zaprta vprašanja imajo lahko več pravilnih odgovorov; napačen odgovor ali pravilen + napačen = 0 točk
+#   - nad 60 % in vsaj 50 % v poglavju 1, v poglavju 2, v poglavjih 4+5+11 skupaj in v 6+7+8+9 skupaj = brez ustnega zagovora;
+#     50–60 % = ustni zagovor; pod 50 % = pisni del ponovno
+#   - poglavji 3 (pregledi pred zagonom) in 10 (cevi) sta samo v praktičnem delu
+# Katalog je iz časa Izvedbene uredbe (EU) 2015/2067; 2024/2215 jo je razveljavila (kategorije A1, A2, B, C, D, E).
+# Ali se je pisni izpit za A1 spremenil, ni objavljeno – preveri pri izvajalcu.
+#
+# Pravila banke: vsaj en pravilen in vsaj en napačen odgovor; razlaga (explain) pove, zakaj.
+# topics.exam: koliko vprašanj teme je na pisnem izpitu (0 = samo vaja); group: skupina za prag 50 %; ref: poglavje kataloga.
 # link: tema ali praktični postopek na strani /f-plini/ (#id), kjer je razlaga.
 
+groups:
+  - { id: g1, label: "Osnove termodinamike (pogl. 1)" }
+  - { id: g2, label: "Okolje in predpisi (pogl. 2)" }
+  - { id: g3, label: "Uhajanje, ravnanje, alternativna hladiva (pogl. 4, 5, 11)" }
+  - { id: g4, label: "Sestavni deli (pogl. 6–9)" }
+
 topics:
-  - { id: termo, label: Termodinamika in delovanje kroga, link: termodinamika }
-  - { id: okolje, label: Okolje in zakonodaja, link: zakonodaja }
-  - { id: zagon, label: Pregledi pred zagonom in po popravilu, link: tlacni }
-  - { id: tesnost, label: Pregled tesnosti, link: tesnost }
-  - { id: ravnanje, label: Ravnanje s hladivom, link: ravnanje }
-  - { id: kompresor, label: Kompresorji, link: termodinamika }
-  - { id: prenosniki, label: Kondenzatorji in uparjalniki, link: termodinamika }
-  - { id: ventili, label: Ekspanzijski ventili in drugi deli, link: termodinamika }
-  - { id: cevi, label: Cevovodi in spajkanje, link: spajkanje }
-  - { id: gorljiva, label: Gorljiva in naravna hladiva, link: gorljiva }
+  - { id: termo, label: Termodinamika in delovanje kroga, link: termodinamika, exam: 12, group: g1, ref: "1 – Osnove termodinamike" }
+  - { id: okolje, label: Okolje in zakonodaja, link: zakonodaja, exam: 16, group: g2, ref: "2 – Vpliv hladilnih sredstev na okolje in okoljski predpisi" }
+  - { id: zagon, label: Pregledi pred zagonom in po popravilu, link: tlacni, exam: 0, ref: "3 – Preverjanja pred začetkom uporabe (praktični del)" }
+  - { id: tesnost, label: Pregled tesnosti, link: tesnost, exam: 3, group: g3, ref: "4 – Preverjanje uhajanja" }
+  - { id: ravnanje, label: Ravnanje s hladivom, link: ravnanje, exam: 3, group: g3, ref: "5 – Okolju prijazno ravnanje s sistemom in hladivom" }
+  - { id: kompresor, label: Kompresorji, link: termodinamika, exam: 3, group: g4, ref: "6 – Kompresorji" }
+  - { id: prenosniki, label: Kondenzatorji in uparjalniki, link: termodinamika, exam: 6, group: g4, ref: "7 in 8 – Kondenzatorji in uparjalniki" }
+  - { id: ventili, label: Ekspanzijski ventili in drugi deli, link: termodinamika, exam: 3, group: g4, ref: "9 – TEV in drugi sestavni deli" }
+  - { id: cevi, label: Cevovodi in spajkanje, link: spajkanje, exam: 0, ref: "10 – Cevi (praktični del)" }
+  - { id: gorljiva, label: Gorljiva in naravna hladiva, link: gorljiva, exam: 5, group: g3, ref: "11 – Alternativna hladiva in varno ravnanje z njimi" }
 
 questions:
   # ---------- termodinamika ----------
@@ -1046,3 +1062,254 @@ questions:
       - { text: "A1 – negorljivo" }
       - { text: "B1 – strupeno" }
     explain: R32 je rahlo gorljiv (A2L). Zato veljajo posebna pravila za količino v prostoru in za opremo.
+
+  # ---------- dodano po izpitnem katalogu A (1.0.0): računi, tabele, okolje, več pravilnih odgovorov ----------
+  - id: t13
+    topic: termo
+    text: "R32, sesalni manometer kaže 7,1 bar. Tabela R32 (absolutni tlak): −4 °C = 7,1 bar, 0 °C = 8,1 bar. Cev na izhodu uparjalnika ima 6 °C. Koliko je pregrevanje?"
+    options:
+      - { text: "6 K", correct: true }
+      - { text: "10 K" }
+      - { text: "2 K" }
+      - { text: "14 K" }
+    explain: Manometer kaže nadtlak – absolutni tlak je 7,1 + 1 = 8,1 bar, kar je 0 °C. Pregrevanje = 6 − 0 = 6 K. Kdor pozabi prišteti 1 bar, odčita −4 °C in dobi napačnih 10 K.
+
+  - id: t14
+    topic: termo
+    text: "R410A, tlačni manometer kaže 26,3 bar. Tabela R410A (absolutni tlak, vrelišče): 43 °C = 26,1 bar, 45 °C = 27,3 bar. Tekočinski vod za kondenzatorjem ima 40 °C. Koliko je podhlajevanje?"
+    options:
+      - { text: "5 K", correct: true }
+      - { text: "3 K" }
+      - { text: "0 K" }
+      - { text: "85 K" }
+    explain: Absolutni tlak je 26,3 + 1 = 27,3 bar, temperatura kondenzacije torej 45 °C. Podhlajevanje = 45 − 40 = 5 K. Brez prištetega 1 bar bi odčital 43 °C in dobil 3 K.
+
+  - id: t15
+    topic: termo
+    text: Katere trditve o enotah so pravilne?
+    options:
+      - { text: "1 bar je 100 kPa", correct: true }
+      - { text: "Temperaturna razlika 5 °C je enaka 5 K", correct: true }
+      - { text: "Osnovna enota SI za tlak je paskal (Pa)", correct: true }
+      - { text: "0 °C je 0 K" }
+    explain: 1 bar = 100 000 Pa = 100 kPa. Stopinja Celzija in kelvin sta enako veliki, zato se razlike ujemajo. 0 °C pa je 273,15 K – 0 K je absolutna ničla.
+
+  - id: t16
+    topic: termo
+    text: Kaj prikazuje logaritemski p-h diagram hladiva?
+    options:
+      - { text: "Tlak in entalpijo – na njem narišeš cel hladilni krog", correct: true }
+      - { text: "Samo porabo elektrike kompresorja" }
+      - { text: "Pretok vode skozi kondenzator" }
+      - { text: "Odvisnost GWP od temperature" }
+    explain: Na p-h diagramu je tlak (logaritemsko) na navpični osi in entalpija na vodoravni. Stiskanje, kondenzacija, ekspanzija in uparjanje se vidijo kot štiri črte kroga.
+
+  - id: t17
+    topic: termo
+    text: Katere trditve o krogu hladiva so pravilne?
+    options:
+      - { text: "Kompresor dvigne tlak in temperaturo pare", correct: true }
+      - { text: "V kondenzatorju hladivo odda toploto in se utekočini", correct: true }
+      - { text: "Za ekspanzijskim ventilom je tlak višji kot pred njim" }
+      - { text: "V uparjalniku hladivo odda toploto okolici" }
+    explain: Kompresor stisne paro, kondenzator toploto odda, ekspanzijski ventil zniža tlak, uparjalnik toploto prejme.
+
+  - id: o13
+    topic: okolje
+    text: Za koliko ton CO₂e gre pri napravi z 2,5 kg R32 (GWP 675)?
+    options:
+      - { text: "Približno 1,7 t CO₂e", correct: true }
+      - { text: "Približno 1688 t CO₂e" }
+      - { text: "Približno 0,27 t CO₂e" }
+      - { text: "Približno 17 t CO₂e" }
+    explain: 2,5 kg × 675 = 1688 kg CO₂e, deljeno s 1000 je 1,69 t. Naprava je pod 5 t CO₂e, zato zanjo ni obveznih rednih pregledov tesnosti.
+
+  - id: o14
+    topic: okolje
+    text: Split klima ima 3 kg R410A (GWP 2088). Kaj velja za pregled tesnosti brez sistema za odkrivanje puščanja?
+    options:
+      - { text: "Pregled vsaj na 12 mesecev, ker ima okoli 6,3 t CO₂e", correct: true }
+      - { text: "Pregled ni potreben, ker ima manj kot 5 kg hladiva" }
+      - { text: "Pregled vsake 3 mesece" }
+      - { text: "Pregled ni potreben, ker je hladivo A1" }
+    explain: Meja se računa v t CO₂e, ne v kg. 3 × 2088 ÷ 1000 ≈ 6,3 t, kar je nad 5 t – torej pregled vsaj na 12 mesecev.
+
+  - id: o15
+    topic: okolje
+    text: Kaj ureja Montrealski protokol?
+    options:
+      - { text: "Odpravo snovi, ki tanjšajo ozonski plašč", correct: true }
+      - { text: "Zmanjšanje emisij CO₂ iz elektrarn" }
+      - { text: "Spričevala za serviserje v EU" }
+      - { text: "Prevoz nevarnih snovi po cesti" }
+    explain: Montrealski protokol (1987) postopno odpravlja CFC, HCFC in druge snovi, ki tanjšajo ozon. HFC je vanj dodal šele Kigalijski amandma.
+
+  - id: o16
+    topic: okolje
+    text: Kaj je cilj Pariškega sporazuma?
+    options:
+      - { text: "Omejiti globalno segrevanje na precej manj kot 2 °C", correct: true }
+      - { text: "Obnoviti ozonski plašč do leta 2030" }
+      - { text: "Prepovedati vsa hladiva v EU" }
+      - { text: "Določiti tlačne razrede jeklenk" }
+    explain: Pariški sporazum (2015) je naslednik Kjotskega protokola. Države so se zavezale, da segrevanje ostane precej pod 2 °C. Ozon ureja Montrealski protokol.
+
+  - id: o17
+    topic: okolje
+    text: Kateri plini so toplogredni plini, za katere veljajo podnebni sporazumi?
+    options:
+      - { text: "Ogljikov dioksid (CO₂)", correct: true }
+      - { text: "Metan (CH₄)", correct: true }
+      - { text: "Fluorirani ogljikovodiki (HFC)", correct: true }
+      - { text: "Kisik (O₂)" }
+    explain: Kjotski protokol zajema CO₂, metan, didušikov oksid in fluorirane pline (HFC, PFC, SF₆). Kisik ni toplogredni plin.
+
+  - id: o18
+    topic: okolje
+    text: Katera hladiva tanjšajo ozonski plašč?
+    options:
+      - { text: "R12 (CFC)", correct: true }
+      - { text: "R22 (HCFC)", correct: true }
+      - { text: "R32 (HFC)" }
+      - { text: "R290 (propan)" }
+    explain: Ozon razgrajuje klor. CFC in HCFC ga vsebujejo, HFC in ogljikovodiki ne – njihov ODP je 0.
+
+  - id: o19
+    topic: okolje
+    text: Katera snov je referenca za ODP (ODP = 1)?
+    options:
+      - { text: "R11 (CFC-11)", correct: true }
+      - { text: "CO₂" }
+      - { text: "R32" }
+      - { text: "R22" }
+    explain: ODP primerja škodo za ozon z R11. CO₂ je referenca za GWP, ne za ODP. R22 ima ODP okoli 0,05.
+
+  - id: o20
+    topic: okolje
+    text: Zakaj ima R22 precej nižji ODP kot R12?
+    options:
+      - { text: "Ker vsebuje vodik in večinoma razpade, preden doseže stratosfero", correct: true }
+      - { text: "Ker ne vsebuje klora" }
+      - { text: "Ker je težji od zraka" }
+      - { text: "Ker ga v napravah uporabljamo manj" }
+    explain: HCFC imajo v molekuli vodik, zato v nižjem ozračju hitreje razpadejo. Klor pa še vedno vsebujejo, zato ODP ni 0.
+
+  - id: o21
+    topic: okolje
+    text: Katero uredbo je nadomestila Uredba (EU) 2024/573 o fluoriranih toplogrednih plinih?
+    options:
+      - { text: "Uredbo (EU) 517/2014", correct: true }
+      - { text: "Montrealski protokol" }
+      - { text: "Uredbo o odpadkih" }
+      - { text: "Izvedbeno uredbo o oznakah opreme" }
+    explain: Uredba 2024/573 je nadomestila 517/2014. Prinaša strožje omejitve GWP in postopno odpravo HFC do leta 2050.
+
+  - id: o22
+    topic: okolje
+    text: Katera kategorija spričevala po Izvedbeni uredbi (EU) 2024/2215 dovoljuje vsa dela s F-plini in ogljikovodiki ne glede na polnitev?
+    options:
+      - { text: "A1", correct: true }
+      - { text: "A2" }
+      - { text: "D" }
+      - { text: "E" }
+    explain: A1 pokriva vse dejavnosti s F-plini in ogljikovodiki. A2 je omejena na opremo pod 3 kg (hermetično zaprto pod 6 kg), D je samo zajem, E samo pregled tesnosti brez posega v krog.
+
+  - id: o23
+    topic: okolje
+    text: Kaj spada v evidenco o opremi, ki potrebuje pregled tesnosti?
+    options:
+      - { text: "Vrsta in količina hladiva v napravi", correct: true }
+      - { text: "Dodane in zajete količine hladiva", correct: true }
+      - { text: "Datumi in rezultati pregledov tesnosti", correct: true }
+      - { text: "Cena opravljenega servisa" }
+    explain: Evidenca omogoča sledljivost – koliko hladiva je v napravi, kaj se je dodalo ali zajelo, kdaj in kdo je delal ter rezultati pregledov. Cena ne spada vanjo.
+
+  - id: o24
+    topic: okolje
+    text: Kaj velja za odpadno hladivo, ki ga ne boš ponovno uporabil?
+    options:
+      - { text: "Oddaš ga pooblaščenemu zbiralcu odpadkov", correct: true }
+      - { text: "Do oddaje ga hraniš v jeklenki za zajem", correct: true }
+      - { text: "Izpustiš ga na prostem, če ga je malo" }
+      - { text: "Zmešaš ga s svežim hladivom in ga porabiš" }
+    explain: Zajeto odpadno hladivo hraniš v označeni jeklenki za zajem in ga oddaš zbiralcu, ki ga reciklira, regenerira ali uniči. Izpust in mešanje sta prepovedana.
+
+  - id: p11
+    topic: tesnost
+    text: Katere so neposredne metode iskanja puščanja?
+    options:
+      - { text: "Elektronski detektor puščanja", correct: true }
+      - { text: "Penilo na spojih", correct: true }
+      - { text: "UV barvilo, če ga proizvajalec dovoli", correct: true }
+      - { text: "Primerjava tlakov in temperatur z normalnimi" }
+    explain: Neposredne metode najdejo mesto puščanja. Primerjava obratovalnih vrednosti je posredna metoda – pove le, da nekaj ni v redu.
+
+  - id: r11
+    topic: ravnanje
+    text: Kaj narediš z oljem, ki ga izpustiš iz kroga s F-plini?
+    options:
+      - { text: "Hraniš ga v zaprti, označeni posodi", correct: true }
+      - { text: "Oddaš ga kot nevaren odpadek pooblaščenemu zbiralcu", correct: true }
+      - { text: "Zliješ ga v odtok, ker ni hladivo" }
+      - { text: "Ga ponovno uporabiš v drugem kompresorju" }
+    explain: Olje vsebuje raztopljeno hladivo in pogosto kisline, zato je nevaren odpadek. Hraniš ga zaprto in označeno, nato oddaš zbiralcu.
+
+  - id: r12
+    topic: ravnanje
+    text: Kaj velja za jeklenko za zajem hladiva?
+    options:
+      - { text: "Biti mora namenska in ponovno polnljiva", correct: true }
+      - { text: "Označena mora biti z vrsto hladiva", correct: true }
+      - { text: "Napolniš jo lahko do vrha" }
+      - { text: "Vanjo lahko zajameš različna hladiva" }
+    explain: Za zajem uporabljaš namensko, označeno jeklenko za eno hladivo in jo napolniš največ do dovoljene meje (okoli 80 %).
+
+  - id: k10
+    topic: kompresor
+    text: Kaj varuje kompresor pred poškodbo?
+    options:
+      - { text: "Stikalo visokega tlaka", correct: true }
+      - { text: "Grelec karterja", correct: true }
+      - { text: "Ločevalnik kapljevine na sesalnem vodu", correct: true }
+      - { text: "Kontrolno steklo na tekočinskem vodu" }
+    explain: Stikalo visokega tlaka izklopi kompresor, grelec karterja prepreči hladivo v olju, ločevalnik zadrži kapljevino. Kontrolno steklo le pokaže stanje tekočine.
+
+  - id: h10
+    topic: prenosniki
+    text: Kaj zviša tlak kondenzacije?
+    options:
+      - { text: "Zamazan zračni kondenzator", correct: true }
+      - { text: "Zrak ali drugi nekondenzirajoči plini v krogu", correct: true }
+      - { text: "Premajhen pretok vode skozi ploščni kondenzator", correct: true }
+      - { text: "Premalo hladiva v krogu" }
+    explain: Vse prve tri ovirajo oddajanje toplote ali zmanjšajo površino za kondenzacijo. Pri premalo hladiva je tlak kondenzacije praviloma nižji.
+
+  - id: v11
+    topic: ventili
+    text: Kaj velja za kapilarno cevko kot ekspanzijski element?
+    options:
+      - { text: "Ima stalen presek in ne uravnava pregrevanja", correct: true }
+      - { text: "Pregrevanje uravnava s tipalom na sesalnem vodu" }
+      - { text: "Krmili jo elektronski krmilnik" }
+      - { text: "Uporablja se samo pri CO₂" }
+    explain: Kapilara je ozka cev stalne dolžine in preseka. Pretok je odvisen od tlakov, zato je občutljiva na pravo količino hladiva. TEV in EEV pregrevanje uravnavata.
+
+  - id: g11
+    topic: gorljiva
+    text: Kaj velja za skladiščenje in prevoz jeklenk z R290?
+    options:
+      - { text: "Jeklenke so zavarovane pred padcem in prevračanjem", correct: true }
+      - { text: "Hraniš jih v prezračenem prostoru nad terenom, ne v kleti", correct: true }
+      - { text: "Prevažaš jih v zaprtem kombiju brez prezračevanja" }
+      - { text: "Hraniš jih ob grelniku, da tlak ne pade" }
+    explain: Propan je težji od zraka in se zbira v kleteh in jaških. Jeklenke morajo biti zavarovane, prostor prezračen, brez virov vžiga in toplote.
+
+  - id: g12
+    topic: gorljiva
+    text: Kako zmanjšaš polnitev hladiva v napravi?
+    options:
+      - { text: "Monoblok izvedba s krogom samo v zunanji enoti", correct: true }
+      - { text: "Manjši izmenjevalniki, npr. mikrokanalni ali ploščni", correct: true }
+      - { text: "Daljši cevni razvod med enotama" }
+      - { text: "Večji zbiralnik tekočine" }
+    explain: Manj notranje prostornine pomeni manj hladiva. Daljše cevi in večji zbiralniki polnitev povečajo.

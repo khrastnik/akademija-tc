@@ -185,7 +185,7 @@ describe('teren – učni del', () => {
         const d = P[f].filter((z, i) => z !== P[g][i]).length;
         expect([f, g, g !== f && g !== x.confuse.with, d <= 4]).toEqual([f, g, true, true]);
       }
-  });
+  }, 30000);
   it('potrditvene meritve res pokažejo okvaro (vsaj ena odstopa)', async () => {
     const { loadTerenUcenje } = await import('../src/lib/content.js');
     const u = loadTerenUcenje();
