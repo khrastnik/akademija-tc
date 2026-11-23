@@ -1,0 +1,34 @@
+id: klima-simptom
+kind: sort
+groups:
+  - id: kaplja
+    label: Kaplja
+  - id: smrdi
+    label: Smrdi
+  - id: hladi
+    label: Slabo hladi
+items:
+  - id: odtok
+    text: Zamašen ali zalomljen odtok kondenzata
+    group: kaplja
+    why: Voda ne more ven, zato se kad prelije.
+  - id: naklon
+    text: Notranja enota nagnjena proti napačni strani
+    group: kaplja
+    why: Voda v kadi ne teče proti odtoku.
+  - id: valj
+    text: Plesen na valju ventilatorja
+    group: smrdi
+    why: Ventilator piha zrak čez plesen naravnost v sobo.
+  - id: kad
+    text: Sluzasta voda v kadi
+    group: smrdi
+    why: V stoječi vodi rastejo bakterije in plesen.
+  - id: filter
+    text: Zamašeni filtri
+    group: hladi
+    why: Čez lamele gre premalo zraka.
+  - id: puscanje
+    text: Puščanje hladiva na spoju
+    group: hladi
+    why: Premalo hladiva – to potrdi serviser s spričevalom z detektorjem.

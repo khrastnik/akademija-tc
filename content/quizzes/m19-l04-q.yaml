@@ -1,0 +1,59 @@
+id: m19-l04-q
+lesson: m19-l04
+questions:
+  - id: q1
+    type: single
+    text: Voda teče po steni pod notranjo enoto. Kaj preveriš najprej?
+    understand:
+      simpler: Kam bi morala iti voda, ki nastane na lamelah?
+      terms: [kondenzat]
+      hint: Kad in cev, po kateri voda odteče.
+    options:
+      - id: a
+        text: Kad in odtok kondenzata
+        correct: true
+        why: Zamašen ali zalomljen odtok je najpogostejši vzrok, da voda teče po steni.
+      - id: b
+        text: Tlak hladiva z manometri
+        why: Hladivo ne teče po steni. Kapljanje je skoraj vedno voda iz kadi.
+      - id: c
+        text: Varovalko v razdelilni omarici
+        why: Varovalka ne vpliva na to, kam odteka voda.
+    lessonLink: m19-l04#what
+
+  - id: q2
+    type: single
+    text: Klima je čista in pravilno nastavljena, a razlika temperature zraka je le 5 K. Na spoju je oljna sled. Kaj sledi?
+    understand:
+      simpler: Ali so preprosti vzroki že izključeni?
+      terms: [klimatska-naprava, vzrok]
+      hint: Oljna sled kaže na krog hladiva.
+    options:
+      - id: a
+        text: Serviser s spričevalom išče puščanje z detektorjem
+        correct: true
+        why: Preprosti vzroki so izključeni, oljna sled kaže na puščanje – to se potrdi z detektorjem.
+      - id: b
+        text: Hladivo doliješ, dokler ne hladi bolje
+        why: Dolivanje brez iskanja puščanja ne odpravi vzroka in hladivo bo spet uhajalo.
+      - id: c
+        text: Stranki svetuješ nižjo nastavljeno temperaturo
+        why: Nastavitev ne odpravi puščanja hladiva.
+    lessonLink: m19-l04#measure
+
+  - id: q3
+    type: truefalse
+    text: Če zunaj ob vročem dnevu klima hladi slabše, je to znak, da manjka hladiva.
+    understand:
+      simpler: Ali vroč zunanji zrak vpliva na to, koliko toplote lahko klima odda?
+      terms: [simptom]
+      hint: Spomni se prve napake na terenu.
+    options:
+      - id: da
+        text: DA
+        why: Ob vročini klima težje odda toploto in hladi slabše, tudi ko hladiva ne manjka.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Slabše hlajenje ob vročini je pričakovano. Puščanje se potrdi z detektorjem, ne z občutkom.
+    lessonLink: m19-l04#field-error

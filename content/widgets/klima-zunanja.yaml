@@ -1,0 +1,34 @@
+id: klima-zunanja
+kind: sort
+groups:
+  - id: zunanja
+    label: Zunanja enota
+  - id: preverjanje
+    label: Preverjanje delovanja
+  - id: zapis
+    label: Zapis
+items:
+  - id: lamele
+    text: Lamele očistiš s krtačo v smeri lamel
+    group: zunanja
+    why: Čiste lamele lahko oddajo toploto zunanjemu zraku.
+  - id: spoji
+    text: Pogledaš spoje in izolacijo cevi
+    group: zunanja
+    why: Oljna sled na spoju je znak puščanja hladiva.
+  - id: dt
+    text: Izmeriš zrak, ki gre v notranjo enoto, in zrak, ki pride iz nje
+    group: preverjanje
+    why: Razlika temperature pove, ali klima hladi.
+  - id: odtekanje
+    text: Preveriš, da kondenzat odteka na koncu odtoka
+    group: preverjanje
+    why: Odtok je lahko zamašen tudi daleč od notranje enote.
+  - id: vrednosti
+    text: Zapišeš razliko temperature, sobno in zunanjo temperaturo
+    group: zapis
+    why: Brez pogojev naslednje leto ne moreš primerjati.
+  - id: nasvet
+    text: Zapišeš, kaj si stranki svetoval glede filtrov
+    group: zapis
+    why: Naslednji serviser ve, ali je stranka filtre čistila.

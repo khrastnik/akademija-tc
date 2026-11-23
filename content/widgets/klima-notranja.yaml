@@ -1,0 +1,36 @@
+id: klima-notranja
+kind: sort
+groups:
+  - id: ja
+    label: Tako ja
+  - id: ne
+    label: Tako ne
+items:
+  - id: zascita
+    text: Pred pršenjem zaščitiš elektroniko in zaslon
+    group: ja
+    why: Voda v krmilniku povzroči okvaro, ki se pokaže šele čez nekaj dni.
+  - id: nizek-tlak
+    text: Izmenjevalnik spereš z nizkim tlakom
+    group: ja
+    why: Lamele so tanke in se pri visokem tlaku upognejo.
+  - id: valj
+    text: Očistiš valj ventilatorja
+    group: ja
+    why: Na valju raste plesen, ki povzroča smrad in slab pretok zraka.
+  - id: odtok
+    text: V kad zliješ vodo in preveriš, da odteče
+    group: ja
+    why: Zamašen odtok je najpogostejši vzrok kapljanja.
+  - id: samo-filtri
+    text: Opereš samo filtre in zaračunaš servis
+    group: ne
+    why: Plesen na valju in v kadi ostane, smrad se hitro vrne.
+  - id: visok-tlak
+    text: Izmenjevalnik očistiš z visokotlačnim čistilnikom
+    group: ne
+    why: Upognjene lamele spustijo manj zraka – klima hladi slabše.
+  - id: doliti
+    text: Pri umazani enoti najprej doliješ hladivo
+    group: ne
+    why: Dokler enota ni čista, ne veš, ali hladiva res manjka.

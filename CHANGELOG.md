@@ -1,5 +1,16 @@
 # Spremembe
 
+## 0.23.0 – 2026-11-24
+
+### Servis klime
+- Tri nove lekcije v modulu 19, vsaka z vajo in kvizom:
+  - **19.2 Servis klime 1 – notranja enota:** filtri, izmenjevalnik, valj ventilatorja, kad in odtok – po vrstnem redu in
+    z zaščito elektronike.
+  - **19.3 Servis klime 2 – zunanja enota, preverjanje in zapis:** lamele, okolica, odtok, spoji; razlika temperature
+    zraka in kdaj je pregled tesnosti obvezen (od 5 t CO₂e).
+  - **19.4 Klima kaplja, smrdi ali slabo hladi – kaj najprej:** od preprostega do kroga hladiva, s potrditvijo puščanja.
+- V slovarju nova pojma »klimatska naprava« in »kondenzat«.
+
 ## 0.22.1 – 2026-11-23
 
 - Stran **Merilna oprema** ima na vrhu razdelek »Kaj potrebuješ«: nujna oprema za začetnika brez spričevala, kaj kupiš, ko

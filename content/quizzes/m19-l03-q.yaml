@@ -1,0 +1,59 @@
+id: m19-l03-q
+lesson: m19-l03
+questions:
+  - id: q1
+    type: single
+    text: Klima vsak popoldan izklopi. Lamele zunanje enote so prekrite s puhom. Kaj je najverjetneje narobe?
+    understand:
+      simpler: Kaj se zgodi, če zunanja enota ne more oddati toplote?
+      terms: [kondenzator]
+      hint: Spomni se radiatorja pod odejo.
+    options:
+      - id: a
+        text: Zunanja enota ne more oddati toplote
+        correct: true
+        why: Umazane lamele zadržijo toploto v napravi, tlak naraste in klima se zaščiti z izklopom.
+      - id: b
+        text: V notranji enoti je preveč kondenzata
+        why: Kondenzat v notranji enoti povzroči kapljanje, ne izklopov popoldne.
+      - id: c
+        text: Daljinski upravljalnik ima prazne baterije
+        why: Prazne baterije ne povzročijo izklopov ob vročih popoldnevih.
+    lessonLink: m19-l03#imagine
+
+  - id: q2
+    type: single
+    text: Kaj moraš zapisati, da boš naslednje leto lahko primerjal?
+    understand:
+      simpler: Kaj potrebuješ, da veš, ali se je delovanje spremenilo?
+      terms: [delta-t, servisno-porocilo]
+      hint: Ena številka brez pogojev malo pove.
+    options:
+      - id: a
+        text: Razliko temperature zraka ter sobno in zunanjo temperaturo
+        correct: true
+        why: Z vrednostmi in pogoji primerjaš isto napravo pri podobnih razmerah.
+      - id: b
+        text: Samo »servis opravljen« in podpis stranke
+        why: Tak zapis ne pove ničesar o tem, kako je klima delovala.
+      - id: c
+        text: Samo datum naslednjega servisa
+        why: Datum je koristen za opomnik, za primerjavo delovanja pa ne zadošča.
+    lessonLink: m19-l03#why
+
+  - id: q3
+    type: truefalse
+    text: Klima z 1,5 kg R410A potrebuje obvezen pregled tesnosti vsakih 12 mesecev.
+    understand:
+      simpler: Koliko ton CO₂e je 1,5 kg R410A z GWP 2088?
+      terms: [co2-ekvivalent, pregled-tesnosti]
+      hint: Meja za obvezen pregled je 5 t CO₂e.
+    options:
+      - id: da
+        text: DA
+        why: 1,5 × 2088 ÷ 1000 = 3,1 t CO₂e, kar je pod mejo 5 t.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. 3,1 t CO₂e je pod 5 t, zato pregled tesnosti ni obvezen – spoje pa vseeno pogledaš.
+    lessonLink: m19-l03#numbers

@@ -85,4 +85,4 @@ Dve napaki po obisku:
 - Poročilo z meritvami je izvid naprave.
 - Razlaga stranki prepreči večje napake.
 
-**Kaj sledi:** v modulu 20 spoznaš, kako ostaneš miren pri napaki, ki je še nisi videl.
+**Kaj sledi:** v lekciji 19.2 isti postopek na servisu klime – najprej notranja enota.

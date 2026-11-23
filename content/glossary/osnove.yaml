@@ -304,3 +304,19 @@
   dolgaRazlaga: Skupaj s števcem elektrike omogoči izračun povprečnega grelnega števila za obdobje. Statistika na zaslonu naprave je pogosto le ocena.
   analogija: Kot vodomer, ki šteje toploto namesto vode.
   povezaneLekcije: [m10-l05]
+
+- id: klimatska-naprava
+  sl: klimatska naprava (klima)
+  en: air conditioner
+  kratkaRazlaga: Toplotna črpalka zrak–zrak – toploto prenaša med zrakom v prostoru in zunanjim zrakom.
+  dolgaRazlaga: Split klima ima notranjo in zunanjo enoto, povezani s cevmi s hladivom. Pri hlajenju je notranja enota uparjalnik in zunanja kondenzator, pri ogrevanju obratno. Krog hladiva deluje enako kot pri toplotni črpalki zrak–voda, le da toploto odda ali vzame zraku, ne vodi.
+  analogija: Hladilnik, ki iz sobe vzame toploto in jo odvrže skozi okno.
+  povezaneLekcije: [m19-l02, m19-l03, m19-l04]
+
+- id: kondenzat
+  sl: kondenzat
+  en: condensate
+  kratkaRazlaga: Voda, ki se iz zraka nabere na hladnih lamelah in mora odteči po odtoku.
+  dolgaRazlaga: Ko topel vlažen zrak zadene hladne lamele, se vlaga iz zraka utekočini. Pri hlajenju nastaja v notranji enoti, pri ogrevanju toplotne črpalke v zunanji. Voda kaplja v kad in po odtoku ven – če je odtok zamašen, voda teče po steni, pozimi pa zamrzne.
+  analogija: Rosa na hladni steklenici iz hladilnika.
+  povezaneLekcije: [m19-l02, m19-l04]

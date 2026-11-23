@@ -1,0 +1,59 @@
+id: m19-l02-q
+lesson: m19-l02
+questions:
+  - id: q1
+    type: single
+    text: Klima slabo hladi in smrdi. Filtri so sivi, valj ventilatorja črn. Kaj narediš najprej?
+    understand:
+      simpler: Ali najprej očistiš enoto ali posežeš v krog hladiva?
+      terms: [klimatska-naprava, uparjalnik]
+      hint: Spomni se zgodbe – kaj je manjkalo, hladivo ali zrak?
+    options:
+      - id: a
+        text: Očistiš filtre, izmenjevalnik, valj in kad
+        correct: true
+        why: Umazanija zmanjša pretok zraka čez lamele. Šele čista enota pokaže, ali je težava še kje drugje.
+      - id: b
+        text: Priklopiš manometre in doliješ hladivo
+        why: Pri umazani enoti ne veš, ali hladiva res manjka. Dolivanje brez iskanja puščanja je ugibanje.
+      - id: c
+        text: Napršiš dišavo v notranjo enoto
+        why: Dišava prekrije smrad za nekaj dni, plesen in slab pretok zraka ostaneta.
+    lessonLink: m19-l02#why
+
+  - id: q2
+    type: single
+    text: Zakaj pred pršenjem zaščitiš elektroniko notranje enote?
+    understand:
+      simpler: Kaj se zgodi, če voda iz pršilke zateče v krmilnik?
+      terms: [klimatska-naprava]
+      hint: Okvara se ne pokaže takoj.
+    options:
+      - id: a
+        text: Ker voda v krmilniku povzroči okvaro
+        correct: true
+        why: Voda na tiskanini povzroči kratek stik ali korozijo – pogosto šele čez nekaj dni.
+      - id: b
+        text: Ker se sredstvo sicer ne prime lamel
+        why: Zaščita elektronike nima vpliva na sredstvo na lamelah.
+      - id: c
+        text: Ker tako zahteva samo garancija
+        why: Ne gre za papirje – voda v elektroniki napravo dejansko poškoduje.
+    lessonLink: m19-l02#measure
+
+  - id: q3
+    type: truefalse
+    text: Če stranka opere filtre, je servis klime opravljen.
+    understand:
+      simpler: Ali čisti filtri očistijo tudi valj ventilatorja in kad?
+      terms: [kondenzat]
+      hint: Kje raste plesen?
+    options:
+      - id: da
+        text: DA
+        why: Filtri so le en del. Plesen na valju, v kadi in na lamelah ostane.
+      - id: ne
+        text: NE
+        correct: true
+        why: Prav. Servis zajame tudi izmenjevalnik, valj ventilatorja ter kad in odtok kondenzata.
+    lessonLink: m19-l02#field-error
