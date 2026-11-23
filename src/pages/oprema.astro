@@ -7,6 +7,39 @@ import { url } from '../lib/site.js';
 const tools = loadTools();
 const tables = loadRefrigerants().map((r) => ({ id: r.id, points: r.points }));
 const lessonTitles = Object.fromEntries(loadLessons().map((l) => [l.id, `${lessonNumber(l.id)} ${l.title}`]));
+
+// Kaj kupiš najprej: naprave s strani (id) ali drugo orodje brez delujoče naprave (samo besedilo).
+const byId = new Map(tools.map((t) => [t.id, t.name]));
+type Item = { id?: string; name?: string; why: string };
+const item = (x: Item) => {
+  if (x.id && !byId.has(x.id)) throw new Error(`oprema.astro: naprava ${x.id} ne obstaja`);
+  return { ...x, name: x.name ?? byId.get(x.id!)! };
+};
+const zacetek = [
+  { id: 'termometer-cevni', why: 'Dva kosa: dvižni in povratni vod – ΔT vode in temperature cevi.' },
+  { id: 'ir-termometer', why: 'Hitro iskanje hladnih zank, radiatorjev in vročih mest.' },
+  { id: 'manometer-vode', why: 'Vgrajen v sistem – samo ga prebereš.' },
+  { name: 'Tlakomer za zrak (kot za avtomobilske gume)', why: 'Predtlak raztezne posode, ko posoda nima vodnega tlaka.' },
+  { name: 'Ključ za odzračevanje, cev za polnjenje, vedro, krpe', why: 'Odzračevanje, čiščenje filtra, dolivanje vode.' },
+  { name: 'Zapisnik in telefon za fotografije', why: 'Meritve pred in po posegu, tablica naprave, zaslon z napako.' },
+].map(item);
+const kasneje = [
+  { id: 'termometer-vbodni', why: 'Temperatura vode v posodi, zraka iz ventilatorja.' },
+  { id: 'termokamera', why: 'Celotna slika talnih zank in radiatorjev naenkrat.' },
+  { name: 'Refraktometer', why: 'Koncentracija glikola pri monobloku – z lestvico za propilen glikol.' },
+  { name: 'Testni lističi za vodo', why: 'Trdota in pH vode v sistemu.' },
+].map(item);
+const spricevalo = [
+  { id: 'digitalna-baterija', why: 'Tlak na obeh straneh, SH in SC na zaslonu (ali analogna baterija).' },
+  { id: 'detektor-puscanja', why: 'Pregled tesnosti in iskanje puščanja – občutljivost vsaj 5 g na leto.' },
+  { id: 'vakuumska-crpalka', why: 'Sušenje kroga pred polnjenjem.' },
+  { id: 'vakuummeter', why: 'Ali je vakuum dovolj globok in ali drži.' },
+  { id: 'tehtnica', why: 'Polnjenje hladiva po teži.' },
+  { id: 'naprava-za-zajem', why: 'Zajem hladiva – za R290 mora biti primerna za razred A3.' },
+  { id: 'dusik-regulator', why: 'Tlačni preizkus in spiranje pri spajkanju.' },
+  { name: 'Za R290: detektor vnetljivih plinov, orodje brez iskrenja, gasilnik', why: 'Varno delo s propanom.' },
+].map(item);
+const elektro = ['klescni-ampermeter', 'multimeter', 'tester-napetosti', 'merilnik-izolacije'].map((id) => item({ id, why: '' }));
 ---
 <Base
   title="Merilna oprema"
@@ -23,11 +56,95 @@ const lessonTitles = Object.fromEntries(loadLessons().map((l) => [l.id, `${lesso
       Vrednosti so učni primer – na terenu veljajo navodila proizvajalca naprave in merilnika.
     </span>
   </p>
+  <section class="op-plan" aria-labelledby="op-plan-h">
+    <h2 id="op-plan-h">Kaj potrebuješ</h2>
+    <p class="muted">Večina napak se najde brez posega v krog hladiva: pretok, zrak, filter, nastavitve, raztezna posoda. Zato začni s prvim kompletom.</p>
+    <div class="op-cols">
+      <div class="op-col op-start">
+        <p class="op-tag">1 · Za začetek, brez spričevala</p>
+        <h3>Nujno</h3>
+        <ul>{zacetek.map((x) => <li>{x.id ? <a href={`#${x.id}`}>{x.name}</a> : <strong>{x.name}</strong>}<span>{x.why}</span></li>)}</ul>
+        <h3>Ko rabiš</h3>
+        <ul>{kasneje.map((x) => <li>{x.id ? <a href={`#${x.id}`}>{x.name}</a> : <strong>{x.name}</strong>}<span>{x.why}</span></li>)}</ul>
+        <p class="op-cost">Okvirno 150–250 € (cene november 2026).</p>
+      </div>
+      <div class="op-col">
+        <p class="op-tag">2 · Ko imaš spričevalo F-plini</p>
+        <h3>Krog hladiva</h3>
+        <ul>{spricevalo.map((x) => <li>{x.id ? <a href={`#${x.id}`}>{x.name}</a> : <strong>{x.name}</strong>}<span>{x.why}</span></li>)}</ul>
+        <p class="op-cost">Okvirno 2.300 € ali več, brez jeklenk in dušika (cene november 2026).</p>
+      </div>
+    </div>
+    <p class="op-elektro">
+      <strong>Samo z elektro usposobljenostjo:</strong>
+      {elektro.map((x, i) => <>{i > 0 && ', '}<a href={`#${x.id}`}>{x.name}</a></>)}. Akademija dela na 230/400 V ne uči – meritve na odprti elektroniki naj dela elektro usposobljena oseba.
+    </p>
+    <p class="muted small">Spodaj izberi napravo in jo preizkusi.</p>
+  </section>
+
   <ToolBox client:load tools={tools as any} tables={tables} lessonTitles={lessonTitles} lessonBase={url('lekcija/')} />
 </Base>
 
 <style>
   .lead {
     margin-top: 0;
+  }
+  .op-plan {
+    margin: 24px 0 28px;
+  }
+  .op-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .op-col {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    min-width: 0;
+  }
+  .op-start {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .op-tag {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+  }
+  .op-col h3 {
+    margin: 12px 0 6px;
+    font-size: 1rem;
+  }
+  .op-col ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .op-col li {
+    display: grid;
+    gap: 2px;
+  }
+  .op-col li span {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+  }
+  .op-cost {
+    margin: 12px 0 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .op-elektro {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    font-size: 0.95rem;
   }
 </style>

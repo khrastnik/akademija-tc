@@ -1,5 +1,11 @@
 # Spremembe
 
+## 0.22.1 – 2026-11-23
+
+- Stran **Merilna oprema** ima na vrhu razdelek »Kaj potrebuješ«: nujna oprema za začetnika brez spričevala, kaj kupiš, ko
+  rabiš, in kaj potrebuješ šele s spričevalom F-plini; električni merilniki so ločeno označeni kot oprema za elektro
+  usposobljene. Vsak vnos odpre delujočo napravo na strani.
+
 ## 0.22.0 – 2026-11-23
 
 ### Servisna mapa (primer)
