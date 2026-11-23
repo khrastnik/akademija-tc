@@ -407,6 +407,57 @@ export function loadFgasExam() {
   return parsed.data;
 }
 
+const str = z.preprocess((v) => (v instanceof Date ? v.toISOString().slice(0, 10) : v), z.string());
+const servisSchema = z.object({
+  stranke: z
+    .array(
+      z.object({
+        id,
+        ime: z.string(),
+        kraj: z.string(),
+        koda: z.string().regex(/^[A-HJ-NP-Z2-9]{5}$/, "koda: 5 znakov, brez I, O, 0 in 1"),
+        naslednji_servis: str,
+        opomnik_poslan: str.optional(),
+        naprava: z.object({
+          tip: z.string(),
+          moc: z.number(),
+          hladivo: z.string(),
+          gwp: z.number(),
+          polnitev: z.number(),
+          leto: z.number().int(),
+          oddajniki: z.string(),
+        }),
+        nalogi: z
+          .array(
+            z.object({
+              id: z.string(),
+              datum: str,
+              vrsta: z.string(),
+              status: z.enum(['planiran', 'caka', 'zakljucen']),
+              klic: z.object({ simptom: z.string(), od_kdaj: z.string(), stranka_ze: z.string(), pripravim: z.string() }),
+              obhod: z.array(z.string()).default([]),
+              pogoji: z.string().optional(),
+              meritve: z.array(z.object({ velicina: z.string(), pred: z.string(), po: z.string() })).default([]),
+              vzrok: z.string().optional(),
+              dokaz: z.string().optional(),
+              popravilo: z.array(z.string()).default([]),
+              hladivo: z.object({ zajeto: z.number(), napolnjeno: z.number() }).optional(),
+              priporocila: z.array(z.string()).default([]),
+              klic_po: z.string().optional(),
+            }),
+          )
+          .min(1),
+      }),
+    )
+    .min(1),
+});
+/** Primer servisne mape (izmišljene stranke) za stran /servis/. */
+export function loadServis() {
+  const parsed = servisSchema.safeParse(parseYaml(read('content', 'servis', 'primer.yaml')));
+  if (!parsed.success) throw new Error(`content/servis/primer.yaml: ${formatZod(parsed.error)}`);
+  return parsed.data;
+}
+
 /** Snov, praktični koraki in vaja za izpit iz ravnanja s F-plini. */
 export function loadFgas() {
   const parsed = fgasSchema.safeParse(parseYaml(read('content', 'f-plini', 'f-plini.yaml')));
@@ -568,6 +619,20 @@ export function validateContent() {
     toolIds.add(t.id);
     for (const l of t.lessons) if (!lessonIds.has(l)) errors.push(`content/oprema/oprema.yaml ${t.id}: lekcija "${l}" ne obstaja`);
   }
+
+  // primer servisne mape: zaključen nalog mora imeti vzrok, dokaz in popravilo; poseg v hladivo mora omeniti spričevalo
+  const servis = tryLoad(loadServis, { stranke: [] });
+  const kode = new Set();
+  for (const s of servis.stranke) {
+    if (kode.has(s.koda)) errors.push(`content/servis/primer.yaml ${s.id}: koda ${s.koda} je podvojena`);
+    kode.add(s.koda);
+  }
+  for (const s of servis.stranke)
+    for (const n of s.nalogi) {
+      const at = `content/servis/primer.yaml ${n.id}`;
+      if (n.status !== 'planiran' && (!n.vzrok || !n.dokaz || n.popravilo.length === 0)) errors.push(`${at}: opravljen nalog potrebuje vzrok, dokaz in popravilo`);
+      if (n.hladivo && !n.popravilo.some((p) => p.includes('spričeval'))) errors.push(`${at}: poseg v hladivo mora biti zapisan kot delo serviserja s spričevalom`);
+    }
 
   // banka izpitnih vprašanj F-plini
   const exam = tryLoad(loadFgasExam, { groups: [], topics: [], questions: [], open: [] });

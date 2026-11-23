@@ -1,0 +1,372 @@
+# Primer servisne mape: izmišljene stranke, naprave brez blagovnih znamk, vrednosti so ponazoritev.
+# Struktura sledi lekciji 19.1 »Servisni obisk od klica do poročila«: pred obiskom → na terenu → po obisku.
+# Posegi v krog hladiva so vedno zapisani kot delo serviserja s spričevalom, količine hladiva po teži.
+# Električnih popravil primer ne opisuje.
+#
+# koda: naključna koda naprave na nalepki (QR vodi na prijavo napake s to kodo) – brez osebnih podatkov.
+# naslednji_servis / opomnik_poslan: za opomnike stranki pred rednim servisom.
+# status: planiran | caka (opravljeno, čaka kontrola) | zakljucen
+
+stranke:
+  - id: s01
+    ime: Kovač
+    kraj: Domžale
+    koda: K7F3Q
+    naslednji_servis: "2027-01-20"
+    naprava: { tip: "Zrak-voda, monoblok", moc: 8, hladivo: R32, gwp: 675, polnitev: 1.65, leto: 2021, oddajniki: "Talno ogrevanje" }
+    nalogi:
+      - id: DN-2026-031
+        datum: 2026-01-20
+        vrsta: Okvara
+        status: zakljucen
+        klic:
+          simptom: Hiša se greje počasneje, naprava je dvakrat javila napako pretoka.
+          od_kdaj: Približno dva tedna, slabše od velikega mraza.
+          stranka_ze: Ponovni zagon naprave – napaka se vrne čez nekaj ur.
+          pripravim: Zapisnik zadnjega servisa (2025), termometra za cevi, manometre, detektor puščanja.
+        obhod:
+          - Tlak vode 1,4 bar (hladen sistem), v območju iz navodil.
+          - Zunanja enota prosta, lamele čiste, brez ledu.
+          - Filter vodnega kroga poln rjavega mulja.
+          - Na spoju pod zunanjo enoto sled olja.
+        pogoji: "Zunaj 1 °C, ogrevanje, ustaljeno delovanje 25 min"
+        meritve:
+          - { velicina: "Dvižni vod", pred: "38 °C", po: "35 °C" }
+          - { velicina: "Povratni vod", pred: "29 °C", po: "30 °C" }
+          - { velicina: "ΔT vode", pred: "9 K", po: "5 K" }
+          - { velicina: "Pregrevanje SH (po čiščenju filtra)", pred: "14 K", po: "6 K" }
+          - { velicina: "Podhlajevanje SC (po čiščenju filtra)", pred: "1 K", po: "5 K" }
+        vzrok: "Dve napaki: zamašen filter vode (premajhen pretok) in puščanje hladiva na spoju."
+        dokaz: "Po čiščenju filtra se ΔT vrne na 5 K, a SH ostane visoko in SC nizko – premalo hladiva. Elektronski detektor potrdi puščanje na spoju z oljno sledjo."
+        popravilo:
+          - Očiščen filter vodnega kroga.
+          - "Serviser s spričevalom: zajem hladiva, popravilo spoja, tlačni preizkus z dušikom, vakuumiranje, polnjenje po teži."
+        hladivo: { zajeto: 1.21, napolnjeno: 1.65 }
+        priporocila:
+          - Filter vodnega kroga pregledati vsako leto pred kurilno sezono.
+          - Tlak vode odčitati enkrat na mesec in zapisati.
+          - Kontrola tesnosti spoja v enem mesecu (nalog DN-2026-038).
+        klic_po: "Čez 4 dni: hiša se greje normalno, napake ni bilo več."
+
+      - id: DN-2026-038
+        datum: 2026-02-18
+        vrsta: Kontrola tesnosti
+        status: zakljucen
+        klic:
+          simptom: Dogovorjena kontrola po popravilu puščanja.
+          od_kdaj: –
+          stranka_ze: –
+          pripravim: Detektor puščanja, poročilo DN-2026-031.
+        obhod:
+          - Brez oljnih sledi na popravljenem spoju.
+          - Tlak vode 1,4 bar.
+        pogoji: "Zunaj 6 °C, ogrevanje, ustaljeno delovanje 20 min"
+        meritve:
+          - { velicina: "Pregrevanje SH", pred: "6 K", po: "6 K" }
+          - { velicina: "Podhlajevanje SC", pred: "5 K", po: "5 K" }
+        vzrok: Kontrola – brez napake.
+        dokaz: Detektor na spoju in servisnih priključkih ne zazna puščanja. SH in SC enaka kot ob zaključku popravila.
+        popravilo:
+          - Brez posega.
+        priporocila:
+          - Naslednji pregled ob rednem letnem servisu.
+        klic_po: "–"
+
+  - id: s02
+    ime: Zupan
+    kraj: Kranj
+    koda: M2T8W
+    naslednji_servis: "2027-09-10"
+    naprava: { tip: "Zrak-voda, split", moc: 6, hladivo: R410A, gwp: 2088, polnitev: 3.0, leto: 2017, oddajniki: "Talno ogrevanje in radiatorji" }
+    nalogi:
+      - id: DN-2026-102
+        datum: 2026-09-10
+        vrsta: Redni servis in pregled tesnosti
+        status: zakljucen
+        klic:
+          simptom: Redni letni servis, naprava deluje brez težav.
+          od_kdaj: –
+          stranka_ze: –
+          pripravim: Evidenca opreme (zadnji pregled 2025-09), detektor puščanja, termometra za cevi.
+        obhod:
+          - Tlak vode 1,6 bar, raztezna posoda drži predtlak.
+          - Filter vodnega kroga malo umazan – očiščen.
+          - Lamele zunanje enote prašne.
+          - Odtok kondenzata prost.
+        pogoji: "Zunaj 19 °C, priprava sanitarne vode, ustaljeno 15 min"
+        meritve:
+          - { velicina: "Tlak vode (hladen)", pred: "1,6 bar", po: "1,6 bar" }
+          - { velicina: "ΔT vode", pred: "6 K", po: "5 K" }
+        vzrok: Redni servis – brez okvare.
+        dokaz: Pregled tesnosti z detektorjem na vseh spojih, ventilih in priključkih – brez puščanja.
+        popravilo:
+          - Očiščen filter vodnega kroga in lamele zunanje enote.
+          - Vpis pregleda tesnosti v evidenco opreme.
+        priporocila:
+          - Naslednji pregled tesnosti do septembra 2027 (6,3 t CO₂e → vsakih 12 mesecev).
+        klic_po: "–"
+
+  - id: s03
+    ime: Horvat
+    kraj: Celje
+    koda: R4H9C
+    naslednji_servis: "2027-02-03"
+    naprava: { tip: "Zrak-voda, monoblok", moc: 10, hladivo: R290, gwp: 3, polnitev: 1.2, leto: 2025, oddajniki: "Talno ogrevanje" }
+    nalogi:
+      - id: DN-2026-045
+        datum: 2026-02-03
+        vrsta: Svetovanje – poraba
+        status: zakljucen
+        klic:
+          simptom: Poraba elektrike v januarju precej višja od pričakovane, v hiši je pretoplo.
+          od_kdaj: Od začetka kurilne sezone.
+          stranka_ze: Zniževala sobne termostate, poraba se ni spremenila.
+          pripravim: Navodila naprave (krivulja ogrevanja), termometra za cevi.
+        obhod:
+          - Krivulja ogrevanja nastavljena strmo, pri 0 °C zunaj zahteva 42 °C vode.
+          - Vsi sobni termostati zaprti na 20 °C, zanke pogosto zaprte – naprava pogosto vklaplja in izklaplja.
+          - Tlak vode 1,5 bar.
+        pogoji: "Zunaj 0 °C, ogrevanje"
+        meritve:
+          - { velicina: "Dvižni vod", pred: "42 °C", po: "33 °C" }
+          - { velicina: "Vklopi kompresorja na uro", pred: "5", po: "1" }
+        vzrok: Previsoka krivulja ogrevanja, termostati jo zapirajo – naprava dela z visoko temperaturo in pogostimi vklopi.
+        dokaz: Po znižanju krivulje in odprtju termostatov se temperatura v prostorih drži, kompresor dela enakomerno.
+        popravilo:
+          - Krivulja znižana (zahteva pri 0 °C zunaj 33 °C).
+          - Sobni termostati v bivalnih prostorih nastavljeni na najvišje, regulira krivulja.
+        priporocila:
+          - Krivuljo popravljati po korakih in počakati 2–3 dni.
+          - Poraba za primerjavo zapisovati vsak teden.
+        klic_po: "Čez 10 dni: v hiši 21 °C, tedenska poraba nižja za približno četrtino."
+
+  - id: s04
+    ime: Krajnc
+    kraj: Maribor
+    koda: P6D2X
+    naslednji_servis: "2027-03-12"
+    naprava: { tip: "Zrak-voda, monoblok", moc: 7, hladivo: R32, gwp: 675, polnitev: 1.4, leto: 2022, oddajniki: "Talno ogrevanje" }
+    nalogi:
+      - id: DN-2026-067
+        datum: 2026-03-12
+        vrsta: Okvara
+        status: zakljucen
+        klic:
+          simptom: Pod varnostnim ventilom je luža, stranka vsak mesec dolije vodo.
+          od_kdaj: Od jeseni.
+          stranka_ze: Dolivala vodo iz pipe do 2 bar.
+          pripravim: Tlakomer za predtlak, ključ za odzračevanje, mehčana voda.
+        obhod:
+          - Tlak vode niha med 0,8 bar (hladen) in 2,9 bar (topel).
+          - Varnostni ventil (3 bar) kaplja pri segretem sistemu.
+          - Na ventilu raztezne posode ob pritisku izstopi voda namesto zraka.
+        pogoji: "Hladen in segret sistem, isti dan"
+        meritve:
+          - { velicina: "Tlak vode hladen", pred: "0,8 bar", po: "1,5 bar" }
+          - { velicina: "Tlak vode topel", pred: "2,9 bar", po: "1,9 bar" }
+          - { velicina: "Predtlak raztezne posode", pred: "0 bar", po: "po navodilih" }
+        vzrok: Raztezna posoda s počeno membrano – ne sprejema raztezanja vode.
+        dokaz: Voda na ventilu posode namesto zraka, velik razpon tlaka med hladnim in toplim sistemom.
+        popravilo:
+          - Zamenjana raztezna posoda, predtlak nastavljen po navodilih.
+          - Sistem dolit z mehčano vodo, odzračen.
+        priporocila:
+          - Vode iz pipe ne dolivati pogosto – prinaša kisik in apnenec.
+          - Tlak zapisovati; če pada, poklicati.
+        klic_po: "Čez teden dni: tlak stalno 1,5 bar, luže ni več."
+
+  - id: s05
+    ime: Potočnik
+    kraj: Novo mesto
+    koda: T3N7B
+    naslednji_servis: "2027-10-21"
+    naprava: { tip: "Zrak-voda, split", moc: 9, hladivo: R32, gwp: 675, polnitev: 2.1, leto: 2026, oddajniki: "Talno ogrevanje (novogradnja)" }
+    nalogi:
+      - id: DN-2026-118
+        datum: 2026-10-21
+        vrsta: Okvara po zagonu
+        status: zakljucen
+        klic:
+          simptom: V ceveh žubori, naprava občasno javi napako pretoka.
+          od_kdaj: Tri tedne po zagonu nove naprave.
+          stranka_ze: Ničesar.
+          pripravim: Ključ za odzračevanje, mehčana voda, termometra za cevi.
+        obhod:
+          - Tlak vode 0,9 bar – pod spodnjo mejo iz navodil.
+          - Avtomatski odzračevalnik spušča zrak.
+          - Dve zanki na razdelilniku brez pretoka na merilniku.
+        pogoji: "Zunaj 9 °C, ogrevanje"
+        meritve:
+          - { velicina: "Tlak vode (hladen)", pred: "0,9 bar", po: "1,5 bar" }
+          - { velicina: "Zanke s pretokom", pred: "6 od 8", po: "8 od 8" }
+          - { velicina: "ΔT vode", pred: "8 K", po: "5 K" }
+        vzrok: Zrak v novem sistemu, ki se je izločal po zagonu – tlak padel, dve zanki zračni.
+        dokaz: Po odzračevanju zank in dolivanju vse zanke kažejo pretok, žuborenje izgine.
+        popravilo:
+          - Zanke odzračene posamično na razdelilniku.
+          - Doliti 4 l mehčane vode do 1,5 bar.
+        priporocila:
+          - V prvih mesecih tlak preverjati vsak teden – zrak se še izloča.
+        klic_po: "Čez 5 dni: tlak 1,4 bar, brez šumov in napak."
+
+  - id: s06
+    ime: Mlakar
+    kraj: Postojna
+    koda: W8K4J
+    naslednji_servis: "2027-01-08"
+    opomnik_poslan: "2026-11-20"
+    naprava: { tip: "Zrak-voda, monoblok", moc: 12, hladivo: R32, gwp: 675, polnitev: 2.5, leto: 2023, oddajniki: "Radiatorji" }
+    nalogi:
+      - id: DN-2026-012
+        datum: 2026-01-08
+        vrsta: Okvara
+        status: zakljucen
+        klic:
+          simptom: Radiatorji v zgornjem nadstropju so mlačni, spodaj je toplo.
+          od_kdaj: Od zamenjave kotla s toplotno črpalko.
+          stranka_ze: Odzračila radiatorje.
+          pripravim: Infrardeči termometer, termometra za cevi, navodila naprave.
+        obhod:
+          - Termostatski ventili v zgornjih sobah na stopnji 2.
+          - Prednastavitve ventilov spodaj odprte do konca – voda gre po najkrajši poti.
+          - Dvižni vod 41 °C, radiatorji so bili dimenzionirani za kotel.
+        pogoji: "Zunaj −3 °C, ogrevanje"
+        meritve:
+          - { velicina: "Radiator zgoraj (površina)", pred: "26 °C", po: "37 °C" }
+          - { velicina: "Radiator spodaj (površina)", pred: "39 °C", po: "37 °C" }
+          - { velicina: "Dvižni vod", pred: "41 °C", po: "45 °C" }
+        vzrok: Hidravlično neuravnotežen sistem in prenizka temperatura vode za obstoječe radiatorje.
+        dokaz: Po nastavitvi prednastavitev in krivulje se površini radiatorjev zgoraj in spodaj izenačita.
+        popravilo:
+          - Hidravlično uravnoteženje s prednastavitvami ventilov.
+          - Krivulja dvignjena za 4 K, termostatski ventili zgoraj odprti.
+        priporocila:
+          - Za nižjo porabo razmisliti o večjih radiatorjih v zgornjem nadstropju.
+        klic_po: "Čez 3 dni: zgoraj toplo, stranka zadovoljna."
+
+  - id: s07
+    ime: Kos
+    kraj: Koper
+    koda: H5Q2V
+    naslednji_servis: "2027-11-12"
+    naprava: { tip: "Zrak-voda, split", moc: 8, hladivo: R410A, gwp: 2088, polnitev: 2.6, leto: 2016, oddajniki: "Talno ogrevanje" }
+    nalogi:
+      - id: DN-2026-124
+        datum: 2026-11-12
+        vrsta: Okvara
+        status: caka
+        klic:
+          simptom: Naprava greje vsako leto slabše, poleti izklaplja na visokem tlaku.
+          od_kdaj: Nekaj let.
+          stranka_ze: Vsako jesen je nekdo dolil hladivo, zapisnikov ni.
+          pripravim: Manometre, termometra za cevi, detektor puščanja, tehtnica, jeklenka za zajem.
+        obhod:
+          - Evidence o dodanem hladivu ni.
+          - Tlak vode 1,5 bar, filter čist, lamele čiste.
+          - "Tablica naprave: polnitev 2,6 kg."
+        pogoji: "Zunaj 12 °C, ogrevanje, ustaljeno delovanje 30 min"
+        meritve:
+          - { velicina: "Pregrevanje SH", pred: "3 K", po: "6 K" }
+          - { velicina: "Podhlajevanje SC", pred: "12 K", po: "5 K" }
+          - { velicina: "ΔT vode", pred: "5 K", po: "5 K" }
+        vzrok: Preveč hladiva po večletnem dolivanju »na oko«.
+        dokaz: SH nizko, SC visoko pri normalnem pretoku vode. Ob zajemu iz kroga izmerjeno 3,05 kg pri predpisanih 2,6 kg.
+        popravilo:
+          - "Serviser s spričevalom: zajem celotne polnitve, pregled tesnosti z detektorjem (brez puščanja), vakuumiranje, polnjenje po teži 2,6 kg."
+          - Vpis v evidenco opreme.
+        hladivo: { zajeto: 3.05, napolnjeno: 2.6 }
+        priporocila:
+          - Hladiva ne dolivati brez meritev SH in SC in brez iskanja puščanja.
+          - Kontrola v mesecu dni (nalog DN-2026-131).
+        klic_po: "Čez 4 dni: greje bolje, napak ni bilo."
+
+      - id: DN-2026-131
+        datum: 2026-12-15
+        vrsta: Kontrola po popravilu
+        status: planiran
+        klic:
+          simptom: Dogovorjena kontrola po popravilu polnitve.
+          od_kdaj: –
+          stranka_ze: –
+          pripravim: Poročilo DN-2026-124, manometre, detektor puščanja.
+
+  - id: s08
+    ime: Golob
+    kraj: Škofja Loka
+    koda: C9R6M
+    naslednji_servis: "2027-01-15"
+    naprava: { tip: "Zrak-voda, monoblok", moc: 6, hladivo: R32, gwp: 675, polnitev: 1.3, leto: 2020, oddajniki: "Talno ogrevanje" }
+    nalogi:
+      - id: DN-2026-021
+        datum: 2026-01-15
+        vrsta: Okvara
+        status: zakljucen
+        klic:
+          simptom: Zunanja enota je vsa v ledu, v hiši hladno.
+          od_kdaj: Po treh dneh snega.
+          stranka_ze: Odmetala sneg okoli enote.
+          pripravim: Infrardeči termometer, krtača za lamele.
+        obhod:
+          - Led na spodnjem delu lamel in v kadi pod enoto.
+          - Odtok kondenzata zamrznjen, voda od odtajanja ne odteče.
+          - Lamele zgoraj prašne in z listjem.
+        pogoji: "Zunaj −4 °C, ogrevanje"
+        meritve:
+          - { velicina: "Odtajanje uspešno", pred: "ne", po: "da" }
+          - { velicina: "Dvižni vod", pred: "27 °C", po: "34 °C" }
+        vzrok: Zamrznjen odtok kondenzata – voda odtajanja ponovno zmrzne, led raste v lamele.
+        dokaz: Po sprostitvi odtoka in ročnem odtajanju naprava naslednje odtajanje opravi do konca.
+        popravilo:
+          - Led odstranjen z odtajanjem, odtok sproščen, lamele očiščene.
+        priporocila:
+          - Okoli enote vsaj toliko prostora, kot ga zahtevajo navodila; sneg odstraniti tudi pod enoto.
+          - Ureditev odtoka kondenzata, da ne zamrzne (posvet z monterjem).
+        klic_po: "Čez 3 dni: brez ledu, v hiši toplo."
+
+  - id: s09
+    ime: Vidmar
+    kraj: Ptuj
+    koda: D4W7L
+    naslednji_servis: "2027-11-27"
+    naprava: { tip: "Zrak-voda, monoblok", moc: 9, hladivo: R290, gwp: 3, polnitev: 1.1, leto: 2024, oddajniki: "Talno ogrevanje" }
+    nalogi:
+      - id: DN-2026-133
+        datum: 2026-11-27
+        vrsta: Okvara
+        status: planiran
+        klic:
+          simptom: Zunanja enota ponoči ropota, sosed se pritožuje.
+          od_kdaj: Približno en teden.
+          stranka_ze: Pogledala, ali je kaj zataknjeno v ventilatorju – nič vidnega.
+          pripravim: "Zapisnik zagona (2024), svetilka, navodila za tihi nočni način. R290: brez virov vžiga, detektor vnetljivih plinov."
+
+  - id: s10
+    ime: Hribar
+    kraj: Nova Gorica
+    koda: X2P5H
+    naslednji_servis: "2027-08-26"
+    naprava: { tip: "Zrak-voda, split", moc: 7, hladivo: R32, gwp: 675, polnitev: 1.8, leto: 2019, oddajniki: "Talno ogrevanje in bojler" }
+    nalogi:
+      - id: DN-2026-097
+        datum: 2026-08-26
+        vrsta: Okvara
+        status: zakljucen
+        klic:
+          simptom: Voda za tuširanje je komaj mlačna, ogrevanje dela normalno.
+          od_kdaj: Po čiščenju kotlovnice.
+          stranka_ze: Zvišala nastavljeno temperaturo sanitarne vode – brez spremembe.
+          pripravim: Termometra za cevi, toplotna pasta, navodila bojlerja.
+        obhod:
+          - Tipalo bojlerja visi iz tulke – meri temperaturo prostora.
+          - Zaslon kaže 50 °C v bojlerju, na pipi 31 °C.
+        pogoji: "Priprava sanitarne vode"
+        meritve:
+          - { velicina: "Bojler po zaslonu", pred: "50 °C", po: "33 °C" }
+          - { velicina: "Voda na pipi", pred: "31 °C", po: "49 °C" }
+        vzrok: Tipalo bojlerja izpadlo iz tulke – krmilnik meni, da je voda že topla.
+        dokaz: Po vstavitvi tipala zaslon kaže dejansko temperaturo, naprava začne greti bojler.
+        popravilo:
+          - Tipalo vstavljeno do dna tulke s toplotno pasto in pritrjeno.
+        priporocila:
+          - Pri čiščenju ne vleči kablov ob bojlerju.
+        klic_po: "Naslednji dan: voda topla."

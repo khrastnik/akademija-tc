@@ -1,6 +1,6 @@
 {
   "name": "akademija-tc",
-  "version": "0.21.3",
+  "version": "0.22.0",
   "private": true,
   "type": "module",
   "description": "Akademija toplotnih črpalk – brezplačna, odprta spletna pot do serviserja in diagnostika TČ",
@@ -22,7 +22,9 @@
     "zod": "^4.6.6"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.5",
     "@types/three": "^0.186.0",
+    "qrcode": "^1.5.4",
     "typescript": "^7.0.2",
     "vitest": "^5.0.4"
   }

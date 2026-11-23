@@ -1,0 +1,351 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/site.js';
+import { loadServis } from '../../lib/content.js';
+import { SERVISER } from '../../lib/nalepka.js';
+
+const { stranke } = loadServis();
+// Na javno stran gre samo to, kar pove nalepka: vrsta naprave in datumi. Brez imena in kraja stranke.
+const naprave = Object.fromEntries(
+  stranke.map((s) => {
+    const opravljeni = s.nalogi.filter((n) => n.status !== 'planiran').sort((a, b) => b.datum.localeCompare(a.datum));
+    return [
+      s.koda,
+      {
+        id: s.id,
+        naprava: `${s.naprava.tip}, ${s.naprava.moc} kW, ${s.naprava.hladivo}`,
+        zadnji: opravljeni[0]?.datum ?? null,
+        naslednji: s.naslednji_servis,
+      },
+    ];
+  }),
+);
+const primer = stranke[0].koda;
+---
+<Base title="Prijavi napako" source="src/pages/servis/prijava.astro" current="servis">
+  <p class="eyebrow"><a href={url('servis')}>Servisna mapa</a> · primer</p>
+  <h1>Prijavi napako</h1>
+  <p class="notice"><span>Primer strani, na katero vodi QR koda s <a href={url('servis/nalepka')}>servisne nalepke</a>. Prijava se ne pošlje nikamor in se ne shrani.</span></p>
+
+  <div class="pr-device" id="pr-device" data-primer={url(`servis/prijava?n=${primer}`)}>
+    <p class="muted">Ni kode naprave. Odpri stran s QR kode na nalepki ali poskusi <a href={url(`servis/prijava?n=${primer}`)}>primer s kodo {primer}</a>.</p>
+  </div>
+
+  <details class="pr-check" open>
+    <summary>Preden pošlješ – preveri sam</summary>
+    <ol>
+      <li>Ali zaslon naprave sveti in kaže kodo napake? Fotografiraj ga.</li>
+      <li>Kakšen je tlak na manometru vodnega kroga pri hladnem sistemu? Običajno je okoli 1–2 bar, velja območje iz navodil naprave.</li>
+      <li>Ali je okoli zunanje enote sneg, listje ali led?</li>
+      <li>Ali so termostati v prostorih nastavljeni kot običajno?</li>
+      <li>Ohišja naprave ne odpiraj in ne posegaj v elektriko.</li>
+    </ol>
+  </details>
+
+  <form id="pr-form" novalidate>
+    <input type="hidden" id="pr-koda" name="koda" />
+
+    <fieldset>
+      <legend>Kaj se dogaja? <span class="req">obvezno</span></legend>
+      <div class="pr-choices">
+        <label><input type="radio" name="tezava" value="Ne greje ali greje slabo" /> Ne greje ali greje slabo</label>
+        <label><input type="radio" name="tezava" value="Ni tople vode" /> Ni tople vode</label>
+        <label><input type="radio" name="tezava" value="Koda napake na zaslonu" /> Koda napake na zaslonu</label>
+        <label><input type="radio" name="tezava" value="Hrup" /> Hrup</label>
+        <label><input type="radio" name="tezava" value="Voda pod napravo" /> Voda pod napravo</label>
+        <label><input type="radio" name="tezava" value="Drugo" /> Drugo</label>
+      </div>
+      <p class="pr-err" id="err-tezava" hidden>Izberi, kaj se dogaja.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Kako nujno je?</legend>
+      <div class="pr-choices">
+        <label><input type="radio" name="nujnost" value="Naprava sploh ne dela" /> Naprava sploh ne dela</label>
+        <label><input type="radio" name="nujnost" value="Dela, a slabše" checked /> Dela, a slabše</label>
+        <label><input type="radio" name="nujnost" value="Ni nujno" /> Ni nujno</label>
+      </div>
+    </fieldset>
+
+    <label class="pr-field" for="pr-napaka">Koda napake z zaslona <span class="muted">(če je)</span>
+      <input id="pr-napaka" name="napaka" autocomplete="off" placeholder="npr. E7" />
+    </label>
+
+    <label class="pr-field" for="pr-opis">Kratek opis
+      <textarea id="pr-opis" name="opis" rows="3" placeholder="Kdaj se je začelo, ali se ponavlja, kaj si že poskusil …"></textarea>
+    </label>
+
+    <label class="pr-field" for="pr-foto">Fotografija zaslona ali manometra <span class="muted">(v primeru se ne pošlje)</span>
+      <input id="pr-foto" name="foto" type="file" accept="image/*" />
+    </label>
+
+    <div class="pr-row">
+      <label class="pr-field" for="pr-ime">Ime
+        <input id="pr-ime" name="ime" autocomplete="name" />
+      </label>
+      <label class="pr-field" for="pr-tel">Telefon <span class="req">obvezno</span>
+        <input id="pr-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" />
+        <span class="pr-err" id="err-tel" hidden>Vpiši telefon, da te serviser lahko pokliče.</span>
+      </label>
+      <label class="pr-field" for="pr-kdaj">Kdaj si dosegljiv
+        <select id="pr-kdaj" name="kdaj">
+          <option>Kadarkoli</option>
+          <option>Dopoldne</option>
+          <option>Popoldne</option>
+        </select>
+      </label>
+    </div>
+
+    <label class="pr-consent" for="pr-soglasje">
+      <input id="pr-soglasje" name="soglasje" type="checkbox" />
+      <span>Strinjam se, da serviser moje podatke uporabi za ta servis. <span class="req">obvezno</span></span>
+    </label>
+    <p class="pr-err" id="err-soglasje" hidden>Brez soglasja serviser prijave ne more obdelati.</p>
+    <label class="pr-consent" for="pr-opomnik">
+      <input id="pr-opomnik" name="opomnik" type="checkbox" />
+      <span>Pred naslednjim rednim servisom me lahko opomni po SMS ali e-pošti.</span>
+    </label>
+
+    <button class="btn" type="submit">Pošlji prijavo</button>
+    <p class="muted small">Raje pokličeš? {SERVISER.ime}, <strong>{SERVISER.tel}</strong></p>
+  </form>
+
+  <section class="pr-done" id="pr-done" hidden>
+    <h2>Prijava je pripravljena</h2>
+    <p class="notice"><span>To je primer – nič ni bilo poslano. Tako bi prijava prišla k serviserju:</span></p>
+    <dl class="pr-summary" id="pr-summary"></dl>
+    <p id="pr-history"></p>
+    <button class="btn secondary" type="button" id="pr-again">Nova prijava</button>
+  </section>
+
+  <script type="application/json" id="pr-data" set:html={JSON.stringify(naprave)} />
+  <script define:vars={{ mapa: url('servis') }}>
+    const naprave = JSON.parse(document.getElementById('pr-data').textContent);
+    const dan = (iso) => {
+      if (!iso) return '–';
+      const [y, m, d] = iso.split('-').map(Number);
+      return `${d}. ${m}. ${y}`;
+    };
+    const koda = (new URLSearchParams(location.search).get('n') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+    const box = document.getElementById('pr-device');
+    const n = koda ? naprave[koda] : null;
+    document.getElementById('pr-koda').value = koda;
+    if (koda && n) {
+      box.innerHTML = '';
+      const dl = document.createElement('dl');
+      for (const [k, v] of [
+        ['Koda naprave', koda],
+        ['Naprava', n.naprava],
+        ['Zadnji servis', dan(n.zadnji)],
+        ['Naslednji redni servis do', dan(n.naslednji)],
+      ]) {
+        const div = document.createElement('div');
+        div.innerHTML = '<dt></dt><dd></dd>';
+        div.children[0].textContent = k;
+        div.children[1].textContent = v;
+        dl.append(div);
+      }
+      box.append(dl);
+    } else if (koda) {
+      box.querySelector('p').textContent = `Koda ${koda} ni najdena. Prijavo lahko vseeno pošlješ – serviser jo poveže z napravo po telefonu.`;
+    }
+
+    const form = document.getElementById('pr-form');
+    const show = (id, on) => (document.getElementById(id).hidden = !on);
+    form.addEventListener('input', (e) => {
+      if (e.target.name === 'tezava') show('err-tezava', false);
+      if (e.target.name === 'tel') show('err-tel', false);
+      if (e.target.name === 'soglasje') show('err-soglasje', false);
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const tel = String(f.get('tel') || '').replace(/[^\d+]/g, '');
+      const bad = { tezava: !f.get('tezava'), tel: tel.length < 9, soglasje: !f.get('soglasje') };
+      show('err-tezava', bad.tezava);
+      show('err-tel', bad.tel);
+      show('err-soglasje', bad.soglasje);
+      if (bad.tezava || bad.tel || bad.soglasje) {
+        form.querySelector(bad.tezava ? '[name=tezava]' : bad.tel ? '#pr-tel' : '#pr-soglasje').focus();
+        return;
+      }
+      const rows = [
+        ['Koda naprave', koda || '– (brez kode)'],
+        ['Naprava', n ? n.naprava : '–'],
+        ['Težava', f.get('tezava')],
+        ['Nujnost', f.get('nujnost')],
+        ['Koda napake', f.get('napaka') || '–'],
+        ['Opis', f.get('opis') || '–'],
+        ['Fotografija', f.get('foto') && f.get('foto').size ? f.get('foto').name : '–'],
+        ['Ime', f.get('ime') || '–'],
+        ['Telefon', f.get('tel')],
+        ['Dosegljiv', f.get('kdaj')],
+        ['Opomnik pred servisom', f.get('opomnik') ? 'da' : 'ne'],
+      ];
+      const dl = document.getElementById('pr-summary');
+      dl.innerHTML = '';
+      for (const [k, v] of rows) {
+        const div = document.createElement('div');
+        div.innerHTML = '<dt></dt><dd></dd>';
+        div.children[0].textContent = k;
+        div.children[1].textContent = String(v);
+        dl.append(div);
+      }
+      const hist = document.getElementById('pr-history');
+      hist.innerHTML = '';
+      if (n) {
+        const a = document.createElement('a');
+        a.href = `${mapa}#${n.id}`;
+        a.textContent = 'Tako jo serviser vidi v servisni mapi – z zgodovino naprave →';
+        hist.append(a);
+      }
+      form.hidden = true;
+      show('pr-done', true);
+      document.getElementById('pr-done').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    document.getElementById('pr-again').addEventListener('click', () => {
+      form.reset();
+      form.hidden = false;
+      show('pr-done', false);
+    });
+  </script>
+</Base>
+
+<style>
+  .pr-device {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .pr-device :global(dl),
+  .pr-summary {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+  }
+  .pr-device :global(dl > div),
+  .pr-summary :global(div) {
+    display: grid;
+    grid-template-columns: 12em minmax(0, 1fr);
+    gap: 4px 12px;
+  }
+  .pr-device :global(dt),
+  .pr-summary :global(dt) {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .pr-device :global(dd),
+  .pr-summary :global(dd) {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .pr-check {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+  }
+  .pr-check summary {
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 32px;
+  }
+  .pr-check ol {
+    margin: 8px 0 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 4px;
+  }
+  form {
+    display: grid;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  legend {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .pr-choices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 8px;
+  }
+  .pr-choices label,
+  .pr-consent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    cursor: pointer;
+  }
+  .pr-choices label:has(input:checked) {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .pr-consent {
+    align-items: flex-start;
+  }
+  .pr-consent input {
+    margin-top: 3px;
+  }
+  .pr-field {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+  }
+  .pr-field input,
+  .pr-field textarea,
+  .pr-field select {
+    font: inherit;
+    font-weight: 400;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .pr-field input[type='file'] {
+    padding: 8px;
+  }
+  .pr-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .req {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-left: 4px;
+  }
+  .pr-err {
+    margin: 4px 0 0;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--bad);
+  }
+  .pr-done {
+    margin-top: 20px;
+    display: grid;
+    gap: 14px;
+  }
+  @media (max-width: 560px) {
+    .pr-device :global(dl > div),
+    .pr-summary :global(div) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

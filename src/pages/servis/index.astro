@@ -1,0 +1,462 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/site.js';
+import { loadServis } from '../../lib/content.js';
+
+const { stranke } = loadServis();
+
+const STATUS = { planiran: 'Planiran', caka: 'Čaka kontrolo', zakljucen: 'Zaključen' };
+const ORDER = { planiran: 0, caka: 1, zakljucen: 2 };
+const dan = (iso) => {
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d}. ${m}. ${y}`;
+};
+const num = (n, d = 1) => n.toLocaleString('sl-SI', { minimumFractionDigits: d, maximumFractionDigits: d });
+const co2e = (n) => (n.polnitev * n.gwp) / 1000;
+/** Pregled tesnosti brez sistema za odkrivanje uhajanja (Uredba 2024/573, F-plini). */
+const tesnost = (n) => {
+  if (n.hladivo === 'R290' || n.hladivo === 'R744') return 'ni F-plin';
+  const t = co2e(n);
+  if (t >= 500) return 'vsake 3 mesece';
+  if (t >= 50) return 'vsakih 6 mesecev';
+  if (t >= 5) return 'vsakih 12 mesecev';
+  return 'ni obvezen (pod 5 t)';
+};
+const zadnji = (s) => [...s.nalogi].sort((a, b) => b.datum.localeCompare(a.datum))[0];
+const stanje = (s) => s.nalogi.map((n) => n.status).sort((a, b) => ORDER[a] - ORDER[b])[0];
+
+const vsi = stranke.flatMap((s) => s.nalogi.map((n) => ({ s, n })));
+const odprti = vsi.filter((x) => x.n.status !== 'zakljucen').sort((a, b) => a.n.datum.localeCompare(b.n.datum));
+const zakljuceni = vsi.filter((x) => x.n.status === 'zakljucen').length;
+const tesnostObvezna = stranke.filter((s) => tesnost(s.naprava).startsWith('vsak')).length;
+
+// Opomnik pred rednim servisom: 60 dni prej, če stranka še ni bila opomnjena (glede na datum objave strani).
+const danes = new Date().toISOString().slice(0, 10);
+const dni = (iso) => Math.round((Date.parse(iso) - Date.parse(danes)) / 86400000);
+const opomnik = (s) =>
+  s.opomnik_poslan
+    ? { cls: 'zakljucen', txt: `poslan ${dan(s.opomnik_poslan)}` }
+    : dni(s.naslednji_servis) <= 60
+      ? { cls: 'caka', txt: 'pošlji opomnik' }
+      : null;
+const opomniki = stranke
+  .filter((s) => opomnik(s))
+  .sort((a, b) => a.naslednji_servis.localeCompare(b.naslednji_servis));
+const zaPoslati = opomniki.filter((s) => !s.opomnik_poslan).length;
+---
+<Base title="Servisna mapa" source="src/pages/servis/index.astro" current="servis">
+  <p class="eyebrow">Servisni center · primer</p>
+  <h1>Servisna mapa</h1>
+  <p class="notice">
+    <span>
+      Primer z izmišljenimi strankami in napravami. Tako bo videti mapa, ko boš vodil servise: stranke, delovni nalogi, zapisnik na terenu in poročilo
+      po obisku. Vsak nalog sledi lekciji <a href={url('lekcija/m19-l01')}>19.1 Servisni obisk od klica do poročila</a>.
+    </span>
+  </p>
+  <p class="sv-links">
+    <a class="btn secondary" href={url('servis/nalepka')}>Servisna nalepka s QR kodo</a>
+    <a class="btn secondary" href={url(`servis/prijava?n=${stranke[0].koda}`)}>Prijava napake – kar vidi stranka</a>
+  </p>
+
+  <dl class="sv-stats">
+    <div><dt>Stranke</dt><dd>{stranke.length}</dd></div>
+    <div><dt>Odprti nalogi</dt><dd>{odprti.length}</dd></div>
+    <div><dt>Zaključeni nalogi</dt><dd>{zakljuceni}</dd></div>
+    <div><dt>Obvezen pregled tesnosti</dt><dd>{tesnostObvezna}</dd></div>
+    <div><dt>Opomniki za poslati</dt><dd>{zaPoslati}</dd></div>
+  </dl>
+
+  <section>
+    <h2>Na vrsti</h2>
+    <ul class="sv-next">
+      {
+        odprti.map(({ s, n }) => (
+          <li>
+            <span class="sv-date">{dan(n.datum)}</span>
+            <a href={`#${s.id}`}>
+              <strong>{s.ime}</strong>, {s.kraj}
+            </a>
+            <span>{n.vrsta}</span>
+            <span class={`sv-pill ${n.status}`}>{STATUS[n.status]}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>Opomniki pred rednim servisom</h2>
+    <p class="muted">Stranke, ki imajo redni servis v naslednjih 60 dneh. Opomnik pošlješ samo tistim, ki so ob prijavi ali servisu privolili.</p>
+    <ul class="sv-next">
+      {
+        opomniki.map((s) => (
+          <li>
+            <span class="sv-date">do {dan(s.naslednji_servis)}</span>
+            <a href={`#${s.id}`}>
+              <strong>{s.ime}</strong>, {s.kraj}
+            </a>
+            <span>Redni servis</span>
+            <span class={`sv-pill ${opomnik(s).cls}`}>{opomnik(s).txt}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>Stranke</h2>
+    <div class="sv-scroll">
+      <table class="sv-table">
+        <thead>
+          <tr><th>Stranka</th><th>Naprava</th><th>Hladivo</th><th>Pregled tesnosti</th><th>Zadnji nalog</th><th>Naslednji servis</th><th>Stanje</th></tr>
+        </thead>
+        <tbody>
+          {
+            stranke.map((s) => {
+              const z = zadnji(s);
+              const st = stanje(s);
+              return (
+                <tr>
+                  <td><a href={`#${s.id}`}><strong>{s.ime}</strong></a><br /><span class="muted">{s.kraj}</span><br /><code class="sv-code">{s.koda}</code></td>
+                  <td>{s.naprava.tip}, {s.naprava.moc} kW<br /><span class="muted">{s.naprava.oddajniki}</span></td>
+                  <td class="num">{s.naprava.hladivo} · {num(s.naprava.polnitev, 2)} kg<br /><span class="muted">{num(co2e(s.naprava))} t CO₂e</span></td>
+                  <td>{tesnost(s.naprava)}</td>
+                  <td>{dan(z.datum)}<br /><span class="muted">{z.vrsta}</span></td>
+                  <td>{dan(s.naslednji_servis)}{opomnik(s) && <><br /><span class={`sv-pill ${opomnik(s).cls}`}>{opomnik(s).txt}</span></>}</td>
+                  <td><span class={`sv-pill ${st}`}>{STATUS[st]}</span></td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Delovni nalogi po strankah</h2>
+    <p class="muted">Vsak nalog ima tri dele: pred obiskom (klic), na terenu (zapisnik) in po obisku (poročilo). Prvi je odprt kot primer.</p>
+    {
+      stranke.map((s, i) => (
+        <details class="sv-client" id={s.id} open={i === 0}>
+          <summary>
+            <span><strong>{s.ime}</strong> · {s.kraj}</span>
+            <span class="muted">{s.naprava.tip} · {s.naprava.hladivo}</span>
+            <span class={`sv-pill ${stanje(s)}`}>{STATUS[stanje(s)]}</span>
+          </summary>
+
+          <dl class="sv-device">
+            <div><dt>Naprava</dt><dd>{s.naprava.tip}, {s.naprava.moc} kW, vgrajena {s.naprava.leto}</dd></div>
+            <div><dt>Oddajniki</dt><dd>{s.naprava.oddajniki}</dd></div>
+            <div><dt>Hladivo</dt><dd>{s.naprava.hladivo}, {num(s.naprava.polnitev, 2)} kg (tablica), GWP {s.naprava.gwp}</dd></div>
+            <div><dt>CO₂ ekvivalent</dt><dd>{num(co2e(s.naprava))} t · pregled tesnosti {tesnost(s.naprava)}</dd></div>
+            <div>
+              <dt>Nalepka</dt>
+              <dd>
+                <code class="sv-code">{s.koda}</code> · <a href={url(`servis/nalepka/${s.koda}.svg`)}>nalepka</a> ·{' '}
+                <a href={url(`servis/prijava?n=${s.koda}`)}>prijava napake</a>
+              </dd>
+            </div>
+            <div><dt>Naslednji redni servis</dt><dd>do {dan(s.naslednji_servis)}{s.opomnik_poslan ? `, opomnik poslan ${dan(s.opomnik_poslan)}` : ''}</dd></div>
+          </dl>
+
+          {
+            [...s.nalogi].sort((a, b) => b.datum.localeCompare(a.datum)).map((n) => (
+              <article class="sv-order">
+                <header>
+                  <h3>{n.id} · {n.vrsta}</h3>
+                  <span class="sv-date">{dan(n.datum)}</span>
+                  <span class={`sv-pill ${n.status}`}>{STATUS[n.status]}</span>
+                </header>
+
+                <div class="sv-part">
+                  <h4><span>1</span> Pred obiskom – klic</h4>
+                  <dl class="sv-kv">
+                    <div><dt>Simptom</dt><dd>{n.klic.simptom}</dd></div>
+                    {n.klic.od_kdaj !== '–' && <div><dt>Od kdaj</dt><dd>{n.klic.od_kdaj}</dd></div>}
+                    {n.klic.stranka_ze !== '–' && <div><dt>Stranka je že</dt><dd>{n.klic.stranka_ze}</dd></div>}
+                    <div><dt>Pripravim</dt><dd>{n.klic.pripravim}</dd></div>
+                  </dl>
+                </div>
+
+                {n.status === 'planiran' ? (
+                  <p class="sv-empty">Zapisnik in poročilo se izpolnita na terenu.</p>
+                ) : (
+                  <>
+                    <div class="sv-part">
+                      <h4><span>2</span> Na terenu – zapisnik</h4>
+                      {n.obhod.length > 0 && (
+                        <>
+                          <p class="sv-label">Obhod</p>
+                          <ul>{n.obhod.map((o) => <li>{o}</li>)}</ul>
+                        </>
+                      )}
+                      {n.pogoji && <p><span class="sv-label">Pogoji meritev:</span> {n.pogoji}</p>}
+                      {n.meritve.length > 0 && (
+                        <div class="sv-scroll">
+                          <table class="sv-table sv-meas">
+                            <thead><tr><th>Meritev</th><th>Pred</th><th>Po</th></tr></thead>
+                            <tbody>
+                              {n.meritve.map((m) => (
+                                <tr><td>{m.velicina}</td><td class="num">{m.pred}</td><td class="num">{m.po}</td></tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+
+                    <div class="sv-part">
+                      <h4><span>3</span> Po obisku – poročilo</h4>
+                      <dl class="sv-kv">
+                        <div><dt>Vzrok</dt><dd>{n.vzrok}</dd></div>
+                        <div><dt>Kako dokazano</dt><dd>{n.dokaz}</dd></div>
+                        <div><dt>Popravilo</dt><dd><ul>{n.popravilo.map((p) => <li>{p}</li>)}</ul></dd></div>
+                        {n.hladivo && (
+                          <div>
+                            <dt>Hladivo (evidenca)</dt>
+                            <dd>
+                              Zajeto {num(n.hladivo.zajeto, 2)} kg, napolnjeno {num(n.hladivo.napolnjeno, 2)} kg po teži – {num((n.hladivo.napolnjeno * s.naprava.gwp) / 1000)} t CO₂e
+                            </dd>
+                          </div>
+                        )}
+                        {n.priporocila.length > 0 && <div><dt>Priporočila stranki</dt><dd><ul>{n.priporocila.map((p) => <li>{p}</li>)}</ul></dd></div>}
+                        {n.klic_po && n.klic_po !== '–' && <div><dt>Klic čez nekaj dni</dt><dd>{n.klic_po}</dd></div>}
+                      </dl>
+                    </div>
+                  </>
+                )}
+              </article>
+            ))
+          }
+        </details>
+      ))
+    }
+  </section>
+
+  <p class="muted small">
+    Posege v krog hladiva sme opraviti le serviser s spričevalom; za naprave s F-plini se vodi evidenca posegov. Intervali pregleda tesnosti veljajo za opremo brez
+    sistema za odkrivanje uhajanja. Kaj točno moraš voditi, preveri pri pristojnem organu.
+  </p>
+</Base>
+
+<style>
+  section {
+    margin-top: 28px;
+  }
+  .sv-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .sv-code {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+  .sv-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 20px 0 0;
+  }
+  .sv-stats div {
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .sv-stats dt {
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+  .sv-stats dd {
+    margin: 2px 0 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .sv-next {
+    display: grid;
+    gap: 6px;
+    padding: 0;
+    list-style: none;
+  }
+  .sv-next li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .sv-date {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-2);
+    min-width: 7.5em;
+  }
+  .sv-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .sv-pill.zakljucen {
+    background: var(--ok-bg);
+    color: var(--ok);
+  }
+  .sv-pill.caka {
+    background: var(--warn-bg);
+    color: var(--ochre);
+  }
+  .sv-pill.planiran {
+    background: var(--surface-2);
+    color: var(--low);
+  }
+  .sv-scroll {
+    overflow-x: auto;
+  }
+  .sv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+  }
+  .sv-table th,
+  .sv-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  .sv-table th {
+    font-size: 0.82rem;
+    color: var(--ink-2);
+    font-weight: 600;
+  }
+  .sv-table .num {
+    font-variant-numeric: tabular-nums;
+  }
+  .sv-client {
+    margin-top: 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    scroll-margin-top: 76px;
+  }
+  .sv-client > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    min-height: 48px;
+  }
+  .sv-client > summary .sv-pill {
+    margin-left: auto;
+  }
+  .sv-client[open] > summary {
+    border-bottom: 1px solid var(--line);
+  }
+  .sv-device {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px 20px;
+    margin: 0;
+    padding: 14px 16px;
+    background: var(--surface-2);
+  }
+  .sv-device dt,
+  .sv-kv dt,
+  .sv-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+  }
+  .sv-device dd {
+    margin: 2px 0 0;
+  }
+  .sv-order {
+    margin: 14px 16px 16px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+  }
+  .sv-order header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+  }
+  .sv-order h3 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+  .sv-part {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+  .sv-part h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px;
+    font-size: 0.98rem;
+  }
+  .sv-part h4 span {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 0.8rem;
+  }
+  .sv-part ul {
+    margin: 4px 0 8px;
+    padding-left: 20px;
+  }
+  .sv-kv {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+  }
+  .sv-kv > div {
+    display: grid;
+    grid-template-columns: 9.5em minmax(0, 1fr);
+    gap: 4px 12px;
+  }
+  .sv-kv dd {
+    margin: 0;
+  }
+  .sv-kv dd ul {
+    margin: 0;
+  }
+  .sv-meas {
+    max-width: 520px;
+  }
+  .sv-empty {
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    color: var(--ink-2);
+  }
+  @media (max-width: 560px) {
+    .sv-kv > div {
+      grid-template-columns: 1fr;
+    }
+    .sv-order {
+      margin: 12px 10px 14px;
+      padding: 12px;
+    }
+  }
+</style>

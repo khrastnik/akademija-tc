@@ -1,5 +1,19 @@
 # Spremembe
 
+## 0.22.0 – 2026-11-23
+
+### Servisna mapa (primer)
+- Nova stran **Servisna mapa** (/servis/) v meniju »Na terenu« in med orodji: primer za 10 izmišljenih strank z napravami,
+  12 delovnimi nalogi (zaključeni, čakajo kontrolo, planirani), zapisnikom na terenu (obhod, pogoji, meritve pred in po) in
+  poročilom po obisku (vzrok, dokaz, popravilo, hladivo za evidenco, priporočila, klic čez nekaj dni) – po lekciji 19.1.
+- Za vsako napravo izračun CO₂e in interval pregleda tesnosti; validator preveri, da ima opravljen nalog vzrok, dokaz in
+  popravilo ter da je poseg v hladivo zapisan kot delo serviserja s spričevalom.
+- **Servisna nalepka** (/servis/nalepka/): nalepka 80 × 50 mm za tisk (SVG za vsako kodo) z imenom, telefonom, praznimi
+  črtami za datume servisa in pregleda tesnosti ter QR kodo z naključno kodo naprave – brez osebnih podatkov.
+- **Prijava napake** (/servis/prijava/?n=KODA): stran, na katero vodi QR koda – naprava in datumi servisa, kaj preveriš sam,
+  kratek obrazec s preverjanjem vnosa in soglasjem; v primeru se nič ne pošlje.
+- Servisna mapa ima kodo naprave, naslednji redni servis in opomnike 60 dni pred servisom.
+
 ## 0.21.3 – 2026-11-22
 
 - Lekcija 8.1: primer s številkami za R32 (nadtlak + 1 bar, P-T tabela, SH 6 K, SC 5 K), okvirna normalna območja in

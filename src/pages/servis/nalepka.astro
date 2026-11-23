@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/site.js';
+import { loadServis } from '../../lib/content.js';
+import { nalepkaSvg, prijavaUrl } from '../../lib/nalepka.js';
+
+const { stranke } = loadServis();
+const prva = stranke[0];
+const velika = await nalepkaSvg(prva.koda);
+const pola = await Promise.all(stranke.map(async (s) => ({ s, svg: await nalepkaSvg(s.koda) })));
+---
+<Base title="Servisna nalepka" source="src/pages/servis/nalepka.astro" current="servis">
+  <p class="eyebrow"><a href={url('servis')}>Servisna mapa</a> · primer</p>
+  <h1>Servisna nalepka</h1>
+  <p class="lead muted">Nalepka 80 × 50 mm, ki jo po servisu nalepiš na napravo. QR koda vodi na <a href={url(`servis/prijava?n=${prva.koda}`)}>prijavo napake</a> za to napravo.</p>
+
+  <div class="nl-big" set:html={velika} />
+  <p class="muted small nl-url">QR koda: <code>{prijavaUrl(prva.koda)}</code></p>
+
+  <section>
+    <h2>Kako jo uporabljaš</h2>
+    <ol class="nl-steps">
+      <li><strong>Pole natisneš vnaprej.</strong> Vsaka nalepka ima svojo naključno kodo in prazne črte za datume.</li>
+      <li><strong>Ob servisu</strong> nalepko nalepiš in z alkoholnim flomastrom vpišeš datum servisa in naslednjega rednega servisa. Pri napravi s F-plini nad 5 t CO₂e vpišeš še rok pregleda tesnosti.</li>
+      <li><strong>Kodo vpišeš v servisno mapo</strong> k stranki. Ko stranka skenira kodo, prijava pride s kodo – takoj veš, katera naprava je in kaj je bilo narejeno.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Kam in iz česa</h2>
+    <ul>
+      <li>Na notranjo enoto ali hidravlični modul, kjer jo stranka vidi. Na zunanji enoti jo uničita sonce in vreme.</li>
+      <li>Nikoli čez tablico naprave – podatki o hladivu, polnitvi in CO₂e morajo ostati vidni.</li>
+      <li>Tisk na vinil za zunanjo rabo z zaščitnim laminatom, da se datumi in koda ne zbrišejo.</li>
+      <li>V kodi ni osebnih podatkov: kdor jo skenira, vidi le vrsto naprave in datum servisa, ne imena ali naslova stranke.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pola s kodami iz primera</h2>
+    <p class="muted">Vsaka nalepka je SVG za tisk v velikosti 80 × 50 mm. Ime in telefon sta zaenkrat nadomestna – zamenjaš ju v <code>src/lib/nalepka.js</code>.</p>
+    <ul class="nl-grid">
+      {
+        pola.map(({ s, svg }) => (
+          <li>
+            <div set:html={svg} />
+            <a href={url(`servis/nalepka/${s.koda}.svg`)} download={`nalepka-${s.koda}.svg`}>Prenesi {s.koda}.svg</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  section {
+    margin-top: 28px;
+  }
+  .nl-big {
+    max-width: 560px;
+    margin-top: 16px;
+  }
+  .nl-big :global(svg),
+  .nl-grid :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+  .nl-url code {
+    word-break: break-all;
+  }
+  .nl-steps {
+    display: grid;
+    gap: 8px;
+    padding-left: 22px;
+  }
+  .nl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+  }
+  .nl-grid li {
+    display: grid;
+    gap: 6px;
+  }
+  .nl-grid a {
+    font-size: 0.9rem;
+  }
+</style>
