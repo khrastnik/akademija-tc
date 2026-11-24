@@ -1,5 +1,13 @@
 # Spremembe
 
+## 0.32.0 – 2026-11-24
+
+- **Utripanje stene v kotlovnici odpravljeno:** zadnja stena kotlovnice in lesena fasada hiše sta bili na isti ravnini, zato je opaž utripal skozi omet.
+- **Filter sušilnik viden:** tekočinski vod zdaj teče nad izoliranimi cevmi; filter sušilnik, EEV in servisna priključka so vidni z desne strani enote.
+  Tanki deli (filter, priključka, stikala, tipala) imajo večjo površino za nameritev.
+- **Nalepka s shemo hladilnega kroga** na steni predelka. Razlage povedo, da se postavitev med proizvajalci razlikuje:
+  kompresor je vedno spodaj, servisna priključka sta ponavadi ob stranskem pokrovu, shema je na notranji strani pokrova ali stranske stene.
+
 ## 0.31.0 – 2026-11-24
 
 - **Hladilni krog v enoti (samo ogled):** za servisnim pokrovom so zdaj kompresor v zvočni izolaciji, 4-potni ventil s tuljavo,

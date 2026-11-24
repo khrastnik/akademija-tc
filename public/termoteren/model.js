@@ -349,7 +349,9 @@
     {
       const ref=id=>{const g=group(internals);g.userData.fieldId="ref:"+id;return g};
       const felt=mat(0x2a2f2c,.02,.95),coilMat=mat(0x15191a,.1,.6),wire=mat(0x2f3b45,.05,.7),capLow=mat(0x2d5fa8,.2,.5),capHigh=mat(0xb23a2a,.2,.5),accMat=mat(0x2e3a34,.35,.55);
-      const L=.0125;
+      const L=.0125,ghost=new T.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false});
+      // Nevidna večja površina, da tanke dele lažje nameriš.
+      const hit=(g,r,h,x,y,z,axis="y")=>{const m=cyl(r,h,x,y,z,ghost,axis,g,8);m.castShadow=m.receiveShadow=false;return m};
       const comp=ref("compressor");                                                    // kompresor v zvočni izolaciji
       cyl(.112,.27,1.08,.6,-.24,felt,"y",comp);cyl(.1,.05,1.08,.76,-.24,steel,"y",comp);
       box(1.0,.79,-.24,.06,.05,.05,rubber,comp);
@@ -366,18 +368,40 @@
       pipe([[.9,.8,-.29],[.97,.74,-.25],[.99,.7,-.24]],L,copper,acc);
       pipe([[1.12,1.02,-.30],[1.12,1.22,-.30],[.86,1.22,-.30],[.86,1.22,-.2],[.83,1.22,-.2]],L,copper,plateHx);
       pipe([[1.06,1.0,-.33],[1.06,.96,-.36],[.47,.96,-.36]],L,copper,four);
-      const liquid=ref("liquid");
-      pipe([[.83,.7,-.03],[1.24,.7,-.03],[1.24,1.32,-.03],[1.24,1.38,-.12],[1.24,1.42,-.3],[.47,1.42,-.3]],.009,copper,liquid);
-      const dryer=ref("dryer");cyl(.024,.17,1.24,1.0,-.03,copper,"y",dryer);
-      for(const y of [.905,1.095])cyl(.014,.02,1.24,y,-.03,brass,"y",dryer,6);
-      const eev=ref("eev");cyl(.02,.07,1.24,1.24,-.03,brass,"y",eev);cyl(.036,.07,1.24,1.31,-.03,coilMat,"y",eev);
-      pipe([[1.24,1.35,-.03],[1.22,1.46,.02],[.9,1.5,.02]],.004,wire,eev);
+      const liquid=ref("liquid");                                                       // izmenjevalnik → filter sušilnik → EEV → uparjalnik
+      pipe([[.83,.7,-.03],[1.24,.7,-.03],[1.24,1.36,-.03],[1.24,1.36,-.32],[.47,1.36,-.32]],.009,copper,liquid);
+      const dryer=ref("dryer");cyl(.032,.2,1.24,1.36,-.15,copper,"z",dryer);
+      for(const z of [-.04,-.26])cyl(.018,.024,1.24,1.36,z,brass,"z",dryer,6);hit(dryer,.065,.27,1.24,1.36,-.15,"z");
+      const eev=ref("eev");cyl(.02,.08,1.02,1.36,-.32,brass,"x",eev);cyl(.036,.075,1.02,1.42,-.32,coilMat,"y",eev);hit(eev,.05,.13,1.02,1.39,-.32);
+      pipe([[1.02,1.46,-.32],[.95,1.5,-.38],[.8,1.5,-.38]],.004,wire,eev);
       const ports=ref("ports");
-      for(const [y,cap] of [[1.47,capHigh],[1.4,capLow]]){pipe([[1.24,y,-.2],[1.24,y,.04]],.006,copper,ports);cyl(.011,.03,1.24,y,.055,brass,"z",ports,6);cyl(.013,.025,1.24,y,.08,cap,"z",ports,12)}
-      const hp=ref("hp");cyl(.018,.05,1.13,.93,-.27,rubber,"x",hp);pipe([[1.155,.93,-.27],[1.2,.98,-.3],[1.2,1.2,-.38]],.003,wire,hp);
-      const lp=ref("lp");cyl(.016,.05,.9,.86,-.32,rubber,"y",lp);pipe([[.9,.885,-.32],[.88,.95,-.38],[.7,1.1,-.38]],.003,wire,lp);
-      const tdis=ref("tdis");box(1.08,.86,-.255,.022,.03,.03,dark,tdis);pipe([[1.08,.86,-.27],[1.15,.9,-.36],[1.15,1.15,-.38]],.003,wire,tdis);
-      const tsuc=ref("tsuc");box(.94,.77,-.26,.022,.022,.03,dark,tsuc);pipe([[.94,.77,-.28],[.85,.85,-.37],[.7,1.05,-.38]],.003,wire,tsuc);
+      for(const [y,cap] of [[1.62,capHigh],[1.55,capLow]]){pipe([[1.24,y,-.2],[1.24,y,.04]],.006,copper,ports);cyl(.011,.03,1.24,y,.055,brass,"z",ports,6);cyl(.013,.025,1.24,y,.08,cap,"z",ports,12)}hit(ports,.05,.2,1.24,1.585,.04);
+      const hp=ref("hp");cyl(.018,.05,1.13,.93,-.27,rubber,"x",hp);hit(hp,.04,.08,1.13,.93,-.27,"x");pipe([[1.155,.93,-.27],[1.2,.98,-.3],[1.2,1.2,-.38]],.003,wire,hp);
+      const lp=ref("lp");cyl(.016,.05,.9,.86,-.32,rubber,"y",lp);hit(lp,.04,.08,.9,.86,-.32);pipe([[.9,.885,-.32],[.88,.95,-.38],[.7,1.1,-.38]],.003,wire,lp);
+      const tdis=ref("tdis");box(1.08,.86,-.255,.022,.03,.03,dark,tdis);hit(tdis,.035,.06,1.08,.86,-.255);pipe([[1.08,.86,-.27],[1.15,.9,-.36],[1.15,1.15,-.38]],.003,wire,tdis);
+      const tsuc=ref("tsuc");box(.94,.77,-.26,.022,.022,.03,dark,tsuc);hit(tsuc,.035,.06,.94,.77,-.26);pipe([[.94,.77,-.28],[.85,.85,-.37],[.7,1.05,-.38]],.003,wire,tsuc);
+    }
+    // Nalepka s shemo hladilnega kroga na steni predelka – na objektu jo najprej poišči.
+    {
+      const schema=group(internals);schema.userData.fieldId="ref:schema";
+      const tex=canvasTex(640,470,(g,w,h)=>{
+        g.fillStyle="#e4e6dc";g.fillRect(0,0,w,h);g.fillStyle="#26332f";g.fillRect(0,0,w,52);
+        g.fillStyle="#eef0e6";g.font="bold 28px sans-serif";g.fillText("SHEMA HLADILNEGA KROGA · OGREVANJE",16,36);
+        const node=(x,y,t1,t2)=>{g.fillStyle="#fbfbf6";g.strokeStyle="#26332f";g.lineWidth=3;g.fillRect(x-78,y-30,156,60);g.strokeRect(x-78,y-30,156,60);g.fillStyle="#1e2a27";g.font="bold 19px sans-serif";g.textAlign="center";g.fillText(t1,x,y-4);g.font="16px sans-serif";g.fillText(t2,x,y+18);g.textAlign="left"};
+        const line=(pts,c)=>{g.strokeStyle=c;g.lineWidth=7;g.beginPath();g.moveTo(...pts[0]);pts.slice(1).forEach(p=>g.lineTo(...p));g.stroke();const [a,b]=pts.slice(-2);const ang=Math.atan2(b[1]-a[1],b[0]-a[0]),mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;g.fillStyle=c;g.beginPath();g.moveTo(mx+12*Math.cos(ang),my+12*Math.sin(ang));g.lineTo(mx-9*Math.cos(ang)-9*Math.sin(ang),my-9*Math.sin(ang)+9*Math.cos(ang));g.lineTo(mx-9*Math.cos(ang)+9*Math.sin(ang),my-9*Math.sin(ang)-9*Math.cos(ang));g.fill()};
+        const RED="#b8432f",ORANGE="#d98a2b",BLUE="#3069a8";
+        line([[320,390],[320,150]],RED);line([[398,120],[520,120],[520,175]],RED);
+        line([[520,235],[520,300]],ORANGE);line([[520,360],[520,420],[200,420],[120,420],[120,330]],ORANGE);
+        line([[120,270],[120,120],[242,120]],BLUE);line([[320,150],[320,150]],BLUE);line([[300,150],[220,250],[220,300]],BLUE);line([[220,360],[220,390],[262,390]],BLUE);
+        node(320,120,"4-POTNI VENTIL","s tuljavo");node(520,205,"KONDENZATOR","ploščni · voda");node(520,330,"FILTER SUŠILNIK","tekočinski vod");
+        node(120,300,"EEV","ekspanzijski v.");node(120,90+0,"","");g.clearRect(0,0,0,0);
+        node(220,330,"LOČEVALNIK","tekočine");node(340,420,"KOMPRESOR","spodaj zadaj");node(120,190,"UPARJALNIK","lamele zunaj");
+        g.fillStyle=RED;g.beginPath();g.arc(372,350,12,0,7);g.fill();g.fillStyle=BLUE;g.beginPath();g.arc(268,250,12,0,7);g.fill();
+        g.fillStyle="#1e2a27";g.font="bold 17px sans-serif";g.fillText("VT",389,356);g.fillText("NT",284,256);
+        g.font="15px sans-serif";g.fillText("rdeče: vroči plin · oranžno: tekočina · modro: sesalni vod",16,h-12);
+      });
+      const label=mesh(new T.PlaneGeometry(.3,.22),new T.MeshBasicMaterial({map:tex,toneMapped:false}),.454,1.6,-.2,schema);
+      label.rotation.y=Math.PI/2;label.castShadow=false;
     }
     const fallenLeaves=group(coil);
     const leafGeo=new T.SphereGeometry(1,6,4),leafSpecs=[[],[],[]];

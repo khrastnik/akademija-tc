@@ -60,7 +60,7 @@ window.createProbeRig=function(T,scene,kit){
  box(annex,flashing,3.78,1.78,ZF+.065,.28,.18,.015);for(let k=0;k<5;k++)box(annex,black,3.78,1.71+k*.035,ZF+.075,.25,.012,.01);
  box(annex,roofMat,(X0+X1)/2,H+.05,(AZ+ZF)/2-.1,X1-X0+.3,.1,ZF-AZ+.6);           // streha
  box(annex,tile,(X0+X1)/2,.012,(AZ+ZF)/2-.1,X1-X0,.02,ZF-AZ+.4);                 // tla
- box(annex,plaster,(X0+X1)/2,H/2,-2.16,X1-X0,H,.1);                              // zadnja stena (hiša se konča pri x = 4)
+ box(annex,plaster,(X0+X1)/2,H/2,-2.13,X1-X0,H,.08);                              // zadnja stena (hiša se konča pri x = 4)
  tag(annex,'KOTLOVNICA',4.4,H-.18,ZF+.065,.62);
  const lamp=new T.PointLight(0xfff1d8,2.2,5.5,1.6);lamp.position.set(4.6,H-.25,-1.0);annex.add(lamp);
  box(annex,material(0xfff6e0,0,.3),4.6,H-.03,-1.0,.5,.03,.12);

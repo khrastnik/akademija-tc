@@ -42,14 +42,15 @@ window.FieldRules=(()=>{
  }
  // Hladilni krog: samo ogled. Poseg vanj je dovoljen samo s spričevalom (F-plini).
  const REF={
-  compressor:{name:'Kompresor (hladilni krog)',info:'Stisne paro hladiva, da se močno segreje. V črni zvočni izolaciji, spodaj zadaj. Samo ogled – poseg s spričevalom.'},
+  compressor:{name:'Kompresor (hladilni krog)',info:'Stisne paro hladiva, da se močno segreje. Na vseh enotah je spodaj, ker je najtežji; ponavadi v črni zvočni izolaciji. Samo ogled – poseg s spričevalom.'},
+  schema:{name:'Nalepka: shema hladilnega kroga',info:'Postavitev delov se med proizvajalci razlikuje. Na objektu najprej poišči to nalepko – ponavadi je na notranji strani servisnega pokrova ali stranske stene.'},
   fourway:{name:'4-potni ventil s tuljavo',info:'Obrne tok hladiva: ogrevanje ali odtajevanje. Črna tuljava ga preklaplja (nalog 13). Samo ogled.'},
   eev:{name:'Elektronski ekspanzijski ventil (EEV)',info:'Spusti v uparjalnik ravno prav hladiva. Črna kapa je koračni motor. Zataknjen EEV = visoko pregrevanje. Samo ogled.'},
   dryer:{name:'Filter sušilnik',info:'Na tekočinskem vodu, lovi vlago in delce. Zamašen: cev za njim je hladnejša, pregrevanje visoko. Samo ogled.'},
   accumulator:{name:'Ločevalnik tekočine',info:'Pred kompresorjem. Zadrži kapljevito hladivo, da ne pride v kompresor. Samo ogled.'},
   plate:{name:'Ploščni izmenjevalnik (kondenzator)',info:'Tu hladivo odda toploto vodi za ogrevanje. Hladivo in voda se ne mešata.'},
   liquid:{name:'Tekočinski vod',info:'Tanjša cev: hladivo v tekočem stanju gre od izmenjevalnika skozi filter sušilnik do EEV.'},
-  ports:{name:'Servisna priključka – visoki (rdeča) in nizki tlak (modra)',info:'Tu serviser s spričevalom priklopi manometre. Brez spričevala ne odpiraj kap.'},
+  ports:{name:'Servisna priključka – visoki (rdeča) in nizki tlak (modra)',info:'Ponavadi ob stranskem pokrovu, da sta dosegljiva brez razstavljanja. Tu serviser s spričevalom priklopi manometre. Brez spričevala ne odpiraj kap.'},
   hp:{name:'Visokotlačno stikalo',info:'Izklopi kompresor, če tlak preveč naraste – na primer ko ni pretoka vode.'},
   lp:{name:'Tipalo nizkega tlaka',info:'Iz njega regulator izračuna temperaturo uparjanja.'},
   tdis:{name:'Tipalo vročega plina',info:'Na tlačni cevi kompresorja. Previsoko: premalo hladiva ali zataknjen EEV. Vrednost vidiš v servisnem meniju.'},
