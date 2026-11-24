@@ -1,5 +1,9 @@
 # Spremembe
 
+## 0.24.1 – 2026-11-24
+
+- Domača stran brez opombe »Vsebina še ni strokovno pregledana …«.
+
 ## 0.24.0 – 2026-11-24
 
 - **Termoteren 3D (Toplolog Simulator)** je zdaj del Akademije na /termoteren/ – prvoosebni servis toplotne črpalke z 10
