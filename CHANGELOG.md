@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.30.0 – 2026-11-24
+
+- **Pokrov kot kratek prizor:** ob držanju klika na pokrov se kamera odmakne in vidiš celega serviserja.
+  Z izvijačem odvije vse štiri vijake (pri spodnjih počepne), nato pokrov z obema rokama odnese na stojalo. Na koncu se kamera vrne v prvoosebni pogled.
+- **Roke in prsti po orodju:** izvijač in krtača v pesti s palcem čez kazalec, merilnik v dlani s prostim palcem, tipalo med palcem in kazalcem,
+  rob pokrova s konicami prstov. V mirovanju je mezinec bolj skrčen kot kazalec, kot pri pravi roki.
+- **Kotlovnica bolj kot prava stavba:** zunaj isti lesen opaž kot hiša, betonski sokl, temni vogalni profili, žleb z odtočno cevjo,
+  odprta kovinska vrata in prezračevalna rešetka. Notranji omet je topel siv, ne bel.
+
 ## 0.29.0 – 2026-11-24
 
 - **Kotlovnica namesto stojala z merilnimi mesti:** vodni del sistema je zdaj v kotlovnici ob hiši, kot na pravem objektu.

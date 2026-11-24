@@ -91,13 +91,23 @@ window.createAnatomicalHand=(()=>{
   });
   // Bind in local millimetres before the arm assumes its world pose.
   mesh.updateMatrixWorld(true);const skeleton=new T.Skeleton(bones);mesh.bind(skeleton);
+  // Prijemi po orodju. f = upogib prstov (kazalec, sredinec, prstanec, mezinec), t = palec,
+  // o = kako daleč palec pride čez dlan, tip = koliko se upogne zadnji členek.
+  const GRIPS={
+   relaxed:{f:[.82,1,1.14,1.3],t:.8,o:.8,tip:1},              // naravna kaskada: mezinec bolj skrčen kot kazalec
+   grip:{f:[.94,1,1.04,1.08],t:1,o:1,tip:1},
+   power:{f:[.9,1.02,1.08,1.14],t:1.08,o:1.35,tip:.9},        // ročaj v pesti, palec ovit čez kazalec
+   instrument:{f:[.5,.56,.62,.7],t:.22,o:.55,tip:1.1},        // instrument v dlani, palec prost za tipke
+   pinch:{f:[.78,.92,1.02,1.12],t:.8,o:1.15,tip:.55},         // tipalo med palcem in kazalcem
+   edge:{f:[.55,.58,.6,.62],t:.7,o:.7,tip:1.6}                // rob pokrova: ravni prsti, upognjene konice
+  };
   return {pose(flex,style){
-   const grip=Math.max(0,Math.min(1,flex));
+   const grip=Math.max(0,Math.min(1,flex)),G=GRIPS[style]||GRIPS.grip;
    chains.forEach((chain,i)=>{const thumb=i===4;chain.forEach((b,k)=>{
-    const f=style==='pinch'&&i>0&&i<4?grip*.5:grip;
+    const f=Math.min(1.12,grip*(thumb?G.t:G.f[i]))*(k===2&&!thumb?G.tip:1);
     b.rotation.x=thumb?-.25-f*[.27,.36,.48][k]:-[.28,.22,.12][k]-f*[.82,1.04,.78][k];
-    b.rotation.y=thumb?-.12+f*[.69,.25,.11][k]:(i-1.5)*.046*(1-f);
-    b.rotation.z=thumb&&k===0?-.27*f:0;
+    b.rotation.y=thumb?-.12+grip*G.o*[.69,.25,.11][k]:(i-1.5)*.046*(1-Math.min(1,f));
+    b.rotation.z=thumb&&k===0?-.27*grip*G.o:0;
    })});
    mount.position.x=.032;if(style==='instrument'){mount.position.x=.059;mount.position.z=.067}else mount.position.z=.028
   },dispose(){skeleton.dispose();if(--users===0){lib.dispose();library=null}}}

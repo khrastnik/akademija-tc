@@ -329,10 +329,21 @@
         return {id,point:s.localToWorld(point(0,0,.0345)),normal:out,twist:s.rotation.z,weight:slide(p/.23)*(1-slide((p-.84)/.16))};
       }else if(id==='cover'){
         // En poteg: vijaki ven, pokrov na stojalo – ali obratno pri zapiranju.
-        const opening=!state.opened,ts=slide(opening?p/.32:(p-.68)/.32),tm=slide(opening?(p-.34)/.6:p/.6);
-        screws.forEach(s=>{const back=opening?ts:1-ts;s.position.z=.043*back;s.rotation.z=back*Math.PI*4.36});
+        // Izvijač gre od vijaka do vijaka; ko so vsi štirje odviti, obe roki primeta pokrov.
+        const opening=!state.opened,S=.5,n=screws.length,sp=opening?p/S:(p-(1-S))/S;
+        const tm=slide(opening?(p-S-.02)/(1-S-.04):p/(1-S-.04)),head=s=>s.localToWorld(point(0,0,.0345));
+        screws.forEach((s,i)=>{
+          const order=opening?i:n-1-i,u=slide((sp*n-order-.28)/.62),back=opening?u:1-u;
+          s.position.z=.043*back;s.rotation.z=back*Math.PI*4.36;
+        });
         movePanel(opening?'frame':'stand',opening?'stand':'frame',tm,.12);rig.visible=false;
-        return panelContact(tm>0&&tm<1?1:0);
+        if(sp>0&&sp<1){
+          const k=Math.min(n-1,Math.floor(sp*n)),local=sp*n-k,idx=opening?k:n-1-k,s=screws[idx];
+          let at=head(s);
+          if(k>0&&local<.28)at=head(screws[opening?k-1:n-k]).lerp(at,slide(local/.28));
+          return {id:'screw:'+idx,point:at,normal:out,twist:s.rotation.z,weight:slide(sp/.07)*(1-slide((sp-.93)/.07))};
+        }
+        return panelContact(slide(tm/.1)*(1-slide((tm-.9)/.1)));
       }else if(['panelRest','panelMount'].includes(id)){
         const pickup=id==='cover',from=pickup?(state.opened?'stand':'frame'):'hands',to=pickup?'hands':id==='panelRest'?'stand':'frame';
         movePanel(from,to,slide((p-.23)/.63),.09);rig.visible=false;

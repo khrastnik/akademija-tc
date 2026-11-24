@@ -110,7 +110,7 @@ window.FieldRules=(()=>{
   if(type==='cover'){
    if(!f.isolated)return no('Najprej ustavi in zavaruj napravo.');
    if(f.opened&&f.removed&&!f.fixed&&mechanical.includes(n))return no('Pred zapiranjem ponovno vgradi sestavni del.');
-   return ok(f.opened?'Namesti pokrov in privij vijake':'Odvij vijake in snemi pokrov',2.4,()=>{if(f.opened){f.opened=false;f.screws=[]}else{f.opened=true;f.screws=[0,1,2,3]}f.panel=null;f.reseat=false});
+   return ok(f.opened?'Namesti pokrov in privij vijake':'Odvij vijake in snemi pokrov',3.4,()=>{if(f.opened){f.opened=false;f.screws=[]}else{f.opened=true;f.screws=[0,1,2,3]}f.panel=null;f.reseat=false});
   }
   if(j.phase==='measure'||j.phase==='verify'){
    const part=type==='test'?value:type;

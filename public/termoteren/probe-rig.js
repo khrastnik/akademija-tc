@@ -29,13 +29,35 @@ window.createProbeRig=function(T,scene,kit){
  // Kotlovnica: prizidek desno od enote. Cevi pridejo iz enote ob fasadi, v kotlovnici tečejo ob steni.
  const annex=new T.Group();root.add(annex);
  const AZ=-1.9,SUP=1.134,RET=.605,X0=3.6,X1=5.95,ZF=.02,H=2.35;
- const plaster=material(0xd8d3c6,0,.92),roofMat=material(0x3c4142,.2,.8),tile=material(0x9a9c95,0,.95),insul=material(0x1f2526,.02,.9),boilerMat=material(0xe9ebe6,.25,.35);
+ // Notranji omet: topla siva z rahlo neenakomerno strukturo, ne bela.
+ const plaster=material(0xa0988a,0,.96);{
+  const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d'),im=g.createImageData(256,256);let seed=7;
+  for(let i=0;i<im.data.length;i+=4){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const n=226+(seed%30)-((i>>2)%256>200?6:0);im.data.set([n,n-2,n-6,255],i)}
+  g.putImageData(im,0,0);for(let k=0;k<14;k++){g.fillStyle='rgba(90,80,64,.05)';g.fillRect(Math.random()*256,0,3+Math.random()*10,256)}
+  const tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;tx.wrapS=tx.wrapT=T.RepeatWrapping;tx.repeat.set(3,3);textures.push(tx);plaster.map=tx;plaster.bumpMap=tx;plaster.bumpScale=.004}
+ // Zunanjost kot hiša: lesen opaž, betonski sokl, pločevinasta obroba.
+ const clad=(w,h)=>{const m=material(0x9a8f84,0,.9);mats.add(m);new T.TextureLoader().load('weathered_brown_planks.jpg',t=>{t.colorSpace=T.SRGBColorSpace;t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(w/1.94,h/1.97);textures.push(t);m.map=t;m.color.setHex(0xffffff);m.needsUpdate=true},undefined,()=>{});return m};
+ const wall=(faces,x,y,z,w,h,d)=>box(annex,faces,x,y,z,w,h,d);
+ const concrete=material(0x7a766e,0,.97),flashing=material(0x3a3f40,.45,.55),doorMat=material(0x3d4446,.35,.5);[concrete,flashing,doorMat].forEach(m=>mats.add(m));
+ const roofMat=material(0x3c4142,.2,.8),tile=material(0x9a9c95,0,.95),insul=material(0x1f2526,.02,.9),boilerMat=material(0xe9ebe6,.25,.35);
  [plaster,roofMat,tile,insul,boilerMat].forEach(m=>mats.add(m));
- box(annex,plaster,X0,H/2,(AZ+ZF)/2-.1,.12,H,ZF-AZ+.42);                          // leva stena
- box(annex,plaster,(X0+3.95)/2,H/2,ZF,3.95-X0,H,.12);                            // sprednja stena levo od vrat
- box(annex,plaster,(4.85+X1)/2,H/2,ZF,X1-4.85,H,.12);                            // sprednja stena desno od vrat
- box(annex,plaster,4.4,H-.18,ZF,.9,.36,.12);                                     // nadvratnik
- box(annex,plaster,X1,H/2,(AZ+ZF)/2-.1,.12,H,ZF-AZ+.42);                          // desna stena
+ const D=ZF-AZ+.42,ZC=(AZ+ZF)/2-.1,P=plaster;
+ wall([P,clad(D,H),P,P,flashing,P],X0,H/2,ZC,.12,H,D);                                  // leva stena (zunaj opaž)
+ wall([P,P,P,P,clad(3.95-X0,H),P],(X0+3.95)/2,H/2,ZF,3.95-X0,H,.12);             // sprednja stena levo od vrat
+ wall([P,P,P,P,clad(X1-4.85,H),P],(4.85+X1)/2,H/2,ZF,X1-4.85,H,.12);             // sprednja stena desno od vrat
+ wall([P,P,P,P,clad(.9,.36),P],4.4,H-.18,ZF,.9,.36,.12);                         // nadvratnik
+ wall([clad(D,H),P,P,P,flashing,P],X1,H/2,ZC,.12,H,D);                                  // desna stena
+ // sokl, obroba strehe, žleb in odtok
+ box(annex,concrete,X0-.075,.16,ZC,.03,.32,D);box(annex,concrete,X1+.075,.16,ZC,.03,.32,D);
+ box(annex,concrete,(X0+3.95)/2,.16,ZF+.075,3.95-X0+.12,.32,.03);box(annex,concrete,(4.85+X1)/2,.16,ZF+.075,X1-4.85+.12,.32,.03);
+ box(annex,flashing,(X0+X1)/2,H+.1,ZF+.21,X1-X0+.32,.06,.03);
+ pipe(annex,flashing,V(X0-.14,H-.02,ZF+.27),V(X1+.14,H-.02,ZF+.27),.045);
+ pipe(annex,flashing,V(X1+.1,H-.02,ZF+.27),V(X1+.1,.08,ZF+.27),.034);
+ box(annex,concrete,X1+.1,.03,ZF+.36,.16,.05,.24);
+ // odprta kovinska vrata, prislonjena ob fasado, in prezračevalna rešetka (kotlovnica jo mora imeti)
+ box(annex,doorMat,4.85+.46,.995,ZF+.095,.88,1.95,.04);box(annex,steel,4.85+.82,1.02,ZF+.13,.12,.022,.03);
+ box(annex,flashing,4.4,H-.37,ZF+.07,.94,.04,.02);box(annex,flashing,3.93,(H-.36)/2,ZF+.07,.04,H-.36,.02);box(annex,flashing,4.87,(H-.36)/2,ZF+.07,.04,H-.36,.02);
+ box(annex,flashing,3.78,1.78,ZF+.065,.28,.18,.015);for(let k=0;k<5;k++)box(annex,black,3.78,1.71+k*.035,ZF+.075,.25,.012,.01);
  box(annex,roofMat,(X0+X1)/2,H+.05,(AZ+ZF)/2-.1,X1-X0+.3,.1,ZF-AZ+.6);           // streha
  box(annex,tile,(X0+X1)/2,.012,(AZ+ZF)/2-.1,X1-X0,.02,ZF-AZ+.4);                 // tla
  box(annex,plaster,(X0+X1)/2,H/2,-2.16,X1-X0,H,.1);                              // zadnja stena (hiša se konča pri x = 4)

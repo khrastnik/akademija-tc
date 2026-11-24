@@ -10,7 +10,8 @@ window.createFirstPerson=function({T,host,canvas,scene,camera,kit,service,callba
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const reach=1.85;
  const probes=window.createProbeRig(T,scene,kit);
- const precision=id=>id?.startsWith('screw:')||['cover','panelRest','panelMount','filterCap','basinDrop','cleanFilter','filterSeat','radVent','radPin','radHead'].includes(id);
+ // Pokrov in vijaki: brez približanja, da vidiš celoten pokrov in roko z izvijačem.
+const precision=id=>['panelRest','panelMount','filterCap','basinDrop','cleanFilter','filterSeat','radVent','radPin','radHead'].includes(id);
  const workRange=id=>precision(id)||id?.startsWith('probe:')?1.32:reach;
  let lean=0,leanTo=null;
  const eyeRotation=new T.Quaternion(),aimRotation=new T.Quaternion(),aimMatrix=new T.Matrix4();
@@ -177,7 +178,7 @@ window.createFirstPerson=function({T,host,canvas,scene,camera,kit,service,callba
   const {f,j,c}=state();setHud(highlighted,p);if(!contact)contact=service.idle();
   if(['flow','thermo','meter'].includes(f.held)){kit.display(Measurements.screen(f,j,c),!!callbacks.reading?.());callbacks.readiness?.(Measurements.stable(f.measurement))}
   else kit.display({heading:'',status:'',rows:[]},false);
-  kit.animate(dt,reduced?0:walking,p,contact);probes.animate();render(dt,f);scenePainted=true;
+  kit.animate(dt,reduced?0:walking,p,contact);cinematic(contact,dt);probes.animate();render(dt,f);scenePainted=true;
  }
  function resize(){const w=host.clientWidth,h=host.clientHeight;if(w&&h){camera.aspect=w/h;camera.updateProjectionMatrix();callbacks.resize(w,h)}}
  const observer=new ResizeObserver(resize);observer.observe(host);resize();
@@ -212,9 +213,25 @@ window.createFirstPerson=function({T,host,canvas,scene,camera,kit,service,callba
  on(canvas,'pointerup',release);on(canvas,'pointercancel',release);on(canvas,'pointerleave',()=>{if(!drag)hover=null});
  on(document,'pointerlockchange',()=>{hover=null;clearInputs()});
  function releaseMouse(){if(document.pointerLockElement===canvas)document.exitPointerLock();clearInputs()}
+ // Samodejni pokrov: kamera se odmakne in pokaže celega serviserja.
+ const worker=window.createWorker?.(T,scene),cineEye=new T.Vector3(),cineLook=new T.Vector3(),cineM=new T.Matrix4(),cineQ=new T.Quaternion();
+ let cine=0,lastContact=null;
+ function cinematic(contact,dt){
+  if(!worker)return;
+  const on=!!hold&&(hold.id==='cover'||hold.id.startsWith('screw:'))&&!!contact&&(contact.id==='cover'||contact.id?.startsWith('screw:'));
+  if(on)lastContact=contact;
+  cine+=((on?1:0)-cine)*(1-Math.exp(-dt*(on?4.5:6)));if(cine<.004){cine=0;lastContact=null}
+  worker.update(cine>.25&&lastContact?lastContact:null,dt);
+  if(kit.arms)kit.arms.visible=cine<.35;
+  if(!cine||!worker.root.visible)return;
+  const b=worker.body.position;
+  cineEye.set(b.x+1.5,1.72,b.z+1.95);cineLook.set(b.x-.3,1.0-(.93-b.y)*.5,b.z-.5);
+  cineM.lookAt(cineEye,cineLook,camera.up);cineQ.setFromRotationMatrix(cineM);
+  camera.position.lerp(cineEye,cine);camera.quaternion.slerp(cineQ,cine);camera.updateMatrixWorld();
+ }
  sync();cameraUpdate(0);raf=requestAnimationFrame(frame);canvas.focus({preventScroll:true});
  return {sync,direction,releaseMouse,move(code,down){if(down){keys.add(code);hover=null}else keys.delete(code)},crouch(){crouched=!crouched},
   lookLock(){const p=canvas.requestPointerLock?.();p?.catch(()=>callbacks.message('Za razgled povleci po prizoru.'))},
-  destroy(){running=false;callbacks.savePose({x:player.x,z:player.z,yaw,pitch,crouched});releaseMouse();cancelAnimationFrame(raf);observer.disconnect();controller.abort();probes.dispose();kit.dispose();service.dispose()}
+  destroy(){running=false;callbacks.savePose({x:player.x,z:player.z,yaw,pitch,crouched});releaseMouse();cancelAnimationFrame(raf);observer.disconnect();controller.abort();probes.dispose();kit.dispose();service.dispose();worker?.dispose()}
  };
 };

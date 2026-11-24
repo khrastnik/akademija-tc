@@ -325,13 +325,17 @@ window.createFieldKit = function createFieldKit(T, scene, camera) {
       wrist.rotation.x+=((Math.PI/2-.04)-wrist.rotation.x)*lift;
       wrist.rotation.y*=1-lift;wrist.rotation.z*=1-lift;
     }
-    right.pose(held&&!carrying?.90:.33,measuring?'instrument':'grip');left.pose(carrying?.9:.34);
+    const style=measuring?'instrument':['driver','brush'].includes(held)?'power':held?'grip':'relaxed';
+    right.pose(held&&!carrying?.90:.33,style);left.pose(carrying?.9:.34,carrying?'grip':'relaxed');
     if(contact?.id==='secondaryPump'||contact?.id?.startsWith('probe:')||(contact?.id?.startsWith('rad')&&!screw)){
       targetPos.copy(contact.point);camera.worldToLocal(targetPos);
       left.wrist.position.lerp(targetPos.sub(offset.copy(filterGrip.position).applyQuaternion(left.wrist.quaternion)),w);
       left.pose(.78,'pinch')
     }
     if(carrying){left.wrist.position.copy(cartridgeRest.position).sub(offset.copy(filterGrip.position).applyQuaternion(left.wrist.quaternion))}
+    // Pri samodejnem odvijanju pokrova se izvijač pokaže v roki, tudi če ga nisi vzel iz kovčka.
+    const autoDriver=screw&&contact.id.startsWith('screw:')&&held!=='driver';
+    for(const [key,tool] of handTools)tool.visible=autoDriver?key==='driver':key===held;
     grip.visible=!panel;
     if(screw){
       camera.getWorldQuaternion(qc).invert();
@@ -342,13 +346,13 @@ window.createFieldKit = function createFieldKit(T, scene, camera) {
       targetPos.sub(offset.set(0,0,-.154).applyQuaternion(qp));
       grip.rotation.set(0,0,(contact.twist-wristRoll)*w);grip.position.set(0,0,0);
       wrist.position.lerp(targetPos,w);wrist.quaternion.slerp(qp,w);
-      right.pose(.94-.26*w*Math.max(0,-Math.cos(contact.twist)));
+      right.pose(.94-.26*w*Math.max(0,-Math.cos(contact.twist)),'power');
     }
     if(panel||filter){
       targetPos.copy(contact.leftPoint||contact.point);camera.worldToLocal(targetPos);
       left.wrist.position.lerp(targetPos.sub(offset.copy(filterGrip.position).applyQuaternion(left.wrist.quaternion)),w);
-      left.pose(.33+.63*w);
-      if(panel){targetPos.copy(contact.point);camera.worldToLocal(targetPos);wrist.position.lerp(targetPos,w);right.pose(.34+.6*w)}
+      left.pose(.33+.63*w,panel?'edge':'grip');
+      if(panel){targetPos.copy(contact.point);camera.worldToLocal(targetPos);wrist.position.lerp(targetPos,w);right.pose(.34+.6*w,'edge')}
     }
     right.solve();left.solve();
   }
@@ -362,5 +366,5 @@ window.createFieldKit = function createFieldKit(T, scene, camera) {
     for(const texture of textures)texture.dispose();
   }
   set();animate(0);
-  return {position:vec(-2.55,.93,1.40),root,set,animate,display,instrumentSocket,dispose,driverTip,cartridgeRest,filterGrip};
+  return {position:vec(-2.55,.93,1.40),root,arms,set,animate,display,instrumentSocket,dispose,driverTip,cartridgeRest,filterGrip};
 };
