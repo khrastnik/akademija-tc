@@ -1,5 +1,10 @@
 # Spremembe
 
+## 0.28.1 – 2026-11-24
+
+- Po objavi se igra 3D naloži v celoti nova: skripte in slog imajo oznako različice, strani pa service worker vedno
+  preveri pri strežniku. Prej je brskalnik do 10 minut lahko kazal novo stran s staro skripto (star začetni meni).
+
 ## 0.28.0 – 2026-11-24
 
 - **Začetni meni igre 3D:** namesto ploščice z nalogom je naslovni zaslon z logotipom, napredkom (zvezdice, rešeni nalogi,

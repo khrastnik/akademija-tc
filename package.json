@@ -1,6 +1,6 @@
 {
   "name": "akademija-tc",
-  "version": "0.28.0",
+  "version": "0.28.1",
   "private": true,
   "type": "module",
   "description": "Akademija toplotnih črpalk – brezplačna, odprta spletna pot do serviserja in diagnostika TČ",
@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "validate": "node scripts/validate.mjs",
-    "build": "npm run validate && astro build && node scripts/sw.mjs",
+    "build": "npm run validate && astro build && node scripts/termoteren-cache.mjs && node scripts/sw.mjs",
     "preview": "astro preview",
     "test": "vitest run"
   },

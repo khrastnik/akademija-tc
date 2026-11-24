@@ -73,7 +73,9 @@ self.addEventListener('fetch', (event) => {
   // ali ko omrežje ne odgovori v 4 s (slab signal na terenu).
   event.respondWith(
     (async () => {
-      const fresh = fetch(req).then((res) => put(req, res));
+      // Strani vedno preveri pri strežniku (304, če se ni spremenila), ne iz 10-minutnega predpomnilnika brskalnika.
+      const net = req.mode === 'navigate' ? fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }) : fetch(req);
+      const fresh = net.then((res) => put(req, res));
       event.waitUntil(fresh.catch(() => {}));
       const timeout = new Promise((r) => setTimeout(() => r(null), 4000));
       try {
