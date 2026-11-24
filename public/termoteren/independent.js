@@ -5,8 +5,8 @@ CASES.push({
  customer:'Že tretji dan imamo v vseh sobah okoli 18 stopinj. Prej smo imeli 21. Topla voda je kot običajno in na zaslonu ni nobene napake.',
  source:'https://khrastnik.github.io/akademija-tc/teren/?vaja=krivulja',sourceTitle:'Ogrevalna krivulja',
  independent:true,decisive:4,referenceOffset:0,
- reportDiagnosis:'Naprava je zahtevo dosegla. Zapisnik za iste zunanje pogoje predvideva 36 °C. Razlika se je pojavila že v zahtevi regulatorja.',
- reportCheck:'S tem si preveril tako novo zahtevo kot odziv naprave.',
+ reportDiagnosis:'Naprava je naredila točno toliko tople vode, kot je regulator zahteval. Regulator pa je zahteval premalo: 30 °C namesto 36 °C.',
+ reportCheck:'Regulator zdaj zahteva 36 °C in naprava to doseže.',
  tests:[
   {part:'pump',tool:'flow',label:'Pretok ogrevalnega kroga',before:'18 l/min pri isti nastavitvi obtočne črpalke kot ob zagonu, ko so izmerili 18 l/min.',after:'Pri isti nastavitvi je pretok še vedno 18 l/min.',
    display:{title:'ULTRAZVOK',points:['up','down'],rows:[['Pretok','l/min',18,18]]}},
@@ -26,15 +26,15 @@ CASES.push({
  cause:1,repairs:['Obnovi zabeleženi odmik in ohrani naklon','Zvišaj hitrost obtočne črpalke','Povečaj naklon ogrevalne krivulje'],fix:0,
  procedure:['Preberi vrednost iz zapisnika zagona.','S servisnim terminalom na regulatorju vnesi vzporedni odmik v kelvinih.','Ponovi preizkus pri enaki zunanji temperaturi.'],
  hints:{
-  measure:['Kje se izgubi toplota, če je podobno hladno v vseh prostorih? Poskusi ločiti težavo pri skupni oskrbi od težave pri posameznem radiatorju.',
-   'Preden spremeniš nastavitev, loči dve možnosti: naprava morda ne doseže svoje zahteve ali pa že regulator zahteva premalo.',
-   'Na regulator priključi servisni terminal in primerjaj zahtevo z doseženo temperaturo. S svetilko preberi še zapisnik zagona pri enaki zunanji temperaturi.'],
-  verify:['Ponovi meritev, na kateri je temeljila tvoja diagnoza. Primerjaj rezultat pri enakih pogojih.','Na regulatorju preveri zahtevo in doseženo vrednost. Primerjaj še shranjeno nastavitev z zapisnikom.']
+  measure:['Hladno je v vseh sobah, ne samo v eni. Težava je torej v tem, koliko toplote naprava pošlje v hišo.',
+   'Možnosti sta dve: naprava ne zmore toliko, kot regulator zahteva, ali pa regulator zahteva premalo.',
+   'S terminalom primerjaj, koliko °C regulator zahteva in koliko naprava doseže. Nato v zapisniku zagona poglej, koliko bi moral zahtevati.'],
+  verify:['Ponovi meritev, s katero si našel napako.','S terminalom preveri, koliko °C regulator zdaj zahteva in ali naprava to doseže.']
  },
- lesson:{cause:'Vzporedni odmik je bil nastavljen na −6 K namesto zagonskih 0 K. Regulator je pri enaki zunanji temperaturi zato zahteval hladnejšo vodo.',
-  effect:'Naprava je dosegala svojo zahtevo, radiatorji pa so pri nižji temperaturi v prostore oddajali premalo toplote. Alarm se ni sprožil.',
-  fix:'Obnovitev odmika je dvignila zahtevo. Po 20 simuliranih minutah ji je sledila voda v dvižnem vodu. Temperaturo prostorov bi pri dejanskem servisu preveril znova čez nekaj ur.',
-  lesson:'Hladna cev sama ne pove, ali napravi manjka moč. Primerjaj, kaj regulator zahteva, kaj naprava doseže in kaj je bilo za iste pogoje predvideno ob zagonu.'}
+ lesson:{cause:'Nekdo je nastavitev ogrevanja zamaknil za 6 stopinj navzdol (odmik −6 K namesto 0 K). Regulator je zato zahteval hladnejšo vodo.',
+  effect:'Naprava je delala brezhibno, a s prehladno vodo. Radiatorji so dali premalo toplote. Alarma ni bilo, ker naprava ni bila pokvarjena.',
+  fix:'Odmik je spet 0 K. Regulator zahteva 36 °C in voda to doseže. V resnici bi temperaturo v sobah preveril še čez nekaj ur.',
+  lesson:'Hladna voda ne pomeni vedno slabe naprave. Primerjaj tri številke: koliko regulator zahteva, koliko naprava doseže in koliko je bilo nastavljeno ob zagonu.'}
 });
 
 // Four-port buffer. Flow settings and temperatures refer to this commissioning record.
@@ -43,8 +43,8 @@ CASES.push({
  customer:'V vseh sobah je okoli 18 stopinj, prej jih je bilo 21. Tako je že nekaj dni. Vode za prhanje ne zmanjka in na zaslonu ni opozorila.',
  source:'https://khrastnik.github.io/akademija-tc/okvare/#sekundarna',sourceTitle:'Sekundarna obtočna črpalka',
  independent:true,decisive:3,
- reportDiagnosis:'Radiatorska veja je odvzemala več vode, kot jo je v istem ciklu dovajala toplotna črpalka. Hladnejši izstop proti radiatorjem potrdi učinek mešanja.',
- reportCheck:'Sekundarni pretok se zdaj ujema s projektnim za ta objekt. Kontrolni temperaturi pokažeta, ali do radiatorjev pride toplejša voda.',
+ reportDiagnosis:'Proti radiatorjem je teklo dvakrat več vode, kot jo je toplotna črpalka dovajala v zalogovnik. Razliko je nadomestila hladna povratna voda.',
+ reportCheck:'Proti radiatorjem zdaj teče toliko vode kot iz toplotne črpalke. Do radiatorjev pride topla voda.',
  tests:[
   {part:'control',tool:'meter',label:'Zahtevana in dosežena temperatura dvižnega voda',required:true,
    before:'Pri 4 °C zunaj regulator zahteva 36 °C. Tipalo ob izstopu iz toplotne črpalke kaže 36 °C.',after:'Pri istih zunanjih pogojih sta zahteva in dosežena temperatura še vedno 36 °C.',
@@ -71,20 +71,20 @@ CASES.push({
  procedure:['Na servisni kartici preveri predvideno stopnjo in ciljni pretok radiatorske veje.','Na sekundarni črpalki nastavi stopnjo iz zapisnika.','Ponovi meritve na istih mestih po ustalitvi.'],
  adjustment:{target:'secondaryPump',tool:'inspect',open:'Odpri izbirnik stopnje',instruction:'Pojdi do sekundarne črpalke in nastavi stopnjo po njeni servisni kartici.',title:'Sekundarna črpalka · izbirnik stopnje',expected:2},
  hints:{
-  measure:['Najprej določi, ali naprava pripravi toliko toplote, kot od nje zahteva regulator. Nato preveri, kaj pride do ogreval.',
-   'Sledi obema dvižnima vodoma ob zalogovniku. Izmeri temperaturo na strani toplotne črpalke in na strani radiatorjev v istem ciklu.',
-   'Če se temperaturi razlikujeta, na vsakem krogu posebej izmeri še pretok. Primerjaj litražo na minuto in zagonski zapisnik.'],
-  procedure:['Na kartici sekundarne črpalke poišči projektno stopnjo. Po nastavitvi učinek preveri z instrumentoma.'],
-  verify:['Ponovi primerjavo obeh pretokov in temperatur na obeh straneh zalogovnika pri enaki zahtevi za ogrevanje.']
+  measure:['Najprej preveri, ali naprava naredi toliko tople vode, kot zahteva regulator. Nato preveri, kakšna voda pride do radiatorjev.',
+   'Zalogovnik je velik bojler vode med toplotno črpalko in radiatorji. Izmeri toplo cev, ki pride iz toplotne črpalke, in toplo cev, ki gre proti radiatorjem.',
+   'Če je voda proti radiatorjem hladnejša, izmeri pretok na obeh straneh zalogovnika in ga primerjaj z zapisnikom.'],
+  procedure:['Na kartici črpalke za radiatorje piše, na kateri stopnji mora delati. Nastavi jo in nato ponovno izmeri.'],
+  verify:['Ponovno izmeri oba pretoka in obe temperaturi ob zalogovniku.']
  },
  evidenceQuestion:'Kateri odčitek bi primerjal s primarnim pretokom, da preveriš mešanje v zalogovniku?',
  weakEvidence:'Ta podatek sam ne pokaže, koliko vode radiatorska veja odvzema iz zalogovnika. Lahko se vrneš na teren.',
  missingEvidence:'Za utemeljitev poveži zahtevo in odziv naprave s pretokoma obeh krogov ter temperaturama ob zalogovniku.',
  verifyPrompt:'Pred zaključkom ponovno primerjaj odziv naprave, oba pretoka in obe temperaturi dovodov.',
- lesson:{cause:'Sekundarna črpalka je na stopnji III proti radiatorjem črpala 30 l/min, toplotna črpalka pa je dovajala 15 l/min. Razliko je v štiricevnem zalogovniku nadomestila hladnejša povratna voda.',
-  effect:'Naprava je dovajala zahtevanih 36 °C. Zaradi primešane povratne vode je v radiatorje pritekala voda s 31 °C. Prostori so se ogrevali slabše.',
-  fix:'Po vrnitvi na projektno stopnjo II je sekundarni pretok znašal 14 l/min, primarni pa 15 l/min. Razlika med dovodoma se je po ustalitvi zmanjšala s 5 na 0,2 °C. Učinek na sobno temperaturo bi preveril čez nekaj ur.',
-  lesson:'Pri dveh obtočnih krogih izmeri vsak pretok posebej. Odčitek na izstopu iz toplotne črpalke še ne pove, kako topla voda vstopa v radiatorje.'},
+ lesson:{cause:'Črpalka za radiatorje je bila nastavljena na stopnjo III in je črpala 30 l/min. Toplotna črpalka pa je v zalogovnik dajala le 15 l/min. Manjkajočo vodo je črpalka vzela iz hladnega dela zalogovnika.',
+  effect:'Iz toplotne črpalke je prihajala voda s 36 °C, v radiatorje pa le 31 °C, ker se je mešala s hladno. Sobe so bile hladnejše.',
+  fix:'Na stopnji II črpalka za radiatorje črpa 14 l/min, toplotna črpalka daje 15 l/min. Voda v radiatorje ima zdaj skoraj enako temperaturo kot iz toplotne črpalke.',
+  lesson:'Če ima sistem zalogovnik in dve črpalki, izmeri pretok na vsaki strani posebej. Topla voda iz toplotne črpalke še ne pomeni tople vode v radiatorjih.'},
  comparison:{title:'Kako ločiš Žiri od Tržiča?',
   tržič:'Pri 4 °C zunaj je bil projektni dvižni vod 36 °C, regulator pa je zahteval le 30 °C. Naprava je teh 30 °C dosegla. Zapisnik je pokazal odmik −6 K namesto 0 K.',
   žiri:'Pri istih zunanjih pogojih je regulator zahteval projektnih 36 °C in naprava jih je dosegla. Temperatura se je znižala šele med dovodom v zalogovnik in izstopom proti radiatorjem.',

@@ -4,22 +4,22 @@
     {
       title:'Hladna soba na podstrešju', location:'Radovljica', air:true,
       upper:22, lower:36, afterTop:39, afterBottom:34,
-      head:'Glava je odprta. Zgoraj se sliši pretakanje. Na preostalih radiatorjih stranka težave ne opaža.',
-      cause:'V zgornjem delu radiatorja se je ujel zrak.', effect:'Voda je ogrevala spodnji del, zgoraj pa je ostal hladen žep. Radiator je v prostor oddajal manj toplote.',
-      fix:'Po odzračenju, preverjanju hladnega tlaka in ponovnem zagonu se je ogrel tudi vrh. Šumenje je prenehalo.',
-      lesson:'Kadar je spodaj toplo, zgoraj pa hladno, voda vsaj deloma priteka. Razlika po višini in šumenje skupaj usmerjata pregled k zraku v radiatorju.',
+      head:'Termostatska glava je odprta. Zgoraj v radiatorju šumi. Drugi radiatorji grejejo normalno.',
+      cause:'Zgoraj v radiatorju se je nabral zrak.', effect:'Topla voda je grela samo spodnji del. Zgoraj je bil zrak, zato je radiator dal manj toplote.',
+      fix:'Po odzračevanju se je ogrel tudi vrh radiatorja. Šumenja ni več.',
+      lesson:'Spodaj topel, zgoraj hladen in šumenje pomeni zrak v radiatorju. Voda pride noter, zrak pa ji ne pusti na vrh.',
       steps:['Ustavi kroženje in počakaj, da se učni radiator ohladi.','Pod odzračevalnik namesti posodico in krpo.','Počasi odpri odzračevalnik in ga zapri, ko priteče enakomeren curek.','Preveri hladni tlak na manometru in tesnost odzračevalnika.','Znova vključi ogrevanje in ponovi meritvi.'],
-      reasons:['Mirujoča voda omogoči zbiranje zraka na vrhu. Vaja s časovnim preskokom ohladi radiator pred odpiranjem.','Zadržiš iztekajočo vodo in vidiš, kdaj začne teči enakomerno.','Zrak zapušča najvišjo točko. Enakomeren curek je znak, da lahko odzračevalnik zapreš.','Pri odzračevanju izteče tudi nekaj vode. Primerjaj hladni tlak z zapisnikom tega sistema in poglej, ali priključek ostaja suh.','Po zagonu temperatura potrebuje čas. Vaja preskoči 15 minut, preden primerjaš ista merilna mesta.']
+      reasons:['Ko voda miruje, se zrak zbere na vrhu. Radiator naj se ohladi, da se ne opečeš.','Posodica ujame vodo, ki priteče iz odzračevalnika.','Zrak gre ven na vrhu. Ko priteče enakomeren curek vode, je zraka konec – zapri.','Pri odzračevanju izteče nekaj vode, zato preveri tlak. Če je prenizek, doliješ.','Po zagonu počakaj, da se radiator ogreje, nato izmeri na istih mestih kot prej.']
     },
     {
       title:'Hladna soba v pritličju', location:'Vrhnika', air:false,
       upper:21, lower:21, afterTop:38, afterBottom:33,
-      head:'Glava je nastavljena na največ. Dovod pred ventilom je topel. Pri funkcijskem preizkusu se zatič po sprostitvi ne vrne. Drugi radiatorji grejejo.',
-      cause:'Zatič pod termostatsko glavo je po mirovanju obtičal v zaprtem položaju.',effect:'Topla voda je prišla do ventila, v radiator pa ni vstopila. Ves radiator je ostal blizu sobne temperature.',
-      fix:'Po sprostitvi zatiča in vrnitvi glave je skozi radiator spet stekla voda. Pri ponovljenem preizkusu se je najprej ogrel vrh radiatorja.',
-      lesson:'Topla cev pred ventilom potrjuje dovod do ventila. Za odločitev o posegu potrebuješ še temperaturo radiatorja in preizkus gibljivosti zatiča.',
+      head:'Termostatska glava je na največ. Cev pred ventilom je topla. Zatič pod glavo se po pritisku ne vrne. Drugi radiatorji grejejo.',
+      cause:'Zatič pod termostatsko glavo se je čez poletje zataknil in ventil ostal zaprt.',effect:'Topla voda je prišla do ventila, v radiator pa ne. Cel radiator je bil hladen.',
+      fix:'Po sprostitvi zatiča voda spet teče skozi radiator. Najprej se je ogrel vrh, nato ves radiator.',
+      lesson:'Topla cev pred ventilom in hladen cel radiator pomenita, da se voda ustavi pri ventilu. Preveri, ali se zatič premika.',
       steps:['Ustavi ogrevanje učnega kroga in počakaj na ohladitev.','Snemi termostatsko glavo z nosilca.','Z nežnim pritiskom sprosti zatič in preveri njegovo samodejno vrnitev.','Ponovno namesti termostatsko glavo in odpri ventil za preizkus.','Zaženi ogrevanje in preveri segrevanje radiatorja.'],
-      reasons:['Pred delom naj se dostopni vroči deli ohladijo. Vaja preskoči čas ohlajanja.','Za dostop do zatiča se sname le suha termostatska glava. Telo ventila ostane zatesnjeno.','Zatič mora po rahlem pritisku sam priti nazaj. Njegova povratna pot omogoči odpiranje ventila; vlečenje s kleščami lahko poškoduje tesnilo.','Glava mora po montaži znova upravljati ventil. Za primerljivo meritev nastavi enako zahtevo kot na začetku.','Vaja preskoči 15 minut ogrevanja. Ponovi kontaktni meritvi na istih mestih in preveri, da je toplota prišla v radiator.']
+      reasons:['Počakaj, da se radiator ohladi, da se ne opečeš.','Sname se samo glava. Ventil ostane zaprt, voda ne izteče.','Zatič rahlo pritisni – mora sam priti nazaj. Ne vleci ga s kleščami, ker poškoduješ tesnilo.','Glavo vrni in nastavi tako kot prej, da bo primerjava poštena.','Po zagonu počakaj, nato izmeri radiator na istih mestih kot prej.']
     }
   ];
   const targets=[['radControl','radCup','radVent','radGauge','radControl'],['radControl','radHead','radPin','radHead','radControl']];
@@ -35,9 +35,9 @@
       repairs:['Sprosti zatič termostatskega ventila','Odzrači radiator in preveri hladni tlak','Zvišaj temperaturo dvižnega voda za celo hišo'],fix:r.air?1:0,
       procedure:[r.steps[0],r.steps.slice(1,4).join(' '),r.steps[4]],explanation:r.lesson,
       station:{...r,targets:targets[i]},lesson:{cause:r.cause,effect:r.effect,fix:r.fix,lesson:r.lesson,questions:{
-        'emitter.thermo':'Pritrdi kontaktni sondi zgoraj in spodaj na istem radiatorju. Če voda vstopa le v del radiatorja, bo temperaturni vzorec drugačen, kot če je zaprt celoten dovod.',
-        'radHead.inspect':'S svetilko preglej termostatsko glavo, poslušaj radiator in preveri odziv ventila. Išči neodvisen dokaz za razlago obeh temperatur.',
-        'radGauge.inspect':'Primerjaj hladni tlak z zapisnikom te naprave. Skupni tlak dopolni lokalni pregled; iz njega samega ne moreš določiti, kaj je narobe v eni sobi.'
+        'emitter.thermo':'Eno tipalo daj zgoraj, drugo spodaj na isti radiator. Hladen samo vrh pomeni zrak. Hladen cel radiator pomeni, da voda ne pride noter.',
+        'radHead.inspect':'Poglej termostatsko glavo, poslušaj radiator in preveri, ali se ventil odpre.',
+        'radGauge.inspect':'Preberi tlak vode, ko je sistem hladen, in ga primerjaj z zapisnikom. Tlak velja za vso hišo, ne samo za ta radiator.'
       }}};
     CASES.push(c);
   }

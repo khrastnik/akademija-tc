@@ -73,3 +73,27 @@ dialog:has(.missionGrid){width:min(900px,calc(100vw - 28px))}
 
 .adjDone{margin:10px 0 14px;padding-left:22px}.adjDone li{margin:8px 0;line-height:1.4}.adjDone b{display:block;font-weight:600}.adjDone small{display:block;color:#b8c3bf;margin-top:3px}
 .adjAsk{font-weight:700;color:#ffc28a;margin:14px 0 4px}
+
+/* Med igro: odziv na korak in manj stalnega besedila */
+@media(prefers-reduced-motion:no-preference){.pulse{animation:stepPulse .7s ease-out}}
+@keyframes stepPulse{0%{box-shadow:0 0 0 0 #ffab67cc;border-color:#ffab67}100%{box-shadow:0 0 0 16px #ffab6700}}
+.fieldOrder p#fieldGoal{font-size:15px;font-weight:600;color:#fff6ea;border-left:3px solid var(--orange);padding-left:8px}
+.heldHUD span{animation:hintFade .8s ease-out 25s forwards}
+@keyframes hintFade{to{opacity:0;max-height:0;margin:0}}
+#sound{font-size:16px}
+
+/* Faze naloga in uvodna kartica */
+.phaseBar{display:flex;gap:3px;list-style:none;margin:6px 0 2px;padding:0}
+.phaseBar li{flex:1;font-size:10px;letter-spacing:.3px;text-transform:uppercase;color:#7f8b88;padding-top:5px;border-top:3px solid #3a4446;text-align:center;white-space:nowrap}
+.phaseBar li.past{color:#a6d9b7;border-top-color:#5f9c74}
+.phaseBar li.now{color:#ffc28a;border-top-color:var(--orange);font-weight:700}
+#missionIntro{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:min(560px,86%);text-align:center;padding:22px 26px;border-radius:12px;background:#0d1617e6;border:1px solid #ffab6788;box-shadow:0 20px 60px #0009;pointer-events:none}
+#missionIntro small{display:block;font:600 12px Consolas,monospace;letter-spacing:1.4px;text-transform:uppercase;color:#ffc28a}
+#missionIntro strong{display:block;font-size:clamp(28px,4vw,42px);letter-spacing:-1px;line-height:1.1;margin:8px 0}
+#missionIntro p{margin:0;color:#d4ddd8;line-height:1.45}
+@media(prefers-reduced-motion:no-preference){#missionIntro{animation:introCard 4.2s ease both}}
+@keyframes introCard{0%{opacity:0;transform:translate(-50%,-40%)}12%{opacity:1;transform:translate(-50%,-50%)}80%{opacity:1}100%{opacity:0}}
+@media(max-width:720px){.phaseBar li{font-size:8px}}
+.fieldOrder{width:min(286px,36%)}
+.phaseBar li{min-width:0;overflow:hidden;text-overflow:ellipsis;text-transform:none;letter-spacing:0;font-size:11px}
+@media(pointer:coarse),(max-width:720px){.fieldOrder{width:200px}.phaseBar li{font-size:8px}}

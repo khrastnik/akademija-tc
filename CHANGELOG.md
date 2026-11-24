@@ -1,5 +1,16 @@
 # Spremembe
 
+## 0.27.0 – 2026-11-24
+
+### Igra 3D – drugi del prenove
+- **Razlage v preprostih stavkih** tudi za mentorja (vsa vprašanja pred meritvijo, razlaga meritev, prenos na drug primer),
+  naloge 7–10 (radiatorja, Tržič, Žiri) in splošne razlage korakov.
+- **Faze naloga v kotu:** Pregled · Diagnoza · Poseg · Kontrola · Poročilo – vedno vidiš, kje si.
+- **Uvodna kartica** ob vstopu na teren: nalog, kraj, vreme in prijava stranke.
+- **Zvok in utrip** ob opravljenem koraku in zapisani meritvi, nižji ton ob napačni odločitvi, kratka melodija ob
+  zaključku; gumb za izklop zvoka.
+- Navodila za hojo v kotu po 25 s izginejo; cilj je poudarjen.
+
 ## 0.26.0 – 2026-11-24
 
 ### Igra 3D – prvi del prenove

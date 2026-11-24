@@ -47,6 +47,16 @@ function resultCard(j){
 const available=i=>!!CASES[i]&&(!i||CASES[i].station||CASES[i].independent||done(i-1));
 const linkedCase=Number(new URLSearchParams(location.search).get('nalog'))-1;
 if(Number.isInteger(linkedCase)&&CASES[linkedCase])db.active=linkedCase;
+// Kratek zvok in utrip ob opravljenem koraku. Tiho, če brskalnik zvoka ne dovoli.
+let audioCtx=null,muted=false;try{muted=localStorage.getItem('termoteren.mute')==='1'}catch{}
+function ping(ok=true){
+ if(muted)return;
+ try{audioCtx??=new (window.AudioContext||window.webkitAudioContext)();const t=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type=ok?'triangle':'sine';o.frequency.setValueAtTime(ok?660:200,t);if(ok)o.frequency.setValueAtTime(990,t+.07);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.07,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+(ok?.2:.28));
+  o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+.3)}catch{}
+}
+function pulse(id){const el=$(id);if(!el)return;el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse')}
 function notice(msg){$('toast').textContent=msg;$('toast').className='show';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').className='',3400)}
 function btn(label,action,cls='secondary',value=''){return '<button class="'+cls+'" data-action="'+action+'" data-value="'+value+'">'+label+'</button>'}
 function refresh(){
@@ -72,6 +82,8 @@ function fieldHud(){
  const {f,j,c}=readField(),next=FieldRules.target(f,j,c);
  $('fieldNumber').textContent='Nalog '+seq(db.active)+' / '+seq(CASES.length-1)+' · '+c.location;
  $('fieldTitle').textContent=c.title;
+ const PH=[['Pregled',['measure']],['Diagnoza',['diagnose','repair']],['Poseg',['procedure']],['Kontrola',['verify']],['Poročilo',['done']]],at=PH.findIndex(p=>p[1].includes(j.phase));
+ if($('phaseBar'))$('phaseBar').innerHTML=PH.map((p,i)=>'<li class="'+(i<at?'past':i===at?'now':'')+'"'+(i===at?' aria-current="step"':'')+'>'+p[0]+'</li>').join('');
  $('fieldGoal').textContent=next==='tablet'?(j.phase==='done'?'Nalog je zaključen. Odpri poročilo.':'Odpri delovni nalog in presodi ugotovitve.'):(f.turn!==0&&f.spare&&!f.fixed?'Poravnaj nadomestni del z ležiščem.':(j.phase==='procedure'?FieldRules.jobs[db.active]+'. ':'')+'Naslednji cilj · '+targetName(next));
  $('equipmentStatus').textContent=f.isolated?'Napajanje izključeno':'Naprava pod napajanjem';
  $('tabletButton').classList.toggle('ready',next==='tablet');
@@ -120,7 +132,8 @@ function toggleReading(){
 }
 function saveReading(e){
  e.preventDefault();const {f,j,c}=readField(),values=[...$('meterInputs').querySelectorAll('input')].map(i=>i.value);
- if(!Measurements.record(f,j,c,values)){$('meterMessage').textContent='Preveri znak, decimalno vejico in kanal. Prepiši ustaljeni odčitek.';return}
+ if(!Measurements.record(f,j,c,values)){$('meterMessage').textContent='Številka se ne ujema z instrumentom. Preveri predznak (minus) in decimalno vejico.';ping(false);return}
+ ping();pulse('fieldOrder');
  if(c.independent)delete j.chosenTest;
  meterRaised=false;save();fieldHud();PumpView.sync();notice('Odčitek je shranjen v servisni dnevnik.')
 }
@@ -131,6 +144,7 @@ function fieldChanged(id,verb){
   if(c.independent)delete j.chosenTest;
   const t=c.tests[j.last];$('readTitle').textContent=t.label;$('readValue').textContent=j.phase==='verify'?t.after:t.before;$('readout').hidden=false;
  }else{$('readout').hidden=true;notice(verb+' · opravljeno')}
+ ping();pulse('fieldOrder');
  save();fieldHud();if(c.independent&&j.phase==='procedure'&&f.configOpen)showConfiguration();
 }
 function rotatePart(){const f=physical();if(!f.spare||f.fixed)return;f.turn=(f.turn+1)%4;PumpView.sync();fieldHud();save();notice('Lega dela · '+f.turn*90+'°')}
@@ -318,6 +332,9 @@ function enter(){
  inModel=true;const j=job();j.started=true;save();$('stage').classList.add('working');$('camera').hidden=false;$('workbench').hidden=false;$('viewLabel').textContent='Servisni pogled · 3D';
  PumpView.setState({caseIndex:db.active,repaired:['verify','done'].includes(j.phase),opened:j.opened});
  $('stage').append($('fieldTemplate').content.cloneNode(true));$('stage').classList.add('fps');document.body.classList.add('playing');
+ {const c=current(),card=document.createElement('div');card.id='missionIntro';card.setAttribute('aria-hidden','true');
+  card.innerHTML='<small>Nalog '+seq(db.active)+' / '+seq(CASES.length-1)+' · '+c.location+' · '+c.weather+'</small><strong>'+c.title+'</strong><p>»'+c.customer+'«</p>';
+  $('fieldUI').append(card);setTimeout(()=>card.remove(),4200)}
  modelFallback=false;
  PumpView.open($('model'),{state:readField,reading:()=>meterRaised,toggleReading,readiness:stable=>{if(meterRaised&&!$('meterSave').hidden)$('meterSave').disabled=!stable},pose:()=>j.field?.pose,savePose:p=>{physical().pose=p;save()},message:notice,rotate:rotatePart,changed:fieldChanged,
   aim:(title,verb,enabled)=>{$('aimTitle').textContent=title;$('aimVerb').textContent=verb;$('actPrompt').classList.toggle('ready',enabled)},
@@ -414,7 +431,7 @@ function perform(action,val){
   if(['why','hint','moreHint'].includes(action)){independentHint(c,j,action==='moreHint');return}
   if(action==='configuration'){showConfiguration();return}
   if(action==='adjStep'&&j.phase==='procedure'&&c.adjustment?.steps){
-   const v=Number(val);
+   const v=Number(val);j.adjStep??=0;
    if(v===j.adjStep){j.adjStep++;save();if(j.adjStep>=c.adjustment.steps.length)showConfiguration();else stepDialog(c,j);}
    else{j.mistakes++;save();stepDialog(c,j,'»'+c.adjustment.steps[v].text+'« pride kasneje. Kaj mora biti narejeno prej?');}
    return;
@@ -473,6 +490,8 @@ function perform(action,val){
   else if(evidence(j.verified)<required().length)feedback=c.verifyPrompt||(c.independent?'Za zaključek potrebuješ dokaz o shranjeni spremembi in o odzivu naprave.':'Ponovi odločilne preizkuse, preden zaključiš nalog.');
   else{j.phase='done';j.score=Math.max(40,100-10*j.mistakes);db.scores[db.active]=Math.max(j.score,db.scores[db.active]||0)}
  }
+ if(feedback)ping(false);
+ if(action==='finish'&&j.phase==='done'){ping();setTimeout(ping,170);setTimeout(ping,340)}
  if(inModel&&!modelFallback){
   PumpView.sync();
   if(action==='fix'&&j.phase==='procedure'){$('dialog').close();notice('Poseg je potrjen. Nadaljuj na napravi.')}
@@ -508,7 +527,9 @@ $('terrain').onclick=()=>{if($('dialog').open)$('dialog').close();leave()};$('mi
 $('back').onclick=leave;$('cover').onclick=()=>{const j=job();j.opened=PumpView.toggleCover();$('cover').querySelector('span').textContent=j.opened?'Zapri pokrov':'Odpri pokrov';save()};$('zoom').onclick=()=>PumpView.zoom(1);$('homecam').onclick=()=>PumpView.reset();
 async function toggleScreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{notice('Igra zaseda celotno okno brskalnika.')} }
 function screenLabel(){if($('screenBtn')){$('screenBtn').textContent=document.fullscreenElement?'Okenski način':'Cel zaslon';$('screenBtn').hidden=!document.fullscreenEnabled}}
-document.addEventListener('fullscreenchange',screenLabel);$('fullscreen').onclick=toggleScreen;
+document.addEventListener('fullscreenchange',screenLabel);
+function soundLabel(){const b=$('sound');if(b){b.textContent=muted?'🔇':'🔊';b.title=muted?'Vklopi zvok':'Izklopi zvok';b.setAttribute('aria-label',b.title)}}
+if($('sound')){$('sound').onclick=()=>{muted=!muted;try{localStorage.setItem('termoteren.mute',muted?'1':'0')}catch{}soundLabel();if(!muted)ping()};soundLabel()}$('fullscreen').onclick=toggleScreen;
 $('sources').onclick=()=>openDialog('O simulaciji','<div class="prose"><p>Toplolog Simulator je vaja v diagnosticiranju toplotnih črpalk zrak–voda. Servisni nalogi so prirejeni po priročniku <a href="https://khrastnik.github.io/akademija-tc/okvare/" target="_blank" rel="noopener">Okvare in popravila · Akademija TČ</a> (khrastnik). Prirejeni scenariji so objavljeni pod licenco <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>.</p><p>Panorama Kloppenheim 06 ter fotografski teksturi Gravel Floor in Weathered Brown Planks so iz zbirke <a href="https://polyhaven.com/" target="_blank" rel="noopener">Poly Haven</a> (CC0).</p><p>Prijave, odčitki, oznake napak in lokacije so simulirani. 3D model prikazuje poenostavljeno servisno postavitev. Pri dejanskem delu upoštevaj servisna navodila konkretnega modela in posege najprej vadi pod strokovnim nadzorom. Dela na električnih delih (230/400 V) izvaja le elektro usposobljena oseba, posege v krog hladiva le serviser s spričevalom.</p></div>');
 document.addEventListener('keydown',e=>{if($('dialog').open||e.altKey||e.ctrlKey||e.metaKey||e.repeat||/SELECT|INPUT|TEXTAREA/.test(e.target.tagName))return;if(modelFallback&&/^[1-4]$/.test(e.key))chooseTool(Object.keys(toolInfo)[Number(e.key)-1]);if(inModel&&!modelFallback&&e.code==='Tab'&&document.pointerLockElement){e.preventDefault();fieldTablet()}if(inModel&&!modelFallback&&e.code==='KeyJ')fieldTablet();if(inModel&&!modelFallback&&e.code==='KeyZ')perform('why')});
 $('help').onclick=()=>openDialog('Prvoosebni servis','<div class="prose"><p>Hodi s tipkami WASD. Za razgled povleci po prizoru ali uporabi smerne tipke. Na telefonu uporabi smerne gumbe. S C počepneš.</p><p>Približaj se kovčku. Drži klik na pokrovu, nato na orodju. Enako delaj na napravi. Uporabiš lahko tudi merilni križ in tipko E. H usmeri pogled k naslednjemu cilju.</p><p>Na sprednjem pokrovu nameri osvetljeni zaslon in drži E ali klik. Prelistaj stanje, podatke in zgodovino napak. Servisni terminal povežeš na ločeni priključek pod zaslonom.</p><p>Tipala pritrdi na označena mesta na ceveh. Z I dvigni instrument, počakaj na oznako STABILNO in prepiši izmerjene vrednosti. Snemi tipala, nato primerjaj odčitke v delovnem nalogu (J). Po diagnozi zavaruj napravo, izvedi ustrezen poseg in ponovi preizkuse. Pri menjavi z R poravnaj novi del z ležiščem.</p></div>');

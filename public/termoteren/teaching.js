@@ -78,28 +78,28 @@ window.ServiceLesson = (() => {
   function why(n, c, f, j, target) {
     if(c.station&&j.phase==='procedure')return c.station.reasons[f.radStep||0];
     if (target === 'tablet') {
-      if (j.phase === 'done') return 'V poročilu primerjaj prijavo stranke z meritvami in preveri, kaj je popravilo spremenilo.';
-      if (j.phase === 'verify') return 'Pred zaključkom primerjaj ponovljene meritve s prvotnimi. Iz njih mora biti razviden učinek posega.';
-      if (j.phase === 'repair') return 'Izberi poseg, ki odpravi potrjeni vzrok in ohrani delujoče dele naprave.';
-      return 'Poišči vzrok, ki pojasni vse tvoje meritve, tudi tiste z običajnimi vrednostmi.';
+      if (j.phase === 'done') return 'V poročilu preberi, kaj je bilo narobe, kaj si naredil in kaj se je spremenilo.';
+      if (j.phase === 'verify') return 'Ponovi iste meritve kot na začetku. Primerjava pokaže, ali je popravilo pomagalo.';
+      if (j.phase === 'repair') return 'Izberi popravilo, ki odpravi vzrok. Delov, ki delajo, ne menjaj.';
+      return 'Izberi vzrok, ki razloži vse tvoje meritve – tudi tiste, ki so normalne.';
     }
-    if (target === 'isolator') return f.isolated ? 'Po sestavi spet vključi napravo, da lahko ponoviš preizkus v primerljivih pogojih.' : 'Zavarovanje pred ponovnim zagonom prepreči, da bi se naprava med delom nepričakovano vključila.';
-    if (target === 'water') return f.drained ? 'Pred zagonom obnovi vodni krog. Odzračevanje omogoči kroženje, s pregledom tesnosti pa preveriš spoje.' : 'Voda je lahko vroča in pod tlakom. V simulaciji servisni blok izolira ohlajeni odsek in razbremeni tlak pred odpiranjem.';
-    if (target.startsWith('screw:') || target === 'tool:driver' && !f.opened && [0,4,5].includes(n)) return f.reseat ? 'Vijaki držijo pokrov na vodilih in varujejo notranje dele med delovanjem.' : 'Konico izvijača poravnaj z glavo vijaka, da ne poškoduješ utora. Pokrov lahko snameš, ko so sproščena vsa štiri pritrdilna mesta.';
-    if (['cover','panelRest','panelMount'].includes(target)) return 'Pokrov podpri z roko in uporabi stojalo. Pri sestavi ga najprej nasloni na vodili, da vijaki ne prevzamejo njegove teže.';
+    if (target === 'isolator') return f.isolated ? 'Napravo spet vključi, da lahko ponoviš meritve.' : 'Napravo izklopi in zavaruj, da se med delom ne vključi sama.';
+    if (target === 'water') return f.drained ? 'Odpri ventile, odzrači in preveri, da nič ne pušča. Šele nato naprava lahko spet dela.' : 'Voda je lahko vroča in pod tlakom. Zapri ventile in spusti tlak, preden kaj odpreš.';
+    if (target.startsWith('screw:') || target === 'tool:driver' && !f.opened && [0,4,5].includes(n)) return f.reseat ? 'Privij vse vijake, da pokrov drži in varuje notranjost.' : 'Odvij vse štiri vijake. Šele nato lahko snameš pokrov.';
+    if (['cover','panelRest','panelMount'].includes(target)) return 'Pokrov odloži na stojalo. Pri sestavi ga najprej nasloni na vodili, nato privij.';
     if (['measure','verify'].includes(j.phase)) {
-      if (f.measurement?.logged) return 'Odčitek je zapisan. Snemi sonde, da jih lahko preneseš na naslednje merilno mesto.';
-      if (target === 'instrument') return 'Odčitek med ustaljanjem se še spreminja. Počakaj na oznako STABILNO in za vsak kanal prepiši vrednost v prikazani enoti.';
+      if (f.measurement?.logged) return 'Odčitek je zapisan. Snemi tipala, da jih lahko uporabiš drugje.';
+      if (target === 'instrument') return 'Počakaj, da instrument pokaže STABILNO, nato prepiši številke.';
       const taken = j.phase === 'verify' ? j.verified : j.read;
       const t = f.measurement ? c.tests[f.measurement.index] : c.tests.find((item,i) => item.required && !taken.includes(i));
       if (t) return purpose(n,t);
     }
-    if (n === 0) return ['filterSeat','cleanFilter'].includes(target) ? 'Čist vložek mora sesti v ležišče, da ga voda ne obide. Po sestavi preveri tesnost ohišja.' : 'Vložek odnesi v kad. Z izpiranjem in mehko krtačo odstrani delce z mrežice, da jih ne vrneš v ogrevalni krog.';
-    if (n === 1) return 'Z mehko krtačo sledi smeri lamel. Zvite lamele bi tudi po odstranitvi listja ovirale pretok zraka.';
-    if (n === 2) return 'Na senčni legi tipalo lažje zazna temperaturo okoliškega zraka. Izberi mesto stran od segrete stene in izpiha.';
-    if (n === 3) return 'Servisni terminal požene vgrajeni cikel za sprostitev rotorja. Kompresor med tem preizkusom miruje.';
-    if (n === 4) return 'Pogon in gred poravnaj v istem končnem položaju. Tako bo kazalnik po sestavi ustrezal dejanski poti vode.';
-    return 'Oznako smeri na novem merilniku poravnaj s smerjo toka vode. Po vgradnji primerjaj njegov signal z zunanjim merilnikom.';
+    if (n === 0) return ['filterSeat','cleanFilter'].includes(target) ? 'Čist vložek vstavi do konca, da gre vsa voda skozi mrežico. Preveri, da nič ne pušča.' : 'Vložek operi v kadi in s krtačo očisti mrežico.';
+    if (n === 1) return 'Krtači v smeri lamel. Zvite lamele bi zrak ovirale tudi brez listja.';
+    if (n === 2) return 'Tipalo mora biti v senci, stran od tople stene in od izpiha enote. Tam meri pravo temperaturo zraka.';
+    if (n === 3) return 'Terminal zažene program, ki zataknjeno črpalko zavrti. Kompresor med tem stoji.';
+    if (n === 4) return 'Novi motorček poravnaj z ventilom v istem položaju. Tako bo kazalec kazal pravo smer vode.';
+    return 'Puščica na novem merilniku mora kazati v smer toka vode. Nato ga primerjaj s svojim merilnikom.';
   }
   return {lessons,purpose,why};
 })();

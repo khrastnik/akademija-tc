@@ -9,12 +9,12 @@
 <article class="brief" id="brief"></article>
 <button id="hotspot" class="hotspot" aria-label="Preglej zunanjo enoto"><span class="hotring"><i data-icon="focus"></i></span><span>Zunanja enota</span></button>
 <div id="location"><i data-icon="pin"></i><div><small>Lokacija</small><strong id="place"></strong></div></div>
-<div class="viewBtns"><button id="help" title="Navodila" aria-label="Navodila"><i data-icon="help"></i></button><button id="fullscreen" title="Celozaslonski pogled" aria-label="Celozaslonski pogled"><i data-icon="expand"></i></button></div>
+<div class="viewBtns"><button id="sound" title="Izklopi zvok" aria-label="Izklopi zvok">🔊</button><button id="help" title="Navodila" aria-label="Navodila"><i data-icon="help"></i></button><button id="fullscreen" title="Celozaslonski pogled" aria-label="Celozaslonski pogled"><i data-icon="expand"></i></button></div>
 <div class="camera" id="camera" hidden><button id="cover"><i data-icon="layers"></i><span>Odpri pokrov</span></button><button id="zoom" aria-label="Približaj model"><i data-icon="zoom"></i></button><button id="homecam" aria-label="Ponastavi pogled"><i data-icon="reset"></i></button><button id="back" title="Nazaj na lokacijo"><i data-icon="pin"></i><span>Lokacija</span></button></div>
 <aside id="workbench" hidden></aside></section>
 <template id="fieldTemplate"><div id="fieldUI">
 <div class="fieldTop"><div class="fieldBadge"><b></b>Toplolog Simulator</div><div class="fieldBadge" id="equipmentStatus"></div></div>
-<div class="fieldOrder"><small id="fieldNumber"></small><h2 id="fieldTitle"></h2><p id="fieldGoal"></p><button id="tabletButton">Delovni nalog</button> <button data-action="why" title="Zakaj ta korak? (Z)">Zakaj?</button> <button id="guidance" hidden>Poskusi brez namiga</button></div>
+<div class="fieldOrder"><small id="fieldNumber"></small><h2 id="fieldTitle"></h2><ol id="phaseBar" class="phaseBar" aria-label="Faze naloga"></ol><p id="fieldGoal"></p><button id="tabletButton">Delovni nalog</button> <button data-action="why" title="Zakaj ta korak? (Z)">Zakaj?</button> <button id="guidance" hidden>Poskusi brez namiga</button></div>
 <div id="beacon" hidden><span>◇</span><b></b></div><div class="crosshair"></div>
 <div id="actPrompt"><small id="aimTitle">Prosti pogled</small><strong id="aimVerb"></strong><div class="holdTrack"><i></i></div></div>
 <div id="readout" hidden><button id="dismissRead" aria-label="Zapri odčitek">×</button><small>Merilni zapis</small><strong id="readTitle"></strong><p id="readValue"></p></div>
