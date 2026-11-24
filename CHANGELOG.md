@@ -1,5 +1,12 @@
 # Spremembe
 
+## 0.31.0 – 2026-11-24
+
+- **Hladilni krog v enoti (samo ogled):** za servisnim pokrovom so zdaj kompresor v zvočni izolaciji, 4-potni ventil s tuljavo,
+  elektronski ekspanzijski ventil (EEV), filter sušilnik na tekočinskem vodu, ločevalnik tekočine, ploščni izmenjevalnik (kondenzator),
+  servisna priključka (rdeča visoki, modra nizki tlak), visokotlačno stikalo, tipalo nizkega tlaka ter tipali vročega plina in sesalnega voda.
+  Ko nanj nameriš, vidiš ime in kratko razlago, kaj dela in kaj pomeni okvara. Ničesar se ne da odpreti – poseg samo s spričevalom.
+
 ## 0.30.0 – 2026-11-24
 
 - **Pokrov kot kratek prizor:** ob držanju klika na pokrov se kamera odmakne in vidiš celega serviserja.

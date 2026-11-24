@@ -40,9 +40,24 @@ window.FieldRules=(()=>{
   if(!f.removed)return tool('driver',n===4?'oldDrive':'oldFlow');
   return !f.spare?'spare':n===4?'driveSeat':'flowSeat';
  }
+ // Hladilni krog: samo ogled. Poseg vanj je dovoljen samo s spričevalom (F-plini).
+ const REF={
+  compressor:{name:'Kompresor (hladilni krog)',info:'Stisne paro hladiva, da se močno segreje. V črni zvočni izolaciji, spodaj zadaj. Samo ogled – poseg s spričevalom.'},
+  fourway:{name:'4-potni ventil s tuljavo',info:'Obrne tok hladiva: ogrevanje ali odtajevanje. Črna tuljava ga preklaplja (nalog 13). Samo ogled.'},
+  eev:{name:'Elektronski ekspanzijski ventil (EEV)',info:'Spusti v uparjalnik ravno prav hladiva. Črna kapa je koračni motor. Zataknjen EEV = visoko pregrevanje. Samo ogled.'},
+  dryer:{name:'Filter sušilnik',info:'Na tekočinskem vodu, lovi vlago in delce. Zamašen: cev za njim je hladnejša, pregrevanje visoko. Samo ogled.'},
+  accumulator:{name:'Ločevalnik tekočine',info:'Pred kompresorjem. Zadrži kapljevito hladivo, da ne pride v kompresor. Samo ogled.'},
+  plate:{name:'Ploščni izmenjevalnik (kondenzator)',info:'Tu hladivo odda toploto vodi za ogrevanje. Hladivo in voda se ne mešata.'},
+  liquid:{name:'Tekočinski vod',info:'Tanjša cev: hladivo v tekočem stanju gre od izmenjevalnika skozi filter sušilnik do EEV.'},
+  ports:{name:'Servisna priključka – visoki (rdeča) in nizki tlak (modra)',info:'Tu serviser s spričevalom priklopi manometre. Brez spričevala ne odpiraj kap.'},
+  hp:{name:'Visokotlačno stikalo',info:'Izklopi kompresor, če tlak preveč naraste – na primer ko ni pretoka vode.'},
+  lp:{name:'Tipalo nizkega tlaka',info:'Iz njega regulator izračuna temperaturo uparjanja.'},
+  tdis:{name:'Tipalo vročega plina',info:'Na tlačni cevi kompresorja. Previsoko: premalo hladiva ali zataknjen EEV. Vrednost vidiš v servisnem meniju.'},
+  tsuc:{name:'Tipalo sesalnega voda',info:'S tlakom uparjanja da pregrevanje. Vrednost vidiš v servisnem meniju regulatorja.'}
+ };
  const labels={kit:'Servisni kovček',cover:'Servisni pokrov',isolator:'Glavno stikalo na fasadi',water:'Vodni servisni blok',filterCap:'Vložek filtra',filterSeat:'Ležišče filtra',oldSensor:'Zunanje tipalo',newMount:'Senčni nosilec',oldDrive:'Pogon ventila',oldFlow:'Merilnik pretoka',driveSeat:'Gred ventila',flowSeat:'Priključek merilnika',spare:'Nadomestni del na pladnju',tablet:'Delovni nalog'};
  Object.assign(labels,{panelRest:'Stojalo za pokrov',panelMount:'Vodili servisnega pokrova',basinDrop:'Pralna kad',cleanFilter:'Opran filtrski vložek',instrument:'Zaslon instrumenta'});for(const [k,v] of Object.entries(Measurements.ports))labels['probe:'+k]=v;
- function label(id){const [type,v]=String(id||'').split(':');if(type==='tool')return names[v];if(type==='screw')return 'Vijak pokrova '+(Number(v)+1);if(type==='dirty')return 'Mrežica · odsek '+(Number(v)+1);if(type==='leaf')return 'Listje na lamelah · '+(Number(v)+1);if(type==='test')return parts[v];return labels[id]||parts[id]||'Del naprave'}
+ function label(id){const [type,v]=String(id||'').split(':');if(type==='ref')return REF[v]?.name||'Hladilni krog';if(type==='tool')return names[v];if(type==='screw')return 'Vijak pokrova '+(Number(v)+1);if(type==='dirty')return 'Mrežica · odsek '+(Number(v)+1);if(type==='leaf')return 'Listje na lamelah · '+(Number(v)+1);if(type==='test')return parts[v];return labels[id]||parts[id]||'Del naprave'}
  function action(f,j,c,id){
   const [type,value]=String(id||'').split(':'),n=f.caseIndex;
   const ok=(verb,seconds,change)=>({verb,seconds,change,enabled:true});
@@ -50,6 +65,7 @@ window.FieldRules=(()=>{
   const need=t=>no('V kovčku vzemi orodje: '+names[t]+'.');
   const has=t=>f.held===t;
   if(!id)return no('Poglej proti predmetu.');
+  if(type==='ref')return no(REF[value]?.info||'Samo za ogled.');
   if(id==='regulatorScreen'||(id==='control'&&!f.held)){
    if(f.isolated)return no('Zaslon nima napajanja.');
    if(f.opened||f.panel||f.carry)return no('Zaslon je na servisnem pokrovu.');

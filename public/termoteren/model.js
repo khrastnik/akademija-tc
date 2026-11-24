@@ -345,6 +345,40 @@
     box(1.167,.831,.205,.151,.104,.098,blue,flowSensor);
     const signal=mat(0xd66143);effects.signal=signal;
     cyl(.016,.011,1.201,.831,.261,signal,"z",flowSensor);
+    // Hladilni krog za pokrovom – samo za ogled (poseg samo s spričevalom). Ime in razlaga se pokažeta, ko nanj nameriš.
+    {
+      const ref=id=>{const g=group(internals);g.userData.fieldId="ref:"+id;return g};
+      const felt=mat(0x2a2f2c,.02,.95),coilMat=mat(0x15191a,.1,.6),wire=mat(0x2f3b45,.05,.7),capLow=mat(0x2d5fa8,.2,.5),capHigh=mat(0xb23a2a,.2,.5),accMat=mat(0x2e3a34,.35,.55);
+      const L=.0125;
+      const comp=ref("compressor");                                                    // kompresor v zvočni izolaciji
+      cyl(.112,.27,1.08,.6,-.24,felt,"y",comp);cyl(.1,.05,1.08,.76,-.24,steel,"y",comp);
+      box(1.0,.79,-.24,.06,.05,.05,rubber,comp);
+      for(const [dx,dz] of [[-.07,-.07],[.07,-.07],[-.07,.07],[.07,.07]])cyl(.016,.03,1.08+dx,.47,-.24+dz,rubber,"y",comp);
+      const acc=ref("accumulator");cyl(.052,.28,.9,.62,-.32,accMat,"y",acc);cyl(.03,.03,.9,.775,-.32,accMat,"y",acc);
+      const four=ref("fourway");cyl(.028,.13,1.06,1.02,-.30,brass,"x",four);box(1.06,1.075,-.30,.05,.05,.045,coilMat,four);
+      pipe([[1.06,1.1,-.30],[1.06,1.16,-.36],[.9,1.16,-.38]],.004,wire,four);
+      const plateHx=ref("plate");
+      for(const z of [-.252,.008])box(.67,.97,z,.33,.73,.012,steel,plateHx);
+      for(const [x,y] of [[.53,.62],[.81,.62],[.53,1.32],[.81,1.32]])cyl(.006,.27,x,y,-.122,silver,"z",plateHx,8);
+      // cevi: tlačna, sesalna, proti izmenjevalniku in uparjalniku
+      pipe([[1.08,.78,-.24],[1.08,.98,-.27],[1.0,1.02,-.30]],L,copper,four);
+      pipe([[.995,1.02,-.33],[.9,1.0,-.33],[.9,.8,-.32]],L,copper,acc);
+      pipe([[.9,.8,-.29],[.97,.74,-.25],[.99,.7,-.24]],L,copper,acc);
+      pipe([[1.12,1.02,-.30],[1.12,1.22,-.30],[.86,1.22,-.30],[.86,1.22,-.2],[.83,1.22,-.2]],L,copper,plateHx);
+      pipe([[1.06,1.0,-.33],[1.06,.96,-.36],[.47,.96,-.36]],L,copper,four);
+      const liquid=ref("liquid");
+      pipe([[.83,.7,-.03],[1.24,.7,-.03],[1.24,1.32,-.03],[1.24,1.38,-.12],[1.24,1.42,-.3],[.47,1.42,-.3]],.009,copper,liquid);
+      const dryer=ref("dryer");cyl(.024,.17,1.24,1.0,-.03,copper,"y",dryer);
+      for(const y of [.905,1.095])cyl(.014,.02,1.24,y,-.03,brass,"y",dryer,6);
+      const eev=ref("eev");cyl(.02,.07,1.24,1.24,-.03,brass,"y",eev);cyl(.036,.07,1.24,1.31,-.03,coilMat,"y",eev);
+      pipe([[1.24,1.35,-.03],[1.22,1.46,.02],[.9,1.5,.02]],.004,wire,eev);
+      const ports=ref("ports");
+      for(const [y,cap] of [[1.47,capHigh],[1.4,capLow]]){pipe([[1.24,y,-.2],[1.24,y,.04]],.006,copper,ports);cyl(.011,.03,1.24,y,.055,brass,"z",ports,6);cyl(.013,.025,1.24,y,.08,cap,"z",ports,12)}
+      const hp=ref("hp");cyl(.018,.05,1.13,.93,-.27,rubber,"x",hp);pipe([[1.155,.93,-.27],[1.2,.98,-.3],[1.2,1.2,-.38]],.003,wire,hp);
+      const lp=ref("lp");cyl(.016,.05,.9,.86,-.32,rubber,"y",lp);pipe([[.9,.885,-.32],[.88,.95,-.38],[.7,1.1,-.38]],.003,wire,lp);
+      const tdis=ref("tdis");box(1.08,.86,-.255,.022,.03,.03,dark,tdis);pipe([[1.08,.86,-.27],[1.15,.9,-.36],[1.15,1.15,-.38]],.003,wire,tdis);
+      const tsuc=ref("tsuc");box(.94,.77,-.26,.022,.022,.03,dark,tsuc);pipe([[.94,.77,-.28],[.85,.85,-.37],[.7,1.05,-.38]],.003,wire,tsuc);
+    }
     const fallenLeaves=group(coil);
     const leafGeo=new T.SphereGeometry(1,6,4),leafSpecs=[[],[],[]];
     for(let i=0;i<110;i++){
