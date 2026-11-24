@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.25.0 – 2026-11-24
+
+### Igra 3D – nalogi iz igre Teren
+- Trije novi nalogi v igri 3D: **11 Klokotanje v vseh ceveh** (zrak in premalo vode), **12 Varnostni ventil kaplja**
+  (raztezna posoda brez predtlaka, nova raztezna posoda na radiatorski postaji) in **13 Enota v ledu** (odtajevanje ne
+  steče; tuljavo 4-potnega ventila zamenja elektro usposobljena oseba).
+- Strani okvar imajo poleg »Vadi v igri Teren« še »Vadi v igri 3D« – povezava odpre izbrani nalog, tudi če še ni odklenjen.
+- V meniju »Vaja« in na domači strani se igra imenuje »Igra 3D«.
+
 ## 0.24.1 – 2026-11-24
 
 - Domača stran brez opombe »Vsebina še ni strokovno pregledana …«.

@@ -182,6 +182,13 @@ window.createProbeRig=function(T,scene,kit){
   box(screw,black,0,0,.0305,.043,.005,.002);
   pipe(vent,gold,V(-.015,-.028,.008),V(-.037,-.067,.036),.011);
   tag(bay,'ODZRAČEVALNIK',-.851,1.412,.005,.62);
+  const vessel=group(bay,-1.22,1.75,.13,'radVessel');
+  const vesselRed=finish(0xb3412f,.25,.42);
+  pipe(vessel,vesselRed,V(0,-.15,0),V(0,.15,0),.11);
+  pipe(vessel,steel,V(0,-.15,0),V(0,-.21,0),.03);
+  pipe(vessel,gold,V(0,.15,0),V(0,.19,0),.018);
+  pipe(bay,copper,V(-1.22,1.54,.13),V(-1.22,.475,.13),.016);
+  tag(bay,'RAZTEZNA POSODA',-1.13,2.02,.005,.5);
   const cup=group(bay,-1.103,.478,.259,'radCup');
   box(bay,oak,-1.11,.414,.202,.46,.028,.351);
   box(cup,cloth,-.012,-.047,.009,.235,.018,.154);
@@ -221,7 +228,7 @@ window.createProbeRig=function(T,scene,kit){
   const lamp=box(control,activeLed,0,.103,.023,.05,.018,.015);
   tag(control,'OBTOK',0,-.149,0,.176);
   function sync(f){
-   bay.visible=f.caseIndex>=6&&f.caseIndex<=9;
+   bay.visible=(f.caseIndex>=6&&f.caseIndex<=9)||f.caseIndex===10||f.caseIndex===11;
    bay.position.x=f.caseIndex===9?4.45:-4.55;bay.position.z=f.caseIndex===9?-1.95:-1.92;
    if(!bay.visible)return;
    const step=f.radStep||0,off=step>=1&&step<=4&&f.phase==='procedure';
@@ -270,7 +277,7 @@ window.createProbeRig=function(T,scene,kit){
  const wires=[cable(),cable()];
  function sync(f){field=f;active=null;
   flow.visible=f.caseIndex!==9;hot.visible=cold.visible=f.caseIndex!==4&&f.caseIndex!==9;boiler.visible=rad.visible=f.caseIndex===4;
-  if(f.caseIndex>=6&&f.caseIndex<=9&&!radiatorBay)radiatorBay=createRadiatorBay();
+  if(((f.caseIndex>=6&&f.caseIndex<=9)||f.caseIndex===10||f.caseIndex===11)&&!radiatorBay)radiatorBay=createRadiatorBay();
   if(f.caseIndex===9&&!bufferBay)bufferBay=createBufferBay();
   const buffering=f.caseIndex===9&&!!bufferBay,activePorts=buffering?bufferPorts:standardPorts,activeHeads=buffering?bufferHeads:standardHeads;
   for(const id of ['up','down','supply','return','boiler','radiator','bufferIn','bufferOut','secUp','secDown']){

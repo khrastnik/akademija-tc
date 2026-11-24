@@ -10,6 +10,16 @@ const inGame = new Map<string, { id: string; name: string }[]>();
 for (const [fid, u] of Object.entries(loadTerenUcenje().faults))
   for (const part of u.parts) inGame.set(part, [...(inGame.get(part) ?? []), { id: fid, name: terenName.get(fid) ?? fid }]);
 const parts = new Map(loadSim().parts.map((p) => [p.id, p]));
+// obratna povezava z igro 3D (public/termoteren): številka naloga se odpre s ?nalog=N
+const NALOGI_3D: Record<number, string> = {
+  1: 'Mlačni radiatorji', 2: 'Po vetrovni noči', 3: 'Opoldanski mraz', 4: 'Prvi jesenski zagon', 5: 'Topla voda, hladna hiša',
+  6: 'Sporna meritev', 7: 'Hladna soba na podstrešju', 8: 'Hladna soba v pritličju', 9: 'Obisk v Tržiču', 10: 'Obisk v Žireh',
+  11: 'Klokotanje v vseh ceveh', 12: 'Varnostni ventil kaplja', 13: 'Enota v ledu',
+};
+const IGRA_3D: Record<string, number[]> = {
+  filter: [1], uparjalnik: [2, 13], ventilator: [2], 'zunanji-senzor': [3], obtocna: [4, 11], tripotni: [5], pretok: [6],
+  radiator: [7, 8, 11], krmilnik: [9], sekundarna: [10], zalogovnik: [10], raztezna: [12, 11], varnostni: [12], stiripotni: [13],
+};
 const GROUP_ORDER = ['hladivo', 'voda', 'krmiljenje'] as const;
 const GROUP_LABEL: Record<string, string> = { hladivo: 'Krog hladiva', voda: 'Vodni krog', krmiljenje: 'Krmiljenje in senzorji' };
 const WHO: Record<string, { label: string; short: string }> = {
@@ -118,6 +128,16 @@ const items = repairs
                   <ul>
                     {inGame.get(r.part)!.map((g) => (
                       <li><a href={`${url('teren')}?vaja=${g.id}`}>{g.name} →</a></li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {IGRA_3D[r.part] && (
+                <div class="ingame">
+                  <h3>🧊 Vadi v igri 3D</h3>
+                  <ul>
+                    {IGRA_3D[r.part].map((n) => (
+                      <li><a href={`${url('termoteren/')}?nalog=${n}`}>Nalog {n} · {NALOGI_3D[n]} →</a></li>
                     ))}
                   </ul>
                 </div>

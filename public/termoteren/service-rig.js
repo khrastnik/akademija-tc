@@ -179,6 +179,10 @@
       const catcher=box(g,0,0,.021,.47,.73,.025,keep(new T.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false})));
       catcher.castShadow=catcher.receiveShadow=false;leaves.push(g);
     }
+    const iceMat=material(0xe6f1f5,.05,.32);iceMat.transparent=true;iceMat.opacity=.86;
+    const ice=group(fixtures,-.45,1.11,-.535);ice.userData.part='coil';
+    box(ice,0,0,0,1.62,1.28,.034,iceMat);
+    for(let i=0;i<14;i++)box(ice,-.75+i*.115,-.61-(i%3)*.012,.02,.05,.07+(i%4)*.025,.03,iceMat);
     const shaded=group(fixtures,.72,1.71,-1.97,'newMount');
     box(shaded,0,0,0,.198,.275,.036,zinc);
     box(shaded,0,.165,.07,.32,.028,.225,black);
@@ -276,6 +280,7 @@
       leaves.forEach((g,i)=>{
         g.visible=level===1&&!fixed&&!clean.includes(i);setTag(g,repair?'leaf:'+i:null);g.userData.part='coil';g.scale.set(1,1,1);
       });
+      ice.visible=level===12&&!fixed;
       shaded.visible=level===2;
       setTag(shaded,repair&&removed&&level===2?'newMount':null);
       wallSensor.visible=level!==5&&!(level===2&&removed);

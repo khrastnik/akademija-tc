@@ -25,7 +25,7 @@ document.querySelectorAll('[data-icon]').forEach(el=>{el.innerHTML=icon(el.datas
 const toolInfo={inspect:['Vizualni pregled','Pregled komponent'],meter:['Servisni terminal','Podatki regulatorja'],thermo:['Termometer','Meritev temperature'],flow:['Merilnik pretoka','Obtočni preizkus']};
 const parts={control:'Regulator',filter:'Vodni filter',pump:'Obtočna črpalka',coil:'Uparjalnik',fan:'Ventilator',sensor:'Tipalo',valve:'Ventili',power:'Napajalni sklop',hydro:'Dvižni in povratni vod'};
 Object.assign(parts,{emitter:'Radiator',radHead:'Termostatska glava',radGauge:'Manometer'});
-parts.secondaryPump='Sekundarna obtočna črpalka';
+parts.secondaryPump='Sekundarna obtočna črpalka';parts.radVessel='Raztezna posoda';
 const key='termoteren.v1';
 const fresh=()=>({phase:'measure',read:[],verified:[],step:0,mistakes:0,started:false,part:'control',tool:'inspect',last:null,opened:false});
 let db={active:0,jobs:{},scores:{}};
@@ -40,7 +40,7 @@ const evidence=arr=>required().filter(i=>arr.includes(i)).length;
 const done=i=>Number.isFinite(db.scores[i]);
 const available=i=>!!CASES[i]&&(!i||CASES[i].station||CASES[i].independent||done(i-1));
 const linkedCase=Number(new URLSearchParams(location.search).get('nalog'))-1;
-if(Number.isInteger(linkedCase)&&available(linkedCase))db.active=linkedCase;
+if(Number.isInteger(linkedCase)&&CASES[linkedCase])db.active=linkedCase;
 function notice(msg){$('toast').textContent=msg;$('toast').className='show';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').className='',3400)}
 function btn(label,action,cls='secondary',value=''){return '<button class="'+cls+'" data-action="'+action+'" data-value="'+value+'">'+label+'</button>'}
 function refresh(){
@@ -216,6 +216,15 @@ function independentHint(c,j,more=false){
 }
 function showConfiguration(){
  const j=job(),c=current();if(!c.independent||j.phase!=='procedure')return;
+ if(c.adjustment?.choices){
+  const a=c.adjustment;
+  openDialog(a.title,'<p>'+a.intro+'</p><form id="pumpSetting"><label for="pumpLevel">'+(a.label||'Izbira')+'</label><select id="pumpLevel" required><option value="">Izberi</option>'+a.choices.map((s,i)=>'<option value="'+i+'">'+s+'</option>').join('')+'</select><button class="primary">'+(a.confirm||'Potrdi')+'</button><p id="settingMessage" role="status"></p></form>');
+  $('pumpSetting').onsubmit=e=>{
+   e.preventDefault();
+   if($('pumpLevel').value===''||Number($('pumpLevel').value)!==a.expected){$('settingMessage').textContent=a.wrong||'Ta izbira ne ustreza nalogu.';return}
+   finishAdjustment();
+  };return;
+ }
  if(c.adjustment){
   openDialog(c.adjustment.title,'<p>Trenutna stopnja je III. Na servisni kartici za ta objekt sta zapisani stopnja II in cilj 14 l/min.</p><form id="pumpSetting"><label for="pumpLevel">Nova stopnja</label><select id="pumpLevel" required><option value="">Izberi stopnjo</option><option value="1">I</option><option value="2">II</option><option value="3">III</option></select><button class="primary">Nastavi črpalko</button><p id="settingMessage" role="status"></p></form>');
   $('pumpSetting').onsubmit=e=>{
@@ -233,7 +242,7 @@ function showConfiguration(){
 }
 function finishAdjustment(){
  const f=physical(),j=job();f.configOpen=false;f.fixed=true;j.phase='verify';j.last=null;delete j.chosenTest;save();
- $('dialog').close();if(inModel&&!modelFallback)PumpView.sync();refresh();notice('Nastavitev shranjena. Preteklo je 20 simuliranih minut.');
+ $('dialog').close();if(inModel&&!modelFallback)PumpView.sync();refresh();notice(current().adjustment?.done||'Nastavitev shranjena. Preteklo je 20 simuliranih minut.');
 }
 function chooseEvidence(c,j){
  return '<p>'+(c.evidenceQuestion||'Katera tvoja meritev najbolje loči to razlago od nezadostne moči naprave?')+'</p>'+j.read.map(i=>btn(c.tests[i].label,'support','choice',i)).join('')+btn('Nazaj k meritvam','backToTests','smallBtn');
@@ -351,6 +360,8 @@ manualJobs.push(
  {name:'Odzračevanje radiatorja',hint:'Kdaj zapreš odzračevalnik?',choices:['Ob prvem pisku zraka','Ko priteče enakomeren curek vode','Šele ko se radiator izprazni'],correct:1},
  {name:'Preizkus zatiča',hint:'Kateri odziv potrdi, da je zatič prost?',choices:['Po rahlem pritisku se sam vrne','Po pritisku ostane ugreznjen','Glava se odvije z nosilca'],correct:0}
 );
+manualJobs[10]={name:'Dolivanje vode',hint:'Do katerega tlaka doliješ hladen sistem?',choices:['Do zagonskega tlaka iz zapisnika','Do 3 bar, da je rezerva','Dokler ne kaplja varnostni ventil'],correct:0};
+manualJobs[11]={name:'Predtlak raztezne posode',hint:'Kdaj izmeriš predtlak posode?',choices:['Ko na vodni strani ni tlaka','Med ogrevanjem','Kadarkoli, ni pomembno'],correct:0};
 const phases=['measure','diagnose','repair','procedure','verify','done'];
 function bench(){
  const j=job(),c=current(),ix=phases.indexOf(j.phase),checking=j.phase==='verify',arr=checking?j.verified:j.read;

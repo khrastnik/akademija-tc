@@ -152,8 +152,8 @@ window.FieldRules=(()=>{
   }
   return no('Poišči mesto naslednjega posega.');
  }
- Object.assign(parts,{radHead:'Termostatska glava',radGauge:'Manometer',emitter:'Radiator',secondaryPump:'Sekundarna obtočna črpalka'});
- Object.assign(labels,{radControl:'Stikalo obtočnega preizkusa',radCup:'Posodica in krpa',radVent:'Odzračevalnik',radPin:'Zatič ventila'});
+ Object.assign(parts,{radVessel:'Raztezna posoda',radHead:'Termostatska glava',radGauge:'Manometer',emitter:'Radiator',secondaryPump:'Sekundarna obtočna črpalka'});
+ Object.assign(labels,{radVessel:'Raztezna posoda',radControl:'Stikalo obtočnega preizkusa',radCup:'Posodica in krpa',radVent:'Odzračevalnik',radPin:'Zatič ventila'});
  labels.regulatorScreen='Zaslon regulatorja';
  jobs.push('Odzrači radiator','Sprosti zatič ventila');
  return {names,jobs,label,target,action,fresh};

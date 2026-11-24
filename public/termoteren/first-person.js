@@ -52,7 +52,7 @@ window.createFirstPerson=function({T,host,canvas,scene,camera,kit,service,callba
   const level=state().f.caseIndex;
   if(rect(1.29,1.68,-1.83,.30)||(level!==9&&rect(1.72,2.49,-.84,-.15)))return false;
   if(level===9&&(rect(2.12,3.18,-1.82,-1.05)||rect(3.25,5.98,-2.05,-.91)))return false;
-  if(level>=6&&level<=8&&rect(-6,-3.08,-2.05,-.91))return false;
+  if(((level>=6&&level<=8)||level===10||level===11)&&rect(-6,-3.08,-2.05,-.91))return false;
   return !(state().f.opened&&rect(2.86,3.83,.59,1.18))
  }
  function idOf(obj){

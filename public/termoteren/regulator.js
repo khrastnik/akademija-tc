@@ -10,6 +10,9 @@ window.Regulator=(()=>{
   {status:'Zahteva za ogrevanje',history:'Regulator je poslal zahtevo za preklop na ogrevanje prostorov.'},
   {status:'Zagon zadržan',history:'Po vklopu obtočne črpalke regulator ni prejel potrditve pretoka.',alarm:flowAlarm}
  ];
+ cases[10]={status:'Ogrevanje',history:'Ob zagonu po menjavi radiatorja je bila zabeležena napaka pretoka, nato je kroženje steklo.'};
+ cases[11]={status:'Ogrevanje',history:'Ogrevanje deluje. Regulator napak ne beleži.'};
+ cases[12]={status:'Ogrevanje',history:'V 24 urah 6 zahtev za odtajevanje, nobeno ni bilo končano.',alarm:{code:'D03',message:'Odtajevanje ni končano',effect:'Naprava ponavlja zahtevo, ker se led ne stali.'}};
  function snapshot(f,c){
   const entry=cases[f.caseIndex]||{status:'Ogrevanje',history:'Zahteva za ogrevanje prostorov je aktivna.'};
   const repaired=!!f.fixed,off=!!f.isolated;

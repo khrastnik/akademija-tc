@@ -111,7 +111,7 @@ window.Mentor = (() => {
    return null;
  }
  function get(n,stage){
-   const s=stages.indexOf(stage),row=decisions[n][s],shift=(n+2*s+1)%3;
+   const s=stages.indexOf(stage),row=(CASES[n]?.mentor||decisions[n])[s],shift=(n+2*s+1)%3;
    return {title:titles[s],question:row[0],options:[0,1,2].map(k=>{
      const i=(k+shift)%3;return {label:row[1+i*2],why:row[2+i*2],correct:i===0};
    })};
