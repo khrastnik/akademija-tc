@@ -45,3 +45,31 @@ body.playing .stage.working.fps{position:fixed;inset:0;width:100%;height:100%;he
 .hmiDisplay h3,.hmiDisplay h4{margin:.55rem 0;color:#b9e2d8}.hmiDisplay p,.hmiDisplay ol{margin:.5rem 0}
 .hmiRow{border-bottom:1px solid #456066;padding:.55rem 0;align-items:baseline}.hmiRow strong{text-align:right;font-family:Consolas,monospace;color:#e3f4df}
 .hmiPanel nav{display:flex;flex-wrap:wrap;padding:.65rem;justify-content:stretch}.hmiTab{flex:1;min-height:40px;background:#344346;border:1px solid #596b6b;color:#e6eeee;border-radius:4px;cursor:pointer}.hmiTab[aria-pressed=true]{border-color:#bbd6aa;background:#c3dcb6;color:#192722}
+
+/* Izbira naloga in zaključek – videz igre */
+dialog:has(.missionGrid){width:min(900px,calc(100vw - 28px))}
+.missionSum{margin:0 0 12px;color:#c7d1cc;font-size:14px}.missionSum b{color:var(--orange)}
+.missionGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.mission{display:grid;gap:6px;align-content:start;text-align:left;min-height:132px;padding:12px 13px;border:1px solid #475254;border-radius:10px;background:linear-gradient(160deg,#253033,#1b2224);transition:transform .12s,border-color .12s}
+.mission:not(:disabled):hover{transform:translateY(-2px);border-color:var(--orange);filter:none}
+.mission.current{border-color:var(--orange);box-shadow:0 0 0 1px var(--orange) inset}
+.mission.solved{background:linear-gradient(160deg,#25332b,#1b2421)}
+.mission:disabled{opacity:.5}
+.mTop{display:flex;align-items:center;justify-content:space-between}
+.mNum{font:700 15px Consolas,monospace;color:var(--orange)}
+.mission strong{font-size:16px;line-height:1.2}
+.mission small{font-size:12px;color:var(--muted)}
+.mState{margin-top:auto;font-size:12px;font-weight:600;color:#e2c8a8}
+.mission.solved .mState{color:var(--mint)}
+.stars{display:inline-flex;gap:1px;font-size:15px;line-height:1}.stars b{color:#4a5455}.stars b.on{color:#ffc35a;text-shadow:0 0 6px #ffb34766}
+.stars.big{font-size:44px;gap:6px}
+.resultCard{display:grid;justify-items:center;gap:6px;text-align:center;padding:18px 14px;margin:10px 0 18px;border:1px solid #8c6a45;border-radius:12px;background:radial-gradient(circle at 50% 0,#3a2e20,#1b2022 70%)}
+.resultCard small{font:600 12px Consolas,monospace;letter-spacing:1.5px;text-transform:uppercase;color:#ffc28a}
+.resultCard strong{font-size:30px;color:var(--orange)}
+.resultCard p{margin:0;color:#dfe6e1;line-height:1.45}
+.resultCard span:last-child{font-size:12px;color:var(--muted)}
+@media(prefers-reduced-motion:no-preference){.resultCard .stars b.on{animation:starPop .45s ease-out both}.resultCard .stars b:nth-child(2){animation-delay:.15s}.resultCard .stars b:nth-child(3){animation-delay:.3s}}
+@keyframes starPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.25);opacity:1}100%{transform:scale(1)}}
+
+.adjDone{margin:10px 0 14px;padding-left:22px}.adjDone li{margin:8px 0;line-height:1.4}.adjDone b{display:block;font-weight:600}.adjDone small{display:block;color:#b8c3bf;margin-top:3px}
+.adjAsk{font-weight:700;color:#ffc28a;margin:14px 0 4px}

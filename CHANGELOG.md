@@ -1,5 +1,17 @@
 # Spremembe
 
+## 0.26.0 – 2026-11-24
+
+### Igra 3D – prvi del prenove
+- **Nalog 13 popravljen:** led je zdaj viden že s poti (levi bok uparjalnika, led pod enoto, ledene sveče), ne le na zadnji
+  strani, ki se je ni videlo.
+- **Menjava tuljave po korakih:** igralec izbere vrstni red šestih korakov (izklop, preverjanje napetosti, meritev tuljave,
+  snemanje, nova tuljava, preizkus); pri vsakem piše, kdo ga opravi in zakaj. Električne korake opravi elektro
+  usposobljena oseba; krog hladiva se ne odpre.
+- **Izbira naloga** je mreža kart z zvezdicami (do 3 na nalog), stanjem in skupnim napredkom.
+- **Zaključek naloga** pokaže zvezdice, XP in kratko sporočilo glede na napačne odločitve.
+- **Razlage nalogov 1–6** prepisane v kratke, preproste stavke.
+
 ## 0.25.0 – 2026-11-24
 
 ### Igra 3D – nalogi iz igre Teren

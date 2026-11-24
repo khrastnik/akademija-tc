@@ -38,6 +38,12 @@ const seq=n=>String(n+1).padStart(2,'0');
 const required=()=>current().tests.map((t,i)=>t.required?i:-1).filter(i=>i>=0);
 const evidence=arr=>required().filter(i=>arr.includes(i)).length;
 const done=i=>Number.isFinite(db.scores[i]);
+const starsOf=s=>Number.isFinite(s)?(s>=100?3:s>=70?2:1):0;
+const starRow=(n,big)=>'<span class="stars'+(big?' big':'')+'" role="img" aria-label="'+n+' od 3 zvezdic">'+[0,1,2].map(k=>'<b class="'+(k<n?'on':'')+'">★</b>').join('')+'</span>';
+function resultCard(j){
+ const n=starsOf(j.score),msg=n===3?'Brez napačne odločitve. Tako dela diagnostik.':n===2?'Nalog je rešen, nekaj odločitev pa si moral ponoviti.':'Nalog je rešen. Ponovi ga in poskusi brez napačnih odločitev.';
+ return '<section class="resultCard"><small>Nalog zaključen</small>'+starRow(n,true)+'<strong>'+j.score+' XP</strong><p>'+msg+'</p><span>Napačne odločitve · '+j.mistakes+'</span></section>';
+}
 const available=i=>!!CASES[i]&&(!i||CASES[i].station||CASES[i].independent||done(i-1));
 const linkedCase=Number(new URLSearchParams(location.search).get('nalog'))-1;
 if(Number.isInteger(linkedCase)&&CASES[linkedCase])db.active=linkedCase;
@@ -214,8 +220,13 @@ function independentHint(c,j,more=false){
  j.hints[stage]=count;save();
  openDialog('Namig',hints.slice(0,count).map((h,i)=>'<div class="record"><strong>Namig '+(i+1)+'</strong><p>'+h+'</p></div>').join('')+(count<hints.length?btn('Podrobnejši namig','moreHint'):''));
 }
+function stepDialog(c,j,msg){
+ const a=c.adjustment,done=a.steps.slice(0,j.adjStep),rest=a.steps.map((_,i)=>i).filter(i=>i>=j.adjStep).sort((x,y)=>((x*7+3)%5)-((y*7+3)%5));
+ openDialog(a.stepsTitle,'<p>'+a.stepsIntro+'</p>'+(done.length?'<ol class="adjDone">'+done.map(s=>'<li><b>'+s.text+'</b><small>'+s.who+' · '+s.why+'</small></li>').join('')+'</ol>':'')+'<p class="adjAsk">Korak '+(j.adjStep+1)+' od '+a.steps.length+' · kaj narediš zdaj?</p>'+rest.map(i=>btn(a.steps[i].text+'<small>'+a.steps[i].who+'</small>','adjStep','choice',i)).join('')+(msg?'<p class="bad" role="status">'+msg+'</p>':''));
+}
 function showConfiguration(){
  const j=job(),c=current();if(!c.independent||j.phase!=='procedure')return;
+ if(c.adjustment?.steps&&(j.adjStep||0)<c.adjustment.steps.length){j.adjStep??=0;stepDialog(c,j);return}
  if(c.adjustment?.choices){
   const a=c.adjustment;
   openDialog(a.title,'<p>'+a.intro+'</p><form id="pumpSetting"><label for="pumpLevel">'+(a.label||'Izbira')+'</label><select id="pumpLevel" required><option value="">Izberi</option>'+a.choices.map((s,i)=>'<option value="'+i+'">'+s+'</option>').join('')+'</select><button class="primary">'+(a.confirm||'Potrdi')+'</button><p id="settingMessage" role="status"></p></form>');
@@ -296,7 +307,7 @@ function fieldTablet(){
   if(diagnosis)html+=btn('Preberi meritve','notes','smallBtn');
   if(diagnosis&&c.independent)html+=btn('Nazaj k meritvam','backToTests','smallBtn');
  }else if(j.phase==='done'){
-  html+='<div class="score">'+j.score+' XP</div>'+lessonReport(c,j)+btn(db.active<CASES.length-1?'Naslednji nalog':'Vsi nalogi',db.active<CASES.length-1?'next':'missions','primary')+btn('Servisni dnevnik','notes')+btn('Ponovi nalog','replay','smallBtn');
+  html+=resultCard(j)+lessonReport(c,j)+btn(db.active<CASES.length-1?'Naslednji nalog':'Vsi nalogi',db.active<CASES.length-1?'next':'missions','primary')+btn('Servisni dnevnik','notes')+btn('Ponovi nalog','replay','smallBtn');
  }else html+='<p>'+c.repairs[c.fix]+'</p><ol class="prose">'+c.procedure.map(s=>'<li>'+s+'</li>').join('')+'</ol><p class="meta">Naslednji cilj · '+targetName(FieldRules.target(f,j,c))+'</p><aside class="lessonTip"><strong>Zakaj ta korak?</strong><p>'+lessonStep(c,f,j)+'</p></aside>';
  if(feedback)html+='<p class="bad">'+feedback+'</p>';openDialog('Delovni nalog',html)
 }
@@ -390,7 +401,7 @@ function bench(){
   html+='<h2>Izvedba posega</h2><p class="muted">'+c.repairs[c.fix]+'. Izberi naslednji korak.</p><div class="meta">Korak '+(j.step+1)+' / '+c.procedure.length+'</div>';
   const order=[[2,0,1],[2,1,0],[1,2,0]][db.active%3];html+=order.filter(i=>i>=j.step).map(i=>btn(c.procedure[i],'step','choice',i)).join('');
  }else if(j.phase==='done'){
-  html+='<div class="success">'+icon('check')+' Zaključeno</div><h2>'+c.title+'</h2><div class="score">'+j.score+' XP</div>'+lessonReport(c,j)+'<p class="meta">Napačne odločitve · '+j.mistakes+'</p>'+btn(db.active<CASES.length-1?'Naslednji nalog':'Pregled vseh nalogov',db.active<CASES.length-1?'next':'missions','primary')+btn('Servisni dnevnik','notes')+btn('Ponovi nalog','replay','smallBtn');
+  html+='<h2>'+c.title+'</h2>'+resultCard(j)+lessonReport(c,j)+btn(db.active<CASES.length-1?'Naslednji nalog':'Pregled vseh nalogov',db.active<CASES.length-1?'next':'missions','primary')+btn('Servisni dnevnik','notes')+btn('Ponovi nalog','replay','smallBtn');
  }
  if(!physical().isolated&&!physical().opened)html+=btn('Zaslon regulatorja','regPage','smallBtn','overview');
  if(feedback)html+='<p role="status" class="bad">'+feedback+'</p>';$('workbench').innerHTML=html;
@@ -402,6 +413,12 @@ function perform(action,val){
  if(c.independent){
   if(['why','hint','moreHint'].includes(action)){independentHint(c,j,action==='moreHint');return}
   if(action==='configuration'){showConfiguration();return}
+  if(action==='adjStep'&&j.phase==='procedure'&&c.adjustment?.steps){
+   const v=Number(val);
+   if(v===j.adjStep){j.adjStep++;save();if(j.adjStep>=c.adjustment.steps.length)showConfiguration();else stepDialog(c,j);}
+   else{j.mistakes++;save();stepDialog(c,j,'»'+c.adjustment.steps[v].text+'« pride kasneje. Kaj mora biti narejeno prej?');}
+   return;
+  }
   if(action==='testMenu'&&['measure','verify'].includes(j.phase)){showTestMenu();return}
   if(action==='pickTest'&&['measure','verify'].includes(j.phase)&&c.tests[Number(val)]){
    if(physical().measurement){openDialog('Meritev v teku','<p>Dokončaj odčitek in odstrani sonde ali prekliči meritev na instrumentu.</p>');return}
@@ -465,7 +482,11 @@ function perform(action,val){
 }
 function loadCase(i){if(!available(i))return;$('dialog').close();leave();db.active=i;if(new URLSearchParams(location.search).has('nalog')){const url=new URL(location.href);url.searchParams.set('nalog',i+1);history.replaceState(null,'',url)}feedback='';save();refresh();window.scrollTo(0,0)}
 function openDialog(title,html){if(inModel&&!modelFallback)PumpView.releaseMouse();$('dialogTitle').textContent=title;$('dialogBody').innerHTML=html;if(!$('dialog').open)$('dialog').showModal()}
-function missions(){openDialog('Servisni nalogi',CASES.map((c,i)=>{const locked=!available(i);return '<button class="row" '+(locked?'disabled':'')+' data-action="job" data-value="'+i+'"><span class="num">'+seq(i)+'</span><span><strong>'+c.title+'</strong><small>'+c.location+' · '+(done(i)?db.scores[i]+' XP':locked?'Zaklenjeno':c.station?'Primerjalna vaja':i===db.active?'Aktivni nalog':'Na voljo')+'</small></span><i>'+icon(locked?'lock':done(i)?'check':'clipboard')+'</i></button>'}).join(''))}
+function missions(){
+ const total=CASES.reduce((s,_,i)=>s+starsOf(db.scores[i]),0);
+ openDialog('Servisni nalogi','<p class="missionSum">Zbrane zvezdice · <b>'+total+' / '+CASES.length*3+'</b> · rešenih nalogov '+Object.keys(db.scores).length+' / '+CASES.length+'</p><div class="missionGrid">'+CASES.map((c,i)=>{const locked=!available(i);
+  const state=locked?'Reši prejšnji nalog':done(i)?db.scores[i]+' XP':i===db.active?'Aktivni nalog':c.independent?'Samostojni nalog':c.station?'Radiatorska postaja':'Na voljo';
+  return '<button class="mission'+(i===db.active?' current':'')+(done(i)?' solved':'')+'" '+(locked?'disabled':'')+' data-action="job" data-value="'+i+'"><span class="mTop"><span class="mNum">'+seq(i)+'</span>'+(locked?'<i>'+icon('lock')+'</i>':starRow(starsOf(db.scores[i])))+'</span><strong>'+c.title+'</strong><small>'+c.location+' · '+c.weather+'</small><span class="mState">'+state+'</span></button>'}).join('')+'</div>')}
 function notes(){
  const j=job(),c=current();
  let html='<div class="step">Nalog '+seq(db.active)+'</div><h3>'+c.title+'</h3>';

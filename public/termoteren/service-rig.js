@@ -179,10 +179,17 @@
       const catcher=box(g,0,0,.021,.47,.73,.025,keep(new T.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false})));
       catcher.castShadow=catcher.receiveShadow=false;leaves.push(g);
     }
-    const iceMat=material(0xe6f1f5,.05,.32);iceMat.transparent=true;iceMat.opacity=.86;
-    const ice=group(fixtures,-.45,1.11,-.535);ice.userData.part='coil';
-    box(ice,0,0,0,1.62,1.28,.034,iceMat);
-    for(let i=0;i<14;i++)box(ice,-.75+i*.115,-.61-(i%3)*.012,.02,.05,.07+(i%4)*.025,.03,iceMat);
+    // Led pri nalogu 13: zadnja in leva stran uparjalnika, led pod enoto in ledene sveče – viden že s poti.
+    const iceMat=material(0xeef7fa,.02,.22);iceMat.transparent=true;iceMat.opacity=.9;
+    const crust=material(0xf6fbfc,0,.6);
+    const ice=group(fixtures,0,0,0);ice.userData.part='coil';
+    box(ice,-.45,1.11,-.54,1.64,1.30,.05,iceMat);
+    box(ice,-1.36,1.11,-.02,.05,1.30,.88,iceMat);
+    for(let i=0;i<9;i++)box(ice,-1.39,.55+i*.14,-.02,.025,.05,.9,crust);
+    box(ice,-.45,.47,.0,1.72,.06,1.02,crust);
+    box(ice,-.45,.15,.62,2.2,.04,.5,crust);
+    for(let i=0;i<22;i++){const h=.05+((i*37)%5)*.03;box(ice,-1.25+i*.078,.43-h/2,.5,.018,h,.018,iceMat)}
+    for(let i=0;i<12;i++){const h=.04+((i*23)%4)*.03;box(ice,-1.38,.43-h/2,-.4+i*.07,.016,h,.016,iceMat)}
     const shaded=group(fixtures,.72,1.71,-1.97,'newMount');
     box(shaded,0,0,0,.198,.275,.036,zinc);
     box(shaded,0,.165,.07,.32,.028,.225,black);

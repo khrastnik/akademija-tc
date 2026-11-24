@@ -3,74 +3,74 @@ window.ServiceLesson = (() => {
   const lessons = [
     {
       questions: {
-        'pump.flow': 'Z ultrazvočnim merilnikom preveriš, koliko vode dejansko kroži. Primerjaj pretok z zapisnikom zagona pri isti nastavitvi črpalke.',
-        'filter.inspect': 'S svetilko preberi indikator na filtru. Pokaže razliko tlaka pred mrežico in za njo. Tako preveriš, ali voda težko prehaja prav skozi filter.',
-        'control.meter': 'Na terminalu odpri zadnji cikel. V njem vidiš, kaj se je dogajalo tik pred izklopom, tudi če naprava zdaj miruje.',
-        'valve.inspect': 'Poglej oznaki položaja na obeh servisnih ventilih. Delno zaprt ventil lahko omeji pretok tudi pri delujoči črpalki.',
-        'hydro.thermo': 'T1 pritrdi na cev, ki vodi ogreto vodo proti radiatorjem, T2 pa na cev, po kateri se vrača. Razlika pove, za koliko se voda na poti ohladi.'
+        'pump.flow': 'Z ultrazvočnim merilnikom izmeriš, koliko litrov vode na minuto res teče po ceveh. Primerjaj z zapisnikom zagona – tam piše, koliko je teklo, ko je bila naprava nova.',
+        'filter.inspect': 'S svetilko poglej kazalec na filtru. Rdeče polje pomeni, da voda skozi mrežico filtra težko prehaja.',
+        'control.meter': 'Na terminalu odpri zadnji cikel ogrevanja. Vidiš, kaj se je zgodilo tik preden se je naprava ustavila.',
+        'valve.inspect': 'Poglej oba servisna ventila. Če je kateri napol zaprt, tudi dobra črpalka ne potisne dovolj vode.',
+        'hydro.thermo': 'Eno tipalo daj na cev, ki pelje toplo vodo k radiatorjem, drugo na cev, po kateri se voda vrača. Razlika pove, koliko se je voda na poti ohladila.'
       },
-      cause: 'Nečistoče so zamašile mrežico filtra na povratnem vodu. Indikator je pokazal velik padec tlaka že pri majhnem pretoku.',
-      effect: 'Skozi radiatorje je krožilo premalo vode, zato so ostali mlačni. Zaščita je nato prekinila ogrevanje.',
-      fix: 'Po čiščenju in ponovni vgradnji vložka se je pretok pri isti nastavitvi črpalke vrnil s 6 na 19 l/min. Indikator je prešel v zeleno polje.',
-      lesson: 'Majhen pretok pove, da voda težko kroži. Šele primerjava tlaka na obeh straneh filtra pokaže, da je ovira v njegovi mrežici.'
+      cause: 'Mrežica filtra je bila zamašena z blatom. Kazalec na filtru je bil v rdečem polju že pri majhnem pretoku.',
+      effect: 'Po radiatorjih je teklo premalo vode, zato so bili mlačni. Naprava se je zaradi premajhnega pretoka sama ustavila.',
+      fix: 'Po čiščenju mrežice je pretok spet 19 l/min namesto 6 l/min. Kazalec na filtru je v zelenem polju.',
+      lesson: 'Majhen pretok pove samo, da voda težko teče. Kje se zatika, pokaže šele kazalec na filtru.'
     },
     {
       questions: {
-        'coil.inspect': 'S svetilko preglej sesalno stran uparjalnika. Zrak mora skozi ozke prehode med lamelami, da lahko naprava iz okolice prevzame toploto.',
-        'fan.meter': 'Na terminalu primerjaj zahtevane in dejanske vrtljaje ventilatorja. Tako preveriš, ali se odziva na ukaz, četudi se sliši glasneje kot običajno.',
-        'control.meter': 'Temperaturo uparjanja primerjaj pri podobni zunanji temperaturi in moči. Tako lahko oceniš, kako se je po posegu spremenil prenos toplote iz zraka.',
-        'pump.flow': 'Izmeri še pretok vode. Če se ujema z zapisnikom zagona, lahko preiskavo usmeriš na zračno stran naprave.'
+        'coil.inspect': 'S svetilko poglej zadnjo stran zunanje enote. Zrak mora prosto teči med tankimi lamelami, sicer naprava iz zraka ne dobi toplote.',
+        'fan.meter': 'Na terminalu primerjaj, koliko vrtljajev ventilator mora imeti in koliko jih ima. Tako veš, ali se ventilator res vrti, kot mora.',
+        'control.meter': 'Preberi temperaturo uparjanja. Čim nižja je pri istem zunanjem zraku, tem težje naprava jemlje toploto iz zraka.',
+        'pump.flow': 'Izmeri še pretok vode. Če je tak kot ob zagonu, je vodna stran v redu in iščeš na zračni strani.'
       },
-      cause: 'Mokro listje je prekrilo dve tretjini sesalne površine uparjalnika. Ventilator je dosegel 675 od zahtevanih 680 vrt/min.',
-      effect: 'Skozi lamele je šlo premalo zraka. Naprava je iz zraka dobivala manj toplote in je pogosteje odtajala.',
-      fix: 'Po odstranitvi listja so bili prehodi med lamelami prosti. Pri primerljivih pogojih se je temperatura uparjanja dvignila z −12 °C na −3 °C.',
-      lesson: 'Ventilator se lahko pravilno vrti tudi ob zaprtih prehodih za zrak. Pred odločitvijo o menjavi motorja preveri vrtljaje in preglej površino izmenjevalnika.'
+      cause: 'Mokro listje je prekrilo dve tretjini zadnje strani zunanje enote. Ventilator se je vrtel pravilno.',
+      effect: 'Skozi lamele je šlo premalo zraka. Naprava je dobila premalo toplote in je zato pogosteje odtajevala.',
+      fix: 'Po čiščenju listja je zrak spet prosto tekel. Temperatura uparjanja se je dvignila z −12 °C na −3 °C.',
+      lesson: 'Ventilator se lahko vrti pravilno, zrak pa vseeno ne gre skozi. Preden menjaš motor, poglej lamele.'
     },
     {
       questions: {
-        'control.meter': 'Na terminalu preberi zunanjo temperaturo, ki jo uporablja regulator. Primerjaj jo z mejo, nad katero regulator prekine ogrevanje.',
-        'sensor.thermo': 'Sondo termometra postavi v senco, stran od segrete stene. Tako dobiš neodvisno meritev zraka za primerjavo s prikazom regulatorja.',
-        'control.inspect': 'Nastavitve ogrevalne krivulje primerjaj z zapisnikom zagona. Preverjaš, ali je kdo spremenil način, kako regulator določa temperaturo vode.'
+        'control.meter': 'Na terminalu preberi, kakšno zunanjo temperaturo vidi naprava. Primerjaj jo z mejo, nad katero naprava neha ogrevati.',
+        'sensor.thermo': 'Svoj termometer postavi v senco, stran od tople stene. Tako dobiš pravo temperaturo zraka in jo primerjaš s tisto, ki jo vidi naprava.',
+        'control.inspect': 'Primerjaj nastavitve ogrevanja z zapisnikom zagona. Preveriš, ali jih je kdo spremenil.'
       },
-      cause: 'Sonce je segrelo steno in zunanje tipalo. Regulator je prikazal 21 °C, v senci pa je bilo 6,1 °C.',
-      effect: 'Odčitek je presegel nastavljeno mejo ogrevanja 18 °C. Regulator je opoldne ustavil ogrevanje, čeprav je bilo zunaj še hladno.',
-      fix: 'Po prestavitvi tipala v senco je regulator pokazal 6,3 °C in spet dovolil ogrevanje. Referenčni termometer je pokazal 6,1 °C.',
-      lesson: 'Če se težava pojavlja le ob določeni uri, ponovi meritev takrat. S primerjavo v senci preveri vpliv sonca, preden spremeniš ogrevalno krivuljo.'
+      cause: 'Sonce je ogrelo steno in zunanje tipalo na njej. Naprava je mislila, da je zunaj 21 °C, v senci pa je bilo 6 °C.',
+      effect: 'Nad 18 °C zunaj naprava neha ogrevati. Zato je opoldne ugasnila, čeprav je bilo zunaj še mraz.',
+      fix: 'Tipalo je zdaj v senci. Naprava vidi 6,3 °C in spet ogreva.',
+      lesson: 'Če se težava pojavi samo ob določeni uri, meri takrat. Preden spremeniš nastavitve, preveri, kaj tipalo res meri.'
     },
     {
       questions: {
-        'pump.meter': 'Preveri tri podatke pogona: ali je dobil ukaz, kakšno hitrost sporoča in ali je zaznal blokado. Ukaz za vklop sam še ne potrdi vrtenja.',
-        'pump.flow': 'Z merilnikom na cevi preveri, ali se med ukazom črpalki voda res premika. Tako podatek pogona primerjaš z neodvisno meritvijo.',
-        'valve.inspect': 'Preglej položaj ventilov in tlak vode. Tako preveriš pogoje v krogu, preden iščeš vzrok v pogonu črpalke.'
+        'pump.meter': 'Na terminalu preveri tri stvari: ali je črpalka dobila ukaz, ali se vrti in ali javlja zastoj. Ukaz sam še ne pomeni, da se vrti.',
+        'pump.flow': 'Z merilnikom na cevi preveri, ali voda res teče, ko črpalka dobi ukaz. Tako preveriš podatek črpalke še z drugim instrumentom.',
+        'valve.inspect': 'Poglej ventile in tlak vode. Preden kriviš črpalko, preveri, da je voda v sistemu in da je pot odprta.'
       },
-      cause: 'Po poletnem mirovanju je rotor obtičal. Pogon je prejel ukaz, javil blokado in sporočil 0 vrt/min.',
-      effect: 'Obtočna črpalka ni pognala vode. Neodvisni merilnik je med ukazom pokazal 0 l/min in ogrevanje se ni zagnalo.',
-      fix: 'Vgrajeni program tega učnega modela je sprostil rotor. Pogon je nato dosegel 2100 vrt/min, na cevi pa je merilnik pokazal 18 l/min.',
-      lesson: 'Pri alarmu pretoka ločeno preveri ukaz, gibanje rotorja in tok vode. Po posegu potrdi tako vrtenje kot dejanski pretok.'
+      cause: 'Po poletju je os črpalke obtičala. Črpalka je dobila ukaz, a se ni zavrtela.',
+      effect: 'Voda ni tekla – merilnik je pokazal 0 l/min. Naprava zato ni začela ogrevati.',
+      fix: 'Program za sprostitev je os zavrtel. Črpalka ima 2100 vrtljajev na minuto, po cevi teče 18 l/min.',
+      lesson: 'Pri napaki pretoka preveri po vrsti: ukaz, vrtenje črpalke in ali voda res teče. Po popravilu preveri obe zadnji stvari.'
     },
     {
       questions: {
-        'control.meter': 'Na regulatorju preveri, kam trenutno zahteva dovod toplote. To je izhodišče za primerjavo s položajem ventila in temperaturama cevi.',
-        'valve.thermo': 'Eno sondo daj na cev proti bojlerju, drugo na cev proti radiatorjem. Po preklopu spremljaj, katera veja se ogreva.',
-        'valve.inspect': 'Primerjaj ukaz s kazalnikom položaja. S simuliranim preizkusom gibljivosti gredi nato ločiš težavo pogona od mehanske blokade ventila.',
-        'pump.flow': 'S skupnim pretokom pred razcepom preveriš, ali voda kroži. Za določitev smeri moraš preveriti še obe veji.'
+        'control.meter': 'Na regulatorju preveri, kam naprava želi poslati toplo vodo – v bojler ali v radiatorje.',
+        'valve.thermo': 'Eno tipalo daj na cev proti bojlerju, drugo na cev proti radiatorjem. Topla cev pokaže, kam voda res teče.',
+        'valve.inspect': 'Primerjaj ukaz s kazalcem na ventilu. Nato preveri, ali se ventil premakne z roko. Tako ločiš okvaro motorčka od zataknjenega ventila.',
+        'pump.flow': 'Skupni pretok pove samo, da voda teče. Kam teče, ti pove šele temperatura obeh cevi.'
       },
-      cause: 'Pogon tripotnega ventila je prejel ukaz za ogrevanje radiatorjev, vendar ventila ni preklopil. Gred se je pri preizkusu prosto premikala.',
-      effect: 'Toplota je še naprej tekla proti bojlerju. Tam je imela cev 44 °C, veja proti hladnim radiatorjem pa le 22 °C.',
-      fix: 'Po menjavi pogona je kazalnik sledil ukazu v obe smeri. Pri zahtevi za ogrevanje se je cev proti radiatorjem ogrela na 39 °C.',
-      lesson: 'Temperaturi cevi pokažeta, kam gre toplota. Primerjava ukaza, kazalnika in gibljivosti gredi ti pove, kateri del ventila potrebuje poseg.'
+      cause: 'Motorček preklopnega ventila je dobil ukaz, ventila pa ni premaknil. Ventil sam se je premikal brez težav.',
+      effect: 'Topla voda je še naprej tekla v bojler (44 °C), radiatorji pa so ostali hladni (22 °C).',
+      fix: 'Po menjavi motorčka ventil sledi ukazu. Cev proti radiatorjem ima zdaj 39 °C.',
+      lesson: 'Temperaturi cevi pokažeta, kam teče toplota. Ukaz, kazalec in premik z roko povejo, kateri del ventila je kriv.'
     },
     {
       questions: {
-        'sensor.meter': 'Na terminalu preberi signal vgrajenega merilnika med tekom in po ustavitvi črpalke. Delujoče tipalo mora zaznati spremembo.',
-        'pump.flow': 'Na isto cev namesti neodvisni ultrazvočni merilnik. Primerjaj ga z vgrajenim tipalom med tekom in v mirovanju.',
-        'filter.inspect': 'Na indikatorju filtra preveri padec tlaka med kroženjem vode. Tako oceniš, ali je pretok oviran prav pri filtru.',
-        'control.meter': 'V dnevniku poišči vrstni red dogodkov. Iz njega razbereš, na kateri pogoj je regulator čakal pred zagonom kompresorja.'
+        'sensor.meter': 'Na terminalu preberi vgrajeni merilnik pretoka, ko črpalka teče in ko stoji. Dober merilnik pokaže razliko.',
+        'pump.flow': 'Na isto cev namesti še svoj merilnik. Primerjaj ga z vgrajenim, ko črpalka teče in ko stoji.',
+        'filter.inspect': 'Poglej kazalec na filtru. Če je zelen, filter ne ovira vode.',
+        'control.meter': 'V dnevniku poglej, na kaj je naprava čakala, preden bi zagnala kompresor.'
       },
-      cause: 'Vgrajeni merilnik je imel napajanje in povezavo, a je ves čas kazal nič. Zunanji merilnik je na isti cevi med tekom izmeril 18 l/min.',
-      effect: 'Voda je krožila, regulator pa ni dobil potrditve pretoka. Zaščita je zato preprečila zagon kompresorja.',
-      fix: 'Po menjavi merilnika sta oba instrumenta med tekom pokazala 18 l/min in po ustavitvi 0 l/min. Regulator je dobil potrditev za zagon.',
-      lesson: 'Pred menjavo črpalke preveri, ali alarm opisuje stanje vode ali napačen signal tipala. Dva merilnika primerjaj na istem mestu v obeh stanjih.'
+      cause: 'Vgrajeni merilnik pretoka je bil pokvarjen in je ves čas kazal 0. Tvoj merilnik je na isti cevi izmeril 18 l/min.',
+      effect: 'Voda je tekla, naprava pa tega ni vedela. Zato iz varnosti ni zagnala kompresorja.',
+      fix: 'Po menjavi merilnika oba merilnika kažeta 18 l/min, ko črpalka teče, in 0, ko stoji. Naprava spet ogreva.',
+      lesson: 'Preden menjaš črpalko, preveri, ali napaka opisuje vodo ali samo signal merilnika. Primerjaj dva merilnika na isti cevi.'
     }
   ];
   for(const c of CASES)if(c.lesson)lessons.push(c.lesson);
