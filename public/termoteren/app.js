@@ -68,6 +68,12 @@ function refresh(){
  if(!inModel){
   if(c.independent&&j.phase==='measure')$('brief').querySelector('.objective').remove();
   const el=$('brief').querySelector('.primary');if(j.phase!=='done')el.innerHTML=icon('play')+(j.started?'Nadaljuj na terenu':'Vstopi na teren');
+  const total=CASES.reduce((s,_,i)=>s+starsOf(db.scores[i]),0),solved=Object.keys(db.scores).length,xp=Object.values(db.scores).reduce((a,b)=>a+b,0);
+  const go=j.phase==='done'?'Odpri poročilo':j.started?'Nadaljuj nalog':solved?'Naslednji nalog':'Začni igro';
+  $('titleMenu').innerHTML='<div class="tmMenu"><div class="tmLogo"><span class="brandmark" aria-hidden="true"><b></b><b></b><b></b></span><h1>Toplolog<span>Simulator</span></h1></div><p class="tmTag">Servis toplotnih črpalk v 3D. Meri, ugotovi vzrok, popravi in preveri.</p>'+
+   '<dl class="tmStats"><div><dt>Zvezdice</dt><dd>★ '+total+' / '+CASES.length*3+'</dd></div><div><dt>Rešeni nalogi</dt><dd>'+solved+' / '+CASES.length+'</dd></div><div><dt>Naziv</dt><dd>'+$('rank').textContent+'</dd></div><div><dt>Točke</dt><dd>'+xp+' XP</dd></div></dl>'+
+   '<nav class="tmButtons" aria-label="Meni">'+btn(icon(j.phase==='done'?'check':'play')+go,'start','primary tmGo')+btn(icon('layers')+'Izberi nalog','missions','tmBtn')+btn(icon('book')+'Servisni dnevnik','notes','tmBtn')+btn(icon('help')+'Kako igrati','howto','tmBtn')+'</nav></div>'+
+   '<article class="tmMission"><small>'+(j.started&&j.phase!=='done'?'Nalog v teku':'Naslednji nalog')+' · '+seq(db.active)+' / '+seq(CASES.length-1)+'</small><h2>'+c.title+'</h2><p class="tmWhere">'+icon('pin')+c.location+' · '+c.weather+'</p><blockquote>»'+c.customer+'«</blockquote>'+(done(db.active)?starRow(starsOf(db.scores[db.active])):'')+'</article>';
   $('tools').innerHTML='<div class="fieldIntro"><b>Prvoosebni servis</b><span><kbd>W A S D</kbd> Hoja</span><span><kbd>Miška</kbd> Razgled in delo na napravi</span><span><kbd>H</kbd> Smer do cilja</span></div>';
   document.querySelector('.beltHead h2').innerHTML=icon('case')+'Terenska oprema';document.querySelector('.beltHead>span').textContent='Orodje prevzameš na lokaciji';
  }
@@ -425,6 +431,7 @@ function bench(){
  $('part')?.addEventListener('change',e=>choosePart(e.target.value))
 }
 function perform(action,val){
+ if(action==='howto'){$('help').click();return}
  const c=current(),j=job();feedback='';
  if(action==='regPage'||action==='regRecord'){showRegulator(action==='regRecord'?'sensors':val,action==='regRecord');return}
  if(c.independent){

@@ -1,5 +1,11 @@
 # Spremembe
 
+## 0.28.0 – 2026-11-24
+
+- **Začetni meni igre 3D:** namesto ploščice z nalogom je naslovni zaslon z logotipom, napredkom (zvezdice, rešeni nalogi,
+  naziv, točke), gumbi »Začni / Nadaljuj«, »Izberi nalog«, »Servisni dnevnik«, »Kako igrati« in kartico naslednjega naloga.
+  Ozadje se počasi premika; vrstica »Terenska oprema« na začetnem zaslonu ni več prikazana.
+
 ## 0.27.0 – 2026-11-24
 
 ### Igra 3D – drugi del prenove
