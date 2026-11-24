@@ -19,6 +19,8 @@ function walk(dir) {
 const files = walk(DIST)
   .map((f) => path.relative(DIST, f).split(path.sep).join('/'))
   .filter((f) => !SKIP.has(f))
+  // 3D igra Termoteren se shrani šele, ko jo kdo res odpre.
+  .filter((f) => !f.startsWith('termoteren/'))
   // Veliki paketi (three.js za simulator) se shranijo šele, ko jih kdo res odpre – ne vsem obiskovalcem.
   .filter((f) => fs.statSync(path.join(DIST, f)).size < 150 * 1024)
   .sort();

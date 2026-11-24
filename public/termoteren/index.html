@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="sl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101416"><title>Toplolog Simulator · Akademija TČ</title><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="style.css"></head>
+<body><header><div class="brand"><span class="brandmark" aria-hidden="true"><b></b><b></b><b></b></span><div><strong>Toplolog Simulator</strong><small>Servis toplotnih črpalk</small></div></div>
+<nav aria-label="Glavni meni"><button id="terrain" class="nav active"><i data-icon="scan"></i>Teren</button><button id="missions" class="nav"><i data-icon="layers"></i>Nalogi</button><button id="journal" class="nav"><i data-icon="book"></i>Dnevnik</button></nav>
+<a href="../" style="margin-left:auto;margin-right:16px;font-size:13px;color:#ffc18c;white-space:nowrap">← Akademija TČ</a><div class="profile"><span class="rank"><i data-icon="rank"></i></span><div><strong id="rank">Vajenec</strong><small id="xp">0 XP</small></div></div></header>
+<main><section id="stage" class="stage" aria-label="Servisna lokacija">
+<div class="photo"></div><div id="model"></div><div class="shade"></div>
+<div class="sceneHUD"><div class="live"><span></span><b id="viewLabel">Terenski pogled</b></div><div class="environment"><i data-icon="cloud"></i><span id="weather"></span></div></div>
+<article class="brief" id="brief"></article>
+<button id="hotspot" class="hotspot" aria-label="Preglej zunanjo enoto"><span class="hotring"><i data-icon="focus"></i></span><span>Zunanja enota</span></button>
+<div id="location"><i data-icon="pin"></i><div><small>Lokacija</small><strong id="place"></strong></div></div>
+<div class="viewBtns"><button id="help" title="Navodila" aria-label="Navodila"><i data-icon="help"></i></button><button id="fullscreen" title="Celozaslonski pogled" aria-label="Celozaslonski pogled"><i data-icon="expand"></i></button></div>
+<div class="camera" id="camera" hidden><button id="cover"><i data-icon="layers"></i><span>Odpri pokrov</span></button><button id="zoom" aria-label="Približaj model"><i data-icon="zoom"></i></button><button id="homecam" aria-label="Ponastavi pogled"><i data-icon="reset"></i></button><button id="back" title="Nazaj na lokacijo"><i data-icon="pin"></i><span>Lokacija</span></button></div>
+<aside id="workbench" hidden></aside></section>
+<template id="fieldTemplate"><div id="fieldUI">
+<div class="fieldTop"><div class="fieldBadge"><b></b>Toplolog Simulator</div><div class="fieldBadge" id="equipmentStatus"></div></div>
+<div class="fieldOrder"><small id="fieldNumber"></small><h2 id="fieldTitle"></h2><p id="fieldGoal"></p><button id="tabletButton">Delovni nalog</button> <button data-action="why" title="Zakaj ta korak? (Z)">Zakaj?</button> <button id="guidance" hidden>Poskusi brez namiga</button></div>
+<div id="beacon" hidden><span>◇</span><b></b></div><div class="crosshair"></div>
+<div id="actPrompt"><small id="aimTitle">Prosti pogled</small><strong id="aimVerb"></strong><div class="holdTrack"><i></i></div></div>
+<div id="readout" hidden><button id="dismissRead" aria-label="Zapri odčitek">×</button><small>Merilni zapis</small><strong id="readTitle"></strong><p id="readValue"></p></div>
+<div id="movePad" aria-label="Hoja"><button data-move="KeyW" aria-label="Naprej">▲</button><button data-move="KeyA" aria-label="Levo">◀</button><button data-move="KeyS" aria-label="Nazaj">▼</button><button data-move="KeyD" aria-label="Desno">▶</button></div>
+<div class="heldHUD"><strong id="heldLabel"></strong><span>WASD · hoja &nbsp; / &nbsp; drži klik ali E · prijem</span><button id="meterBtn" hidden>Dvigni instrument <kbd>I</kbd></button></div>
+<form id="meterForm" hidden><h3>Zapis odčitka</h3><div id="meterInputs"></div><p id="meterMessage" role="status"></p><button class="primary" id="meterSave" type="submit">Vnesi v dnevnik</button><button type="button" id="meterAbort" class="smallBtn">Pospravi merilno opremo</button></form>
+<div class="fieldBar"><button id="guideBtn">Smer <kbd>H</kbd></button><button id="duckBtn">Počep <kbd>C</kbd></button><button id="rotateBtn" hidden>Zasuk <kbd>R</kbd></button><button id="lockBtn">Zajem miške</button><button id="screenBtn">Cel zaslon</button><button id="exitField">Lokacija</button></div>
+</div></template>
+<section class="belt" aria-label="Orodja"><div class="beltHead"><h2><i data-icon="case"></i>Servisni kovček</h2><span>Izberi orodje <kbd>1</kbd>–<kbd>4</kbd></span></div><div id="tools"></div></section>
+<footer><span><i data-icon="save"></i><span id="saveMsg">Lokalno shranjevanje</span></span><button id="sources">Akademija TČ <i data-icon="external"></i></button></footer></main>
+<dialog id="dialog"><div class="dialogHead"><h2 id="dialogTitle"></h2><button id="close" aria-label="Zapri"><i data-icon="x"></i></button></div><div id="dialogBody"></div></dialog>
+<div id="toast" role="status"></div>
+<script src="three.min.js"></script><script src="cases.js"></script><script src="radiators.js"></script><script src="independent.js"></script><script src="reasoning.js"></script><script src="teaching.js"></script><script src="measurements.js"></script><script src="regulator.js"></script><script src="hands.js"></script><script src="kit.js"></script><script src="probe-rig.js"></script><script src="service-rig.js"></script><script src="field-rules.js"></script><script src="first-person.js"></script><script src="model.js"></script><script src="app.js"></script></body></html>

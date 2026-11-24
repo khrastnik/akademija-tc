@@ -1,5 +1,15 @@
 # Spremembe
 
+## 0.24.0 – 2026-11-24
+
+- **Termoteren 3D (Toplolog Simulator)** je zdaj del Akademije na /termoteren/ – prvoosebni servis toplotne črpalke z 10
+  delovnimi nalogi, merilniki, regulatorjem in poročilom. Povezave na domači strani, med orodji, na strani Teren in v
+  meniju »Vaja« vodijo na podstran namesto na zunanjo stran.
+- Igra (3,8 MB s three.js in teksturami) se ne nalaga vnaprej vsem obiskovalcem; shrani se, ko jo kdo odpre.
+- V igri: koraki z električnim priklopom povedo, da ga opravi elektro usposobljena oseba; oznaka na vodnih merilnih
+  mestih je »MERILNA MESTA VODE« namesto »SERVISNI PRIKLJUČKI«, ki pomeni priključke kroga hladiva.
+- Noga strani (opomba o usposabljanju, povezave na GitHub, licenca, različica) je odstranjena z vseh strani.
+
 ## 0.23.0 – 2026-11-24
 
 ### Servis klime

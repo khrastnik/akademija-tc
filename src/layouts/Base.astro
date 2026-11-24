@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, url, sourceUrl, issueUrl } from '../lib/site.js';
-import pkg from '../../package.json';
+import { SITE, url, issueUrl } from '../lib/site.js';
 
 interface Props {
   title: string;
@@ -13,7 +12,7 @@ interface Props {
   /** Široka postavitev (simulator). */
   wide?: boolean;
 }
-const { title, description = 'Brezplačna, odprta spletna pot od nič do serviserja in diagnostika toplotnih črpalk zrak–voda. Kratke lekcije s kvizi, na telefonu.', source = 'src/pages', updated, current, wide = false } = Astro.props;
+const { title, description = 'Brezplačna, odprta spletna pot od nič do serviserja in diagnostika toplotnih črpalk zrak–voda. Kratke lekcije s kvizi, na telefonu.', current, wide = false } = Astro.props;
 const pageTitle = title === SITE.name ? title : `${title} · ${SITE.short}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(url('og.png'), Astro.site).href;
@@ -33,6 +32,7 @@ const I: Record<string, string> = {
   'sh-sc': '<path d="M12 3v11"/><circle cx="12" cy="17" r="4"/><path d="M15 5h3M15 8h3M15 11h3"/>',
   'f-plini': '<path d="M9 3h6"/><path d="M10 3v4l-4 9a3 3 0 0 0 2.7 4h6.6a3 3 0 0 0 2.7-4l-4-9V3"/><path d="M7.5 14h9"/>',
   servis: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 10h7M8.5 14h7M8.5 18h4"/>',
+  termoteren: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M9 12h6M12 9v6"/>',
   orodja: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-2.5z"/>',
 };
 // Meni v treh skupinah – ista struktura za glavo (spustni seznami) in meni na telefonu.
@@ -52,6 +52,7 @@ const groups = [
     label: 'Vaja',
     items: [
       { id: 'teren', href: url('teren'), label: 'Teren – igra', hint: 'Delovni dan serviserja: meri, ugotovi, zasluži' },
+      { id: 'termoteren', href: url('termoteren/'), label: 'Termoteren 3D', hint: 'Servis v 3D: meritve, diagnoza, poseg' },
       { id: 'simulator', href: url('simulator'), label: '3D simulator', hint: 'Kako toplotna črpalka deluje, del za delom' },
       { id: 'f-plini', href: url('f-plini'), label: 'Izpit F-plini', hint: 'Priprava na spričevalo za delo s hladivi' },
     ],
@@ -281,18 +282,6 @@ const active = current ?? (isHome ? 'domov' : undefined);
     <main id="vsebina" class={wide ? "wrap wide" : "wrap"}>
       <slot />
     </main>
-    <footer class="site-footer">
-      <div class="wrap">
-        <p><strong>Ta stran uči razumevanje in diagnostično razmišljanje.</strong> Ne nadomešča uradnega usposabljanja ne spričevala, ki ga zakonodaja zahteva za delo s hladivi. Navodila proizvajalca vedno prevladajo.</p>
-        <p class="links">
-          {updated && <span>Zadnja sprememba: {updated}</span>}
-          <a href={sourceUrl(source)}>Vir na GitHubu</a>
-          <a href={issueUrl(title)}>Javi napako</a>
-          <a href={`${SITE.repo}/blob/${SITE.branch}/CONTRIBUTING.md`}>Kako pomagati</a>
-        </p>
-        <p>Koda MIT · vsebina CC BY-NC-SA 4.0 · brez piškotkov, sledenja in analitike · <a href={`${SITE.repo}/blob/${SITE.branch}/CHANGELOG.md`}>različica {pkg.version}</a></p>
-      </div>
-    </footer>
     {import.meta.env.PROD && (
       <script is:inline define:vars={{ swUrl: url('sw.js'), scope: url('') }}>
         // Service worker: stran deluje brez povezave in se ob ponovnem obisku naloži iz predpomnilnika.
