@@ -25,17 +25,50 @@ window.createProbeRig=function(T,scene,kit){
   const tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;textures.push(tx);const mat=new T.MeshBasicMaterial({map:tx,toneMapped:false});mats.add(mat);const geo=new T.PlaneGeometry(width,width*80/512);geos.add(geo);const o=new T.Mesh(geo,mat);o.position.set(x,y,z);p.add(o)
  }
  const ports=new Map(),heads=new Map();let field=null,active=null;
- const z=-.43;
- for(const x of [2.67,3.68]){box(root,steel,x,.81,z-.1,.041,1.59,.048);box(root,steel,x,.035,z-.1,.16,.06,.21)}
- function rail(y,title){
-  const group=new T.Group();root.add(group);
-  pipe(group,copper,V(2.55,y,z),V(3.82,y,z),.039);
-  for(const x of [2.61,3.75])pipe(group,gold,V(x-.034,y,z),V(x+.034,y,z),.057);
-  tag(group,title,3.16,y+.113,z,.73);return group
- }
- const flow=rail(1.37,'PRETOK   ·   A   ›   B'),hot=rail(1.02,'DVIŽNI VOD'),cold=rail(.68,'POVRATNI VOD');
- const boiler=rail(1.02,'VEJA BOJLERJA'),rad=rail(.68,'VEJA RADIATORJEV');
- for(const [x,y] of [[2.58,1.37],[3.78,1.02],[2.64,.68]]){pipe(root,copper,V(x,y,z),V(x,y,-1.96),.039)}
+
+ // Kotlovnica: prizidek desno od enote. Cevi pridejo iz enote ob fasadi, v kotlovnici tečejo ob steni.
+ const annex=new T.Group();root.add(annex);
+ const AZ=-1.9,SUP=1.134,RET=.605,X0=3.6,X1=5.95,ZF=.02,H=2.35;
+ const plaster=material(0xd8d3c6,0,.92),roofMat=material(0x3c4142,.2,.8),tile=material(0x9a9c95,0,.95),insul=material(0x1f2526,.02,.9),boilerMat=material(0xe9ebe6,.25,.35);
+ [plaster,roofMat,tile,insul,boilerMat].forEach(m=>mats.add(m));
+ box(annex,plaster,X0,H/2,(AZ+ZF)/2-.1,.12,H,ZF-AZ+.42);                          // leva stena
+ box(annex,plaster,(X0+3.95)/2,H/2,ZF,3.95-X0,H,.12);                            // sprednja stena levo od vrat
+ box(annex,plaster,(4.85+X1)/2,H/2,ZF,X1-4.85,H,.12);                            // sprednja stena desno od vrat
+ box(annex,plaster,4.4,H-.18,ZF,.9,.36,.12);                                     // nadvratnik
+ box(annex,plaster,X1,H/2,(AZ+ZF)/2-.1,.12,H,ZF-AZ+.42);                          // desna stena
+ box(annex,roofMat,(X0+X1)/2,H+.05,(AZ+ZF)/2-.1,X1-X0+.3,.1,ZF-AZ+.6);           // streha
+ box(annex,tile,(X0+X1)/2,.012,(AZ+ZF)/2-.1,X1-X0,.02,ZF-AZ+.4);                 // tla
+ box(annex,plaster,(X0+X1)/2,H/2,-2.16,X1-X0,H,.1);                              // zadnja stena (hiša se konča pri x = 4)
+ tag(annex,'KOTLOVNICA',4.4,H-.18,ZF+.065,.62);
+ const lamp=new T.PointLight(0xfff1d8,2.2,5.5,1.6);lamp.position.set(4.6,H-.25,-1.0);annex.add(lamp);
+ box(annex,material(0xfff6e0,0,.3),4.6,H-.03,-1.0,.5,.03,.12);
+ // dvižni (zgoraj) in povratni (spodaj) vod ob zadnji steni
+ pipe(annex,copper,V(X0,SUP,AZ),V(4.6,SUP,AZ),.039);
+ pipe(annex,copper,V(4.6,SUP,AZ),V(5.12,SUP,AZ),.039);
+ pipe(annex,copper,V(5.12,SUP,AZ),V(5.12,SUP,-2.08),.039);                       // proti radiatorjem v hišo
+ pipe(annex,copper,V(X0,RET,AZ),V(5.3,RET,AZ),.039);
+ pipe(annex,copper,V(5.3,RET,AZ),V(5.3,RET,-2.08),.039);                          // povratek iz hiše
+ pipe(annex,copper,V(4.6,SUP,AZ),V(4.6,1.62,AZ),.039);                            // veja bojlerja navzgor
+ pipe(annex,copper,V(4.6,1.62,AZ),V(5.32,1.62,AZ),.039);
+ pipe(annex,copper,V(5.42,.42,AZ),V(5.3,.42,AZ),.03);pipe(annex,copper,V(5.3,.42,AZ),V(5.3,RET,AZ),.03);
+ for(const [a,b,y] of [[X0,3.72,SUP],[X0,3.72,RET],[4.2,4.28,SUP],[4.97,5.04,SUP],[4.5,4.53,RET]])pipe(annex,insul,V(a,y,AZ),V(b,y,AZ),.06);
+ // bojler v desnem kotu
+ pipe(annex,boilerMat,V(5.6,.12,-1.68),V(5.6,1.86,-1.68),.3);
+ pipe(annex,steel,V(5.6,1.86,-1.68),V(5.6,1.9,-1.68),.22);
+ tag(annex,'BOJLER',5.6,1.45,-1.37,.34);
+ // nalepke smeri, kot jih nalepi monter
+ tag(annex,'DVIŽNI VOD  ›',3.95,SUP-.12,AZ+.03,.34);
+ tag(annex,'‹  POVRATNI VOD',4.1,RET-.12,AZ+.03,.34);
+ tag(annex,'› RADIATORJI',4.95,SUP+.13,AZ+.03,.36);
+ tag(annex,'› BOJLER',4.98,1.75,AZ+.03,.3);
+ tag(annex,'RAVNI ODSEK · PRETOK',5.0,RET-.13,AZ+.03,.5);
+ // raztezna posoda, varnostni ventil in manometer na steni nad dvižnim vodom
+ const vesselMat=material(0xb53e2c,.25,.42);mats.add(vesselMat);
+ pipe(annex,vesselMat,V(3.95,1.45,-1.95),V(3.95,1.8,-1.95),.13);
+ pipe(annex,copper,V(3.95,1.45,AZ),V(3.95,SUP,AZ),.016);
+ pipe(annex,gold,V(3.84,SUP,AZ),V(3.84,1.28,AZ),.018);box(annex,red,3.84,1.31,AZ,.045,.05,.045);tag(annex,'VARNOSTNI VENTIL',3.78,1.4,AZ+.03,.3);
+ pipe(annex,copper,V(4.18,SUP,AZ),V(4.18,1.34,AZ),.012);pipe(annex,steel,V(4.18,1.38,AZ+.0),V(4.18,1.38,AZ+.05),.045);tag(annex,'TLAK VODE',4.18,1.48,AZ+.03,.22);
+ tag(annex,'RAZTEZNA POSODA',3.95,1.9,AZ+.03,.4);
  function mount(id,parent,x,y,where,kind,channel){
   const g=new T.Group();g.position.set(x,y,where);g.userData.fieldId='probe:'+id;parent.add(g);ports.set(id,g);
   pipe(g,id==='air'?steel:copper,V(-.097,0,0),V(.097,0,0),.0405);
@@ -51,9 +84,9 @@ window.createProbeRig=function(T,scene,kit){
   }
   h.visible=false;
  }
- mount('up',flow,2.92,1.37,z,'flow',0);mount('down',flow,3.40,1.37,z,'flow',1);
- mount('supply',hot,3.14,1.02,z,'temp',0);mount('return',cold,3.14,.68,z,'temp',1);
- mount('boiler',boiler,3.14,1.02,z,'temp',0);mount('radiator',rad,3.14,.68,z,'temp',1);
+ mount('up',annex,4.88,RET,AZ,'flow',0);mount('down',annex,5.12,RET,AZ,'flow',1);
+ mount('supply',annex,4.08,SUP,AZ,'temp',0);mount('return',annex,4.08,RET,AZ,'temp',1);
+ mount('boiler',annex,4.95,1.62,AZ,'temp',0);mount('radiator',annex,4.86,SUP,AZ,'temp',1);
  mount('air',root,.39,1.51,-1.94,'air',0);tag(root,'SONDA · SENCA',.39,1.69,-1.93,.32);
  const standardPorts=new Map(ports),standardHeads=new Map(heads);let bufferPorts=null,bufferHeads=null;
  let radiatorBay,bufferBay;
@@ -276,7 +309,7 @@ window.createProbeRig=function(T,scene,kit){
  }
  const wires=[cable(),cable()];
  function sync(f){field=f;active=null;
-  flow.visible=f.caseIndex!==9;hot.visible=cold.visible=f.caseIndex!==4&&f.caseIndex!==9;boiler.visible=rad.visible=f.caseIndex===4;
+  annex.visible=f.caseIndex!==9;
   if(((f.caseIndex>=6&&f.caseIndex<=9)||f.caseIndex===10||f.caseIndex===11)&&!radiatorBay)radiatorBay=createRadiatorBay();
   if(f.caseIndex===9&&!bufferBay)bufferBay=createBufferBay();
   const buffering=f.caseIndex===9&&!!bufferBay,activePorts=buffering?bufferPorts:standardPorts,activeHeads=buffering?bufferHeads:standardHeads;

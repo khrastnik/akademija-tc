@@ -13,7 +13,8 @@ window.FieldRules=(()=>{
   const n=f.caseIndex;
   const measurement=Measurements.next(f,j,c);if(measurement)return measurement;
   const tool=(t,d)=>f.held===t?d:f.kitOpen?'tool:'+t:'kit';
-  const assemble=()=>f.opened?'cover':f.screws.length?tool('driver','screw:'+f.screws[0]):f.drained?'water':'isolator';
+  // Pokrov z vijaki je eno dejanje: animacija sama odvije ali privije vijake in prestavi pokrov.
+  const assemble=()=>f.opened||f.screws.length?'cover':f.drained?'water':'isolator';
   if(j.phase==='done'||j.phase==='diagnose'||j.phase==='repair')return 'tablet';
   if(j.phase==='measure'||j.phase==='verify'){
    if(f.opened||f.screws.length||f.isolated||f.drained)return assemble();
@@ -30,7 +31,7 @@ window.FieldRules=(()=>{
   if(n===3)return tool('meter','control');
   if(!f.isolated)return 'isolator';
   if(mechanical.includes(n)&&!f.opened){
-   const next=[0,1,2,3].find(i=>!f.screws.includes(i));return next===undefined?'cover':tool('driver','screw:'+next);
+   return 'cover';
   }
   if(wet.includes(n)&&!f.drained)return 'water';
   if(n===0){if(!f.removed)return 'filterCap';if(f.cleaned.length<3)return tool('brush','dirty:'+([0,1,2].find(i=>!f.cleaned.includes(i))));return f.carry==='cartridge'?'filterSeat':'cleanFilter'}
@@ -96,7 +97,8 @@ window.FieldRules=(()=>{
    if(f.drained&&f.removed&&!f.fixed)return no('Najprej vgradi del in zapri ohišje.');
    return ok(f.drained?'Odpri ventila, napolni, odzrači in preskusi tesnost':'Izoliraj ohlajeni odsek in razbremeni tlak',.95,()=>{f.drained=!f.drained});
   }
-  if(type==='screw'){
+  if(type==='screw')return action(f,j,c,'cover');
+  if(type==='screwManual'){
    if(!f.isolated)return no('Najprej zavaruj napravo z glavnim stikalom.');
    if(!has('driver'))return need('driver');
    const i=Number(value),loose=f.screws.includes(i);
@@ -107,9 +109,8 @@ window.FieldRules=(()=>{
   }
   if(type==='cover'){
    if(!f.isolated)return no('Najprej ustavi in zavaruj napravo.');
-   if(f.screws.length<4&&!f.opened)return no('Odvij vse štiri vijake pokrova.');
-   if(f.removed&&!f.fixed&&mechanical.includes(n))return no('Pred zapiranjem ponovno vgradi sestavni del.');
-   return ok(f.opened?'Dvigni pokrov s stojala':'Primi in snemi servisni pokrov',1.45,()=>{f.panel=f.opened?'in':'out';f.opened=true;f.reseat=false});
+   if(f.opened&&f.removed&&!f.fixed&&mechanical.includes(n))return no('Pred zapiranjem ponovno vgradi sestavni del.');
+   return ok(f.opened?'Namesti pokrov in privij vijake':'Odvij vijake in snemi pokrov',2.4,()=>{if(f.opened){f.opened=false;f.screws=[]}else{f.opened=true;f.screws=[0,1,2,3]}f.panel=null;f.reseat=false});
   }
   if(j.phase==='measure'||j.phase==='verify'){
    const part=type==='test'?value:type;

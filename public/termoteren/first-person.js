@@ -50,7 +50,8 @@ window.createFirstPerson=function({T,host,canvas,scene,camera,kit,service,callba
   const rect=(a,b,c,d)=>x>a&&x<b&&z>c&&z<d;
   if(rect(-1.58,1.58,-.73,.81)||rect(-3.31,-1.81,.85,1.94)||rect(-3.19,-1.89,-.66,.47))return false;
   const level=state().f.caseIndex;
-  if(rect(1.29,1.68,-1.83,.30)||(level!==9&&rect(1.72,2.49,-.84,-.15)))return false;
+  if(rect(1.29,1.68,-1.83,.30))return false;
+  if(level!==9&&(rect(3.5,3.7,-2.1,.12)||rect(3.5,3.98,-.08,.12)||rect(4.82,6,-.08,.12)||rect(5.22,6,-2.1,-1.3)))return false;
   if(level===9&&(rect(2.12,3.18,-1.82,-1.05)||rect(3.25,5.98,-2.05,-.91)))return false;
   if(((level>=6&&level<=8)||level===10||level===11)&&rect(-6,-3.08,-2.05,-.91))return false;
   return !(state().f.opened&&rect(2.86,3.83,.59,1.18))

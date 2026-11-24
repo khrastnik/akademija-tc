@@ -1,5 +1,14 @@
 # Spremembe
 
+## 0.29.0 – 2026-11-24
+
+- **Kotlovnica namesto stojala z merilnimi mesti:** vodni del sistema je zdaj v kotlovnici ob hiši, kot na pravem objektu.
+  Dvižni in povratni vod tečeta ob steni, zraven so bojler, raztezna posoda, varnostni ventil in manometer »TLAK VODE«.
+  Krogelni ventili, izpustna pipa, magnetni filter, obtočna črpalka, tipalo pretoka in preklopni ventil A/B so na cevi tam, kjer so v praksi.
+  Merilna mesta so na ravnem odseku cevi. Servisno stikalo je ob zunanji enoti.
+- **Pokrov v enem koraku:** držiš klik na pokrov (ali vijak) in igra sama odvije vse štiri vijake ter odloži pokrov na stojalo.
+  Pri zapiranju ga vrne na vodila in privije vijake. Izvijača ni treba več jemati iz kovčka.
+
 ## 0.28.1 – 2026-11-24
 
 - Po objavi se igra 3D naloži v celoti nova: skripte in slog imajo oznako različice, strani pa service worker vedno

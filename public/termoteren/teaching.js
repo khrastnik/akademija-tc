@@ -86,6 +86,7 @@ window.ServiceLesson = (() => {
     if (target === 'isolator') return f.isolated ? 'Napravo spet vključi, da lahko ponoviš meritve.' : 'Napravo izklopi in zavaruj, da se med delom ne vključi sama.';
     if (target === 'water') return f.drained ? 'Odpri ventile, odzrači in preveri, da nič ne pušča. Šele nato naprava lahko spet dela.' : 'Voda je lahko vroča in pod tlakom. Zapri ventile in spusti tlak, preden kaj odpreš.';
     if (target.startsWith('screw:') || target === 'tool:driver' && !f.opened && [0,4,5].includes(n)) return f.reseat ? 'Privij vse vijake, da pokrov drži in varuje notranjost.' : 'Odvij vse štiri vijake. Šele nato lahko snameš pokrov.';
+    if (target === 'cover') return f.opened ? 'Drži klik: pokrov se vrne na vodila in vijaki se privijejo.' : 'Drži klik: vijaki se odvijejo in pokrov gre na stojalo. Naprava mora biti prej izklopljena.';
     if (['cover','panelRest','panelMount'].includes(target)) return 'Pokrov odloži na stojalo. Pri sestavi ga najprej nasloni na vodili, nato privij.';
     if (['measure','verify'].includes(j.phase)) {
       if (f.measurement?.logged) return 'Odčitek je zapisan. Snemi tipala, da jih lahko uporabiš drugje.';

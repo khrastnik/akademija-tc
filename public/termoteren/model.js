@@ -208,7 +208,7 @@
       scene.backgroundIntensity=sunny?1.05:.84;
       fallbackTrees.forEach(tree=>tree.visible=false);
     },undefined,()=>{});
-    const rocks=[];for(let i=0;i<46;i++){const x=1.85+random()*3,z=-1.5+random()*.58,s=.07+random()*.11;rocks.push([x,s*.44,z,s*1.4,s*.61,s,random(),random()*4,0]);}
+    const rocks=[];for(let i=0;i<46;i++){const x=1.85+random()*(callbacks.state().f.caseIndex===9?3:1.6),z=-1.5+random()*.58,s=.07+random()*.11;rocks.push([x,s*.44,z,s*1.4,s*.61,s,random(),random()*4,0]);}
     batch(new T.IcosahedronGeometry(1,0),mat(0x74766b),rocks);
 
     const machine=group(), cover=group(machine),internals=group(machine);
@@ -328,11 +328,12 @@
     box(1.02,1.135,.156,.18,.171,.173,brass,valve);
     box(1.02,1.166,.272,.215,.152,.10,edge,valve);
     const lever=box(1.025,1.174,.329,.117,.019,.02,red,valve);effects.lever=lever;
+    const toAnnex=callbacks.state().f.caseIndex!==9;
     for(const [y,m] of [[.605,blue],[1.134,red]]){
       cyl(.070,.178,1.225,y,.136,brass,"x",internals,6);
-      pipe([[1.22,y,.136],[1.442,y,.136],[1.48,y,-.02],[1.48,y,-2.085]],.065,rubber);
+      pipe(toAnnex?[[1.22,y,.136],[1.442,y,.136],[1.48,y,-.02],[1.48,y,-1.9],[3.6,y,-1.9]]:[[1.22,y,.136],[1.442,y,.136],[1.48,y,-.02],[1.48,y,-2.085]],.065,rubber);
       cyl(.070,.023,1.48,y,-.34,m,"z");
-      cyl(.101,.05,1.48,y,-2.058,steel,"z");
+      if(toAnnex)cyl(.101,.05,3.55,y,-1.9,steel,"x");else cyl(.101,.05,1.48,y,-2.058,steel,"z");
     }
     const wallSensor=group(sensor);
     box(1.72,1.70,-2.035,.151,.225,.103,white,wallSensor);

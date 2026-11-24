@@ -93,41 +93,44 @@
     box(switchHandle,0,.026,0,.043,.142,.045,red);
     plate(isolatedSwitch,0,-.142,.084,.241,.046,'GLAVNO STIKALO');
     line(fixtures,[2.15,1.21,-2],[2.15,.5,-2],.016,zinc);
-    // Remote hydronic test block tapped into the insulated pipes. Flat targets face the service aisle.
-    const rack=group(fixtures,2.13,.99,-.62);
-    box(rack,0,-.08,0,.88,.77,.10,zinc);
-    for(const x of [-.32,.32]){
-      box(rack,x,-.67,-.035,.045,.63,.055,steel);box(rack,x,-.956,-.03,.15,.048,.21,black);
-      cylinder(rack,x,-.44,.021,.047,.23,brass,'y',true);
+    // Hidravlika v kotlovnici (probe-rig zgradi prostor in cevi). Tu so deli, na katerih serviser dela.
+    const rack=group(fixtures,0,0,0);
+    const AZ=-1.9,SUP=1.134,RET=.605;
+    // zaporna krogelna ventila ob vstopu v kotlovnico in izpustna pipica na povratku
+    const water=group(rack,3.75,RET,AZ,'water');
+    for(const [dy,col] of [[0,teal],[SUP-RET,red]]){
+      cylinder(water,0,dy,0,.052,.12,brass,'x',true);
+      box(water,0,dy+.06,.04,.13,.022,.022,col);
     }
-    line(fixtures,[1.48,.605,-.62],[1.81,.605,-.62],.041,brass);
-    line(fixtures,[1.48,1.134,-.62],[1.81,1.134,-.62],.041,brass);
-    plate(rack,0,.244,.055,.74,.075,'MERILNA MESTA VODE');
-    function station(id,x,y,title){
-      const g=group(rack,x,y,.083,'test:'+id);
-      box(g,0,0,0,.24,.207,.057,black);
-      plate(g,0,-.075,.032,.22,.042,title);
-      return g;
-    }
-    const returnPoint=station('pump',-.276,.062,'PRETOK');
-    cylinder(returnPoint,0,.036,.043,.048,.138,brass,'x');
-    box(returnPoint,0,.051,.086,.084,.064,.038,teal);
-    const filterPoint=station('filter',0,.062,'FILTER Δp');
-    cylinder(filterPoint,0,.029,.047,.066,.03,steel,'z');
-    cylinder(filterPoint,0,.029,.065,.054,.006,white,'z');
-    const filterNeedle=group(filterPoint,0,.029,.072);
-    box(filterNeedle,0,.016,0,.006,.039,.004,black);
-    const valvePoint=station('valve',.276,.062,'VEJI A / B');
-    for(const x of [-.06,.06]){cylinder(valvePoint,x,.03,.054,.035,.052,x<0?red:teal,'z');}
-    const flowPoint=station('sensor',.276,-.207,'TIPALO PRETOKA');
-    box(flowPoint,0,.022,.047,.18,.072,.04,teal);
-    plate(flowPoint,0,.022,.07,.132,.033,'Q   BUS');
-    const water=group(rack,-.078,-.215,.092,'water');
-    box(water,0,0,0,.37,.181,.046,black);
-    plate(water,0,-.062,.025,.326,.047,'IZOLACIJA / IZPUST');
-    cylinder(water,0,.023,.043,.039,.065,brass,'z');
-    const waterHandle=group(water,0,.023,.086);
-    box(waterHandle,.056,0,0,.184,.032,.031,teal);
+    cylinder(water,.04,-.07,0,.018,.09,brass,'y');
+    const waterHandle=group(water,.04,-.12,.03);
+    box(waterHandle,.04,0,0,.08,.016,.016,teal);
+    plate(water,0,-.2,.05,.3,.05,'ZAPORA · IZPUST');
+    // magnetni filter na povratnem vodu z manometrom pred in za njim
+    const filterPoint=group(rack,4.36,RET,AZ,'test:filter');
+    cylinder(filterPoint,0,0,0,.05,.12,brass,'x',true);
+    cylinder(filterPoint,0,-.13,0,.06,.22,black,'y');
+    cylinder(filterPoint,0,-.25,0,.035,.04,brass,'y');
+    for(const dx of [-.1,.1]){cylinder(filterPoint,dx,.06,0,.012,.07,brass,'y');cylinder(filterPoint,dx,.12,.01,.034,.022,steel,'z');cylinder(filterPoint,dx,.12,.023,.029,.004,white,'z')}
+    const filterNeedle=group(filterPoint,.1,.12,.027);
+    box(filterNeedle,0,.012,0,.004,.026,.003,black);
+    plate(filterPoint,0,-.42,.05,.18,.045,'FILTER');
+    // obtočna črpalka na dvižnem vodu
+    const returnPoint=group(rack,4.36,SUP,AZ,'test:pump');
+    cylinder(returnPoint,0,0,0,.06,.16,red,'x');
+    cylinder(returnPoint,0,0,.08,.07,.1,red,'z');
+    box(returnPoint,0,0,.15,.11,.11,.06,black);
+    plate(returnPoint,0,-.16,.05,.2,.045,'ČRPALKA');
+    // merilnik pretoka na povratnem vodu
+    const flowPoint=group(rack,4.63,RET,AZ,'test:sensor');
+    cylinder(flowPoint,0,0,0,.05,.1,brass,'x',true);
+    box(flowPoint,0,.06,.02,.08,.07,.07,teal);
+    plate(flowPoint,0,.13,.05,.16,.04,'PRETOK');
+    // tripotni preklopni ventil: dvižni vod ali bojler
+    const valvePoint=group(rack,4.6,SUP,AZ,'test:valve');
+    box(valvePoint,0,0,0,.1,.1,.1,brass);
+    box(valvePoint,0,0,.1,.1,.09,.09,black);
+    plate(valvePoint,0,0,.148,.08,.03,'A / B');
     // The washing station stands just behind the tool table, on the technician's side of the facade.
     const bench=group(fixtures,-2.55,0,-.16);
     const basin=group(bench,0,.79,0);
@@ -273,7 +276,7 @@
       waterHandle.rotation.z=field.drained?Math.PI*.5:0;
       switchHandle.rotation.z=field.isolated?Math.PI*.5:0;
       filterNeedle.rotation.z=level===0&&!fixed&&!field.drained?-.95:.85;
-      flowPoint.visible=level===5;
+      flowPoint.visible=true;
       filterSocket.visible=filterOut;
       setModule(cartridge,!filterOut,repair&&level===0&&!fixed?'filterCap':null);
       extracted.visible=filterOut;
@@ -317,13 +320,20 @@
       if(!state)return;
       const p=Math.max(0,Math.min(1,progress||0));
       if(!id)return idle();
+      if(id.startsWith('screw:'))id='cover'; // klik na vijak sproži celoten postopek pokrova
       if(id.startsWith('screw:')){
         const index=Number(id.slice(6)),s=screws[index];if(!s)return;
         const turning=slide((p-.24)/.58);
         const back=(state.screws||[]).includes(index)?1-turning:turning;
         s.position.z=.043*back;s.rotation.z=back*Math.PI*4.36;
         return {id,point:s.localToWorld(point(0,0,.0345)),normal:out,twist:s.rotation.z,weight:slide(p/.23)*(1-slide((p-.84)/.16))};
-      }else if(['cover','panelRest','panelMount'].includes(id)){
+      }else if(id==='cover'){
+        // En poteg: vijaki ven, pokrov na stojalo – ali obratno pri zapiranju.
+        const opening=!state.opened,ts=slide(opening?p/.32:(p-.68)/.32),tm=slide(opening?(p-.34)/.6:p/.6);
+        screws.forEach(s=>{const back=opening?ts:1-ts;s.position.z=.043*back;s.rotation.z=back*Math.PI*4.36});
+        movePanel(opening?'frame':'stand',opening?'stand':'frame',tm,.12);rig.visible=false;
+        return panelContact(tm>0&&tm<1?1:0);
+      }else if(['panelRest','panelMount'].includes(id)){
         const pickup=id==='cover',from=pickup?(state.opened?'stand':'frame'):'hands',to=pickup?'hands':id==='panelRest'?'stand':'frame';
         movePanel(from,to,slide((p-.23)/.63),.09);rig.visible=false;
         return panelContact(pickup?slide(p/.22):1-slide((p-.85)/.15));
