@@ -1,5 +1,13 @@
 # Spremembe
 
+## 0.33.0 – 2026-11-25
+
+- **Lepši serviser:** namesto kock in valjev ima oblikovan trup (ramena širša od pasu), zaobljene roke in noge, glavo z obrazom in kapo,
+  rokavice s prsti, delovne čevlje, ščitnike za kolena, pas s torbico in napis »SERVIS TČ« na hrbtu. Ob spodnjih vijakih počepne,
+  pokrov nosi pred seboj (prej je obstal pri enoti in iztegnil roke v stran), pod njim je mehka senca.
+- **Led pri nalogu 13:** namesto bele plošče pred enoto je nepravilna prosojna zamrznjena luža, ledene sveče so stožci namesto belih zobcev.
+- **Kamni ob hiši** so zaobljeni prodniki namesto oglatih kosov.
+
 ## 0.32.0 – 2026-11-24
 
 - **Utripanje stene v kotlovnici odpravljeno:** zadnja stena kotlovnice in lesena fasada hiše sta bili na isti ravnini, zato je opaž utripal skozi omet.

@@ -188,11 +188,16 @@
     const ice=group(fixtures,0,0,0);ice.userData.part='coil';
     box(ice,-.45,1.11,-.54,1.64,1.30,.05,iceMat);
     box(ice,-1.36,1.11,-.02,.05,1.30,.88,iceMat);
-    for(let i=0;i<9;i++)box(ice,-1.39,.55+i*.14,-.02,.025,.05,.9,crust);
     box(ice,-.45,.47,.0,1.72,.06,1.02,crust);
-    box(ice,-.45,.15,.62,2.2,.04,.5,crust);
-    for(let i=0;i<22;i++){const h=.05+((i*37)%5)*.03;box(ice,-1.25+i*.078,.43-h/2,.5,.018,h,.018,iceMat)}
-    for(let i=0;i<12;i++){const h=.04+((i*23)%4)*.03;box(ice,-1.38,.43-h/2,-.4+i*.07,.016,h,.016,iceMat)}
+    // Led pred enoto: nepravilna, prosojna zamrznjena luža iz odtaljene vode, ne ravna plošča.
+    const puddle=material(0xdfeef4,.05,.12);puddle.transparent=true;puddle.opacity=.78;
+    for(let i=0;i<16;i++){const r=((i*53)%17)/17,u=((i*29)%13)/13;
+      const m=new T.Mesh(geometry.sphere,puddle);m.position.set(-1.35+i*.11+r*.06,.135,.42+u*.32);m.scale.set(.1+r*.13,.012+u*.012,.07+u*.1);m.rotation.y=r*3;ice.add(m)}
+    // Ledene sveče: prosojni stožci s konico navzdol, različnih dolžin.
+    const icicle=keep(new T.ConeGeometry(1,1,8));
+    const drip=(x,z,h,r)=>{const m=new T.Mesh(icicle,iceMat);m.position.set(x,.43-h/2,z);m.scale.set(r,h,r);m.rotation.x=Math.PI;ice.add(m)};
+    for(let i=0;i<22;i++)drip(-1.25+i*.078+((i*7)%3)*.01,.5,.05+((i*37)%5)*.035,.009+((i*11)%3)*.003);
+    for(let i=0;i<12;i++)drip(-1.38,-.4+i*.07,.04+((i*23)%4)*.035,.008+((i*5)%3)*.003);
     const shaded=group(fixtures,.72,1.71,-1.97,'newMount');
     box(shaded,0,0,0,.198,.275,.036,zinc);
     box(shaded,0,.165,.07,.32,.028,.225,black);

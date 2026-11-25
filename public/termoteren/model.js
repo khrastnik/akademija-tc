@@ -209,7 +209,7 @@
       fallbackTrees.forEach(tree=>tree.visible=false);
     },undefined,()=>{});
     const rocks=[];for(let i=0;i<46;i++){const x=1.85+random()*(callbacks.state().f.caseIndex===9?3:1.6),z=-1.5+random()*.58,s=.07+random()*.11;rocks.push([x,s*.44,z,s*1.4,s*.61,s,random(),random()*4,0]);}
-    batch(new T.IcosahedronGeometry(1,0),mat(0x74766b),rocks);
+    batch(new T.IcosahedronGeometry(1,2),mat(0x7a7b72,.02,.9),rocks);   // zaobljeni prodniki, ne oglati kosi
 
     const machine=group(), cover=group(machine),internals=group(machine);
     // A fine powder-coat grain and a less uniform gloss give the folded steel a surface at arm's length.
