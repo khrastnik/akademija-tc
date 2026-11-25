@@ -135,3 +135,11 @@ main:has(.stage:not(.working)) .belt{display:none}
 .stage:not(.working) .sceneHUD{z-index:2}
 @media(max-width:760px){.stage:not(.working) .viewBtns{top:12px;right:12px}.stage:not(.working) .environment{display:none}}
 @media(max-width:760px){.tmMenu{padding-top:56px}}
+
+/* Ponastavitev naloga */
+.missionCell{position:relative;display:grid}
+.missionCell .mission{height:100%}
+.mReset{position:absolute;right:8px;bottom:8px;padding:3px 9px;font-size:12px;border-radius:999px;border:1px solid #ffffff33;background:#141c1ecc;color:#e8ece6;cursor:pointer}
+.mReset:hover{border-color:var(--orange);color:#fff}
+.tmIcon{display:inline-block;width:20px;text-align:center;font-size:17px}
+.missionCell:has(.mReset) .mission{padding-bottom:36px}

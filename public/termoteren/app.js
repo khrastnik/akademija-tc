@@ -72,7 +72,7 @@ function refresh(){
   const go=j.phase==='done'?'Odpri poročilo':j.started?'Nadaljuj nalog':solved?'Naslednji nalog':'Začni igro';
   $('titleMenu').innerHTML='<div class="tmMenu"><div class="tmLogo"><span class="brandmark" aria-hidden="true"><b></b><b></b><b></b></span><h1>Toplolog<span>Simulator</span></h1></div><p class="tmTag">Servis toplotnih črpalk v 3D. Meri, ugotovi vzrok, popravi in preveri.</p>'+
    '<dl class="tmStats"><div><dt>Zvezdice</dt><dd>★ '+total+' / '+CASES.length*3+'</dd></div><div><dt>Rešeni nalogi</dt><dd>'+solved+' / '+CASES.length+'</dd></div><div><dt>Naziv</dt><dd>'+$('rank').textContent+'</dd></div><div><dt>Točke</dt><dd>'+xp+' XP</dd></div></dl>'+
-   '<nav class="tmButtons" aria-label="Meni">'+btn(icon(j.phase==='done'?'check':'play')+go,'start','primary tmGo')+btn(icon('layers')+'Izberi nalog','missions','tmBtn')+btn(icon('book')+'Servisni dnevnik','notes','tmBtn')+btn(icon('help')+'Kako igrati','howto','tmBtn')+'</nav></div>'+
+   '<nav class="tmButtons" aria-label="Meni">'+btn(icon(j.phase==='done'?'check':'play')+go,'start','primary tmGo')+btn(icon('layers')+'Izberi nalog','missions','tmBtn')+btn(icon('book')+'Servisni dnevnik','notes','tmBtn')+btn(icon('help')+'Kako igrati','howto','tmBtn')+(j.started||j.phase==='done'?btn('<span class="tmIcon">↺</span>Začni nalog znova','reset','tmBtn'):'')+'</nav></div>'+
    '<article class="tmMission"><small>'+(j.started&&j.phase!=='done'?'Nalog v teku':'Naslednji nalog')+' · '+seq(db.active)+' / '+seq(CASES.length-1)+'</small><h2>'+c.title+'</h2><p class="tmWhere">'+icon('pin')+c.location+' · '+c.weather+'</p><blockquote>»'+c.customer+'«</blockquote>'+(done(db.active)?starRow(starsOf(db.scores[db.active])):'')+'</article>';
   $('tools').innerHTML='<div class="fieldIntro"><b>Prvoosebni servis</b><span><kbd>W A S D</kbd> Hoja</span><span><kbd>Miška</kbd> Razgled in delo na napravi</span><span><kbd>H</kbd> Smer do cilja</span></div>';
   document.querySelector('.beltHead h2').innerHTML=icon('case')+'Terenska oprema';document.querySelector('.beltHead>span').textContent='Orodje prevzameš na lokaciji';
@@ -432,6 +432,11 @@ function bench(){
 }
 function perform(action,val){
  if(action==='howto'){$('help').click();return}
+ // Ponastavitev naloga: kadar koli, s potrditvijo. Zvezdice (najboljši rezultat) ostanejo.
+ if(action==='reset'){const i=val===undefined||val===''?db.active:Number(val);
+  openDialog('Začni nalog znova?','<p class="prose">Nalog <b>'+seq(i)+' · '+CASES[i].title+'</b> se začne od začetka: meritve, odločitve in stanje naprave se pobrišejo. Zvezdice, ki si jih že dobil, ostanejo.</p><div class="actions">'+btn('Začni znova','resetYes','primary',i)+btn('Prekliči','resetNo')+'</div>');return}
+ if(action==='resetNo'){$('dialog').close();return}
+ if(action==='resetYes'){const i=Number(val),wasIn=inModel;$('dialog').close();if(inModel)leave();db.jobs[i]=fresh();db.active=i;feedback='';save();refresh();notice('Nalog '+seq(i)+' se začne od začetka.');if(wasIn)enter();return}
  const c=current(),j=job();feedback='';
  if(action==='regPage'||action==='regRecord'){showRegulator(action==='regRecord'?'sensors':val,action==='regRecord');return}
  if(c.independent){
@@ -512,7 +517,8 @@ function missions(){
  const total=CASES.reduce((s,_,i)=>s+starsOf(db.scores[i]),0);
  openDialog('Servisni nalogi','<p class="missionSum">Zbrane zvezdice · <b>'+total+' / '+CASES.length*3+'</b> · rešenih nalogov '+Object.keys(db.scores).length+' / '+CASES.length+'</p><div class="missionGrid">'+CASES.map((c,i)=>{const locked=!available(i);
   const state=locked?'Reši prejšnji nalog':done(i)?db.scores[i]+' XP':i===db.active?'Aktivni nalog':c.independent?'Samostojni nalog':c.station?'Radiatorska postaja':'Na voljo';
-  return '<button class="mission'+(i===db.active?' current':'')+(done(i)?' solved':'')+'" '+(locked?'disabled':'')+' data-action="job" data-value="'+i+'"><span class="mTop"><span class="mNum">'+seq(i)+'</span>'+(locked?'<i>'+icon('lock')+'</i>':starRow(starsOf(db.scores[i])))+'</span><strong>'+c.title+'</strong><small>'+c.location+' · '+c.weather+'</small><span class="mState">'+state+'</span></button>'}).join('')+'</div>')}
+  const progress=!locked&&(db.jobs[i]?.started||done(i));
+  return '<div class="missionCell">'+'<button class="mission'+(i===db.active?' current':'')+(done(i)?' solved':'')+'" '+(locked?'disabled':'')+' data-action="job" data-value="'+i+'"><span class="mTop"><span class="mNum">'+seq(i)+'</span>'+(locked?'<i>'+icon('lock')+'</i>':starRow(starsOf(db.scores[i])))+'</span><strong>'+c.title+'</strong><small>'+c.location+' · '+c.weather+'</small><span class="mState">'+state+'</span></button>'+(progress?'<button class="mReset" data-action="reset" data-value="'+i+'" title="Začni ta nalog znova">↺ Znova</button>':'')+'</div>'}).join('')+'</div>')}
 function notes(){
  const j=job(),c=current();
  let html='<div class="step">Nalog '+seq(db.active)+'</div><h3>'+c.title+'</h3>';

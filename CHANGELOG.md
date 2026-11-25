@@ -1,5 +1,11 @@
 # Spremembe
 
+## 0.34.0 – 2026-11-25
+
+- **Ponastavitev vsakega naloga:** gumb »↺ Znova« med igro (v kotu z nalogom), »Začni nalog znova« na začetnem meniju
+  in »↺ Znova« na vsaki kartici z napredkom pri izbiri naloga. Pred ponastavitvijo igra vpraša za potrditev;
+  meritve, odločitve in stanje naprave se pobrišejo, zbrane zvezdice ostanejo.
+
 ## 0.33.0 – 2026-11-25
 
 - **Lepši serviser:** namesto kock in valjev ima oblikovan trup (ramena širša od pasu), zaobljene roke in noge, glavo z obrazom in kapo,
