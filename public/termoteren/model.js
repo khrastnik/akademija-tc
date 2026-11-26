@@ -346,6 +346,15 @@
     for(let i=0;i<5;i++)box(0,-.05+i*.021,.109,.099,.009,.012,edge,wallSensor);
     pipe([[0,-.115,.03],[0,-.4,.03],[0,-.43,0]],.008,steel,wallSensor);
     const flowSensor=group(sensor);
+    // Pregled notranjosti: "voda" pusti vodni del, hladilni krog postane prosojen – in obratno. Prosojni deli ne lovijo klikov.
+    const ghostMat=new T.MeshStandardMaterial({color:0x9fb3b8,roughness:.6,transparent:true,opacity:.12,depthWrite:false});
+    const hydroGroups=()=>[filter,pump,valve,power,flowSensor];
+    const refGroups=()=>internals.children.filter(g=>/^ref:/.test(g.userData.fieldId||"")&&!["ref:plate","ref:schema"].includes(g.userData.fieldId));
+    function ghost(g,on){g.userData.nonBlocking=on;g.traverse(n=>{if(!n.isMesh||(n.userData.solid?n.userData.solid:n.material).opacity===0)return;   // nevidne površine za nameritev ostanejo nevidne
+      
+      if(on&&!n.userData.solid){n.userData.solid=n.material;n.material=ghostMat;n.castShadow=false}
+      else if(!on&&n.userData.solid){n.material=n.userData.solid;delete n.userData.solid}})}
+    function layer(mode){hydroGroups().forEach(g=>ghost(g,mode==="refrigerant"));refGroups().forEach(g=>ghost(g,mode==="water"));renderer.shadowMap.needsUpdate=true}
     cyl(.078,.133,1.166,.775,.132,brass,"y",flowSensor,8);
     pipe([[1.163,.609,.14],[1.163,.79,.14],[1.163,.955,.14],[1.03,.955,.14]],.043,copper,flowSensor);
     box(1.167,.831,.205,.151,.104,.098,blue,flowSensor);
@@ -431,8 +440,8 @@
       }
     });
     renderer.shadowMap.needsUpdate=true;
-    return { ...fp, applyState(){fp.sync();renderer.shadowMap.needsUpdate=true},destroy(){
-      disposed=true;fp.destroy();
+    return { ...fp, layer, applyState(){fp.sync();renderer.shadowMap.needsUpdate=true},destroy(){
+      disposed=true;layer("all");ghostMat.dispose();fp.destroy();
       const gs=new Set(),ms=new Set(),ts=new Set();
       scene.traverse(n=>{if(n.geometry)gs.add(n.geometry);if(n.material){const mats=Array.isArray(n.material)?n.material:[n.material];for(const m of mats){ms.add(m);if(m.map)ts.add(m.map);}}});
       gs.forEach(g=>g.dispose());ms.forEach(m=>m.dispose());for(const t of [...photoSurfaces,coatGrain,landscape,panorama])ts.add(t);ts.forEach(t=>t.dispose());
@@ -465,6 +474,7 @@
     sync(){view?.applyState?.()}, direction(){view?.direction?.()}, releaseMouse(){view?.releaseMouse?.()},
     move(code,down){view?.move?.(code,down)},crouch(){view?.crouch?.()},lookLock(){view?.lookLock?.()},
     setState(next){for(const k of Object.keys(current))if(next[k]!==undefined)current[k]=next[k];view?.applyState();},
+    layer(mode){view?.layer?.(mode)},
     toggleCover(){if(view)return view.toggleCover();current.opened=!current.opened;return current.opened;}
   };
 })();

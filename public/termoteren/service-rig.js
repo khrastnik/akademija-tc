@@ -28,7 +28,12 @@
     const zinc = material(0x87928e,.62,.52), white = material(0xcbd4ce,.14,.43);
     const teal = material(0x397b87,.4), red = material(0xb94334,.2), ochre = material(0xe5af48,.29);
     const metalScreen = material(0x81948f,.58,.59), dirt = material(0x62513b,0,.98);
-    const leafColors = [0xb38544,0x99723b,0x946039].map(c=>material(c,.01,.92));
+    // Suho listje: rjavi odtenki, mat površina, vidno z obeh strani.
+    const leafColors = [0x6e4a2a,0x7d5a34,0x5a3d22,0x8a6a3c].map(c=>{const m=material(c,0,.96);m.side=T.DoubleSide;return m});
+    const veinMat=material(0x3f2a18,0,.9);
+    // List: koničasta oblika, robovi zvihani navzgor, rahlo upognjen po dolžini – ne ploščica.
+    const leafGeo=keep((()=>{const s=new T.Shape();s.moveTo(0,-1);s.quadraticCurveTo(.62,-.42,.42,.32);s.quadraticCurveTo(.22,.78,0,1);s.quadraticCurveTo(-.22,.78,-.42,.32);s.quadraticCurveTo(-.62,-.42,0,-1);
+      const g=new T.ShapeGeometry(s,10),p=g.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i);p.setZ(i,.55*x*x+.18*y*y-.12*y)}g.computeVertexNormals();return g})());
     function mesh(parent, geo, mat, x, y, z, w=1, h=1, d=1) {
       const m = new T.Mesh(geo,mat);
       m.position.set(x,y,z); m.scale.set(w,h,d); m.castShadow=m.receiveShadow=true;
@@ -175,8 +180,9 @@
       const g=group(fixtures,-1.00+i*.55,1.05,-.523,'leaf:'+i);
       for(let j=0;j<16;j++){
         const x=(random()-.5)*.43,y=(random()-.5)*.64,z=-random()*.014;
-        const leaf=mesh(g,geometry.sphere,leafColors[(i+j)%3],x,y,z,.046+random()*.018,.079+random()*.018,.013);
-        leaf.rotation.z=random()*Math.PI*2;
+        const sz=.045+random()*.02,leaf=mesh(g,leafGeo,leafColors[(i*7+j)%4],x,y,z-.006,sz*.85,sz,sz*(.7+random()*.6));
+        leaf.rotation.set(Math.PI+(random()-.5)*.5,(random()-.5)*.5,random()*Math.PI*2);
+        const vein=mesh(leaf,geometry.box,veinMat,0,0,.02,.035,1.7,.02);vein.castShadow=false;
       }
       // Bounding surface follows the patch and only catches clicks on the dirty section of the coil.
       const catcher=box(g,0,0,.021,.47,.73,.025,keep(new T.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false})));

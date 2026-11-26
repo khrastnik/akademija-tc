@@ -1,5 +1,11 @@
 # Spremembe
 
+## 0.38.0 – 2026-11-26
+
+- **Pregled notranjosti enote:** gumb »Notranjost« ali tipka V pri odprti enoti preklaplja vse → vodni del → hladilni krog.
+  Drugi del postane prosojen in ne lovi klikov, zato je vsak krog jasno viden. Ob zaprtju pokrova se pogled vrne na »vse«.
+- **Listje na uparjalniku:** rjavi posušeni listi z žilo, zvihani in upognjeni, namesto živo oranžnih ploščic.
+
 ## 0.37.1 – 2026-11-26
 
 - Kompas je večji in bolj berljiv; črke ostanejo pokončne tudi med hitrim obračanjem.
