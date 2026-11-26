@@ -29,7 +29,7 @@
     const teal = material(0x397b87,.4), red = material(0xb94334,.2), ochre = material(0xe5af48,.29);
     const metalScreen = material(0x81948f,.58,.59), dirt = material(0x62513b,0,.98);
     // Suho listje: rjavi odtenki, mat površina, vidno z obeh strani.
-    const leafColors = [0x6e4a2a,0x7d5a34,0x5a3d22,0x8a6a3c].map(c=>{const m=material(c,0,.96);m.side=T.DoubleSide;return m});
+    const leafColors = [0x7a5230,0x9a6e3a,0x5e4024,0xa9824a].map(c=>{const m=material(c,0,.96);m.side=T.DoubleSide;return m});
     const veinMat=material(0x3f2a18,0,.9);
     // List: koničasta oblika, robovi zvihani navzgor, rahlo upognjen po dolžini – ne ploščica.
     const leafGeo=keep((()=>{const s=new T.Shape();s.moveTo(0,-1);s.quadraticCurveTo(.62,-.42,.42,.32);s.quadraticCurveTo(.22,.78,0,1);s.quadraticCurveTo(-.22,.78,-.42,.32);s.quadraticCurveTo(-.62,-.42,0,-1);
@@ -178,9 +178,9 @@
     const leaves=[];
     for(let i=0;i<3;i++){
       const g=group(fixtures,-1.00+i*.55,1.05,-.523,'leaf:'+i);
-      for(let j=0;j<16;j++){
-        const x=(random()-.5)*.43,y=(random()-.5)*.64,z=-random()*.014;
-        const sz=.045+random()*.02,leaf=mesh(g,leafGeo,leafColors[(i*7+j)%4],x,y,z-.006,sz*.85,sz,sz*(.7+random()*.6));
+      for(let j=0;j<12;j++){
+        const x=(random()-.5)*.36,y=(random()-.5)*.56,z=-random()*.02;
+        const sz=.075+random()*.03,leaf=mesh(g,leafGeo,leafColors[(i*7+j)%4],x,y,z-.006,sz*.85,sz,sz*(.7+random()*.6));
         leaf.rotation.set(Math.PI+(random()-.5)*.5,(random()-.5)*.5,random()*Math.PI*2);
         const vein=mesh(leaf,geometry.box,veinMat,0,0,.02,.035,1.7,.02);vein.castShadow=false;
       }
@@ -188,6 +188,15 @@
       const catcher=box(g,0,0,.021,.47,.73,.025,keep(new T.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false})));
       catcher.castShadow=catcher.receiveShadow=false;leaves.push(g);
     }
+    // Veter je listje nanesel tudi okoli enote: na betonsko ploščo in gramoz pred njo, da je težava vidna že s poti.
+    const groundLeaves=group(fixtures);groundLeaves.userData.nonBlocking=true;
+    const lay=(x,y,z)=>{const sz=.1+random()*.04,tilt=.25+random()*.45,l=mesh(groundLeaves,leafGeo,leafColors[Math.floor(random()*4)],x,y+sz*Math.sin(tilt)*.9,z,sz*.85,sz,sz*(.7+random()*.5));
+      l.rotation.set(-Math.PI/2+(random()<.5?-tilt:tilt),(random()-.5)*.5,random()*Math.PI*2);l.castShadow=false};
+    for(let k=0;k<12;k++)lay(-1.5+random()*3,.13,-.74+random()*.18);           // za enoto, ob uparjalniku
+    for(let k=0;k<7;k++)lay(-1.56+random()*.24,.13,-.7+random()*1.4);          // leva stran plošče
+    for(let k=0;k<5;k++)lay(1.33+random()*.23,.13,-.7+random()*1.4);           // desna stran plošče
+    for(let k=0;k<6;k++)lay(-1.4+random()*2.8,.13,.52+random()*.2);            // pred enoto
+    for(let k=0;k<16;k++){const a=random()*Math.PI*2,r=.25+random()*.9;lay(Math.cos(a)*(1.65+r*.6),.015,.2+Math.sin(a)*(.8+r))} // gramoz okoli plošče
     // Led pri nalogu 13: zadnja in leva stran uparjalnika, led pod enoto in ledene sveče – viden že s poti.
     const iceMat=material(0xeef7fa,.02,.22);iceMat.transparent=true;iceMat.opacity=.9;
     const crust=material(0xf6fbfc,0,.6);
@@ -299,6 +308,7 @@
       setTag(extracted,repair&&filterOut&&clean.length===3?'cleanFilter':null);
       dirty.forEach((g,i)=>{g.visible=!clean.includes(i);g.scale.set(1,1,1);});
       fallenLeaves.visible=false;
+      groundLeaves.visible=level===1&&!fixed;
       leaves.forEach((g,i)=>{
         g.visible=level===1&&!fixed&&!clean.includes(i);setTag(g,repair?'leaf:'+i:null);g.userData.part='coil';g.scale.set(1,1,1);
       });

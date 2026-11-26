@@ -1,5 +1,10 @@
 # Spremembe
 
+## 0.38.1 – 2026-11-26
+
+- **Listje vidno s poti:** listi na uparjalniku so večji (15–20 cm), veter jih je nanesel tudi na betonsko ploščo in gramoz okoli enote,
+  zato je pri nalogu 2 težava opazna že pred prihodom za enoto. Po popravilu izginejo.
+
 ## 0.38.0 – 2026-11-26
 
 - **Pregled notranjosti enote:** gumb »Notranjost« ali tipka V pri odprti enoti preklaplja vse → vodni del → hladilni krog.
