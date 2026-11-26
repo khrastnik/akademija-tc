@@ -1,5 +1,9 @@
 # Spremembe
 
+## 0.37.1 – 2026-11-26
+
+- Kompas je večji in bolj berljiv; črke ostanejo pokončne tudi med hitrim obračanjem.
+
 ## 0.37.0 – 2026-11-26
 
 - **Strani neba v sceni:** sever je levo od enote, jug desno, sprednja fasada hiše gleda proti zahodu. Sonce prihaja z jugozahoda,

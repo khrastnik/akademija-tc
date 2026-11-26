@@ -178,3 +178,7 @@ main:has(.stage:not(.working)) .belt{display:none}
 #compass b{position:absolute;left:50%;top:50%;width:16px;margin:-8px 0 0 -8px;text-align:center;font:700 12px/16px Consolas,monospace;color:#c9d3ce;transform:rotate(calc(-1 * var(--r,0rad)))}
 #compass .cn{color:#ff8a4c;top:12px}#compass .cs{top:calc(100% - 12px)}#compass .ce{left:calc(100% - 12px)}#compass .cw{left:12px}
 #compass i{position:absolute;left:50%;top:-1px;margin-left:-5px;border:5px solid transparent;border-top:7px solid #ffc28a}
+#compass{width:72px;height:72px;top:8px}
+#compass b{width:18px;margin:-9px 0 0 -9px;font-size:15px;line-height:18px}
+#compass .cn{top:14px}#compass .cs{top:calc(100% - 14px)}#compass .ce{left:calc(100% - 14px)}#compass .cw{left:14px}
+#compass .rose{transition:none}
