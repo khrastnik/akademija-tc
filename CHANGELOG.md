@@ -1,5 +1,9 @@
 # Spremembe
 
+## 0.39.1 – 2026-11-26
+
+- **Nalog 12 (Varnostni ventil kaplja):** voda s police kaplja na lesen podest pred postajo – temen moker madež z nekaj svetlečimi lužicami, viden že od daleč. Po popravilu izgine.
+
 ## 0.39.0 – 2026-11-26
 
 - **Enota v ledu (nalog 13):** zamrznjena luža je ena nepravilna prosojna ploskev z grbinami pod odtokom, ne kup belih ploščic;

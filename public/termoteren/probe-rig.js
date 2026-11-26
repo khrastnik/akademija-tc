@@ -257,6 +257,13 @@ window.createProbeRig=function(T,scene,kit){
   const stain=new T.Mesh(new T.CircleGeometry(1,24),wet);geos.add(stain.geometry);stain.rotation.x=-Math.PI/2;stain.position.set(-1.16,.43,.12);stain.scale.set(.09,.07,1);leak.add(stain);
   const hang=new T.Mesh(new T.SphereGeometry(1,10,8),water);geos.add(hang.geometry);hang.position.set(-1.13,.948,.13);hang.scale.set(.007,.011,.007);leak.add(hang);
   const fall=new T.Mesh(hang.geometry,water);fall.position.set(-1.13,.7,.13);fall.scale.set(.005,.01,.005);leak.add(fall);
+  // Voda prelije polico in kaplja z njenega roba na tla: temen moker madež na podestu in nekaj svetlečih lužic.
+  const edgeDrop=new T.Mesh(hang.geometry,water);edgeDrop.position.set(-1.2,.395,.385);edgeDrop.scale.set(.006,.01,.006);leak.add(edgeDrop);
+  const blob=(n,seedA)=>{const sh=new T.Shape();for(let i=0;i<=n;i++){const a=i/n*Math.PI*2,r=1+.22*Math.sin(a*3+seedA)+.12*Math.sin(a*5+seedA*2),p=[Math.cos(a)*r,Math.sin(a)*r];i?sh.lineTo(...p):sh.moveTo(...p)}const g=new T.ShapeGeometry(sh);geos.add(g);return g};
+  const wetGround=finish(0x2a2a24,0,.35);wetGround.transparent=true;wetGround.opacity=.55;wetGround.depthWrite=false;wetGround.polygonOffset=true;wetGround.polygonOffsetFactor=-2;
+  const sheen=finish(0x8fb4bd,.1,.06);sheen.transparent=true;sheen.opacity=.5;sheen.depthWrite=false;sheen.polygonOffset=true;sheen.polygonOffsetFactor=-4;
+  const patch=new T.Mesh(blob(28,.7),wetGround);patch.rotation.x=-Math.PI/2;patch.position.set(-1.02,.035,.62);patch.scale.set(.35,.3,1);leak.add(patch);
+  for(const [x,z,w,d,k] of [[-1.2,.5,.12,.07,1.3],[-.98,.7,.16,.08,2.1],[-1.3,.78,.09,.06,.4]]){const m=new T.Mesh(blob(18,k),sheen);m.rotation.x=-Math.PI/2;m.position.set(x,.037,z);m.scale.set(w,d,1);leak.add(m)}
   const cup=group(bay,-1.103,.478,.259,'radCup');
   box(bay,oak,-1.11,.414,.202,.46,.028,.351);
   box(cup,cloth,-.012,-.047,.009,.235,.018,.154);
