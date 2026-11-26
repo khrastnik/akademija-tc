@@ -31,14 +31,15 @@
     const camera = new T.PerspectiveCamera(36, 1, .045, 75);
     const sunny=callbacks.state().f.caseIndex===2;
     const light = new T.DirectionalLight(sunny?0xffdfb8:0xffeee1,sunny?3.35:2.25);
-    light.position.set(-4.2, 6.8, 3.8);
+    // Sonce od spredaj desno: fasada hiše je osončena, zahodne stene (obrnjene v levo) so v senci.
+    light.position.set(4.2, 6.8, 3.8);
     light.castShadow = true;
     light.shadow.mapSize.set(1024,1024);
-    Object.assign(light.shadow.camera, {left:-6.3,right:5.6,top:5.1,bottom:-5.1,near:1,far:23});
+    Object.assign(light.shadow.camera, {left:-6.3,right:6.3,top:5.1,bottom:-5.1,near:1,far:23});
     light.shadow.normalBias = .008;
     scene.add(light, new T.HemisphereLight(0xd8e9fb, 0x6f6550,1.48));
     const fill = new T.DirectionalLight(0xc6def3,.68);
-    fill.position.set(3, 3, -4); scene.add(fill);
+    fill.position.set(-3, 3, -4); scene.add(fill);
     const V = (x,y,z) => new T.Vector3(x,y,z);
     const mat = (color, metalness=0,roughness=.64) => new T.MeshStandardMaterial({color,metalness,roughness});
     const graphite = mat(0x374249,.55,.34), edge = mat(0x20292c,.47,.38);
@@ -195,10 +196,13 @@
     const cladding=mat(0xffffff,.01,.88);
     const wallSkin=mesh(new T.PlaneGeometry(7.96,3.55),cladding,0,2.08,-2.11);
     wallSkin.visible=false;
+    // Stranski steni hiše z enakim opažem (pri Žireh je na levi steni zunanje tipalo, v senci).
+    const sideCladding=mat(0xffffff,.01,.88),sides=[-1,1].map(side=>{const m=mesh(new T.PlaneGeometry(3.71,3.55),sideCladding,side*3.998,2.08,-4.14);m.rotation.y=side*Math.PI/2;m.visible=false;return m});
     const planks=new T.TextureLoader().load('weathered_brown_planks.jpg',t=>{
       if(disposed){t.dispose();return}
       t.colorSpace=T.SRGBColorSpace;t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(4.1,1.8);
       t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());cladding.map=t;cladding.needsUpdate=true;wallSkin.visible=true;
+      const side=t.clone();side.repeat.set(1.9,1.8);side.needsUpdate=true;photoSurfaces.push(side);sideCladding.map=side;sideCladding.needsUpdate=true;sides.forEach(m=>m.visible=true);
     },undefined,()=>{});
     photoSurfaces.push(planks,softEdge);
     const landscape=new T.TextureLoader().load('okolica.jpg',texture=>{

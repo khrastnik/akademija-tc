@@ -300,9 +300,9 @@
       shaded.visible=level===2;
       setTag(shaded,repair&&removed&&level===2?'newMount':null);
       wallSensor.visible=level!==5&&!(level===2&&removed);
-      // Zunanje tipalo: senčna stena, vsaj 2 m visoko, ne nad okni ali vrati in ne v toku zraka zunanje enote.
+      // Zunanje tipalo: senčna (zahodna) stena – kotlovnica ali pri Žireh stranska stena hiše –, vsaj 2 m visoko, ne nad okni ali vrati in ne v toku zraka zunanje enote.
       // Pri nalogu 3 je pred popravilom napačno na osončeni fasadi hiše (ta napaka je bistvo naloga).
-      const spot=level===2&&!fixed?[1.72,2.12,-2.09,0]:level===9?[-3.72,2.2,-2.09,0]:[3.504,2.05,-1.25,-Math.PI/2];
+      const spot=level===2&&!fixed?[1.72,2.12,-2.09,0]:level===9?[-3.995,2.2,-3.0,-Math.PI/2]:[3.504,2.05,-1.25,-Math.PI/2];
       wallSensor.position.set(spot[0],spot[1],spot[2]);wallSensor.rotation.y=spot[3];
       setTag(wallSensor,repair&&level===2&&!removed&&!fixed?'oldSensor':null);
       flowSensor.visible=level===5;

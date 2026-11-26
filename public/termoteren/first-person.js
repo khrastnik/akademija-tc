@@ -47,7 +47,9 @@ const precision=id=>['panelRest','panelMount','filterCap','basinDrop','cleanFilt
    const port=probes.point('probe:'+m.ports[0]);
    if(port&&Math.hypot(x-port.x,z-port.z)>Math.max(2.1,Math.hypot(player.x-port.x,player.z-port.z))+.00001)return false;
   }
-  if(x < -6||x>6||z< -1.82||z>6.5)return false;
+  // Pri Žireh (ni kotlovnice) je zunanje tipalo za levim vogalom hiše; ta kotiček je prehoden.
+  const nook=state().f.caseIndex===9&&x< -4.06&&x> -5.6&&z> -4.2;
+  if(x < -6||x>6||(z< -1.82&&!nook)||z>6.5)return false;
   const rect=(a,b,c,d)=>x>a&&x<b&&z>c&&z<d;
   if(rect(-1.58,1.58,-.73,.81)||rect(-3.31,-1.81,.85,1.94)||rect(-3.19,-1.89,-.66,.47))return false;
   const level=state().f.caseIndex;

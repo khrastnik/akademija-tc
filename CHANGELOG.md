@@ -1,5 +1,12 @@
 # Spremembe
 
+## 0.36.0 – 2026-11-26
+
+- **Senca je zdaj res na strani tipala:** sonce je prej svetilo z leve, zato je bila stena kotlovnice s tipalom osončena.
+  Sonce zdaj sveti od spredaj desno: fasada hiše ostane osončena (napaka pri nalogu 3), zahodne stene so v senci.
+- **Žiri (brez kotlovnice):** zunanje tipalo je za levim vogalom hiše na senčni zahodni steni, 2,2 m visoko. Kotiček za vogalom je prehoden.
+- Stranski steni hiše imata enak lesen opaž kot sprednja fasada (prej gola temna ploskev).
+
 ## 0.35.0 – 2026-11-26
 
 - **Zunanje tipalo na pravem mestu:** prej je viselo na fasadi tik ob zunanji enoti (po popravilu pri nalogu 3 celo za enoto, v toku hladnega zraka).
