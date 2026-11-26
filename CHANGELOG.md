@@ -1,5 +1,12 @@
 # Spremembe
 
+## 0.39.0 – 2026-11-26
+
+- **Enota v ledu (nalog 13):** zamrznjena luža je ena nepravilna prosojna ploskev z grbinami pod odtokom, ne kup belih ploščic;
+  ivje na uparjalniku je neenakomerno, spodaj debelejše, zgoraj se še vidijo lamele; ledene sveče imajo nepravilen razmik in dolžino.
+- **Postaja z radiatorjem:** dodan varnostni ventil z odtokom; pri nalogu 12 (Varnostni ventil kaplja) iz njega kaplja, po popravilu je suh.
+- Napis »TERMOSTAT« ni več delno skrit za škatlo termostata.
+
 ## 0.38.1 – 2026-11-26
 
 - **Listje vidno s poti:** listi na uparjalniku so večji (15–20 cm), veter jih je nanesel tudi na betonsko ploščo in gramoz okoli enote,

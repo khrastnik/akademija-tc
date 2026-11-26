@@ -198,21 +198,33 @@
     for(let k=0;k<6;k++)lay(-1.4+random()*2.8,.13,.52+random()*.2);            // pred enoto
     for(let k=0;k<16;k++){const a=random()*Math.PI*2,r=.25+random()*.9;lay(Math.cos(a)*(1.65+r*.6),.015,.2+Math.sin(a)*(.8+r))} // gramoz okoli plošče
     // Led pri nalogu 13: zadnja in leva stran uparjalnika, led pod enoto in ledene sveče – viden že s poti.
-    const iceMat=material(0xeef7fa,.02,.22);iceMat.transparent=true;iceMat.opacity=.9;
+    const iceMat=material(0xd9ecf2,.02,.14);iceMat.transparent=true;iceMat.opacity=.82;
     const crust=material(0xf6fbfc,0,.6);
+    // Ivje na lamelah: neenakomerno belo, spodaj debelejše, zgoraj se še vidijo lamele – ne ravna bela plošča.
+    const frostTex=(()=>{const c=document.createElement('canvas');c.width=256;c.height=256;const g=c.getContext('2d');
+      const grad=g.createLinearGradient(0,0,0,256);grad.addColorStop(0,'rgba(236,244,247,.55)');grad.addColorStop(.55,'rgba(240,247,249,.85)');grad.addColorStop(1,'rgba(248,251,252,.98)');
+      g.fillStyle=grad;g.fillRect(0,0,256,256);
+      for(let x=0;x<256;x+=4){g.fillStyle='rgba(70,86,92,'+(.18+random()*.1)+')';g.fillRect(x,0,1,150+random()*70)}
+      for(let k=0;k<70;k++){const x=random()*256,y=40+random()*216,r=6+random()*22;const b=g.createRadialGradient(x,y,0,x,y,r);b.addColorStop(0,'rgba(255,255,255,.85)');b.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=b;g.fillRect(x-r,y-r,2*r,2*r)}
+      const t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;return keep(t)})();
+    const frostMat=new T.MeshStandardMaterial({map:frostTex,transparent:true,roughness:.7,metalness:0,depthWrite:false});keep(frostMat);
     const ice=group(fixtures,0,0,0);ice.userData.part='coil';
-    box(ice,-.45,1.11,-.54,1.64,1.30,.05,iceMat);
-    box(ice,-1.36,1.11,-.02,.05,1.30,.88,iceMat);
+    box(ice,-.45,1.11,-.54,1.64,1.30,.05,frostMat);
+    box(ice,-1.36,1.11,-.02,.05,1.30,.88,frostMat);
     box(ice,-.45,.47,.0,1.72,.06,1.02,crust);
-    // Led pred enoto: nepravilna, prosojna zamrznjena luža iz odtaljene vode, ne ravna plošča.
-    const puddle=material(0xdfeef4,.05,.12);puddle.transparent=true;puddle.opacity=.78;
-    for(let i=0;i<16;i++){const r=((i*53)%17)/17,u=((i*29)%13)/13;
-      const m=new T.Mesh(geometry.sphere,puddle);m.position.set(-1.35+i*.11+r*.06,.135,.42+u*.32);m.scale.set(.1+r*.13,.012+u*.012,.07+u*.1);m.rotation.y=r*3;ice.add(m)}
+    // Led pred enoto: odtaljena voda kaplja iz korita in zmrzuje v eno nepravilno ploskev z grbinami pod odtočnimi luknjami.
+    const puddle=material(0xc9e2ea,.05,.08);puddle.transparent=true;puddle.opacity=.74;
+    const sheet=(()=>{const sh=new T.Shape(),n=22;for(let i=0;i<=n;i++){const a=i/n*Math.PI*2,r=1+.16*Math.sin(a*3+1)+.1*Math.sin(a*7)+(random()-.5)*.08,p=[Math.cos(a)*r,Math.sin(a)*r];i?sh.lineTo(...p):sh.moveTo(...p)}
+      const g=new T.ExtrudeGeometry(sh,{depth:.5,bevelEnabled:true,bevelThickness:.5,bevelSize:.12,bevelSegments:3,curveSegments:4});g.rotateX(-Math.PI/2);g.computeVertexNormals();return keep(g)})();
+    const sheetMesh=new T.Mesh(sheet,puddle);sheetMesh.position.set(-.3,.121,.5);sheetMesh.scale.set(.95,.014,.17);sheetMesh.receiveShadow=true;ice.add(sheetMesh);
+    const lump=keep((()=>{const g=new T.IcosahedronGeometry(1,2),p=g.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i),z=p.getZ(i),k=1+.18*Math.sin(x*5+z*3)+.12*Math.cos(z*6-y*2);p.setXYZ(i,x*k,Math.max(y,-.2)*k,z*k)}g.computeVertexNormals();return g})());
+    [[-1.05,.5,.16,.035,.11],[-.6,.52,.2,.045,.13],[-.12,.5,.15,.03,.1],[.32,.52,.17,.04,.11]].forEach(([x,z,w,h,d])=>{const m=new T.Mesh(lump,puddle);m.position.set(x,.13,z);m.scale.set(w,h,d);m.rotation.y=x*4;ice.add(m)});
     // Ledene sveče: prosojni stožci s konico navzdol, različnih dolžin.
     const icicle=keep(new T.ConeGeometry(1,1,8));
     const drip=(x,z,h,r)=>{const m=new T.Mesh(icicle,iceMat);m.position.set(x,.43-h/2,z);m.scale.set(r,h,r);m.rotation.x=Math.PI;ice.add(m)};
-    for(let i=0;i<22;i++)drip(-1.25+i*.078+((i*7)%3)*.01,.5,.05+((i*37)%5)*.035,.009+((i*11)%3)*.003);
-    for(let i=0;i<12;i++)drip(-1.38,-.4+i*.07,.04+((i*23)%4)*.035,.008+((i*5)%3)*.003);
+    // Nepravilen razmik, nekaj dolgih in debelih, vmes vrzeli – kot v naravi.
+    for(let x=-1.25;x<.4;x+=.05+random()*.07){if(random()<.2)continue;const L=random()<.18?.16+random()*.08:.03+random()*.09;drip(x,.49+random()*.02,L,.006+L*.08+random()*.004)}
+    for(let z=-.38;z<.42;z+=.06+random()*.07){if(random()<.25)continue;const L=random()<.15?.14+random()*.06:.03+random()*.08;drip(-1.38,z,L,.006+L*.08)}
     // Senčni nosilec: severna stena kotlovnice, 2 m visoko, stran od zunanje enote, oken in vrat.
     const shaded=group(fixtures,3.522,2.05,-1.25,'newMount');shaded.rotation.y=-Math.PI/2;
     box(shaded,0,0,0,.198,.275,.036,zinc);

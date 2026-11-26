@@ -219,7 +219,7 @@ window.createProbeRig=function(T,scene,kit){
    pipe(bay,gold,V(x-.062,y,.30),V(x+.055,y,.30),.048);
    pipe(bay,steel,V(x,y,.30),V(x,y,.386),.044);
   }
-  tag(bay,'TERMOSTAT',.858,1.411,.005,.43);
+  tag(bay,'TERMOSTAT',.6,1.411,.005,.43);
   const headRest=V(.99,.516,.26),headHome=head.position.clone();
   box(bay,oak,1.00,.383,.21,.435,.033,.34);
   pipe(head,steel,V(0,0,-.045),V(0,0,.012),.066);
@@ -246,6 +246,17 @@ window.createProbeRig=function(T,scene,kit){
   pipe(vessel,gold,V(0,.15,0),V(0,.19,0),.018);
   pipe(bay,copper,V(-1.22,1.54,.13),V(-1.22,.475,.13),.016);
   tag(bay,'RAZTEZNA POSODA',-1.13,2.02,.005,.5);
+  // Varnostni ventil 3 bar na dvižnem vodu z odtokom navzdol; pri nalogu 12 iz njega kaplja in polica pod njim je mokra.
+  const safetyRed=finish(0xc0392b,.2,.45);
+  pipe(bay,gold,V(-1.22,1.06,.13),V(-1.15,1.06,.13),.017);
+  box(bay,safetyRed,-1.13,1.07,.13,.05,.075,.05);pipe(bay,black,V(-1.13,1.105,.13),V(-1.13,1.135,.13),.02);
+  pipe(bay,steel,V(-1.13,1.03,.13),V(-1.13,.96,.13),.012);
+  tag(bay,'VARNOSTNI VENTIL',-1.02,1.2,.005,.26);
+  const leak=new T.Group();bay.add(leak);
+  const wet=finish(0x2e3b3c,.05,.18);wet.transparent=true;wet.opacity=.45;wet.depthWrite=false;
+  const stain=new T.Mesh(new T.CircleGeometry(1,24),wet);geos.add(stain.geometry);stain.rotation.x=-Math.PI/2;stain.position.set(-1.16,.43,.12);stain.scale.set(.09,.07,1);leak.add(stain);
+  const hang=new T.Mesh(new T.SphereGeometry(1,10,8),water);geos.add(hang.geometry);hang.position.set(-1.13,.948,.13);hang.scale.set(.007,.011,.007);leak.add(hang);
+  const fall=new T.Mesh(hang.geometry,water);fall.position.set(-1.13,.7,.13);fall.scale.set(.005,.01,.005);leak.add(fall);
   const cup=group(bay,-1.103,.478,.259,'radCup');
   box(bay,oak,-1.11,.414,.202,.46,.028,.351);
   box(cup,cloth,-.012,-.047,.009,.235,.018,.154);
@@ -296,6 +307,7 @@ window.createProbeRig=function(T,scene,kit){
    cup.position.copy(catching?cupWork:cupHome);waterInside.visible=f.caseIndex===6&&step>=3;
    rocker.rotation.x=off?-.52:.52;lamp.material=off?restLed:activeLed;
    screw.rotation.z=0;drops.visible=false;
+   leak.visible=f.caseIndex===11&&!f.fixed;
   }
   function interact(id,p){
    const item=objects[id];if(!item)return null;
