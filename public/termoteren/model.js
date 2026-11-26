@@ -208,7 +208,7 @@
       scene.backgroundIntensity=sunny?1.05:.84;
       fallbackTrees.forEach(tree=>tree.visible=false);
     },undefined,()=>{});
-    const rocks=[];for(let i=0;i<46;i++){const x=1.85+random()*(callbacks.state().f.caseIndex===9?3:1.6),z=-1.5+random()*.58,s=.07+random()*.11;rocks.push([x,s*.44,z,s*1.4,s*.61,s,random(),random()*4,0]);}
+    const rocks=[];for(let i=0;i<46;i++){const x=1.85+random()*(callbacks.state().f.caseIndex===9?3:1.6),z=-1.5+random()*.58,s=.045+random()*.075;rocks.push([x,s*.3,z,s*1.35,s*.45,s*1.05,random()*.3,random()*4,0]);}
     batch(new T.IcosahedronGeometry(1,2),mat(0x7a7b72,.02,.9),rocks);   // zaobljeni prodniki, ne oglati kosi
 
     const machine=group(), cover=group(machine),internals=group(machine);
@@ -336,9 +336,10 @@
       if(toAnnex)cyl(.101,.05,3.55,y,-1.9,steel,"x");else cyl(.101,.05,1.48,y,-2.058,steel,"z");
     }
     const wallSensor=group(sensor);
-    box(1.72,1.70,-2.035,.151,.225,.103,white,wallSensor);
-    for(let i=0;i<5;i++)box(1.72,1.65+i*.021,-1.977,.099,.009,.012,edge,wallSensor);
-    pipe([[1.72,1.58,-2.02],[1.72,.89,-2.02],[1.57,.89,-2.02]],.012,steel,wallSensor);
+    // Zunanje tipalo v lokalnih koordinatah (+z = stran od stene). Kje visi, določi servisni del glede na nalog.
+    box(0,0,.0515,.151,.225,.103,white,wallSensor);
+    for(let i=0;i<5;i++)box(0,-.05+i*.021,.109,.099,.009,.012,edge,wallSensor);
+    pipe([[0,-.115,.03],[0,-.4,.03],[0,-.43,0]],.008,steel,wallSensor);
     const flowSensor=group(sensor);
     cyl(.078,.133,1.166,.775,.132,brass,"y",flowSensor,8);
     pipe([[1.163,.609,.14],[1.163,.79,.14],[1.163,.955,.14],[1.03,.955,.14]],.043,copper,flowSensor);

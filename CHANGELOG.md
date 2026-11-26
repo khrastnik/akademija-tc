@@ -1,5 +1,16 @@
 # Spremembe
 
+## 0.35.0 – 2026-11-26
+
+- **Zunanje tipalo na pravem mestu:** prej je viselo na fasadi tik ob zunanji enoti (po popravilu pri nalogu 3 celo za enoto, v toku hladnega zraka).
+  Zdaj je na senčni steni kotlovnice, 2 m visoko, stran od enote, oken in vrat. Pri nalogu 3 je pred popravilom namenoma na osončeni fasadi,
+  po popravilu pa pod senčnikom na senčni steni. Referenčna sonda »SONDA · SENCA« je ob njem, ne več za enoto.
+- **Naslovni meni:** rešen nalog ni več označen kot »Naslednji nalog«; dodan gumb »Naslednji nalog«. Meni je kompaktnejši (brez drsnika),
+  na telefonu kartica naloga ne prekrije več gumbov.
+- **Kako igrati:** nova navodila s potekom naloga in razpredelnico tipk (počep, smer, pokrov, gumb Znova, hladilni krog samo za ogled).
+- **Poročilo:** gumbi Naslednji nalog, Servisni dnevnik in Ponovi nalog so v eni vrsti.
+- Prodniki ob hiši so manjši in bolj ploščati.
+
 ## 0.34.0 – 2026-11-25
 
 - **Ponastavitev vsakega naloga:** gumb »↺ Znova« med igro (v kotu z nalogom), »Začni nalog znova« na začetnem meniju

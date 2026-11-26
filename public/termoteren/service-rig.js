@@ -198,7 +198,8 @@
     const drip=(x,z,h,r)=>{const m=new T.Mesh(icicle,iceMat);m.position.set(x,.43-h/2,z);m.scale.set(r,h,r);m.rotation.x=Math.PI;ice.add(m)};
     for(let i=0;i<22;i++)drip(-1.25+i*.078+((i*7)%3)*.01,.5,.05+((i*37)%5)*.035,.009+((i*11)%3)*.003);
     for(let i=0;i<12;i++)drip(-1.38,-.4+i*.07,.04+((i*23)%4)*.035,.008+((i*5)%3)*.003);
-    const shaded=group(fixtures,.72,1.71,-1.97,'newMount');
+    // Senčni nosilec: zahodna (senčna) stena kotlovnice, 2 m visoko, stran od zunanje enote, oken in vrat.
+    const shaded=group(fixtures,3.522,2.05,-1.25,'newMount');shaded.rotation.y=-Math.PI/2;
     box(shaded,0,0,0,.198,.275,.036,zinc);
     box(shaded,0,.165,.07,.32,.028,.225,black);
     for(const y of [-.092,.092])cylinder(shaded,0,y,.026,.011,.019,steel,'z');
@@ -299,7 +300,10 @@
       shaded.visible=level===2;
       setTag(shaded,repair&&removed&&level===2?'newMount':null);
       wallSensor.visible=level!==5&&!(level===2&&removed);
-      wallSensor.position.x=level===2&&fixed?-.998:0;
+      // Zunanje tipalo: senčna stena, vsaj 2 m visoko, ne nad okni ali vrati in ne v toku zraka zunanje enote.
+      // Pri nalogu 3 je pred popravilom napačno na osončeni fasadi hiše (ta napaka je bistvo naloga).
+      const spot=level===2&&!fixed?[1.72,2.12,-2.09,0]:level===9?[-3.72,2.2,-2.09,0]:[3.504,2.05,-1.25,-Math.PI/2];
+      wallSensor.position.set(spot[0],spot[1],spot[2]);wallSensor.rotation.y=spot[3];
       setTag(wallSensor,repair&&level===2&&!removed&&!fixed?'oldSensor':null);
       flowSensor.visible=level===5;
       setModule(drive,!driveOut,repair&&level===4&&!fixed?'oldDrive':null);

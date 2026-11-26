@@ -143,3 +143,32 @@ main:has(.stage:not(.working)) .belt{display:none}
 .mReset:hover{border-color:var(--orange);color:#fff}
 .tmIcon{display:inline-block;width:20px;text-align:center;font-size:17px}
 .missionCell:has(.mReset) .mission{padding-bottom:36px}
+/* Kako igrati */
+.howto h4{margin:14px 0 6px;font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:#ffc28a}
+.howto ol,.howto ul{margin:0;padding-left:20px}.howto li{margin:4px 0}
+.howto table.keys{border-collapse:collapse;width:100%}
+.howto table.keys td{padding:5px 6px;border-bottom:1px solid #ffffff14;vertical-align:middle}
+.howto table.keys td:first-child{white-space:nowrap;width:1%}
+.howto kbd,.prose kbd{display:inline-block;min-width:20px;padding:1px 6px;border:1px solid #ffffff38;border-bottom-width:2px;border-radius:5px;background:#1b2427;font:600 12px Consolas,monospace;text-align:center;color:#f0f2e8}
+.reportActions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.reportActions button{flex:1 1 150px;min-height:42px;margin:0}
+/* Naslovni meni: kompaktneje, da gre brez drsnika tudi na nižjih zaslonih */
+.tmButtons{gap:6px}
+.tmBtn{min-height:38px;padding:6px 14px}
+@media(max-height:760px) and (min-width:761px){
+ .tmMenu{gap:12px;padding-top:16px;padding-bottom:16px}
+ .tmLogo .brandmark{width:46px;height:46px}
+ .tmLogo h1{font-size:clamp(28px,3.4vw,40px)}
+ .tmTag{display:none}
+ .tmStats{grid-template-columns:repeat(4,1fr);gap:6px}
+ .tmStats div{padding:6px 8px}.tmStats dd{font-size:14px}.tmStats dt{font-size:10px}
+ .tmButtons .tmGo{min-height:46px;font-size:17px}
+}
+/* Naslovni meni na telefonu: v toku strani, brez notranjega drsnika in brez prekrivanja kartice */
+@media(max-width:760px){
+ #titleMenu{position:relative;inset:auto;display:flex;flex-direction:column;overflow:visible}
+ #titleMenu::before{position:absolute}
+ .tmMenu{overflow:visible}
+ .tmMission{position:relative;align-self:stretch;margin:0 18px 18px}
+ .stage:not(.working){height:auto;min-height:0}
+}

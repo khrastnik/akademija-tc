@@ -22,7 +22,7 @@ window.createProbeRig=function(T,scene,kit){
  }
  function tag(p,text,x,y,z,width){
   const c=document.createElement('canvas');c.width=512;c.height=80;const g=c.getContext('2d');g.fillStyle='#172c31';g.fillRect(0,0,512,80);g.fillStyle='#f1ead3';g.font='600 51px Segoe UI';g.textAlign='center';g.fillText(text,256,59,492);
-  const tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;textures.push(tx);const mat=new T.MeshBasicMaterial({map:tx,toneMapped:false});mats.add(mat);const geo=new T.PlaneGeometry(width,width*80/512);geos.add(geo);const o=new T.Mesh(geo,mat);o.position.set(x,y,z);p.add(o)
+  const tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;textures.push(tx);const mat=new T.MeshBasicMaterial({map:tx,toneMapped:false});mats.add(mat);const geo=new T.PlaneGeometry(width,width*80/512);geos.add(geo);const o=new T.Mesh(geo,mat);o.position.set(x,y,z);p.add(o);return o
  }
  const ports=new Map(),heads=new Map();let field=null,active=null;
 
@@ -109,7 +109,9 @@ window.createProbeRig=function(T,scene,kit){
  mount('up',annex,4.88,RET,AZ,'flow',0);mount('down',annex,5.12,RET,AZ,'flow',1);
  mount('supply',annex,4.08,SUP,AZ,'temp',0);mount('return',annex,4.08,RET,AZ,'temp',1);
  mount('boiler',annex,4.95,1.62,AZ,'temp',0);mount('radiator',annex,4.86,SUP,AZ,'temp',1);
- mount('air',root,.39,1.51,-1.94,'air',0);tag(root,'SONDA · SENCA',.39,1.69,-1.93,.32);
+ // Referenčna sonda za zrak: v senci na zahodni steni kotlovnice, ob zunanjem tipalu – ne za enoto, kjer enota sesa hladen zrak.
+ mount('air',annex,X0-.105,1.9,-.82,'air',0);ports.get('air').rotation.y=-Math.PI/2;
+ tag(annex,'SONDA · SENCA',X0-.065,2.06,-.82,.32).rotation.y=-Math.PI/2;
  const standardPorts=new Map(ports),standardHeads=new Map(heads);let bufferPorts=null,bufferHeads=null;
  let radiatorBay,bufferBay;
  function createBufferBay(){

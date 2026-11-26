@@ -61,7 +61,7 @@ window.CASES = [
     cause: 1,
     repairs: ['Dvigni naklon krivulje', 'Zamenjaj obtočno črpalko', 'Prestavi tipalo na ustrezno senčno lego'],
     fix: 2,
-    procedure: ['Izberi senčno mesto po navodilih modela, stran od oken in izpiha.', 'Izklopi napajanje in prestavi tipalo. Kabel in kabelski uvod uredi elektro usposobljena oseba.', 'Vključi krmiljenje in počakaj, da se temperatura tipala ustali.'],
+    procedure: ['Izberi senčno mesto po navodilih modela: severna ali severozahodna stena, vsaj 2 m visoko, ne nad okni in vrati ter ne v toku zraka zunanje enote.', 'Izklopi napajanje in prestavi tipalo. Kabel in kabelski uvod uredi elektro usposobljena oseba.', 'Vključi krmiljenje in počakaj, da se temperatura tipala ustali.'],
     explanation: 'Začasno senčenje je razložilo razliko med termometrom in regulatorjem. Tipalo je zaznavalo segreto okolico fasade. Popravek krivulje bi vplival tudi na ogrevanje ponoči.'
   },
   {
