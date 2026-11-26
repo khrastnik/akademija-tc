@@ -1,5 +1,12 @@
 # Spremembe
 
+## 0.37.0 – 2026-11-26
+
+- **Strani neba v sceni:** sever je levo od enote, jug desno, sprednja fasada hiše gleda proti zahodu. Sonce prihaja z jugozahoda,
+  zato je sprednja fasada opoldne in popoldne osončena (napaka pri nalogu 3), severne stene pa so v senci.
+- **Zunanje tipalo na severni steni:** pri vseh nalogih na severni steni kotlovnice, pri Žireh na severni (stranski) steni hiše; vsaj 2 m visoko.
+- **Kompas** na vrhu zaslona med igro (S sever, J jug, V vzhod, Z zahod), omenjen tudi v »Kako igrati«.
+
 ## 0.36.0 – 2026-11-26
 
 - **Senca je zdaj res na strani tipala:** sonce je prej svetilo z leve, zato je bila stena kotlovnice s tipalom osončena.

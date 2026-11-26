@@ -31,7 +31,8 @@
     const camera = new T.PerspectiveCamera(36, 1, .045, 75);
     const sunny=callbacks.state().f.caseIndex===2;
     const light = new T.DirectionalLight(sunny?0xffdfb8:0xffeee1,sunny?3.35:2.25);
-    // Sonce od spredaj desno: fasada hiše je osončena, zahodne stene (obrnjene v levo) so v senci.
+    // Strani neba: sever = −x, jug = +x, zahod = +z (sprednja fasada), vzhod = −z. Sonce z jugozahoda:
+    // sprednja (zahodna) fasada je opoldne in popoldne osončena, severne stene (obrnjene v −x) so v senci.
     light.position.set(4.2, 6.8, 3.8);
     light.castShadow = true;
     light.shadow.mapSize.set(1024,1024);

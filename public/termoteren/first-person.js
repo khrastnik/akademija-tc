@@ -26,6 +26,7 @@ const precision=id=>['panelRest','panelMount','filterCap','basinDrop','cleanFilt
   player.x=T.MathUtils.clamp(pose.x,-6,6);player.z=T.MathUtils.clamp(pose.z,-1.8,6.5);
   yaw=pose.yaw;pitch=pose.pitch;crouched=Boolean(pose.crouched);
  }
+ let lastYaw=NaN;
  function cameraUpdate(dt){
   const turn=(keys.has('ArrowLeft')?1:0)-(keys.has('ArrowRight')?1:0);
   yaw+=turn*dt*1.7;pitch=T.MathUtils.clamp(pitch+((keys.has('ArrowUp')?1:0)-(keys.has('ArrowDown')?1:0))*dt*1.38,-1.48,1.37);
@@ -47,7 +48,7 @@ const precision=id=>['panelRest','panelMount','filterCap','basinDrop','cleanFilt
    const port=probes.point('probe:'+m.ports[0]);
    if(port&&Math.hypot(x-port.x,z-port.z)>Math.max(2.1,Math.hypot(player.x-port.x,player.z-port.z))+.00001)return false;
   }
-  // Pri Žireh (ni kotlovnice) je zunanje tipalo za levim vogalom hiše; ta kotiček je prehoden.
+  // Pri Žireh (ni kotlovnice) je zunanje tipalo za levim vogalom hiše, na severni steni; ta kotiček je prehoden.
   const nook=state().f.caseIndex===9&&x< -4.06&&x> -5.6&&z> -4.2;
   if(x < -6||x>6||(z< -1.82&&!nook)||z>6.5)return false;
   const rect=(a,b,c,d)=>x>a&&x<b&&z>c&&z<d;
@@ -155,7 +156,10 @@ const precision=id=>['panelRest','panelMount','filterCap','basinDrop','cleanFilt
    if(!scenePainted&&!document.hidden){render(0,state().f);scenePainted=true}
    return;
   }
-  cameraUpdate(dt);let p=0,contact=null;
+  cameraUpdate(dt);
+  // Kompas: sever je v sceni −x (levo od enote). Pri yaw = π/2 gledaš proti severu.
+  if(!(Math.abs(yaw-lastYaw)<.002)){const rose=document.querySelector('#compass .rose');if(rose){lastYaw=yaw;rose.style.setProperty('--r',(yaw-Math.PI/2)+'rad')}}
+  let p=0,contact=null;
   const engage=hold&&precision(hold.id)?1:0;
   lean+=(engage-lean)*(1-Math.exp(-dt*11));
   if(leanTo&&lean>.002){
