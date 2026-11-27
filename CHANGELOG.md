@@ -1,5 +1,15 @@
 # Spremembe
 
+## 0.42.0 – 2026-11-27
+
+Igra 3D – nadaljevanje realnih komponent:
+
+- **Bojler:** obokan vrh z anodo in iztokom tople vode, nogice, termometer, potopno tipalo TČ s kablom, prirobnica električnega grelca, dotok hladne vode, tipska ploščica; opis na tipki I.
+- **Preklopni ventil v enoti:** medeninasto telo s holandci, svetel pogon z okencem A ↔ B, ročica in kabel.
+- **Kondenzni odtok** iz dna enote skozi ploščo v gramoz, z grelnim kablom; opis na tipki I.
+- **Kovček:** ob instrumentih je pribor, po katerem jih ločiš – objemni tipali termometra, ultrazvočno vodilo s sondama, navit kabel servisnega terminala.
+- Odstranjen podvojen paket plošč v kondenzatorju.
+
 ## 0.41.0 – 2026-11-27
 
 Igra 3D – komponente so videti kot na terenu, da jih serviser prepozna:

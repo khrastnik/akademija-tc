@@ -170,6 +170,28 @@ window.createFieldKit = function createFieldKit(T, scene, camera) {
     }
     return p;
   }
+  // Pribor v penasti oblogi: po njem instrumente ločiš tudi na terenu.
+  function cord(p,pts,r=.0028,m=rubber){const curve=new T.CatmullRomCurve3(pts.map(q=>vec(...q)));const t=mesh(p,geometry(new T.TubeGeometry(curve,24,r,6,false)),m,0,0,0);return t}
+  function accessories(slot,key){
+    const y=.012;
+    if(key==='thermo'){
+      // dve objemni tipali za cev (rdeče T1 dvižni, modro T2 povratni) s kabloma do instrumenta
+      [[.125,-.07,orange],[.125,.05,blue]].forEach(([x,z,band])=>{box(slot,graphite,x,y+.012,z,.03,.018,.05);box(slot,band,x,y+.022,z,.032,.004,.02);
+        for(const dx of [-.011,.011])box(slot,steel,x+dx,y+.026,z+.03,.004,.012,.018);
+        cord(slot,[[x-.016,y+.01,z],[.08,y+.006,z-.02],[.045,y+.006,-.1],[.028*(band===blue?1:-1),y+.03,-.119]])});
+    }else if(key==='flow'){
+      // ultrazvočno vodilo z dvema sondama in napenjalnimi trakovi, kabla do instrumenta
+      box(slot,steel,.128,y+.008,-.01,.022,.01,.2);
+      [-.07,.05].forEach((z,i)=>{box(slot,graphite,.128,y+.022,z,.03,.022,.035);cylinderZ(slot,brass,.128,y+.036,z,.004,.02);
+        cord(slot,[[.115,y+.02,z],[.085,y+.006,z-.03],[.04,y+.006,-.1],[(i?.025:-.025),y+.03,-.13]])});
+      for(const z of [-.1,.08])box(slot,orange,.128,y+.004,z,.04,.003,.012);
+    }else if(key==='meter'){
+      // navit povezovalni kabel s servisnim konektorjem
+      for(let k=0;k<4;k++){const ring=mesh(slot,geometry(new T.TorusGeometry(.04-k*.002,.003,6,30)),rubber,.125,y+.006+k*.004,.03);ring.rotation.x=Math.PI/2}
+      box(slot,graphite,.125,y+.014,-.06,.022,.016,.04);box(slot,steel,.125,y+.014,-.083,.012,.008,.008);
+      cord(slot,[[.125,y+.01,-.04],[.12,y+.01,-.01],[.09,y+.01,.03]]);
+    }
+  }
   const trays=new Map(),handTools=new Map();
   Object.keys(tools).forEach((key,i)=>{
     const x=(i%3-1)*.365, z=(Math.floor(i/3)-.5)*.293;
@@ -177,6 +199,7 @@ window.createFieldKit = function createFieldKit(T, scene, camera) {
     plate(slot,rubber,0,0,0,.339,.012,.265,.019);
     const tool=buildTool(key);tool.position.set(0,.038,-.012);slot.add(tool);
     if(key==='brush')tool.rotation.z=Math.PI;
+    accessories(slot,key);
     label(slot,0,.008,.110,.23,.038,tools[key].title,'','#222d2d','#d9dfce');
     trays.set(key,{tool,slot});
   });

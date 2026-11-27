@@ -101,7 +101,38 @@ window.createProbeRig=function(T,scene,kit){
  for(const [a,b,y] of [[X0,3.72,SUP],[X0,3.72,RET],[4.2,4.28,SUP],[4.97,5.04,SUP],[4.5,4.53,RET]])pipe(annex,insul,V(a,y,AZ),V(b,y,AZ),.06);
  // bojler v desnem kotu
  pipe(annex,boilerMat,V(5.6,.12,-1.68),V(5.6,1.86,-1.68),.3);
- pipe(annex,steel,V(5.6,1.86,-1.68),V(5.6,1.9,-1.68),.22);
+ // Bojler: obokan vrh z anodo in iztokom tople vode, nogice, termometer, potopno tipalo TČ, prirobnica električnega grelca, dotok hladne vode, tipska ploščica.
+ {const BX=5.6,BZ=-1.68,BR=.3,FZ=BZ+BR;
+  const dome=new T.Mesh(domeGeo,boilerMat);dome.position.set(BX,1.86,BZ);dome.scale.set(BR,.11,BR);dome.castShadow=true;annex.add(dome);
+  const base=new T.Mesh(domeGeo,boilerMat);base.position.set(BX,.12,BZ);base.scale.set(BR,-.06,BR);annex.add(base);
+  for(let k=0;k<3;k++){const a=k/3*Math.PI*2+.5;pipe(annex,steel,V(BX+Math.cos(a)*.2,.0,BZ+Math.sin(a)*.2),V(BX+Math.cos(a)*.2,.09,BZ+Math.sin(a)*.2),.018)}
+  for(const y of [.5,1.5])pipe(annex,boilerMat,V(BX,y-.006,BZ),V(BX,y+.006,BZ),BR+.004);
+  // vrh: magnezijeva anoda (šestroba glava) in iztok tople vode z rdečim obročem proti stropu
+  pipe(annex,gold,V(BX+.08,1.96,BZ+.05),V(BX+.08,1.99,BZ+.05),.022);
+  pipe(annex,copper,V(BX-.08,1.95,BZ),V(BX-.08,2.33,BZ),.016);pipe(annex,red,V(BX-.08,2.06,BZ),V(BX-.08,2.08,BZ),.019);
+  // termometer na čelu
+  const th=document.createElement('canvas');th.width=th.height=128;{const g=th.getContext('2d');g.fillStyle='#f4f2ea';g.beginPath();g.arc(64,64,64,0,7);g.fill();g.strokeStyle='#222';g.lineWidth=3;
+   for(let k=0;k<=8;k++){const a=(-135+k*33.75)*Math.PI/180;g.beginPath();g.moveTo(64+44*Math.sin(a),64-44*Math.cos(a));g.lineTo(64+54*Math.sin(a),64-54*Math.cos(a));g.stroke()}
+   g.fillStyle='#222';g.font='bold 15px Arial';g.textAlign='center';g.fillText('0',30,100);g.fillText('120',100,100);g.fillText('°C',64,96);
+   g.strokeStyle='#c0261c';g.lineWidth=4;g.beginPath();g.moveTo(64,64);const a=(-135+48/120*270)*Math.PI/180;g.lineTo(64+40*Math.sin(a),64-40*Math.cos(a));g.stroke()}
+  const thx=new T.CanvasTexture(th);thx.colorSpace=T.SRGBColorSpace;textures.push(thx);const thm=new T.MeshBasicMaterial({map:thx,toneMapped:false});mats.add(thm);
+  pipe(annex,steel,V(BX,1.22,FZ-.01),V(BX,1.22,FZ+.012),.045);const tg=new T.CircleGeometry(.04,32);geos.add(tg);const tf=new T.Mesh(tg,thm);tf.position.set(BX,1.22,FZ+.013);annex.add(tf);
+  // potopno tipalo toplotne črpalke v tulki, s kablom
+  pipe(annex,gold,V(BX+.16,.95,FZ-.04),V(BX+.16,.95,FZ+.03),.012);pipe(annex,black,V(BX+.16,.95,FZ+.03),V(BX+.16,.95,FZ+.05),.008);
+  pipe(annex,black,V(BX+.16,.95,FZ+.05),V(BX+.16,.75,FZ+.05),.004);
+  // prirobnica električnega grelca s pokrovom in uvodnico
+  pipe(annex,steel,V(BX,.42,FZ-.01),V(BX,.42,FZ+.03),.1);pipe(annex,material(0xd3d6d2,.1,.5),V(BX,.42,FZ+.03),V(BX,.42,FZ+.07),.085);
+  for(let k=0;k<8;k++){const a=k/8*Math.PI*2;pipe(annex,steel,V(BX+Math.cos(a)*.09,.42+Math.sin(a)*.09,FZ+.03),V(BX+Math.cos(a)*.09,.42+Math.sin(a)*.09,FZ+.04),.006)}
+  pipe(annex,black,V(BX+.06,.36,FZ+.06),V(BX+.06,.33,FZ+.06),.012);
+  // dotok hladne vode spodaj z modrim obročem
+  pipe(annex,copper,V(BX-.25,.24,BZ+.14),V(BX-.42,.24,BZ+.14),.016);pipe(annex,blue,V(BX-.33,.24,BZ+.14),V(BX-.35,.24,BZ+.14),.019);
+  pipe(annex,copper,V(BX-.42,.24,BZ+.14),V(BX-.42,.02,BZ+.14),.016);
+  // tipska ploščica
+  {const c=document.createElement('canvas');c.width=256;c.height=180;const g=c.getContext('2d');g.fillStyle='#e6e8e3';g.fillRect(0,0,256,180);g.fillStyle='#24495a';g.fillRect(0,0,256,36);g.fillStyle='#fff';g.font='bold 22px Arial';g.textAlign='center';g.fillText('BOJLER 200 L',128,26);
+   g.fillStyle='#222';g.font='18px Arial';['Max. tlak: 6 bar','Max. temp.: 95 °C','Izmenjevalnik TČ: 3,2 m²','Grelec: 3 kW, 230 V'].forEach((t,i)=>g.fillText(t,128,64+i*30));
+   const tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;textures.push(tx);const m=new T.MeshBasicMaterial({map:tx,toneMapped:false});mats.add(m);const pg=new T.PlaneGeometry(.17,.12);geos.add(pg);const pl=new T.Mesh(pg,m);pl.position.set(BX,.72,FZ+.002);annex.add(pl)}
+  infoHit(annex,'info:boiler',BX,1.0,BZ,.62,1.8,.62);
+ }
  tag(annex,'BOJLER',5.6,1.45,-1.37,.34);
  // nalepke smeri, kot jih nalepi monter
  tag(annex,'DVIŽNI VOD  ›',3.95,SUP-.12,AZ+.03,.34);

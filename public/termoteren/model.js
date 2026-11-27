@@ -242,6 +242,12 @@
       for(const z of [-.32,.32]){cyl(.08,.10,x,.32,z,rubber);cyl(.055,.035,x,.375,z,silver,"y",machine,6);}
     }
     box(0,.411,0,2.65,.078,.97,graphite,machine);
+    // Kondenzni odtok iz dna enote: siva PVC cev skozi ploščo v gramoz, ob njej oranžen grelni kabel, da pozimi ne zamrzne.
+    {const drain=group(scene);drain.userData.fieldId='info:drain';const pvc=mat(0x8c9294,.05,.6),heat=mat(0xd9792b,.05,.6);
+     cyl(.03,.03,-.2,.36,.15,pvc,'y',drain,16);
+     pipe([[-.2,.36,.15],[-.2,.16,.15],[-.2,.16,.82],[-.2,-.02,.82]],.02,pvc,drain);
+     pipe([[-.177,.35,.15],[-.177,.17,.15],[-.177,.17,.83],[-.177,-.02,.83]],.004,heat,drain);
+     for(const z of [.35,.6])box(-.2,.13,z,.06,.012,.03,graphite,drain);}
     box(0,1.812,0,2.69,.064,.985,coat,machine);
     box(0,1.775,.466,2.65,.018,.035,silver,machine);
     box(.428,1.11,0,.046,1.34,.91,edge,machine);
@@ -311,9 +317,6 @@
     batch(new T.CylinderGeometry(1,1,1,6),silver,bolts.slice(0,4),machine);
     batch(new T.CylinderGeometry(1,1,1,6),silver,bolts.slice(4),cover);
     // Key components of the hydronic section. Shapes are individually pickable, including their fittings.
-    const insidePlate=mat(0xa7a792,.62,.41);
-    const plates=[];for(let i=0;i<22;i++)plates.push([.67,.97,-.232+i*.011,.31,.69,.006]);
-    batch(boxGeo,insidePlate,plates,internals);
     box(.69,1.552,.012,.392,.295,.213,rubber,power);
     // Električni predal: siv pokrov z opozorilno nalepko, vrstne sponke na DIN letvi (L, N, PE …) in uvodnice s kabli spodaj.
     const lidGrey=mat(0xb7bdbb,.35,.45),termGrey=mat(0x8d9493,.05,.6),termBlue=mat(0x2f6fb5,.05,.6),termGY=mat(0x7fb23a,.05,.6),gland=mat(0x15191a,.05,.75);
@@ -339,8 +342,13 @@
     cyl(.055,.10,1.04,.603,.28,edge,"z",filter);
     const indicatorMat=mat(0xa94c39,.20);effects.indicator=indicatorMat;
     cyl(.037,.014,1.04,.603,.341,indicatorMat,"z",filter);
-    box(1.02,1.135,.156,.18,.171,.173,brass,valve);
-    box(1.02,1.166,.272,.215,.152,.10,edge,valve);
+    // preklopni ventil: medeninasto telo s priključki in holandci, svetel pogon s kablom, okence položaja A/B in rdeča ročica za ročni preklop
+    cyl(.056,.2,1.02,1.135,.156,brass,"x",valve,20);cyl(.05,.12,1.02,1.075,.156,brass,"y",valve,20);
+    for(const x of [.91,1.13])cyl(.062,.03,x,1.135,.156,brass,"x",valve,6);cyl(.06,.03,1.02,1.02,.156,brass,"y",valve,6);
+    cyl(.022,.05,1.02,1.135,.205,silver,"z",valve,12);
+    const actGrey=mat(0xd9dcd8,.05,.55);box(1.02,1.166,.272,.215,.152,.10,actGrey,valve);box(1.02,1.245,.272,.17,.01,.08,edge,valve);
+    surfaceLabel(.985,1.2,.3225,.07,.035,(g,w,h)=>{g.fillStyle="#20292b";g.fillRect(0,0,w,h);g.fillStyle="#f1f1ea";g.font="bold 110px sans-serif";g.fillText("A ↔ B",20,140)},valve);
+    cyl(.013,.03,1.1,1.085,.272,edge,"y",valve,10);pipe([[1.1,1.07,.272],[1.1,1.0,.26],[1.15,.95,.2]],.007,dark,valve);
     const lever=box(1.025,1.174,.329,.117,.019,.02,red,valve);effects.lever=lever;
     const toAnnex=callbacks.state().f.caseIndex!==9;
     for(const [y,m] of [[.605,blue],[1.134,red]]){
