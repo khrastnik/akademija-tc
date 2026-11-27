@@ -10,6 +10,27 @@ window.createProbeRig=function(T,scene,kit){
  // Nevidno območje za ogled s tipko I (opis komponente, brez dejanja).
  const hitMat=material(0xffffff);hitMat.transparent=true;hitMat.opacity=0;hitMat.depthWrite=false;mats.add(hitMat);
  function infoHit(parent,id,x,y,z,w,h,d){const m=box(parent,hitMat,x,y,z,w,h,d);m.castShadow=m.receiveShadow=false;m.userData.fieldId=id;return m}
+ // Raztezna posoda: valj z obokanima dnoma, varjenima šivoma, ventilčkom s kapico zgoraj, objemko in tipsko nalepko.
+ const domeGeo=new T.SphereGeometry(1,28,14,0,Math.PI*2,0,Math.PI/2);geos.add(domeGeo);
+ const vesselSteel=material(0x9da59d,.78,.3);mats.add(vesselSteel);const capBlack=material(0x141819,.05,.6);mats.add(capBlack);
+ function vesselDetail(parent,x,y0,y1,z,r,mat,label=true){
+  const top=new T.Mesh(domeGeo,mat);top.position.set(x,y1,z);top.scale.set(r,r*.38,r);top.castShadow=true;parent.add(top);
+  const bottom=new T.Mesh(domeGeo,mat);bottom.position.set(x,y0,z);bottom.scale.set(r,-r*.38,r);bottom.castShadow=true;parent.add(bottom);
+  for(const y of [y0+.012,y1-.012])pipe(parent,mat,V(x,y-.004,z),V(x,y+.004,z),r+.003);
+  pipe(parent,vesselSteel,V(x,y1+r*.36,z),V(x,y1+r*.36+.02,z),.01);pipe(parent,capBlack,V(x,y1+r*.36+.02,z),V(x,y1+r*.36+.04,z),.013);
+  pipe(parent,vesselSteel,V(x,(y0+y1)/2-.015,z),V(x,(y0+y1)/2+.015,z),r+.006);
+  if(label){const c=document.createElement('canvas');c.width=256;c.height=200;const g=c.getContext('2d');g.fillStyle='#eeeeea';g.fillRect(0,0,256,200);g.fillStyle='#b8322a';g.fillRect(0,0,256,40);
+   g.fillStyle='#fff';g.font='bold 26px Arial';g.textAlign='center';g.fillText('RAZTEZNA POSODA',128,29);g.fillStyle='#222';g.font='22px Arial';
+   ['Prostornina: 18 L','Predtlak: 1,0 bar','Max. tlak: 3 bar','Max. temp.: 70 °C'].forEach((t,i)=>g.fillText(t,128,72+i*34));
+   const tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;textures.push(tx);const m=new T.MeshBasicMaterial({map:tx,toneMapped:false});mats.add(m);
+   const pg=new T.PlaneGeometry(r*.95,r*.75);geos.add(pg);const pl=new T.Mesh(pg,m);pl.position.set(x,(y0+y1)/2+(y1-y0)*.22,z+r+.002);parent.add(pl)}
+ }
+ // Varnostni ventil: medeninasto telo, rdeč vrtljiv gumb z rebri zgoraj (ročni preizkus) in iztok s strani.
+ function safetyValve(parent,x,y,z,outlet){
+  pipe(parent,gold,V(x,y-.03,z),V(x,y+.02,z),.017);for(let k=0;k<6;k++){const a=k/6*Math.PI*2;pipe(parent,gold,V(x+Math.cos(a)*.018,y-.03,z+Math.sin(a)*.018),V(x+Math.cos(a)*.018,y-.018,z+Math.sin(a)*.018),.004)}
+  pipe(parent,red,V(x,y+.02,z),V(x,y+.05,z),.021);for(let k=0;k<10;k++){const a=k/10*Math.PI*2;pipe(parent,red,V(x+Math.cos(a)*.021,y+.022,z+Math.sin(a)*.021),V(x+Math.cos(a)*.021,y+.048,z+Math.sin(a)*.021),.004)}
+  pipe(parent,gold,V(x,y,z),V(x+outlet.x*.04,y+outlet.y*.04,z+outlet.z*.04),.019);
+ }
  function pipe(p,m,a,b,r){const delta=b.clone().sub(a),mid=a.clone().lerp(b,.5);const o=mesh(p,round,m,mid.x,mid.y,mid.z,r,delta.length(),r);o.quaternion.setFromUnitVectors(V(0,1,0),delta.normalize());return o}
  function route(parent,material,points,r){
   const path=new T.CurvePath();let last=V(...points[0]);
@@ -90,9 +111,14 @@ window.createProbeRig=function(T,scene,kit){
  tag(annex,'RAVNI ODSEK · PRETOK',5.0,RET-.13,AZ+.03,.5);
  // raztezna posoda, varnostni ventil in manometer na steni nad dvižnim vodom
  const vesselMat=material(0xb53e2c,.25,.42);mats.add(vesselMat);
- pipe(annex,vesselMat,V(3.95,1.45,-1.95),V(3.95,1.8,-1.95),.13);
+ pipe(annex,vesselMat,V(3.95,1.45,-1.95),V(3.95,1.8,-1.95),.13);vesselDetail(annex,3.95,1.45,1.8,-1.95,.13,vesselMat);
  pipe(annex,copper,V(3.95,1.45,AZ),V(3.95,SUP,AZ),.016);
- pipe(annex,gold,V(3.84,SUP,AZ),V(3.84,1.28,AZ),.018);box(annex,red,3.84,1.31,AZ,.045,.05,.045);tag(annex,'VARNOSTNI VENTIL',3.8,1.218,AZ+.03,.24);
+ pipe(annex,gold,V(3.84,SUP,AZ),V(3.84,1.28,AZ),.018);safetyValve(annex,3.84,1.31,AZ,V(0,0,1));
+ // iztok varnostnega ventila: cev naprej in navzdol v odprt lijak s sifonom, da se kapljanje vidi
+ pipe(annex,gold,V(3.84,1.31,AZ+.04),V(3.84,1.31,AZ+.09),.012);pipe(annex,gold,V(3.84,1.31,AZ+.09),V(3.76,1.31,AZ+.09),.012);pipe(annex,gold,V(3.76,1.31,AZ+.09),V(3.76,.56,AZ+.09),.012);
+ {const fg=new T.CylinderGeometry(.035,.013,.06,20,1,true);geos.add(fg);const fun=new T.Mesh(fg,steel);fun.position.set(3.76,.5,AZ+.09);annex.add(fun);
+  pipe(annex,steel,V(3.76,.47,AZ+.09),V(3.76,.44,AZ+.09),.013);pipe(annex,steel,V(3.76,.44,AZ+.09),V(3.76,.44,AZ-.17),.013)}
+ tag(annex,'VARNOSTNI VENTIL',4.02,1.218,AZ+.03,.24);
  // Manometer 0–4 bar: krom obroč, bela številčnica z rdečim poljem nad 3 bar, kazalec in steklo; priključen od spodaj prek medeninastega ventila.
  const GX=4.18,GY=1.44,GZ=AZ+.035,GR=.055;
  pipe(annex,copper,V(GX,SUP,AZ),V(GX,1.3,AZ),.012);
@@ -258,7 +284,11 @@ window.createProbeRig=function(T,scene,kit){
    const a=i*Math.PI/9;
    pipe(head,joint,V(Math.cos(a)*.08,Math.sin(a)*.08,.066),V(Math.cos(a)*.08,Math.sin(a)*.08,.16),.0035);
   }
-  tag(head,'5',0,0,.184,.077);
+  // čelo glave in lestvica nastavitev (❄ 1–5) na zgornji strani, kot na pravi termostatski glavi
+  pipe(head,enamel,V(0,0,.181),V(0,0,.19),.07);
+  {const c=document.createElement('canvas');c.width=512;c.height=96;const g=c.getContext('2d');g.fillStyle='#f3eee2';g.fillRect(0,0,512,96);g.fillStyle='#2b2b2b';g.font='bold 54px Arial';g.textAlign='center';['❄','1','2','3','4','5'].forEach((t,i)=>g.fillText(t,46+i*84,68));g.fillStyle='#c0392b';g.fillRect(46+3*84-4,4,8,14);
+   const tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;textures.push(tx);const m=new T.MeshBasicMaterial({map:tx,toneMapped:false});mats.add(m);const pg=new T.PlaneGeometry(.15,.028);geos.add(pg);const sc=new T.Mesh(pg,m);sc.rotation.x=-Math.PI/2;sc.position.set(0,.087,.12);head.add(sc)}
+  box(bay,black,.818,1.144+.069,.232,.008,.008,.012);
   const pin=group(bay,.818,1.144,.235,'radPin');
   pipe(pin,gold,V(0,0,-.04),V(0,0,.001),.054);
   const stem=pipe(pin,steel,V(0,0,.001),V(0,0,.032),.013);
@@ -271,7 +301,7 @@ window.createProbeRig=function(T,scene,kit){
   tag(bay,'ODZRAČEVALNIK',-.851,1.412,.005,.62);
   const vessel=group(bay,-1.22,1.75,.13,'radVessel');
   const vesselRed=finish(0xb3412f,.25,.42);
-  pipe(vessel,vesselRed,V(0,-.15,0),V(0,.15,0),.11);
+  pipe(vessel,vesselRed,V(0,-.15,0),V(0,.15,0),.11);vesselDetail(vessel,0,-.15,.15,0,.11,vesselRed);
   pipe(vessel,steel,V(0,-.15,0),V(0,-.21,0),.03);
   pipe(vessel,gold,V(0,.15,0),V(0,.19,0),.018);
   pipe(bay,copper,V(-1.22,1.54,.13),V(-1.22,.475,.13),.016);
@@ -279,7 +309,7 @@ window.createProbeRig=function(T,scene,kit){
   // Varnostni ventil 3 bar na dvižnem vodu z odtokom navzdol; pri nalogu 12 iz njega kaplja in polica pod njim je mokra.
   const safetyRed=finish(0xc0392b,.2,.45);
   pipe(bay,gold,V(-1.22,1.06,.13),V(-1.15,1.06,.13),.017);
-  box(bay,safetyRed,-1.13,1.07,.13,.05,.075,.05);pipe(bay,black,V(-1.13,1.105,.13),V(-1.13,1.135,.13),.02);
+  safetyValve(bay,-1.13,1.07,.13,V(0,-1,0));
   pipe(bay,steel,V(-1.13,1.03,.13),V(-1.13,.96,.13),.012);
   infoHit(bay,'info:safety',-1.13,1.06,.13,.11,.14,.09);
   tag(bay,'VARNOSTNI VENTIL',-1.02,1.2,.005,.26);

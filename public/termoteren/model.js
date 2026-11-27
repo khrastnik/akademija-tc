@@ -315,8 +315,17 @@
     const plates=[];for(let i=0;i<22;i++)plates.push([.67,.97,-.232+i*.011,.31,.69,.006]);
     batch(boxGeo,insidePlate,plates,internals);
     box(.69,1.552,.012,.392,.295,.213,rubber,power);
-    box(.69,1.553,.139,.339,.242,.045,white,power);
-    for(let i=0;i<3;i++)box(.578+i*.072,1.553,.178,.05,.103,.036,i===0?red:edge,power);
+    // Električni predal: siv pokrov z opozorilno nalepko, vrstne sponke na DIN letvi (L, N, PE …) in uvodnice s kabli spodaj.
+    const lidGrey=mat(0xb7bdbb,.35,.45),termGrey=mat(0x8d9493,.05,.6),termBlue=mat(0x2f6fb5,.05,.6),termGY=mat(0x7fb23a,.05,.6),gland=mat(0x15191a,.05,.75);
+    box(.69,1.585,.14,.36,.2,.04,lidGrey,power);
+    for(const [x,y] of [[.525,1.67],[.855,1.67],[.525,1.5],[.855,1.5]])cyl(.007,.006,x,y,.162,silver,'z',power,8);
+    {const warn=canvasTex(300,170,(g,w,h)=>{g.fillStyle='#f5c400';g.fillRect(0,0,w,h);g.fillStyle='#111';g.beginPath();g.moveTo(58,18);g.lineTo(104,100);g.lineTo(12,100);g.closePath();g.fill();
+       g.fillStyle='#f5c400';g.beginPath();g.moveTo(58,34);g.lineTo(92,92);g.lineTo(24,92);g.closePath();g.fill();g.fillStyle='#111';g.font='bold 40px sans-serif';g.textAlign='center';g.fillText('⚡',58,88);
+       g.textAlign='left';g.font='bold 26px sans-serif';g.fillText('NEVARNOST',118,46);g.font='20px sans-serif';g.fillText('230/400 V',118,76);g.fillText('Po izklopu počakaj',14,130);g.fillText('5 min (kondenzatorji)',14,156)});
+     const wl=new T.Mesh(new T.PlaneGeometry(.15,.085),new T.MeshBasicMaterial({map:warn,toneMapped:false}));wl.position.set(.69,1.6,.1605);power.add(wl);}
+    box(.69,1.452,.1,.34,.012,.008,silver,power);
+    ['termGrey','termGrey','termGrey','termBlue','termGY','termGrey','termBlue','termGY'].forEach((m,i)=>{const mm={termGrey,termBlue,termGY}[m];box(.555+i*.038,1.455,.118,.03,.05,.035,mm,power);cyl(.006,.004,.555+i*.038,1.475,.137,silver,'z',power,8)});
+    for(const x of [.6,.69,.78]){cyl(.014,.022,x,1.392,.06,gland,'y',power,12);pipe([[x,1.38,.06],[x,1.3,.06],[x-.02,1.22,.03]],.008,dark,power)}
     pipe([[.56,1.405,.034],[.51,1.341,.021],[.51,1.156,-.022]],.014,dark,power);
     cyl(.144,.19,.67,.988,.13,red,"z",pump);
     cyl(.123,.033,.67,.988,.241,edge,"z",pump);

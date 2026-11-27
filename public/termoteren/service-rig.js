@@ -91,8 +91,12 @@
     box(panelMount,.879,1.72,.411,.79,.061,.071,zinc);
     plate(panelMount,.879,1.72,.451,.25,.045,'VODILI');
     const isolatedSwitch=group(fixtures,2.15,1.43,-1.99,'isolator');
-    box(isolatedSwitch,0,0,0,.29,.40,.16,white);
+    // Servisno stikalo IP65: sivo ohišje s pokrovom na štirih vijakih, rumena plošča z oznakama 0 in I, uvodnice za kabel spodaj.
+    box(isolatedSwitch,0,0,0,.29,.40,.16,material(0xc9ccc8,.05,.55));box(isolatedSwitch,0,0,.081,.27,.38,.004,material(0xbfc3bf,.05,.5));
+    for(const [x,y] of [[-.12,.175],[.12,.175],[-.12,-.175],[.12,-.175]])cylinder(isolatedSwitch,x,y,.084,.009,.006,zinc,'z');
     box(isolatedSwitch,0,.035,.084,.25,.233,.023,ochre);
+    sticker(isolatedSwitch,0,.035,.0962,.25,.233,(g,w,h)=>{g.fillStyle='#f2bf1c';g.fillRect(0,0,w,h);g.strokeStyle='#222';g.lineWidth=4;g.beginPath();g.arc(w/2,h/2+4,78,0,7);g.stroke();g.fillStyle='#111';g.font='bold 40px Arial';g.textAlign='center';g.fillText('I',w/2+44,42);g.fillText('0',30,h/2+18);g.font='bold 15px Arial';g.fillText('ON',w/2+44,62);g.fillText('OFF',34,h/2+46)});
+    for(const x of [-.07,.07])cylinder(isolatedSwitch,x,-.21,0,.016,.025,black,'y');
     cylinder(isolatedSwitch,0,.044,.108,.082,.044,red,'z');
     const switchHandle=group(isolatedSwitch,0,.044,.142);
     box(switchHandle,0,.026,0,.043,.142,.045,red);
@@ -101,21 +105,39 @@
     // Hidravlika v kotlovnici (probe-rig zgradi prostor in cevi). Tu so deli, na katerih serviser dela.
     const rack=group(fixtures,0,0,0);
     const AZ=-1.9,SUP=1.134,RET=.605;
+    const castIron=material(0x2c3134,.45,.55),motorRed=material(0xb8322a,.25,.42),headGrey=material(0x3a4044,.2,.6),plastic=material(0x1d2224,.05,.7),
+      actuatorWhite=material(0xe3e5e0,.05,.55);
+    const nut=(p,x,y,z,r=.05,len=.028,axis='x')=>cylinder(p,x,y,z,r,len,brass,axis,true);
+    const cable=(p,pts)=>{for(let i=1;i<pts.length;i++)line(p,pts[i-1],pts[i],.006,plastic)};
+    function sticker(p,x,y,z,w,h,draw,rotY=0){const c=document.createElement('canvas');c.width=256;c.height=Math.round(256*h/w);const g=c.getContext('2d');draw(g,c.width,c.height);
+      const t=keep(new T.CanvasTexture(c));t.colorSpace=T.SRGBColorSpace;const m=new T.Mesh(keep(new T.PlaneGeometry(w,h)),keep(new T.MeshBasicMaterial({map:t,toneMapped:false})));m.position.set(x,y,z);m.rotation.y=rotY;p.add(m);return m}
+    // Krogelni ventil: medeninasto telo s šestrobima holandcema, vreteno in ploščata ročica (rdeča = dvižni, modra = povratni).
+    function ballValve(p,x,y,col){
+      nut(p,x-.052,y,0);nut(p,x+.052,y,0);cylinder(p,x,y,0,.046,.08,brass,'x');
+      mesh(p,geometry.sphere,brass,x,y,0,.052,.05,.05);
+      cylinder(p,x,y+.055,0,.013,.04,brass,'y');nut(p,x,y+.077,0,.017,.01,'y');
+      box(p,x+.045,y+.086,0,.11,.008,.026,col);box(p,x+.1,y+.082,0,.02,.016,.03,col);cylinder(p,x,y+.092,0,.006,.006,zinc,'y');
+    }
     // zaporna krogelna ventila ob vstopu v kotlovnico in izpustna pipica na povratku
     const water=group(rack,3.75,RET,AZ,'water');
-    for(const [dy,col] of [[0,teal],[SUP-RET,red]]){
-      cylinder(water,0,dy,0,.052,.12,brass,'x',true);
-      box(water,0,dy+.06,.04,.13,.022,.022,col);
-    }
-    cylinder(water,.04,-.07,0,.018,.09,brass,'y');
-    const waterHandle=group(water,.04,-.12,.03);
-    box(waterHandle,.04,0,0,.08,.016,.016,teal);
+    ballValve(water,0,0,teal);ballValve(water,0,SUP-RET,red);
+    // izpustna pipica: telo navzdol, nastavek za cev z rebri in kapica
+    cylinder(water,.04,-.06,0,.018,.06,brass,'y');nut(water,.04,-.095,0,.02,.016,'y');
+    cylinder(water,.04,-.15,0,.013,.07,brass,'y');for(let k=0;k<3;k++)cylinder(water,.04,-.135-k*.022,0,.016,.006,brass,'y');
+    cylinder(water,.04,-.192,0,.017,.02,teal,'y');
+    const waterHandle=group(water,.04,-.095,.03);
+    box(waterHandle,.035,0,0,.07,.014,.012,teal);
     plate(water,0,-.2,.05,.3,.05,'ZAPORA · IZPUST');
     // magnetni filter na povratnem vodu z manometrom pred in za njim
     const filterPoint=group(rack,4.36,RET,AZ,'test:filter');
-    cylinder(filterPoint,0,0,0,.05,.12,brass,'x',true);
-    cylinder(filterPoint,0,-.13,0,.06,.22,black,'y');
-    cylinder(filterPoint,0,-.25,0,.035,.04,brass,'y');
+    // magnetni filter: medeninast priključni blok s holandcema, pokrov, črno ohišje z rebri, izpustni ventil spodaj, odzračevalnik zgoraj
+    cylinder(filterPoint,0,0,0,.046,.1,brass,'x');nut(filterPoint,-.075,0,0);nut(filterPoint,.075,0,0);
+    cylinder(filterPoint,0,-.035,0,.05,.03,brass,'y');cylinder(filterPoint,0,-.058,0,.066,.02,castIron,'y');
+    cylinder(filterPoint,0,-.15,0,.06,.17,plastic,'y');
+    for(const y of [-.08,-.2])cylinder(filterPoint,0,y,0,.064,.012,castIron,'y');
+    cylinder(filterPoint,0,-.245,0,.04,.02,castIron,'y');cylinder(filterPoint,0,-.27,0,.012,.03,brass,'y');box(filterPoint,.02,-.268,0,.045,.008,.012,teal);
+    cylinder(filterPoint,0,.052,0,.012,.02,brass,'y');cylinder(filterPoint,0,.066,0,.016,.008,zinc,'y');
+    sticker(filterPoint,0,-.14,.0605,.07,.06,(g,w,h)=>{g.fillStyle='#d8dcd6';g.fillRect(0,0,w,h);g.fillStyle='#1f6f8b';g.fillRect(0,0,w,46);g.fillStyle='#fff';g.font='bold 30px Arial';g.textAlign='center';g.fillText('MAGNET',w/2,34);g.fillStyle='#222';g.font='22px Arial';g.fillText('filter  →',w/2,90);g.fillText('očisti 1× letno',w/2,140);g.fillText('max 3 bar · 90 °C',w/2,186)});
     // Manometra 0–4 bar pred in za filtrom – enaka izvedba kot manometer na steni kotlovnice. Zamašen filter = nižji tlak za njim.
     const gaugeTex=keep((()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d'),cx=128,cy=128;
       g.fillStyle='#f4f2ea';g.beginPath();g.arc(cx,cy,128,0,7);g.fill();
@@ -144,20 +166,38 @@
     plate(filterPoint,0,-.42,.05,.18,.045,'FILTER');
     // obtočna črpalka na dvižnem vodu
     const returnPoint=group(rack,4.36,SUP,AZ,'test:pump');
-    cylinder(returnPoint,0,0,0,.06,.16,red,'x');
-    cylinder(returnPoint,0,0,.08,.07,.1,red,'z');
-    box(returnPoint,0,0,.15,.11,.11,.06,black);
+    // mokrotekoča obtočna črpalka: litoželezno ohišje v cevi s holandcema, motor z vodoravno gredjo, krmilna glava z lučkami in tipko, kabel
+    nut(returnPoint,-.095,0,0,.05,.03);nut(returnPoint,.095,0,0,.05,.03);
+    cylinder(returnPoint,0,0,0,.045,.16,castIron,'x');mesh(returnPoint,geometry.sphere,castIron,0,0,.02,.075,.07,.06);
+    cylinder(returnPoint,0,0,.07,.058,.06,castIron,'z');
+    cylinder(returnPoint,0,0,.125,.06,.07,motorRed,'z');for(const z of [.1,.115,.13,.145])cylinder(returnPoint,0,0,z,.063,.004,motorRed,'z');
+    box(returnPoint,0,0,.185,.115,.115,.05,headGrey);
+    sticker(returnPoint,0,0,.2105,.105,.105,(g,w,h)=>{g.fillStyle='#2c3236';g.fillRect(0,0,w,h);g.fillStyle='#9aa3a6';g.font='bold 20px Arial';g.textAlign='center';g.fillText('OBTOČNA',w/2,30);
+      for(let k=0;k<5;k++){g.fillStyle=k===2?'#3ee07a':'#4b5558';g.fillRect(40+k*36,92,24,12)}
+      g.fillStyle='#cfd5d6';g.font='16px Arial';g.fillText('I    II   III  ΔP  AUTO',w/2,130);
+      g.fillStyle='#55605f';g.beginPath();g.arc(w/2,190,26,0,7);g.fill();g.fillStyle='#e8eceb';g.font='bold 22px Arial';g.fillText('MODE',w/2,198)});
+    cylinder(returnPoint,.05,-.065,.185,.012,.03,plastic,'y');cable(returnPoint,[[.05,-.08,.185],[.05,-.13,.185],[.05,-.13,-.14],[.08,-.16,-.14]]);
+    sticker(returnPoint,0,.047,.0,.07,.02,(g,w,h)=>{g.fillStyle='#e9e9e2';g.fillRect(0,0,w,h);g.fillStyle='#111';g.font='bold 52px Arial';g.textAlign='center';g.fillText('→',w/2,h*.85)});
     plate(returnPoint,0,-.16,.05,.2,.045,'ČRPALKA');
     // merilnik pretoka na povratnem vodu
     const flowPoint=group(rack,4.63,RET,AZ,'test:sensor');
-    cylinder(flowPoint,0,0,0,.05,.1,brass,'x',true);
-    box(flowPoint,0,.06,.02,.08,.07,.07,teal);
+    // vrtinčni merilnik pretoka: plastično telo v cevi, glava s priključkom in kablom, puščica smeri
+    nut(flowPoint,-.065,0,0);nut(flowPoint,.065,0,0);cylinder(flowPoint,0,0,0,.044,.1,plastic,'x');
+    box(flowPoint,0,.058,0,.06,.04,.05,headGrey);cylinder(flowPoint,0,.09,0,.014,.025,plastic,'y');cable(flowPoint,[[0,.1,0],[0,.12,0],[0,.12,-.165],[0,.37,-.165],[-.11,.37,-.165]]);
+    sticker(flowPoint,0,.058,.0255,.055,.035,(g,w,h)=>{g.fillStyle='#e9e9e2';g.fillRect(0,0,w,h);g.fillStyle='#111';g.font='bold 34px Arial';g.textAlign='center';g.fillText('→ l/min',w/2,62);g.font='22px Arial';g.fillText('1,5–40',w/2,120)});
     plate(flowPoint,0,.13,.05,.16,.04,'PRETOK');
     // tripotni preklopni ventil: dvižni vod ali bojler
     const valvePoint=group(rack,4.6,SUP,AZ,'test:valve');
-    box(valvePoint,0,0,0,.1,.1,.1,brass);
-    box(valvePoint,0,0,.1,.1,.09,.09,black);
-    plate(valvePoint,0,0,.148,.08,.03,'A / B');
+    // preklopni ventil: medeninasto telo s tremi priključki (AB iz enote, A radiatorji, B bojler navzgor) in pogon z ročno ročico
+    cylinder(valvePoint,0,0,0,.048,.11,brass,'x');cylinder(valvePoint,0,.045,0,.046,.07,brass,'y');
+    nut(valvePoint,-.07,0,0);nut(valvePoint,.07,0,0);nut(valvePoint,0,.085,0,.05,.028,'y');
+    cylinder(valvePoint,0,0,.055,.02,.03,zinc,'z');
+    box(valvePoint,0,0,.11,.1,.11,.08,actuatorWhite);box(valvePoint,0,.06,.11,.04,.012,.02,plastic);
+    cylinder(valvePoint,-.035,-.06,.11,.011,.02,plastic,'y');cable(valvePoint,[[-.035,-.07,.11],[-.035,-.13,.11],[-.035,-.13,-.14],[-.08,-.16,-.14]]);
+    // razdelilna doza na steni med črpalko in ventilom, od nje instalacijska cev do tal
+    box(rack,4.48,SUP-.16,AZ-.165,.09,.09,.05,headGrey);box(rack,4.48,SUP-.16,AZ-.139,.08,.08,.004,castIron);
+    line(rack,[4.48,SUP-.205,AZ-.17],[4.48,.03,AZ-.17],.011,headGrey);
+    plate(valvePoint,0,.015,.151,.08,.03,'A / B');
     // The washing station stands just behind the tool table, on the technician's side of the facade.
     const bench=group(fixtures,-2.55,0,-.16);
     const basin=group(bench,0,.79,0);

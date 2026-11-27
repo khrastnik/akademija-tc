@@ -1,5 +1,21 @@
 # Spremembe
 
+## 0.41.0 – 2026-11-27
+
+Igra 3D – komponente so videti kot na terenu, da jih serviser prepozna:
+
+- **Obtočna črpalka** (kotlovnica): litoželezno ohišje v cevi s holandcema, motor z vodoravno gredjo in rebri, krmilna glava z lučkami načinov in tipko, puščica smeri, kabel.
+- **Preklopni ventil:** medeninasto telo s tremi priključki in pogon z ročno ročico in kablom.
+- **Krogelni ventili** s šestrobimi holandci in ploščato rdečo/modro ročico, **izpustna pipica** z nastavkom za cev.
+- **Magnetni filter:** pokrov, rebrasto ohišje, odzračevalnik zgoraj, izpust spodaj, nalepka.
+- **Merilnik pretoka:** vrtinčno tipalo z glavo, priključkom in kablom.
+- Kabli so speljani ob steni v **razdelilno dozo** in instalacijsko cev.
+- **Raztezni posodi** (kotlovnica in postaja): obokani dni, vari, ventilček s kapico, objemka, tipska nalepka.
+- **Varnostna ventila:** medeninasto telo, rdeč gumb z rebri za ročni preizkus; v kotlovnici iztok v lijak s sifonom.
+- **Električni predal v enoti:** pokrov z vijaki in opozorilno nalepko, vrstne sponke (L, N, PE) na DIN letvi, uvodnice s kabli.
+- **Glavno stikalo na fasadi:** sivo ohišje z vijaki, rumena plošča z oznakama 0/OFF in I/ON, uvodnice.
+- **Termostatska glava:** lestvica ❄ 1–5 in oznaka na ventilu.
+
 ## 0.40.2 – 2026-11-27
 
 - **Manometra pred in za filtrom** v kotlovnici sta enaka kot glavni manometer: številčnica 0–4 bar, kazalec, steklo, oznaki PRED in ZA. Pri zamašenem filtru kaže manometer za filtrom opazno manj.
