@@ -58,7 +58,7 @@ window.FieldRules=(()=>{
  };
  const labels={kit:'Servisni kovček',cover:'Servisni pokrov',isolator:'Glavno stikalo na fasadi',water:'Vodni servisni blok',filterCap:'Vložek filtra',filterSeat:'Ležišče filtra',oldSensor:'Zunanje tipalo',newMount:'Senčni nosilec · severna stena',oldDrive:'Pogon ventila',oldFlow:'Merilnik pretoka',driveSeat:'Gred ventila',flowSeat:'Priključek merilnika',spare:'Nadomestni del na pladnju',tablet:'Delovni nalog'};
  Object.assign(labels,{panelRest:'Stojalo za pokrov',panelMount:'Vodili servisnega pokrova',basinDrop:'Pralna kad',cleanFilter:'Opran filtrski vložek',instrument:'Zaslon instrumenta'});for(const [k,v] of Object.entries(Measurements.ports))labels['probe:'+k]=v;
- function label(id){const [type,v]=String(id||'').split(':');if(type==='ref')return REF[v]?.name||'Hladilni krog';if(type==='tool')return names[v];if(type==='screw')return 'Vijak pokrova '+(Number(v)+1);if(type==='dirty')return 'Mrežica · odsek '+(Number(v)+1);if(type==='leaf')return 'Listje na lamelah · '+(Number(v)+1);if(type==='test')return parts[v];return labels[id]||parts[id]||'Del naprave'}
+ function label(id){const [type,v]=String(id||'').split(':');if(type==='ref')return REF[v]?.name||'Hladilni krog';if(type==='info')return window.PartInfo?.get(id)?.name||'Del naprave';if(type==='tool')return names[v];if(type==='screw')return 'Vijak pokrova '+(Number(v)+1);if(type==='dirty')return 'Mrežica · odsek '+(Number(v)+1);if(type==='leaf')return 'Listje na lamelah · '+(Number(v)+1);if(type==='test')return parts[v];return labels[id]||parts[id]||'Del naprave'}
  function action(f,j,c,id){
   const [type,value]=String(id||'').split(':'),n=f.caseIndex;
   const ok=(verb,seconds,change)=>({verb,seconds,change,enabled:true});
@@ -67,6 +67,7 @@ window.FieldRules=(()=>{
   const has=t=>f.held===t;
   if(!id)return no('Poglej proti predmetu.');
   if(type==='ref')return no(REF[value]?.info||'Samo za ogled.');
+  if(type==='info')return no('Samo za ogled · pritisni I in preberi, kaj je to.');
   if(id==='regulatorScreen'||(id==='control'&&!f.held)){
    if(f.isolated)return no('Zaslon nima napajanja.');
    if(f.opened||f.panel||f.carry)return no('Zaslon je na servisnem pokrovu.');

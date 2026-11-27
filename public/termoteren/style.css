@@ -182,3 +182,11 @@ main:has(.stage:not(.working)) .belt{display:none}
 #compass b{width:18px;margin:-9px 0 0 -9px;font-size:15px;line-height:18px}
 #compass .cn{top:14px}#compass .cs{top:calc(100% - 14px)}#compass .ce{left:calc(100% - 14px)}#compass .cw{left:14px}
 #compass .rose{transition:none}
+
+/* Opis komponente (tipka I) */
+#infoBtn{margin-left:8px;padding:3px 10px;border-radius:6px;border:1px solid #7fc6d6;background:#123038d9;color:#d9f2f7;font-weight:700}
+#infoBtn kbd{margin-left:4px}
+.partInfo p{margin:0 0 10px;line-height:1.5}.partInfo b{color:#ffbb80;margin-right:2px}
+.partInfo .piHome{background:#ffffff0d;border-left:3px solid var(--orange);padding:8px 10px;border-radius:4px}
+.partInfo .piSafe{background:#5a1f1626;border:1px solid #c0574066;color:#ffd5c9;padding:8px 10px;border-radius:6px;font-size:14px}
+.partInfo .piClose{color:var(--muted);font-size:13px;margin:4px 0 0}

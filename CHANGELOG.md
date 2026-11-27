@@ -1,5 +1,13 @@
 # Spremembe
 
+## 0.40.0 – 2026-11-27
+
+- **Igra 3D · »Kaj je to?« (tipka I):** nameri katerikoli del – črpalko, filter, ventilator, uparjalnik, raztezno posodo, manometer, varnostni ventil,
+  termostatsko glavo, kompresor, ekspanzijski ventil, orodje … – in pritisni I (na telefonu gumb ⓘ). Odpre se opis: kaj je to, čemu služi, po domače
+  in kaj gre rado narobe, s povezavo v slovar. Raztezna posoda, varnostni ventil in manometer v kotlovnici ter varnostni ventil na postaji so zdaj prav tako za ogled.
+- Dvig merilnega instrumenta je prestavljen s tipke I na **F**.
+- **Slovar · raztezna posoda:** razširjena razlaga – zgradba z membrano, koliko se voda razteza, predtlak in polnilni tlak, kako preveriš posodo in kaj se zgodi, ko se izprazni.
+
 ## 0.39.1 – 2026-11-26
 
 - **Nalog 12 (Varnostni ventil kaplja):** voda s police kaplja na lesen podest pred postajo – temen moker madež z nekaj svetlečimi lužicami, viden že od daleč. Po popravilu izgine.

@@ -125,8 +125,8 @@ const precision=id=>['panelRest','panelMount','filterCap','basinDrop','cleanFilt
    verb=hit.d>workRange(hit.id)?'Stopi bliže ali počepni · '+hit.d.toFixed(1).replace('.',',')+' m':a.verb;
    available=hit.d<=workRange(hit.id)&&a.enabled;
   }
-  const signature=title+'|'+verb+'|'+available;
-  if(signature!==lastHud){callbacks.aim(title,verb,available);lastHud=signature}
+  const signature=title+'|'+verb+'|'+available+'|'+(hit?.id||'');
+  if(signature!==lastHud){callbacks.aim(title,verb,available,hit?.id||null);lastHud=signature}
   callbacks.progress(progress);
   if(guidePoint){
    world.copy(guidePoint).project(camera);
@@ -190,7 +190,8 @@ const precision=id=>['panelRest','panelMount','filterCap','basinDrop','cleanFilt
  const observer=new ResizeObserver(resize);observer.observe(host);resize();
  function keyDown(e){
   if(blocked()||e.ctrlKey||e.altKey||e.metaKey||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;
-  if(e.code==='KeyI'&&!e.repeat){callbacks.toggleReading?.();return}
+  if(e.code==='KeyF'&&!e.repeat){callbacks.toggleReading?.();return}
+  if(e.code==='KeyI'&&!e.repeat){e.preventDefault();callbacks.info?.(highlighted?.id);return}
   if(callbacks.reading?.())return;
   if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','ShiftLeft','ShiftRight'].includes(e.code)){e.preventDefault();keys.add(e.code);return}
   if(e.repeat)return;

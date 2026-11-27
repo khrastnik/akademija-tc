@@ -6,6 +6,9 @@ window.createProbeRig=function(T,scene,kit){
  const V=(x=0,y=0,z=0)=>new T.Vector3(x,y,z);
  function mesh(parent,g,m,x,y,z,sx,sy,sz){const o=new T.Mesh(g,m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);parent.add(o);o.castShadow=true;return o}
  const box=(p,m,x,y,z,w,h,d)=>mesh(p,boxGeo,m,x,y,z,w,h,d);
+ // Nevidno območje za ogled s tipko I (opis komponente, brez dejanja).
+ const hitMat=material(0xffffff);hitMat.transparent=true;hitMat.opacity=0;hitMat.depthWrite=false;mats.add(hitMat);
+ function infoHit(parent,id,x,y,z,w,h,d){const m=box(parent,hitMat,x,y,z,w,h,d);m.castShadow=m.receiveShadow=false;m.userData.fieldId=id;return m}
  function pipe(p,m,a,b,r){const delta=b.clone().sub(a),mid=a.clone().lerp(b,.5);const o=mesh(p,round,m,mid.x,mid.y,mid.z,r,delta.length(),r);o.quaternion.setFromUnitVectors(V(0,1,0),delta.normalize());return o}
  function route(parent,material,points,r){
   const path=new T.CurvePath();let last=V(...points[0]);
@@ -91,6 +94,7 @@ window.createProbeRig=function(T,scene,kit){
  pipe(annex,gold,V(3.84,SUP,AZ),V(3.84,1.28,AZ),.018);box(annex,red,3.84,1.31,AZ,.045,.05,.045);tag(annex,'VARNOSTNI VENTIL',3.78,1.4,AZ+.03,.3);
  pipe(annex,copper,V(4.18,SUP,AZ),V(4.18,1.34,AZ),.012);pipe(annex,steel,V(4.18,1.38,AZ+.0),V(4.18,1.38,AZ+.05),.045);tag(annex,'TLAK VODE',4.18,1.48,AZ+.03,.22);
  tag(annex,'RAZTEZNA POSODA',3.95,1.9,AZ+.03,.4);
+ infoHit(annex,'info:vessel',3.95,1.62,-1.95,.3,.42,.3);infoHit(annex,'info:safety',3.84,1.31,AZ,.09,.11,.09);infoHit(annex,'info:gauge',4.18,1.38,AZ+.03,.11,.11,.08);
  function mount(id,parent,x,y,where,kind,channel){
   const g=new T.Group();g.position.set(x,y,where);g.userData.fieldId='probe:'+id;parent.add(g);ports.set(id,g);
   pipe(g,id==='air'?steel:copper,V(-.097,0,0),V(.097,0,0),.0405);
@@ -251,6 +255,7 @@ window.createProbeRig=function(T,scene,kit){
   pipe(bay,gold,V(-1.22,1.06,.13),V(-1.15,1.06,.13),.017);
   box(bay,safetyRed,-1.13,1.07,.13,.05,.075,.05);pipe(bay,black,V(-1.13,1.105,.13),V(-1.13,1.135,.13),.02);
   pipe(bay,steel,V(-1.13,1.03,.13),V(-1.13,.96,.13),.012);
+  infoHit(bay,'info:safety',-1.13,1.06,.13,.11,.14,.09);
   tag(bay,'VARNOSTNI VENTIL',-1.02,1.2,.005,.26);
   const leak=new T.Group();bay.add(leak);
   const wet=finish(0x2e3b3c,.05,.18);wet.transparent=true;wet.opacity=.45;wet.depthWrite=false;

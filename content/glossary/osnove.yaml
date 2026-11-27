@@ -120,8 +120,8 @@
   sl: raztezna posoda
   en: expansion vessel
   kratkaRazlaga: Posoda z zračno blazino, ki sprejme raztezanje tople vode.
-  dolgaRazlaga: Voda se ob segrevanju razteza. Raztezna posoda to prostornino sprejme, da tlak v krogu ne skače. Prazna posoda povzroča nihanje tlaka in kapljanje varnostnega ventila.
-  analogija: Kot blažilnik v avtu.
+  dolgaRazlaga: "Voda se ob segrevanju razteza: od 10 do 50 °C za približno 1,2 % prostornine. V krogu z 200 litri vode so to dobra 2 litra, ki morata nekam. Raztezna posoda je zaprta jeklena posoda, ki jo gumijasta membrana deli na dva dela. Na eni strani je voda iz kroga, na drugi dušik ali zrak pod predtlakom. Ko se voda segreje, potisne membrano in stisne plin. Ko se ohladi, plin vodo potisne nazaj v cevi. Zato tlak v krogu niha le malo, na primer med 1,5 in 2 bar. Predtlak se nastavi glede na višino stavbe, okvirno višina sistema v metrih, deljena z 10, plus 0,2–0,3 bar. Polnilni tlak hladnega kroga je še za okoli 0,3 bar višji, da v posodi ostane nekaj vode za čas, ko se krog ohladi. Predtlak izmeriš na ventilčku posode, ko na vodni strani ni tlaka. Sčasoma plin počasi uide ali membrana poči in posoda ne sprejme več vode. Takrat ima hladen krog prenizek tlak, ob segrevanju tlak skoči proti 3 bar, varnostni ventil kaplja, uporabnik pa vodo stalno doliva. Sveža voda prinaša kisik in z njim rjo. Če ob pritisku na ventilček izteče voda namesto zraka, je membrana počena."
+  analogija: Kot zračni mehurček v zaprti steklenici vode – ko vode pride več, se zrak stisne in ji naredi prostor, ko je vode manj, jo zrak potisne nazaj. Brez mehurčka vsaka kapljica več takoj dvigne tlak.
   povezaneLekcije: [m09-l01]
 
 - id: obtocna-crpalka
