@@ -1,5 +1,11 @@
 # Spremembe
 
+## 0.40.1 – 2026-11-27
+
+- **Manometer v kotlovnici:** namesto sivega valja pravi merilnik – kromiran obroč, bela številčnica 0–4 bar z zelenim (1–2,5 bar) in rdečim (nad 3 bar) poljem,
+  kazalec in steklo, priključen prek medeninastega ventila. Pri nalogu 12 kazalec pred popravilom stoji pri 2,8 bar, po popravilu pri 1,7 bar.
+- Napis »VARNOSTNI VENTIL« v kotlovnici ni več skrit za raztezno posodo.
+
 ## 0.40.0 – 2026-11-27
 
 - **Igra 3D · »Kaj je to?« (tipka I):** nameri katerikoli del – črpalko, filter, ventilator, uparjalnik, raztezno posodo, manometer, varnostni ventil,

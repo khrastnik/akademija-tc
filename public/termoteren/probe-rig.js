@@ -6,6 +6,7 @@ window.createProbeRig=function(T,scene,kit){
  const V=(x=0,y=0,z=0)=>new T.Vector3(x,y,z);
  function mesh(parent,g,m,x,y,z,sx,sy,sz){const o=new T.Mesh(g,m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);parent.add(o);o.castShadow=true;return o}
  const box=(p,m,x,y,z,w,h,d)=>mesh(p,boxGeo,m,x,y,z,w,h,d);
+ const finishGauge=(c,m,r)=>{const x=material(c,m,r);mats.add(x);return x};
  // Nevidno območje za ogled s tipko I (opis komponente, brez dejanja).
  const hitMat=material(0xffffff);hitMat.transparent=true;hitMat.opacity=0;hitMat.depthWrite=false;mats.add(hitMat);
  function infoHit(parent,id,x,y,z,w,h,d){const m=box(parent,hitMat,x,y,z,w,h,d);m.castShadow=m.receiveShadow=false;m.userData.fieldId=id;return m}
@@ -91,10 +92,35 @@ window.createProbeRig=function(T,scene,kit){
  const vesselMat=material(0xb53e2c,.25,.42);mats.add(vesselMat);
  pipe(annex,vesselMat,V(3.95,1.45,-1.95),V(3.95,1.8,-1.95),.13);
  pipe(annex,copper,V(3.95,1.45,AZ),V(3.95,SUP,AZ),.016);
- pipe(annex,gold,V(3.84,SUP,AZ),V(3.84,1.28,AZ),.018);box(annex,red,3.84,1.31,AZ,.045,.05,.045);tag(annex,'VARNOSTNI VENTIL',3.78,1.4,AZ+.03,.3);
- pipe(annex,copper,V(4.18,SUP,AZ),V(4.18,1.34,AZ),.012);pipe(annex,steel,V(4.18,1.38,AZ+.0),V(4.18,1.38,AZ+.05),.045);tag(annex,'TLAK VODE',4.18,1.48,AZ+.03,.22);
+ pipe(annex,gold,V(3.84,SUP,AZ),V(3.84,1.28,AZ),.018);box(annex,red,3.84,1.31,AZ,.045,.05,.045);tag(annex,'VARNOSTNI VENTIL',3.8,1.218,AZ+.03,.24);
+ // Manometer 0–4 bar: krom obroč, bela številčnica z rdečim poljem nad 3 bar, kazalec in steklo; priključen od spodaj prek medeninastega ventila.
+ const GX=4.18,GY=1.44,GZ=AZ+.035,GR=.055;
+ pipe(annex,copper,V(GX,SUP,AZ),V(GX,1.3,AZ),.012);
+ pipe(annex,gold,V(GX,1.3,AZ),V(GX,1.34,AZ),.017);box(annex,gold,GX,1.32,AZ,.04,.022,.04);
+ pipe(annex,gold,V(GX,1.34,AZ),V(GX,GY-GR,AZ+.012),.009);
+ const gaugeCase=finishGauge(0x2b3133,.5,.4),chrome=finishGauge(0xd7dcdc,.95,.18);
+ pipe(annex,gaugeCase,V(GX,GY,AZ+.008),V(GX,GY,GZ),GR);
+ const rimGeo=new T.TorusGeometry(GR,.006,10,40);geos.add(rimGeo);const rim=new T.Mesh(rimGeo,chrome);rim.position.set(GX,GY,GZ+.002);annex.add(rim);
+ const dialTex=(()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d'),cx=128,cy=128;
+  g.fillStyle='#f4f2ea';g.beginPath();g.arc(cx,cy,128,0,7);g.fill();
+  const ang=v=>(-135+v/4*270)*Math.PI/180,pt=(v,r)=>[cx+r*Math.sin(ang(v)),cy-r*Math.cos(ang(v))];
+  const arc=(a,b,color,w)=>{g.strokeStyle=color;g.lineWidth=w;g.beginPath();g.arc(cx,cy,100,ang(a)-Math.PI/2,ang(b)-Math.PI/2);g.stroke()};
+  arc(1,2.5,'#3f9b5a',12);arc(3,4,'#c8352b',12);
+  for(let v=0;v<=4.0001;v+=.1){const major=Math.abs(v-Math.round(v))<.01,half=Math.abs(v*2-Math.round(v*2))<.01;const [x1,y1]=pt(v,major?82:half?88:93),[x2,y2]=pt(v,108);g.strokeStyle='#1c1f20';g.lineWidth=major?5:half?3:1.6;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke()}
+  g.fillStyle='#1c1f20';g.font='700 30px Segoe UI, Arial';g.textAlign='center';g.textBaseline='middle';for(let v=0;v<=4;v++){const [x,y]=pt(v,60);g.fillText(String(v),x,y)}
+  g.font='700 26px Segoe UI, Arial';g.fillText('bar',cx,cy+50);g.font='500 15px Segoe UI, Arial';g.fillStyle='#555';g.fillText('OGREVANJE',cx,cy+74);
+  const t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;t.anisotropy=4;textures.push(t);return t})();
+ const dialMat=new T.MeshBasicMaterial({map:dialTex,toneMapped:false});mats.add(dialMat);
+ const dialGeo=new T.CircleGeometry(GR-.002,40);geos.add(dialGeo);const dial=new T.Mesh(dialGeo,dialMat);dial.position.set(GX,GY,GZ+.001);annex.add(dial);
+ const gaugeNeedle=new T.Group();gaugeNeedle.position.set(GX,GY,GZ+.004);annex.add(gaugeNeedle);
+ const needleMat=finishGauge(0xc0261c,.1,.5);box(gaugeNeedle,needleMat,0,.019,0,.0035,.05,.0015);box(gaugeNeedle,needleMat,0,-.008,0,.006,.014,.0015);
+ const capGeo=new T.CylinderGeometry(.006,.006,.004,16);geos.add(capGeo);const cap=new T.Mesh(capGeo,black);cap.rotation.x=Math.PI/2;cap.position.set(GX,GY,GZ+.006);annex.add(cap);
+ const glassMat=new T.MeshStandardMaterial({color:0xffffff,metalness:0,roughness:.05,transparent:true,opacity:.14,depthWrite:false});mats.add(glassMat);
+ const glass=new T.Mesh(dialGeo,glassMat);glass.position.set(GX,GY,GZ+.009);glass.castShadow=false;annex.add(glass);
+ const setGauge=bar=>{gaugeNeedle.rotation.z=-(-135+Math.max(0,Math.min(4,bar))/4*270)*Math.PI/180};setGauge(1.7);
+ tag(annex,'TLAK VODE',GX,GY+GR+.05,AZ+.03,.22);
  tag(annex,'RAZTEZNA POSODA',3.95,1.9,AZ+.03,.4);
- infoHit(annex,'info:vessel',3.95,1.62,-1.95,.3,.42,.3);infoHit(annex,'info:safety',3.84,1.31,AZ,.09,.11,.09);infoHit(annex,'info:gauge',4.18,1.38,AZ+.03,.11,.11,.08);
+ infoHit(annex,'info:vessel',3.95,1.62,-1.95,.3,.42,.3);infoHit(annex,'info:safety',3.84,1.31,AZ,.09,.11,.09);infoHit(annex,'info:gauge',GX,GY,GZ-.005,.13,.13,.06);
  function mount(id,parent,x,y,where,kind,channel){
   const g=new T.Group();g.position.set(x,y,where);g.userData.fieldId='probe:'+id;parent.add(g);ports.set(id,g);
   pipe(g,id==='air'?steel:copper,V(-.097,0,0),V(.097,0,0),.0405);
@@ -357,6 +383,7 @@ window.createProbeRig=function(T,scene,kit){
  }
  const wires=[cable(),cable()];
  function sync(f){field=f;active=null;
+  setGauge(f.caseIndex===11&&!f.fixed?2.8:1.7);
   annex.visible=f.caseIndex!==9;
   if(((f.caseIndex>=6&&f.caseIndex<=9)||f.caseIndex===10||f.caseIndex===11)&&!radiatorBay)radiatorBay=createRadiatorBay();
   if(f.caseIndex===9&&!bufferBay)bufferBay=createBufferBay();
