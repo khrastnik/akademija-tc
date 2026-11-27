@@ -1,5 +1,10 @@
 # Spremembe
 
+## 0.40.2 – 2026-11-27
+
+- **Manometra pred in za filtrom** v kotlovnici sta enaka kot glavni manometer: številčnica 0–4 bar, kazalec, steklo, oznaki PRED in ZA. Pri zamašenem filtru kaže manometer za filtrom opazno manj.
+- **Kondenzator v enoti:** ploščni prenosnik ima zdaj paket plošč med končnima ploščama, vodna priključka (modro vstop, rdeče izstop) in nalepko »KONDENZATOR«. Opis (tipka I) pojasni, da je pri monobloku v zunanji enoti in kaj se z njim zgodi med odtajevanjem.
+
 ## 0.40.1 – 2026-11-27
 
 - **Manometer v kotlovnici:** namesto sivega valja pravi merilnik – kromiran obroč, bela številčnica 0–4 bar z zelenim (1–2,5 bar) in rdečim (nad 3 bar) poljem,

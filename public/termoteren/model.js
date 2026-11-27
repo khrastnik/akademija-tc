@@ -377,6 +377,17 @@
       const plateHx=ref("plate");
       for(const z of [-.252,.008])box(.67,.97,z,.33,.73,.012,steel,plateHx);
       for(const [x,y] of [[.53,.62],[.81,.62],[.53,1.32],[.81,1.32]])cyl(.006,.27,x,y,-.122,silver,"z",plateHx,8);
+      // Paket nerjavnih plošč med končnima ploščama – to je kondenzator monobloka: hladivo na eni, voda na drugi strani plošč.
+      const plateA=mat(0xa9b4b5,.78,.26),plateB=mat(0x6f7b7e,.7,.34);
+      for(let k=0;k<26;k++)box(.67,.97,-.239+k*.0093,.305,.705,.0062,k%2?plateB:plateA,plateHx);
+      // vodna priključka na sprednji plošči: modro vstop spodaj, rdeče izstop zgoraj
+      for(const [y,ring] of [[.72,blue],[1.22,red]]){cyl(.022,.075,.6,y,.045,copper,"z",plateHx,16);cyl(.026,.018,.6,y,.06,ring,"z",plateHx,16)}
+      const condTex=canvasTex(400,230,(g,w,h)=>{g.fillStyle="#f2f1e8";g.fillRect(0,0,w,h);g.fillStyle="#1f6f8b";g.fillRect(0,0,w,64);
+        g.fillStyle="#fff";g.font="bold 40px sans-serif";g.textAlign="center";g.fillText("KONDENZATOR",w/2,47);
+        g.fillStyle="#1d2a2c";g.font="bold 26px sans-serif";g.fillText("ploščni prenosnik",w/2,108);
+        g.font="22px sans-serif";g.fillStyle="#b8432f";g.fillText("hladivo: vroča para → tekočina",w/2,150);
+        g.fillStyle="#256779";g.fillText("voda: npr. 30 °C → 35 °C",w/2,186);g.fillStyle="#555";g.font="18px sans-serif";g.fillText("hladivo in voda se ne mešata",w/2,218)});
+      const condLabel=new T.Mesh(new T.PlaneGeometry(.2,.115),new T.MeshBasicMaterial({map:condTex,toneMapped:false}));condLabel.position.set(.8265,1.0,-.12);condLabel.rotation.y=Math.PI/2;condLabel.castShadow=false;plateHx.add(condLabel);
       // cevi: tlačna, sesalna, proti izmenjevalniku in uparjalniku
       pipe([[1.08,.78,-.24],[1.08,.98,-.27],[1.0,1.02,-.30]],L,copper,four);
       pipe([[.995,1.02,-.33],[.9,1.0,-.33],[.9,.8,-.32]],L,copper,acc);

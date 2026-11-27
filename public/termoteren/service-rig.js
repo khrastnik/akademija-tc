@@ -116,9 +116,31 @@
     cylinder(filterPoint,0,0,0,.05,.12,brass,'x',true);
     cylinder(filterPoint,0,-.13,0,.06,.22,black,'y');
     cylinder(filterPoint,0,-.25,0,.035,.04,brass,'y');
-    for(const dx of [-.1,.1]){cylinder(filterPoint,dx,.06,0,.012,.07,brass,'y');cylinder(filterPoint,dx,.12,.01,.034,.022,steel,'z');cylinder(filterPoint,dx,.12,.023,.029,.004,white,'z')}
-    const filterNeedle=group(filterPoint,.1,.12,.027);
-    box(filterNeedle,0,.012,0,.004,.026,.003,black);
+    // Manometra 0–4 bar pred in za filtrom – enaka izvedba kot manometer na steni kotlovnice. Zamašen filter = nižji tlak za njim.
+    const gaugeTex=keep((()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d'),cx=128,cy=128;
+      g.fillStyle='#f4f2ea';g.beginPath();g.arc(cx,cy,128,0,7);g.fill();
+      const ang=v=>(-135+v/4*270)*Math.PI/180,pt=(v,r)=>[cx+r*Math.sin(ang(v)),cy-r*Math.cos(ang(v))];
+      const arc=(a,b,color)=>{g.strokeStyle=color;g.lineWidth=12;g.beginPath();g.arc(cx,cy,100,ang(a)-Math.PI/2,ang(b)-Math.PI/2);g.stroke()};
+      arc(1,2.5,'#3f9b5a');arc(3,4,'#c8352b');
+      for(let k=0;k<=40;k++){const v=k/10,major=k%10===0,half=k%5===0;const [x1,y1]=pt(v,major?82:half?88:93),[x2,y2]=pt(v,108);g.strokeStyle='#1c1f20';g.lineWidth=major?5:half?3:1.6;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke()}
+      g.fillStyle='#1c1f20';g.font='700 30px Segoe UI, Arial';g.textAlign='center';g.textBaseline='middle';for(let v=0;v<=4;v++){const [x,y]=pt(v,60);g.fillText(String(v),x,y)}
+      g.font='700 26px Segoe UI, Arial';g.fillText('bar',cx,cy+50);
+      const t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;t.anisotropy=4;return t})());
+    const gaugeFace=keep(new T.MeshBasicMaterial({map:gaugeTex,toneMapped:false})),gaugeShell=material(0x2b3133,.5,.4),gaugeChrome=material(0xd7dcdc,.95,.18),gaugeRed=material(0xc0261c,.1,.5);
+    const gaugeGlass=keep(new T.MeshStandardMaterial({color:0xffffff,roughness:.05,transparent:true,opacity:.14,depthWrite:false}));
+    const dialGeo=keep(new T.CircleGeometry(1,40)),rimGeo=keep(new T.TorusGeometry(1,.11,10,40));
+    function makeGauge(parent,x,y,z,r){
+      const g=group(parent,x,y,z);
+      cylinder(g,0,0,-.013,r,.026,gaugeShell,'z');
+      const rim=new T.Mesh(rimGeo,gaugeChrome);rim.scale.setScalar(r);rim.position.z=.001;g.add(rim);
+      const face=new T.Mesh(dialGeo,gaugeFace);face.scale.setScalar(r*.96);face.position.z=.0005;g.add(face);
+      const needle=group(g,0,0,.002);box(needle,0,r*.35,0,r*.07,r*.9,.0012,gaugeRed);box(needle,0,-r*.15,0,r*.11,r*.26,.0012,gaugeRed);
+      cylinder(g,0,0,.003,r*.12,.002,black,'z');
+      const glass=new T.Mesh(dialGeo,gaugeGlass);glass.scale.setScalar(r*.96);glass.position.z=.005;glass.castShadow=false;g.add(glass);
+      return bar=>{needle.rotation.z=-(-135+Math.max(0,Math.min(4,bar))/4*270)*Math.PI/180};
+    }
+    const gauges=[-.1,.1].map(dx=>{cylinder(filterPoint,dx,.06,0,.012,.07,brass,'y');cylinder(filterPoint,dx,.098,0,.016,.016,brass,'y',true);return makeGauge(filterPoint,dx,.145,.026,.038)});
+    plate(filterPoint,-.1,.205,.03,.09,.026,'PRED');plate(filterPoint,.1,.205,.03,.09,.026,'ZA');
     plate(filterPoint,0,-.42,.05,.18,.045,'FILTER');
     // obtočna črpalka na dvižnem vodu
     const returnPoint=group(rack,4.36,SUP,AZ,'test:pump');
@@ -308,7 +330,7 @@
       });
       waterHandle.rotation.z=field.drained?Math.PI*.5:0;
       switchHandle.rotation.z=field.isolated?Math.PI*.5:0;
-      filterNeedle.rotation.z=level===0&&!fixed&&!field.drained?-.95:.85;
+      const clogged=level===0&&!fixed&&!field.drained;gauges[0](clogged?1.9:1.75);gauges[1](clogged?1.0:1.6);
       flowPoint.visible=true;
       filterSocket.visible=filterOut;
       setModule(cartridge,!filterOut,repair&&level===0&&!fixed?'filterCap':null);
