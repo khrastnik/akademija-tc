@@ -122,7 +122,7 @@
    fault:'Umazanija ali premajhen pretok vode na vodni strani dvigneta visoki tlak.',safe:HLADIVO,gl:'kondenzator'},
   'ref.liquid':{name:'Tekočinski vod',what:'Tanjša bakrena cev od kondenzatorja proti ekspanzijskemu ventilu.',
    why:'Po njej teče utekočinjeno hladivo.',home:'Dovod do pršilke.',safe:HLADIVO},
-  'ref.ports':{name:'Servisna priključka',what:'Ventilčka z rdečo in modro kapico.',
+  'ref.ports':{name:'Servisna priključka',what:'Dva ventilčka (Schrader) na nosilcu v predelku. Rdeča kapa je visoki tlak, s tankim vodom priključen na tlačni vod za kompresorjem. Modra kapa je nizki tlak, priključen na sesalni vod. Pod kapo je ventilček kot pri pnevmatiki, kapa pa je tudi tesnilo.',
    why:'Nanju serviser s spričevalom priklopi manometre in meri tlaka hladilnega kroga.',home:'Ventilček na pnevmatiki.',safe:HLADIVO},
   'ref.hp':{name:'Tipalo visokega tlaka',what:'Tlačno tipalo na tlačni strani kompresorja.',
    why:'Izklopi kompresor, preden tlak postane nevaren.',home:'Varovalka za tlak.',safe:HLADIVO,gl:'nadtlak'},

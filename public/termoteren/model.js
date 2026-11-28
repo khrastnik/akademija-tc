@@ -418,7 +418,17 @@
       const eev=ref("eev");cyl(.02,.08,1.02,1.36,-.32,brass,"x",eev);cyl(.036,.075,1.02,1.42,-.32,coilMat,"y",eev);hit(eev,.05,.13,1.02,1.39,-.32);
       pipe([[1.02,1.46,-.32],[.95,1.5,-.38],[.8,1.5,-.38]],.004,wire,eev);
       const ports=ref("ports");
-      for(const [y,cap] of [[1.62,capHigh],[1.55,capLow]]){pipe([[1.24,y,-.2],[1.24,y,.04]],.006,copper,ports);cyl(.011,.03,1.24,y,.055,brass,"z",ports,6);cyl(.013,.025,1.24,y,.08,cap,"z",ports,12)}hit(ports,.05,.2,1.24,1.585,.04);
+      // Servisna priključka (Schrader): s T-kosom na tlačnem vodu (visoki tlak, rdeča kapa) in sesalnem vodu (nizki tlak, modra kapa),
+      // speljana po tankem servisnem vodu na nosilec, privit na zadnjo steno predelka – dostopna, ko snameš stranski pokrov.
+      box(1.176,1.585,-.345,.008,.17,.062,silver,ports);for(const z of [-.322,-.368])cyl(.007,.006,1.181,1.585,z,steel,"x",ports,8);
+      box(1.15,1.585,-.372,.05,.17,.008,silver,ports);
+      cyl(.012,.02,1.08,.86,-.249,brass,"x",ports,10);
+      pipe([[1.08,.86,-.249],[1.16,.86,-.249],[1.16,.86,-.34],[1.16,1.62,-.34],[1.18,1.62,-.34]],.005,copper,ports);
+      cyl(.012,.02,.93,1.006,-.33,brass,"z",ports,10);
+      pipe([[.93,1.006,-.33],[.93,1.006,-.355],[.93,1.55,-.355],[1.18,1.55,-.355]],.005,copper,ports);
+      for(const [y,z,cap] of [[1.62,-.34,capHigh],[1.55,-.355,capLow]]){cyl(.011,.024,1.192,y,z,brass,"x",ports,6);cyl(.007,.012,1.21,y,z,brass,"x",ports,10);cyl(.013,.022,1.225,y,z,cap,"x",ports,12)}
+      for(const [y,text,col] of [[1.66,'VISOKI TLAK','#b8432f'],[1.505,'NIZKI TLAK','#3069a8']]){const l=surfaceLabel(1.1815,y,-.345,.058,.016,(g,w,h)=>{g.fillStyle=col;g.fillRect(0,0,w,h);g.fillStyle='#fff';g.font='bold 120px sans-serif';g.fillText(text,14,140,484)},ports);l.rotation.y=Math.PI/2}
+      hit(ports,.06,.2,1.2,1.585,-.345);
       const hp=ref("hp");cyl(.018,.05,1.13,.93,-.27,rubber,"x",hp);hit(hp,.04,.08,1.13,.93,-.27,"x");pipe([[1.155,.93,-.27],[1.2,.98,-.3],[1.2,1.2,-.38]],.003,wire,hp);
       const lp=ref("lp");cyl(.016,.05,.9,.86,-.32,rubber,"y",lp);hit(lp,.04,.08,.9,.86,-.32);pipe([[.9,.885,-.32],[.88,.95,-.38],[.7,1.1,-.38]],.003,wire,lp);
       const tdis=ref("tdis");box(1.08,.86,-.255,.022,.03,.03,dark,tdis);hit(tdis,.035,.06,1.08,.86,-.255);pipe([[1.08,.86,-.27],[1.15,.9,-.36],[1.15,1.15,-.38]],.003,wire,tdis);

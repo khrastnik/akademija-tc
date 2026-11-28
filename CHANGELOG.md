@@ -1,5 +1,9 @@
 # Spremembe
 
+## 0.42.1 – 2026-11-28
+
+- **Servisna priključka hladilnega kroga** ne visita več v zraku: visokotlačni (rdeča kapa) je s T-kosom in tankim servisnim vodom priključen na tlačni vod za kompresorjem, nizkotlačni (modra kapa) na sesalni vod. Oba sta na kovinskem nosilcu, privitem na zadnjo steno predelka, z nalepkama VISOKI TLAK in NIZKI TLAK. Opis na tipki I to pojasni.
+
 ## 0.42.0 – 2026-11-27
 
 Igra 3D – nadaljevanje realnih komponent:
